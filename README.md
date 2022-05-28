@@ -19,3 +19,14 @@ If you wanted to play any of the levels the codes are:
 - **Final:** ILVCT
 
 The code for the detonator at the mine level is 67134
+
+## Maps
+### Paris chase
+![/Images/paris chase map.png](https://raw.githubusercontent.com/unorig/AVTAK/main/Images/paris%20chase.png)
+
+### Mine
+![/Images/mine_map.png](https://raw.githubusercontent.com/unorig/AVTAK/main/Images/mine_map.png)
+
+
+
+
