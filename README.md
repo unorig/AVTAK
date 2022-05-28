@@ -27,6 +27,21 @@ The code for the detonator at the mine level is 67134
 ### Mine
 ![/Images/mine_map.png](https://raw.githubusercontent.com/unorig/AVTAK/main/Images/mine_map.png)
 
+## Solutions
+- Paris chase: https://youtu.be/IKfzO06n60Y
+- City hall: https://youtu.be/Qd88dvQBF5c
+- Mine - https://youtu.be/enfYuKBORVI
 
+
+
+
+
+
+  
+
+
+
+
+  
 
 
