@@ -2,7 +2,7 @@
 This is the decompiled source code for A View to a Kill for the Commodore 64. 
 
 ## Description
-I am very slowly working my way through the Commodore 64 code for A View to a Kill for the Commodore 64. I am hoping to better understand the code and one day possibly fix some of the bugs.
+I am very slowly working my way through the code for A View to a Kill for the Commodore 64. I am hoping to better understand the code and one day possibly fix some of the bugs.
 
 ## The code
 
@@ -19,3 +19,14 @@ If you wanted to play any of the levels the codes are:
 - **Final:** ILVCT
 
 The code for the detonator at the mine level is 67134
+
+## Maps
+### Paris chase
+![/Images/paris chase map.png](https://raw.githubusercontent.com/unorig/AVTAK/main/Images/paris%20chase.png)
+
+### Mine
+![/Images/mine_map.png](https://raw.githubusercontent.com/unorig/AVTAK/main/Images/mine_map.png)
+
+
+
+
