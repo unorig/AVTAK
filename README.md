@@ -2,7 +2,7 @@
 This is the decompiled source code for A View to a Kill for the Commodore 64. 
 
 ## Description
-I am very slowly working my way through the Commodore 64 code for A View to a Kill for the Commodore 64. I am hoping to better understand the code and one day possibly fix some of the bugs.
+I am very slowly working my way through the code for A View to a Kill for the Commodore 64. I am hoping to better understand the code and one day possibly fix some of the bugs.
 
 ## The code
 
