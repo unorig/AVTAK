@@ -12,10 +12,10 @@ The S files are the Assembly output from 6502 Bench which will assemble using 64
 ## Helpful game codes
 
 If you wanted to play any of the levels the codes are:
-- Opening: code not required
-- Paris chase: code not required
-- City Hall: CCPHJ
-- Mine: DB4CT
-- Final: ILVCT
+- **Opening:** code not required
+- **Paris chase:** code not required
+- **City Hall:** CCPHJ
+- **Mine:** DB4CT
+- **Final:** ILVCT
 
 The code for the detonator at the mine level is 67134
