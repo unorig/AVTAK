@@ -21,7 +21,7 @@
 "PlatformSymbolFileIdentifiers":["RT:Commodore/C64-Kernal.sym65"],
 "ExtensionScriptFileIdentifiers":["RT:Commodore/VisC64.cs"],
 "ProjectSyms":{
-"JoystickFire":{
+"V_JoystickFire":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -32,13 +32,13 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"JoystickFire",
+"Label":"V_JoystickFire",
 "Value":827,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"JoystickLeftRight":{
+"V_JoystickLeftRight":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -49,13 +49,13 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"JoystickLeftRight",
+"Label":"V_JoystickLeftRight",
 "Value":825,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"JoystickUpDown":{
+"V_JoystickUpDown":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -66,7 +66,7 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"JoystickUpDown",
+"Label":"V_JoystickUpDown",
 "Value":826,
 "Source":"Project",
 "Type":"ExternalAddr",
@@ -105,7 +105,11 @@
 "2":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "3756":"Joystick up detected",
 "4007":"01 = Right / 02 = Left.",
-"4356":"Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching"},
+"4356":"Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching",
+"4647":"Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching",
+"7690":"This never seems to change",
+"7712":"Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching",
+"8541":"Usually alway jumps as 1b4d is always #00"},
 
 "LongComments":{
 "-2147483647":{
@@ -132,6 +136,18 @@
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
+
+"7682":{
+"Text":"Character action matrix",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-5383962},
+
+"7865":{
+"Text":"Character action routines",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-5383962},
 
 "8747":{
 "Text":"Something to do with falling down.",
@@ -190,56 +206,56 @@
 "LabelAnno":"None"},
 
 "3746":{
-"Label":"GetJoystickInput",
+"Label":"S_GetJoystickInput",
 "Value":6048,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "54018":{
-"Label":"Joystick2Input",
+"Label":"V_Joystick2Input",
 "Value":56320,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "3753":{
-"Label":"JoystickCheckUp",
+"Label":"L_JoystickCheckUp",
 "Value":6055,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "3757":{
-"Label":"JoystickCheckDown",
+"Label":"L_JoystickCheckDown",
 "Value":6059,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "3761":{
-"Label":"JoystickCheckLeft",
+"Label":"L_JoystickCheckLeft",
 "Value":6063,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "3765":{
-"Label":"JoystickCheckRight",
+"Label":"L_JoystickCheckRight",
 "Value":6067,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "3769":{
-"Label":"StoreJoystickDirection",
+"Label":"L_StoreJoystickDirection",
 "Value":6071,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "3781":{
-"Label":"Store_Joystick_Fire",
+"Label":"L_Store_Joystick_Fire",
 "Value":6083,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -323,14 +339,14 @@
 "LabelAnno":"None"},
 
 "4690":{
-"Label":"StandingOnConveyor",
+"Label":"V_StandingOnConveyor",
 "Value":6992,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "4691":{
-"Label":"StandingOnLift",
+"Label":"V_StandingOnLift",
 "Value":6993,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -381,6 +397,97 @@
 "50979":{
 "Label":"BackgroundColor",
 "Value":53281,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8747":{
+"Label":"StartFallDamage",
+"Value":11049,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7735":{
+"Label":"StandingDetected",
+"Value":10037,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7741":{
+"Label":"MovingDetected",
+"Value":10043,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7753":{
+"Label":"JumpingDetected",
+"Value":10055,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7747":{
+"Label":"FallingDetected",
+"Value":10049,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7759":{
+"Label":"ClimbingDetected",
+"Value":10061,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7765":{
+"Label":"Sub_standing",
+"Value":10067,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7977":{
+"Label":"Sub_moving",
+"Value":10279,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8419":{
+"Label":"Sub_falling",
+"Value":10721,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8162":{
+"Label":"Sub_jumping",
+"Value":10464,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8538":{
+"Label":"Sub_climbing",
+"Value":10840,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2":{
+"Label":"Sub_CharacterActions",
+"Value":2304,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4354":{
+"Label":"Sub_CharacterActionCheck",
+"Value":6656,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},

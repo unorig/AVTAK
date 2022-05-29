@@ -1,13 +1,14 @@
 ; Target assembler: 64tass v1.56.2625 [--ascii --case-sensitive -Wall]
 ; 6502bench SourceGen v1.8.3
         .cpu    "6502"
-JoystickLeftRight = $0339
-JoystickUpDown = $033a
-JoystickFire =  $033b
+V_JoystickLeftRight = $0339
+V_JoystickUpDown = $033a
+V_JoystickFire = $033b
 
 
 *       =       $0900
-L0900   ldx     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+Sub_CharacterActions
+        ldx     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         beq     NoCharacterMovement
         dex
         beq     CharacterMoveLeftRight
@@ -2421,35 +2422,35 @@ L1770   lda     #$64
 
         .fill   18,$ff
 
-GetJoystickInput
-        lda     Joystick2Input
+S_GetJoystickInput
+        lda     V_Joystick2Input
         ldy     #$00
         ldx     #$00
-JoystickCheckUp
+L_JoystickCheckUp
         lsr     a
-        bcs     JoystickCheckDown
+        bcs     L_JoystickCheckDown
         dey                ;Joystick up detected
-JoystickCheckDown
+L_JoystickCheckDown
         lsr     a
-        bcs     JoystickCheckLeft
+        bcs     L_JoystickCheckLeft
         iny
-JoystickCheckLeft
+L_JoystickCheckLeft
         lsr     a
-        bcs     JoystickCheckRight
+        bcs     L_JoystickCheckRight
         dex
-JoystickCheckRight
+L_JoystickCheckRight
         lsr     a
-        bcs     StoreJoystickDirection
+        bcs     L_StoreJoystickDirection
         inx
-StoreJoystickDirection
+L_StoreJoystickDirection
         lsr     a
-        stx     JoystickLeftRight
-        sty     JoystickUpDown
+        stx     V_JoystickLeftRight
+        sty     V_JoystickUpDown
         ldx     #$00
-        bcs     Store_Joystick_Fire
+        bcs     L_Store_Joystick_Fire
         inx
-Store_Joystick_Fire
-        stx     JoystickFire
+L_Store_Joystick_Fire
+        stx     V_JoystickFire
         rts
 
         .byte   $02
@@ -2599,7 +2600,7 @@ L1900   dec     L1B60
 
 _L1906  lda     L1B61
         sta     L1B60
-        lda     StandingOnLift+3
+        lda     V_StandingOnLift+3
         bpl     _L1921
         lda     #$1f
         ldx     L1B62
@@ -2785,7 +2786,8 @@ _L1975  .byte   $ff
         .byte   $ff
         .fill   11,$fe
 
-L1A00   lda     #$01
+Sub_CharacterActionCheck
+        lda     #$01
         ldx     CharacterAction ;Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching
         beq     L1A13
         dex
@@ -2851,7 +2853,7 @@ L1A53   dec     L1B63
         jmp     L1A14
 
 Sub_CharacterMoving
-        lda     StandingOnConveyor
+        lda     V_StandingOnConveyor
         beq     _L1A7D
         lda     ClockFirstMillisecond
         and     #$01
@@ -2947,7 +2949,7 @@ L1B16   .byte   $02
         .byte   $00
         .byte   $00
 CharacterAction
-        .byte   $00
+        .byte   $00        ;Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching
 CharacterDirection
         .byte   $00
         .byte   $01
@@ -2972,9 +2974,9 @@ L1B4C   .byte   $04
 L1B4D   .byte   $00
 L1B4E   .byte   $00
         .byte   $00
-StandingOnConveyor
+V_StandingOnConveyor
         .byte   $00
-StandingOnLift
+V_StandingOnLift
         .byte   $00
         .byte   $00
         .byte   $00
@@ -3493,11 +3495,11 @@ _L224C  lda     L1B06
 _L226D  inc     ClockSecondMinute+2
 _L2270  stx     $03ff
         lda     ClockFirstMillisecond-1
-        ora     StandingOnConveyor-1
+        ora     V_StandingOnConveyor-1
         beq     _L227E
         jsr     L1100
 _L227E  lda     ClockSecondMinute+2
-        ora     StandingOnConveyor-1
+        ora     V_StandingOnConveyor-1
         beq     _L2289
         jsr     L2600
 _L2289  jsr     L1700
@@ -3507,7 +3509,7 @@ _L2289  jsr     L1700
         sta     L1B01
         lda     #$00
         sta     L1B4E
-        sta     StandingOnConveyor-1
+        sta     V_StandingOnConveyor-1
         rts
 
 L22A1   lda     L1B3F
@@ -3906,14 +3908,14 @@ _L2551  dey
 _L2575  jsr     L3000
         nop
         jsr     L2700
-        jsr     L1A00
+        jsr     Sub_CharacterActionCheck
         ldx     L1B2D
         dex
         stx     L1B2D
         bne     _L2594
         nop
         nop
-        jsr     L0900
+        jsr     Sub_CharacterActions
         ldx     #$03
         stx     L1B2D
         nop
@@ -4092,9 +4094,9 @@ L26EF   .byte   $fe
         .fill   11,$fe
 
 L2700   lda     #$00
-        sta     StandingOnConveyor
-        sta     StandingOnLift
-        sta     StandingOnLift+1
+        sta     V_StandingOnConveyor
+        sta     V_StandingOnLift
+        sta     V_StandingOnLift+1 ;This never seems to change
         lda     #$42
         sta     $fb
         lda     #$42
@@ -4103,39 +4105,45 @@ L2700   lda     #$00
         sta     $fd
         lda     #$52
         sta     $fe
-        jsr     GetJoystickInput
-        ldx     CharacterAction
-        beq     _L2735
+        jsr     S_GetJoystickInput
+        ldx     CharacterAction ;Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching
+        beq     StandingDetected
         dex
-        beq     _L273B
+        beq     MovingDetected
         dex
-        beq     _L2747
+        beq     JumpingDetected
         dex
-        beq     _L2741
+        beq     FallingDetected
         dex
-        beq     _L274D
-        jsr     L2B29
+        beq     ClimbingDetected
+        jsr     StartFallDamage
         jmp     L2CA3
 
-_L2735  jsr     L2753
+StandingDetected
+        jsr     Sub_standing
         jmp     L2CA3
 
-_L273B  jsr     L2827
+MovingDetected
+        jsr     Sub_moving
         jmp     L2CA3
 
-_L2741  jsr     L29E1
+FallingDetected
+        jsr     Sub_falling
         jmp     L2CA3
 
-_L2747  jsr     L28E0
+JumpingDetected
+        jsr     Sub_jumping
         jmp     L2CA3
 
-_L274D  jsr     L2A58
+ClimbingDetected
+        jsr     Sub_climbing
         jmp     L2CA3
 
-L2753   jsr     L2B4D
+Sub_standing
+        jsr     L2B4D
         cpx     #$01
         beq     L2770
-        lda     JoystickUpDown
+        lda     V_JoystickUpDown
         cmp     #$ff
         bne     L2781
         cpy     #$01
@@ -4167,24 +4175,24 @@ L2781   jsr     L2BC1
         sta     L1B5A
         sta     L1B64
         sta     L1B63
-        jmp     L29E1
+        jmp     Sub_falling
 
 _L27A3  dey
         bne     _L27AD
         iny
-        sty     StandingOnLift
+        sty     V_StandingOnLift
         jmp     _L27BA
 
 _L27AD  dey
         bne     _L27B7
         iny
-        sty     StandingOnLift+1
+        sty     V_StandingOnLift+1
         jmp     _L27BA
 
-_L27B7  sty     StandingOnConveyor
-_L27BA  lda     JoystickFire
+_L27B7  sty     V_StandingOnConveyor
+_L27BA  lda     V_JoystickFire
         beq     _L27F2
-        lda     JoystickLeftRight
+        lda     V_JoystickLeftRight
         beq     _L27EF
         cmp     #$01
         bne     _L27E2
@@ -4197,7 +4205,7 @@ _L27D2  lda     #$02
         lda     #$00
         sta     CharacterDirection+2
         sta     L1B5A
-        jmp     L28E0
+        jmp     Sub_jumping
 
 _L27E2  lda     #$02
         sta     CharacterAction
@@ -4207,7 +4215,7 @@ _L27E2  lda     #$02
 
 _L27EF  jmp     L2E80
 
-_L27F2  lda     JoystickLeftRight
+_L27F2  lda     V_JoystickLeftRight
         beq     _L2815
         cmp     #$01
         bne     _L2808
@@ -4215,29 +4223,30 @@ _L27F2  lda     JoystickLeftRight
         sta     CharacterAction
         lda     #$01
         sta     CharacterDirection
-        jmp     L2827
+        jmp     Sub_moving
 
 _L2808  lda     #$01
         sta     CharacterAction
         lda     #$02
         sta     CharacterDirection
-        jmp     L2827
+        jmp     Sub_moving
 
-_L2815  lda     JoystickUpDown
+_L2815  lda     V_JoystickUpDown
         beq     _L2826
         cmp     #$01
         bne     _L2826
-        lda     StandingOnLift
+        lda     V_StandingOnLift
         bne     _L2826
         jsr     L23A0
 _L2826  rts
 
-L2827   jsr     L2B4D
+Sub_moving
+        jsr     L2B4D
         cpx     #$01
         bne     _L2831
         jmp     L2770
 
-_L2831  lda     JoystickUpDown
+_L2831  lda     V_JoystickUpDown
         cmp     #$01
         bne     _L2847
         cpy     #$01
@@ -4262,19 +4271,19 @@ _L2858  cpy     #$04
         cpy     #$03
         bne     _L2868
         lda     #$01
-        sta     StandingOnConveyor
+        sta     V_StandingOnConveyor
         jmp     _L2893
 
 _L2868  cpy     #$02
         bne     _L2874
         lda     #$01
-        sta     StandingOnLift+1
+        sta     V_StandingOnLift+1
         jmp     _L2893
 
 _L2874  cpy     #$01
         bne     _L2880
         lda     #$01
-        sta     StandingOnLift
+        sta     V_StandingOnLift
         jmp     _L2893
 
 _L2880  lda     #$03
@@ -4283,7 +4292,7 @@ _L2880  lda     #$03
         sta     L1B63
         sta     L1B64
         sta     L1B5A
-        jmp     L29E1
+        jmp     Sub_falling
 
 _L2893  lda     L1B00
         cmp     #$02
@@ -4293,7 +4302,7 @@ _L2893  lda     L1B00
         bne     _L28A4
         jmp     L2770
 
-_L28A4  lda     JoystickFire
+_L28A4  lda     V_JoystickFire
         beq     _L28BE
         lda     #$02
         sta     CharacterAction
@@ -4302,15 +4311,15 @@ _L28A4  lda     JoystickFire
         lda     #$00
         sta     CharacterDirection+2
         sta     L1B5A
-        jmp     L28E0
+        jmp     Sub_jumping
 
-_L28BE  lda     JoystickLeftRight
+_L28BE  lda     V_JoystickLeftRight
         bne     _L28D0
         lda     #$00
         sta     CharacterAction
         lda     #$01
         sta     CharacterDirection+2
-        jmp     L2753
+        jmp     Sub_standing
 
 _L28D0  cmp     #$01
         bne     _L28DA
@@ -4322,7 +4331,8 @@ _L28DA  lda     #$02
         sta     CharacterDirection
         rts
 
-L28E0   jsr     L2B4D
+Sub_jumping
+        jsr     L2B4D
         cpx     #$01
         bne     _L28F9
         lda     #$03
@@ -4331,7 +4341,7 @@ L28E0   jsr     L2B4D
         sta     L1B5A
         lda     #$01
         sta     CharacterDirection+2
-        jmp     L29E1
+        jmp     Sub_falling
 
 _L28F9  cpy     #$01
         bne     _L290A
@@ -4339,7 +4349,7 @@ _L28F9  cpy     #$01
         sta     CharacterAction
         lda     #$01
         sta     CharacterDirection+2
-        jmp     L2A58
+        jmp     Sub_climbing
 
 _L290A  lda     CharacterDirection+2
         cmp     #$06
@@ -4399,7 +4409,7 @@ L296B   lda     #$01
         sta     L1B63
         sta     L1B64
         sta     CharacterDirection+2
-        jmp     L29E1
+        jmp     Sub_falling
 
 _L298F  lda     L1B01
         cmp     #$07
@@ -4411,24 +4421,24 @@ _L299D  lda     #$00
         sta     CharacterAction
         lda     #$01
         sta     CharacterDirection+2
-        jmp     L2753
+        jmp     Sub_standing
 
 _L29AA  cpy     #$01
         bne     _L29B6
         lda     #$01
-        sta     StandingOnLift
+        sta     V_StandingOnLift
         jmp     _L299D
 
 _L29B6  cpy     #$02
         bne     _L29C2
         lda     #$01
-        sta     StandingOnLift+1
+        sta     V_StandingOnLift+1
         jmp     _L299D
 
 _L29C2  cpy     #$03
         bne     _L29CE
         lda     #$01
-        sta     StandingOnConveyor
+        sta     V_StandingOnConveyor
         jmp     _L299D
 
 _L29CE  cpy     #$04
@@ -4441,7 +4451,8 @@ _L29D5  cpy     #$05
         sta     CharacterAction
 L29DE   jmp     L2935
 
-L29E1   jsr     L2B4D
+Sub_falling
+        jsr     L2B4D
         cpx     #$01
         bne     _L29ED
         lda     #$46
@@ -4472,19 +4483,19 @@ _L2A17  lda     #$01
 _L2A1A  cpy     #$01
         bne     _L2A26
         lda     #$01
-        sta     StandingOnLift
+        sta     V_StandingOnLift
         jmp     _L2A17
 
 _L2A26  cpy     #$02
         bne     _L2A32
         lda     #$01
-        sta     StandingOnLift+1
+        sta     V_StandingOnLift+1
         jmp     _L2A17
 
 _L2A32  cpy     #$03
         bne     _L2A3E
         lda     #$01
-        sta     StandingOnConveyor
+        sta     V_StandingOnConveyor
         jmp     _L2A17
 
 _L2A3E  cpy     #$04
@@ -4501,20 +4512,21 @@ _L2A45  cpy     #$05
 _L2A55  lda     #$00
         rts
 
-L2A58   lda     L1B4D
-        beq     _L2A6A
+Sub_climbing
+        lda     L1B4D
+        beq     _L2A6A     ;Usually alway jumps as 1b4d is always #00
         lda     L1B05
         beq     _L2A6A
         lda     #$03
         sta     CharacterAction
-        jmp     L29E1
+        jmp     Sub_falling
 
 _L2A6A  lda     #$02
         sta     L1B00
         jsr     L2C90
         cpx     #$00
         beq     _L2A82
-        lda     JoystickUpDown
+        lda     V_JoystickUpDown
         beq     _L2AF1
         cmp     #$01
         bne     _L2AF1
@@ -4549,7 +4561,7 @@ _L2AA4  lda     L1B01
         jsr     L2AF7
         rts
 
-_L2AC3  lda     JoystickLeftRight
+_L2AC3  lda     V_JoystickLeftRight
         beq     _L2ADC
         cmp     #$01
         bne     _L2AD4
@@ -4561,7 +4573,7 @@ _L2AD4  lda     #$02
         sta     CharacterDirection
         jmp     _L2A8E
 
-_L2ADC  lda     JoystickUpDown
+_L2ADC  lda     V_JoystickUpDown
         beq     _L2AF1
         cmp     #$01
         beq     _L2AEB
@@ -4596,16 +4608,17 @@ _L2B08  lda     #$00
         dec     NumberCodesEntered+1
         bne     _L2B08
         lda     #$01
-        sta     StandingOnConveyor-1
+        sta     V_StandingOnConveyor-1
 _L2B23  lda     #$00
         sta     GraplingHookDeployed
         rts
 
-L2B29   jsr     L2BC1
+StartFallDamage
+        jsr     L2BC1
         ldx     L1B5C
-        stx     JoystickLeftRight-1
+        stx     V_JoystickLeftRight-1
 _L2B32  jsr     Sub_ReduceTime
-        dec     JoystickLeftRight-1
+        dec     V_JoystickLeftRight-1
         bne     _L2B32
         dec     L1B5B
         beq     _L2B40
@@ -4615,7 +4628,7 @@ _L2B40  lda     #$00
         sta     CharacterAction
         lda     #$01
         sta     CharacterDirection+2
-        jmp     L2753
+        jmp     Sub_standing
 
 L2B4D   ldy     #$01
         ldx     #$06
@@ -4734,7 +4747,7 @@ _L2C05  lda     ($fb),y
         bcs     _L2C17
         ldy     #$03
         ldx     $02
-        sty     StandingOnConveyor
+        sty     V_StandingOnConveyor
         rts
 
 _L2C17  dey
@@ -4749,7 +4762,7 @@ _L2C1E  lda     ($fb),y
         bcs     _L2C30
         ldy     #$02
         ldx     $02
-        sty     StandingOnLift+1
+        sty     V_StandingOnLift+1
         rts
 
 _L2C30  iny
@@ -4764,7 +4777,7 @@ _L2C37  lda     ($fb),y
         bcs     _L2C49
         ldy     #$01
         ldx     $02
-        sty     StandingOnLift
+        sty     V_StandingOnLift
         rts
 
 _L2C49  dey
@@ -4825,15 +4838,15 @@ _L2C9A  dey
 _L2CA0  ldx     #$01
         rts
 
-L2CA3   lda     StandingOnConveyor
+L2CA3   lda     V_StandingOnConveyor
         beq     _L2CAB
         jmp     _L2CBC
 
-_L2CAB  lda     StandingOnLift
+_L2CAB  lda     V_StandingOnLift
         beq     _L2CB3
         jmp     L3C01
 
-_L2CB3  lda     StandingOnLift+1
+_L2CB3  lda     V_StandingOnLift+1
         beq     _L2CBB
         jmp     L3D39
 
@@ -4844,7 +4857,7 @@ _L2CBC  lda     L1B05
         lda     L1B04
         cmp     #$be
         bcs     _L2CCF
-        lda     StandingOnLift+3
+        lda     V_StandingOnLift+3
         sta     L1B3E
         rts
 
@@ -4874,11 +4887,11 @@ _L2D0E  lda     _L2D93,x
 _L2D22  stx     $af
         lda     #$00
         sta     LiftPosition+1
-        jsr     GetJoystickInput
+        jsr     S_GetJoystickInput
         ldx     $af
-        lda     JoystickFire
+        lda     V_JoystickFire
         bne     _L2D6E
-        lda     JoystickLeftRight
+        lda     V_JoystickLeftRight
         beq     _L2D22
         bmi     _L2D53
         lda     $02
@@ -5052,16 +5065,16 @@ _L2E14  sec
         bne     _L2E11
         rts
 
-_L2E20  jsr     GetJoystickInput
-        lda     JoystickFire
+_L2E20  jsr     S_GetJoystickInput
+        lda     V_JoystickFire
         bne     _L2E20
         jsr     L2E5D
         lda     #$01
         sta     LiftPosition+2
         rts
 
-L2E31   jsr     GetJoystickInput
-        lda     JoystickFire
+L2E31   jsr     S_GetJoystickInput
+        lda     V_JoystickFire
         bne     L2E31
         jsr     L2E5D
         lda     #$02
@@ -5207,8 +5220,8 @@ _L2F26  lda     #$78
         sta     _L2EEC+2
         jmp     _L2EEA
 
-_L2F33  jsr     GetJoystickInput
-        lda     JoystickFire
+_L2F33  jsr     S_GetJoystickInput
+        lda     V_JoystickFire
         beq     _L2F44
         lda     LiftPosition+1
         beq     _L2F41
@@ -5216,7 +5229,7 @@ _L2F33  jsr     GetJoystickInput
 
 _L2F41  jmp     L2D00
 
-_L2F44  lda     JoystickLeftRight
+_L2F44  lda     V_JoystickLeftRight
         beq     _L2F33
         bpl     _L2F5C
         ldx     $ff
@@ -6997,7 +7010,7 @@ _L3B9C  lda     #$00
 
 L3C00   rts
 
-L3C01   lda     JoystickUpDown
+L3C01   lda     V_JoystickUpDown
         beq     L3C00
         bmi     _L3C0B
         jmp     _L3C9E
@@ -7062,7 +7075,7 @@ _L3C7A  lda     L1B06
         lda     L1B03
         sbc     #$00
         sta     L1B03
-_L3C98  inc     StandingOnConveyor-1
+_L3C98  inc     V_StandingOnConveyor-1
 _L3C9B  jmp     L3D45
 
 _L3C9E  jsr     L3D3A
@@ -7125,7 +7138,7 @@ _L3D0D  lda     L1B06
         lda     L1B03
         adc     #$00
         sta     L1B03
-_L3D2B  inc     StandingOnConveyor-1
+_L3D2B  inc     V_StandingOnConveyor-1
         jmp     L3D45
 
 _L3D31  .byte   $74
@@ -22923,7 +22936,7 @@ LD8AF   .fill   81,$00
 LD900   .fill   78,$00
 LD94E   .byte   $00
 LD94F   .fill   689,$00
-Joystick2Input
+V_Joystick2Input
         .fill   14,$00
 LDC0E   .fill   242,$00
 LDD00   .byte   $00
