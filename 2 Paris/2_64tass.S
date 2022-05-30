@@ -3883,7 +3883,7 @@ _L41E2  clc
         .byte   $ff
 
 S_UpdateSpritePosition
-        pha
+        pha                ;#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond
         lda     #$00
         bcc     _L4207
         adc     #$00
@@ -4009,7 +4009,7 @@ _L42AF  lda     L6980,x
         sta     L6910,x
         jmp     _L4317
 
-_L42E7  lda     L6910,x
+_L42E7  lda     L6910,x    ;691d = #1
         ora     #$80
         sta     L6910,x
         and     #$07
@@ -4033,7 +4033,7 @@ _L42E7  lda     L6910,x
         beq     _L4310
         sec
 _L4310  lda     $02
-        jsr     S_UpdateSpritePosition
+        jsr     S_UpdateSpritePosition ;#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond
         pla
         tax
 _L4317  dex
@@ -7702,7 +7702,7 @@ _L5AC6  stx     V_HandbrakeTurnFlag
         ldy     #$bd
         ldx     #$ab
         lda     #$08
-        jsr     S_UpdateSpritePosition
+        jsr     S_UpdateSpritePosition ;#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond
         jmp     L4450
 
         .byte   $ea
@@ -7752,7 +7752,7 @@ L5B2A   ldx     V_CarDirection
         ldy     #$bd
         ldx     #$ab
         lda     #$08
-        jsr     S_UpdateSpritePosition
+        jsr     S_UpdateSpritePosition ;#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond
         nop
         nop
         nop

@@ -568,15 +568,20 @@
 "12402":"Reset end game flag",
 "12542":"Unknown",
 "12628":"Unknown",
+"12802":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
 "12903":"Check if car collision has occured",
 "12906":"Jump over joystick input as car collision occured",
 "12913":"Branch as Up is not detected",
+"13033":"691d = #1",
 "13043":"Store current sprite",
+"13076":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
 "16270":"1=Theme, 2=Effects, 3=Both",
 "16283":"1=Theme, 2=Effects, 3=Both",
 "16291":"Set menu to Theme",
 "16304":"This will change the \u0027Pres fire to start\u0027 text colour.",
-"17642":"Complete draw screen sub routine when complete"},
+"17642":"Complete draw screen sub routine when complete",
+"19162":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
+"19259":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond"},
 
 "LongComments":{
 "-2147483647":{
@@ -616,6 +621,12 @@
 "MaxWidth":80,
 "BackgroundColor":-23296},
 
+"13033":{
+"Text":"This could be police car movement subroutube",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-23296},
+
 "13570":{
 "Text":"Car damage routine",
 "BoxMode":false,
@@ -650,7 +661,13 @@
 "Text":"Car control routine",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":0}},
+"BackgroundColor":-23296},
+
+"19239":{
+"Text":"Only run at start of game. Possibly positioning sprites for the start of the game.",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-23296}},
 
 "UserLabels":{
 "49171":{
