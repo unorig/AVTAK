@@ -107,6 +107,8 @@
 "4007":"01 = Right / 02 = Left.",
 "4356":"Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching",
 "4647":"Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching",
+"4648":"01 = Right / 02 = Left",
+"4649":"01 = Down / 02 = Up",
 "7690":"This never seems to change",
 "7712":"Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching",
 "8541":"Usually alway jumps as 1b4d is always #00"},
@@ -262,7 +264,7 @@
 "LabelAnno":"None"},
 
 "4648":{
-"Label":"CharacterDirection",
+"Label":"V_CharDirectionLeftRight",
 "Value":6950,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -290,15 +292,15 @@
 "LabelAnno":"None"},
 
 "4391":{
-"Label":"Sub_CharacterJumping",
+"Label":"Sub_CharJumpIncline",
 "Value":6693,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
-"4411":{
-"Label":"Sub_CharacterFalling",
-"Value":6713,
+"4433":{
+"Label":"Sub_CharClimbingDown",
+"Value":6735,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
@@ -488,6 +490,27 @@
 "4354":{
 "Label":"Sub_CharacterActionCheck",
 "Value":6656,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4386":{
+"Label":"Sub_CharMoveRight",
+"Value":6688,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4405":{
+"Label":"Sub_CharJumpDecline",
+"Value":6707,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4649":{
+"Label":"V_CharDirectionUpDown",
+"Value":6951,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},

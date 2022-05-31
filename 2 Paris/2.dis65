@@ -79,7 +79,7 @@
 "SubFormat":"Hex",
 "SymbolRef":null},
 
-"Comment":"",
+"Comment":"#00 Continue / #80 Mayday found / Ends game #27",
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
@@ -293,7 +293,7 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"V_CarPositionXHigh":{
+"V_CarPosHorizontalHigh":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -304,13 +304,13 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"V_CarPositionXHigh",
+"Label":"V_CarPosHorizontalHigh",
 "Value":825,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"V_CarPositionXLow":{
+"V_CarPosHorizontalLow":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -321,7 +321,7 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"V_CarPositionXLow",
+"Label":"V_CarPosHorizontalLow",
 "Value":824,
 "Source":"Project",
 "Type":"ExternalAddr",
@@ -565,21 +565,30 @@
 "0":"load address",
 "4098":"Sprites",
 "7170":"Unknown",
-"12402":"Reset end game flag",
+"12402":"#00 Continue / #80 Mayday found / Ends game #27",
 "12542":"Unknown",
 "12628":"Unknown",
-"12802":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
+"12802":"#0-#2 Police, #3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
 "12903":"Check if car collision has occured",
 "12906":"Jump over joystick input as car collision occured",
 "12913":"Branch as Up is not detected",
-"13033":"691d = #1",
-"13043":"Store current sprite",
+"13041":"Reduce to first four sprites and isolate current",
+"13043":"Store current sprite #",
 "13076":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
+"14773":"#00 Continue / #80 Mayday found / Ends game #27",
+"15266":"#00 Continue / #80 Mayday found / Ends game #27",
+"15327":"#00 Continue / #80 Mayday found / Ends game #27",
 "16270":"1=Theme, 2=Effects, 3=Both",
 "16283":"1=Theme, 2=Effects, 3=Both",
 "16291":"Set menu to Theme",
 "16304":"This will change the \u0027Pres fire to start\u0027 text colour.",
+"16309":"#00 Continue / #80 Mayday found / Ends game #27",
+"16723":"#00 Continue / #80 Mayday found / Ends game #27",
+"16842":"#00 Continue / #80 Mayday found / Ends game #27",
+"16898":"#00 Continue / #80 Mayday found / Ends game #27",
+"17242":"#00 Continue / #80 Mayday found / Ends game #27",
 "17642":"Complete draw screen sub routine when complete",
+"19072":"#00 Continue / #80 Mayday found / Ends game #27",
 "19162":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
 "19259":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond"},
 
@@ -762,7 +771,7 @@
 "LabelAnno":"None"},
 
 "22786":{
-"Label":"MaydayLatPos",
+"Label":"MaydayPosHorizontal",
 "Value":26880,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -1163,6 +1172,13 @@
 "49152":{
 "Label":"V_SpriteCoordinates",
 "Value":53246,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"13033":{
+"Label":"S_Sprite",
+"Value":17127,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},

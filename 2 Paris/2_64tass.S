@@ -4,15 +4,15 @@
 menu_seletion = $02e0
 MaydayBeginLanding = $02fe
 Line_token_Low = $0304
-EndGameFlag =   $0313
+EndGameFlag =   $0313      ;#00 Continue / #80 Mayday found / Ends game #27
 IRQ_addr_low =  $0314
 IRQ_addr_high = $0315
 BRK_serv_address_low = $0316
 BRK_serv_address_high = $0317
 NMI_IRQ_addr_low = $0318
 NMI_IRQ_addr_high = $0319
-V_CarPositionXLow = $0338
-V_CarPositionXHigh = $0339
+V_CarPosHorizontalLow = $0338
+V_CarPosHorizontalHigh = $0339
 V_CarPositionYLow = $033a
 V_CarPositionYHigh = $033b
 V_CarSpeed =    $0340
@@ -3743,7 +3743,7 @@ _L4005  dex
         nop
         lda     #$00
         sta     $02e1
-        sta     EndGameFlag ;Reset end game flag
+        sta     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
         lda     #$30
         sta     V_SpriteEnableRegister
         lda     #$01
@@ -3764,7 +3764,7 @@ _L4005  dex
         sty     V_SpritePointer4
         ldy     #$00
 _L40A3  lda     L6800,y
-        sta     MaydayLatPos,y
+        sta     MaydayPosHorizontal,y
         iny
         bne     _L40A3
         lda     #$07
@@ -3883,7 +3883,7 @@ _L41E2  clc
         .byte   $ff
 
 S_UpdateSpritePosition
-        pha                ;#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond
+        pha                ;#0-#2 Police, #3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond
         lda     #$00
         bcc     _L4207
         adc     #$00
@@ -3970,50 +3970,51 @@ L_StoreFireInput
         .fill   5,$ff
 
 L4290   ldx     #$0f
-_L4292  lda     MaydayLatPos,x
+L4292   lda     MaydayPosHorizontal,x
         sec
-        sbc     V_CarPositionXLow
+        sbc     V_CarPosHorizontalLow
         sta     $ad
         lda     L6940,x
-        sbc     V_CarPositionXHigh
+        sbc     V_CarPosHorizontalHigh
         sta     $af
         beq     _L42AF
         cmp     #$01
-        bne     _L431E
+        bne     L431E
         lda     $ad
         cmp     #$40
-        bcs     _L431E
+        bcs     L431E
 _L42AF  lda     L6980,x
         sec
         sbc     V_CarPositionYLow
         sta     $fd
         lda     L69C0,x
         sbc     V_CarPositionYHigh
-        bne     _L431E
+        bne     L431E
         lda     $fd
         cmp     #$70
-        bcs     _L431E
+        bcs     L431E
         lda     L6910,x
         tay
-        bmi     _L42E7
+        bmi     S_Sprite
         and     #$40
-        bne     _L4317
+        bne     L4317
         tya
         and     #$07
         tay
         lda     $03c8,y
         and     V_SpriteEnableRegister
-        beq     _L42E7
+        beq     S_Sprite
         lda     L6910,x
         ora     #$40
         sta     L6910,x
-        jmp     _L4317
+        jmp     L4317
 
-_L42E7  lda     L6910,x    ;691d = #1
+S_Sprite
+        lda     L6910,x
         ora     #$80
         sta     L6910,x
-        and     #$07
-        sta     $02        ;Store current sprite
+        and     #$07       ;Reduce to first four sprites and isolate current
+        sta     $02        ;Store current sprite #
         inc     $02
         lda     L6920,x
         sta     $ae
@@ -4036,13 +4037,13 @@ _L4310  lda     $02
         jsr     S_UpdateSpritePosition ;#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond
         pla
         tax
-_L4317  dex
+L4317   dex
         bmi     _L431D
-        jmp     _L4292
+        jmp     L4292
 
 _L431D  rts
 
-_L431E  lda     L6910,x
+L431E   lda     L6910,x
         tay
         bmi     _L4357
 _L4324  and     #$10
@@ -4052,7 +4053,7 @@ _L4324  and     #$10
         .fill   5,$ea
 
 _L4330  lda     L6800,x
-        sta     MaydayLatPos,x
+        sta     MaydayPosHorizontal,x
         lda     L6840,x
         sta     L6940,x
         lda     L6880,x
@@ -4080,7 +4081,7 @@ _L4357  lda     L6910,x
 _L4375  lda     L6910,x
         and     #$07
         sta     L6910,x
-        jmp     _L4317
+        jmp     L4317
 
         .byte   $01
         .byte   $ff
@@ -4426,10 +4427,10 @@ L4570   lda     V_SpriteEnableRegister
         and     #$40
         bne     _L45AC
         clc
-        lda     V_CarPositionXLow
+        lda     V_CarPosHorizontalLow
         adc     #$aa
         sta     L690F
-        lda     V_CarPositionXHigh
+        lda     V_CarPosHorizontalHigh
         adc     #$00
         sta     L694F
         clc
@@ -4788,12 +4789,12 @@ _L47BE  lda     ($ae),y
         inx
         cpx     $02
         bne     _L47BE
-        inc     V_CarPositionXLow-1
+        inc     V_CarPosHorizontalLow-1
         lda     #$00
         sta     $0336
         rts
 
-L47FC   lda     V_CarPositionXLow-1
+L47FC   lda     V_CarPosHorizontalLow-1
         bne     _L4802
         rts
 
@@ -4817,7 +4818,7 @@ _L4804  lda     $0d09,x
         dex
         bpl     _L4804
         lda     #$00
-        sta     V_CarPositionXLow-1
+        sta     V_CarPosHorizontalLow-1
         rts
 
         .byte   $00
@@ -4837,7 +4838,7 @@ _L4804  lda     $0d09,x
         .byte   $00
 
 L4850   sec
-        lda     MaydayLatPos
+        lda     MaydayPosHorizontal
         sbc     #$88
         sta     $ea
         lda     L6940
@@ -4852,30 +4853,30 @@ L4850   sec
         sta     $ed
         nop
         nop
-        lda     V_CarPositionXHigh
+        lda     V_CarPosHorizontalHigh
         cmp     $eb
         beq     _L487C
         bcc     _L4895
         jmp     _L4883
 
-_L487C  lda     V_CarPositionXLow
+_L487C  lda     V_CarPosHorizontalLow
         cmp     $ea
         bcc     _L4895
 _L4883  sec
-        lda     V_CarPositionXLow
+        lda     V_CarPosHorizontalLow
         sbc     $ea
         sta     $ae
-        lda     V_CarPositionXHigh
+        lda     V_CarPosHorizontalHigh
         sbc     $eb
         sta     $af
         jmp     _L48A4
 
 _L4895  sec
         lda     $ea
-        sbc     V_CarPositionXLow
+        sbc     V_CarPosHorizontalLow
         sta     $ae
         lda     $eb
-        sbc     V_CarPositionXHigh
+        sbc     V_CarPosHorizontalHigh
         sta     $af
 _L48A4  lda     V_CarPositionYHigh
         cmp     $ed
@@ -5028,7 +5029,7 @@ _L49A0  lda     damage_count
         jsr     L4428
         rts
 
-_L49B3  sta     EndGameFlag
+_L49B3  sta     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
         rts
 
         .byte   $fd
@@ -5355,7 +5356,7 @@ L4B40   .byte   $9e
         .byte   $ff
 
 Sub_CheckLevelComplete
-        lda     EndGameFlag
+        lda     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
         cmp     #$80
         bne     _L4BB7
         lda     #$12
@@ -5382,7 +5383,7 @@ _L4BCB  lda     #$10
         jmp     _L4BBB
 
 _L4BDB  lda     #$00
-        sta     EndGameFlag
+        sta     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
         jmp     L4F7F
 
         .byte   $ff
@@ -5470,7 +5471,7 @@ _L4C5A  lda     L6960,x
         sta     $fc
         stx     $fb
         ldx     $ac
-        lda     MaydayLatPos,x
+        lda     MaydayPosHorizontal,x
         ldy     L6940,x
         ldx     #$08
         jsr     L4AB0
@@ -5504,17 +5505,17 @@ _L4CB2  lda     L6930,x
         bmi     _L4CCE
         beq     _L4CDC
         clc
-        lda     MaydayLatPos,x
+        lda     MaydayPosHorizontal,x
         adc     #$01
-        sta     MaydayLatPos,x
+        sta     MaydayPosHorizontal,x
         bcc     _L4CDC
         inc     L6940,x
         jmp     _L4CDC
 
 _L4CCE  sec
-        lda     MaydayLatPos,x
+        lda     MaydayPosHorizontal,x
         sbc     #$01
-        sta     MaydayLatPos,x
+        sta     MaydayPosHorizontal,x
         bcs     _L4CDC
         dec     L6940,x
 _L4CDC  lda     L69B8,y
@@ -5911,7 +5912,7 @@ _L4FA8  dex
         bne     _L4FA6
         inc     $d9        ;This will change the 'Pres fire to start' text colour.
         jsr     L542D
-        lda     EndGameFlag
+        lda     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
         beq     L4F7F
         jmp     Sub_CheckLevelComplete
 
@@ -6132,7 +6133,7 @@ _L5137  sta     V_IRQStatusRegister
         lda     $02e1
         beq     Restore_values_from_stack
         lda     #$80
-        sta     EndGameFlag
+        sta     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
         jmp     Restore_values_from_stack
 
 _L5157  txa
@@ -6198,7 +6199,7 @@ _L51BB  sta     V_CarSpeed
         cpy     #$28
         bcc     _L51CB
         ldy     #$27
-        sty     EndGameFlag
+        sty     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
 _L51CB  sty     damage_count
         inc     V_RegisterCollision
         lda     $0347
@@ -6225,7 +6226,7 @@ _L51F2  jmp     Restore_values_from_stack
         .fill   11,$ff
 
 sub_Mayday
-        lda     EndGameFlag
+        lda     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
         bne     _L5216
         ldy     $034f
         dey
@@ -6247,17 +6248,17 @@ _L5218  ldy     #$07
         bmi     _L5239
         beq     _L5247
         clc
-        lda     MaydayLatPos
+        lda     MaydayPosHorizontal
         adc     #$01
-        sta     MaydayLatPos
+        sta     MaydayPosHorizontal
         bcc     _L5247
         inc     L6940
         jmp     _L5247
 
 _L5239  sec
-        lda     MaydayLatPos
+        lda     MaydayPosHorizontal
         sbc     #$01
-        sta     MaydayLatPos
+        sta     MaydayPosHorizontal
         bcs     _L5247
         dec     L6940
 _L5247  lda     L69B8,y
@@ -6310,22 +6311,22 @@ _L52A4  ldy     #$08
         beq     _L52B6
         jmp     _L52C0
 
-_L52B6  lda     MaydayLatPos
+_L52B6  lda     MaydayPosHorizontal
         cmp     L69FC
         bcc     _L52D1
         beq     _L52DF
 _L52C0  sec
-        lda     MaydayLatPos
+        lda     MaydayPosHorizontal
         sbc     #$01
-        sta     MaydayLatPos
+        sta     MaydayPosHorizontal
         bcs     _L52DF
         dec     L6940
         jmp     _L52DF
 
 _L52D1  clc
-        lda     MaydayLatPos
+        lda     MaydayPosHorizontal
         adc     #$01
-        sta     MaydayLatPos
+        sta     MaydayPosHorizontal
         bcc     _L52DF
         inc     L6940
 _L52DF  lda     L69C0
@@ -6385,7 +6386,7 @@ _L534E  cmp     #$6a
 _L5355  rts
 
 _L5356  lda     #$40
-        sta     EndGameFlag
+        sta     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
         rts
 
 _L535C  .byte   $03
@@ -7645,7 +7646,7 @@ L5A66   jsr     L4290
         jsr     L4D92
         jsr     MapLoadTempLow
         jsr     L4940
-        lda     EndGameFlag
+        lda     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
         beq     _L5A8D
         cmp     #$80
         beq     _L5A8A
@@ -7847,11 +7848,11 @@ L5C00   lda     V_CarDirection
         ldy     #$00
 _L5C1E  sty     $033e
         sec
-        lda     V_CarPositionXLow
+        lda     V_CarPosHorizontalLow
         sbc     #$02
-        sta     V_CarPositionXLow
+        sta     V_CarPosHorizontalLow
         bcs     _L5C2F
-        dec     V_CarPositionXHigh
+        dec     V_CarPosHorizontalHigh
 _L5C2F  jmp     _L5C53
 
 _L5C32  ldy     $033e
@@ -7864,11 +7865,11 @@ _L5C32  ldy     $033e
         ldy     #$06
 _L5C42  sty     $033e
         clc
-        lda     V_CarPositionXLow
+        lda     V_CarPosHorizontalLow
         adc     #$02
-        sta     V_CarPositionXLow
+        sta     V_CarPosHorizontalLow
         bcc     _L5C53
-        inc     V_CarPositionXHigh
+        inc     V_CarPosHorizontalHigh
 _L5C53  lda     $0380,x
         beq     _L5CAD
         bmi     _L5C85
@@ -9840,7 +9841,7 @@ L68C0   .byte   $01
         .byte   $00
         .byte   $20
         .byte   $00
-MaydayLatPos
+MaydayPosHorizontal
         .byte   $03
         .byte   $68
         .byte   $e6
