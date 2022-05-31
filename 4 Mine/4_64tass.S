@@ -4194,9 +4194,9 @@ _L27AD  dey
 
 _L27B7  sty     V_StandingOnConveyor
 _L27BA  lda     V_JoystickFire
-        beq     _L27F2
+        beq     Sub_JoystickFire
         lda     V_JoystickLeftRight
-        beq     _L27EF
+        beq     Sub_JoystickLeftRight
         cmp     #$01
         bne     _L27E2
         lda     #$02
@@ -4216,9 +4216,11 @@ _L27E2  lda     #$02
         sta     V_CharDirectionLeftRight
         jmp     _L27D2
 
-_L27EF  jmp     L2E80
+Sub_JoystickLeftRight
+        jmp     L2E80
 
-_L27F2  lda     V_JoystickLeftRight
+Sub_JoystickFire
+        lda     V_JoystickLeftRight
         beq     _L2815
         cmp     #$01
         bne     _L2808
@@ -4235,13 +4237,14 @@ _L2808  lda     #$01
         jmp     Sub_moving
 
 _L2815  lda     V_JoystickUpDown
-        beq     _L2826
+        beq     Sub_LeftMovementRoutine
         cmp     #$01
-        bne     _L2826
+        bne     Sub_LeftMovementRoutine
         lda     V_StandingOnLift
-        bne     _L2826
+        bne     Sub_LeftMovementRoutine
         jsr     L23A0
-_L2826  rts
+Sub_LeftMovementRoutine
+        rts
 
 Sub_moving
         jsr     L2B4D
@@ -4337,7 +4340,7 @@ _L28DA  lda     #$02
 Sub_jumping
         jsr     L2B4D
         cpx     #$01
-        bne     _L28F9
+        bne     Sub_TriggeredOnJumping
         lda     #$03
         sta     CharacterAction
         lda     #$46
@@ -4346,7 +4349,8 @@ Sub_jumping
         sta     V_CharDirectionUpDown+1
         jmp     Sub_falling
 
-_L28F9  cpy     #$01
+Sub_TriggeredOnJumping
+        cpy     #$01
         bne     _L290A
         lda     #$04
         sta     CharacterAction
@@ -4359,10 +4363,10 @@ _L290A  lda     V_CharDirectionUpDown+1
         bcs     L296B
         lda     L1B01
         cmp     #$07
-        bne     L2935
+        bne     Sub_TriggeredOnFalling
         jsr     L2C90
         cpx     #$01
-        bne     L2935
+        bne     Sub_TriggeredOnFalling
         lda     #$03
         sta     CharacterAction
         lda     #$46
@@ -4373,7 +4377,8 @@ _L290A  lda     V_CharDirectionUpDown+1
         sta     V_CharDirectionUpDown+1
         rts
 
-L2935   lda     L1B00
+Sub_TriggeredOnFalling
+        lda     L1B00
         cmp     #$02
         bne     _L2965
         jsr     L2C6A
@@ -4452,7 +4457,7 @@ _L29D5  cpy     #$05
         bne     L29DE
         lda     #$04
         sta     CharacterAction
-L29DE   jmp     L2935
+L29DE   jmp     Sub_TriggeredOnFalling
 
 Sub_falling
         jsr     L2B4D
