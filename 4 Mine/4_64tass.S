@@ -8,7 +8,7 @@ V_JoystickFire = $033b
 
 *       =       $0900
 Sub_CharacterActions
-        ldx     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        ldx     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         beq     NoCharacterMovement
         dex
         beq     CharacterMoveLeftRight
@@ -1572,24 +1572,24 @@ L1170   lda     #$07
         pha
 _L1173  ldy     #$01
         ldx     #$02
-_L1177  sty     L1B3F
-_L117A  lda     L1B3F
+_L1177  sty     V_ActiveLeftRightMovement+1
+_L117A  lda     V_ActiveLeftRightMovement+1
         bne     _L117A
         jsr     _L11B7
         dex
         bne     _L1177
         ldy     #$ff
         ldx     #$04
-_L1189  sty     L1B3F
-_L118C  lda     L1B3F
+_L1189  sty     V_ActiveLeftRightMovement+1
+_L118C  lda     V_ActiveLeftRightMovement+1
         bne     _L118C
         jsr     _L11B7
         dex
         bne     _L1189
         ldy     #$01
         ldx     #$02
-_L119B  sty     L1B3F
-_L119E  lda     L1B3F
+_L119B  sty     V_ActiveLeftRightMovement+1
+_L119E  lda     V_ActiveLeftRightMovement+1
         bne     _L119E
         jsr     _L11B7
         dex
@@ -2422,7 +2422,7 @@ L1770   lda     #$64
 
         .fill   18,$ff
 
-S_GetJoystickInput
+Sub_GetJoystickInput
         lda     V_Joystick2Input
         ldy     #$00
         ldx     #$00
@@ -2563,7 +2563,7 @@ _L1883  lda     ($fb),y
         sta     LD900
         jsr     L3080
         lda     #$03
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         jsr     L1A90
         lda     #$00
         ldy     #$80
@@ -2585,7 +2585,7 @@ _L18CE  lda     LBD00,y
         lda     #$09
         sta     ClockFirstMinute
         lda     #$00
-        sta     CharacterAction-1
+        sta     V_CharacterAction-1
         lda     #$00
         sta     L1B90
         jsr     L1770
@@ -2600,7 +2600,7 @@ L1900   dec     L1B60
 
 _L1906  lda     L1B61
         sta     L1B60
-        lda     V_StandingOnLift+3
+        lda     V_StandingOnWHAT+2
         bpl     _L1921
         lda     #$1f
         ldx     L1B62
@@ -2625,7 +2625,7 @@ _L1931  lda     _L1975,y
         dey
         dex
         bpl     _L1931
-        lda     L1B55
+        lda     V_StandingOnWHAT+3
         bpl     _L1950
         lda     #$1f
         ldx     L1B62
@@ -2788,28 +2788,30 @@ _L1975  .byte   $ff
 
 Sub_CharacterActionCheck
         lda     #$01
-        ldx     CharacterAction ;Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching
-        beq     L1A13
-        dex
+        ldx     V_CharacterAction ;Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching
+        beq     Exit_CharacterActionSub
+        dex                ;Check for Moving
         beq     Sub_CharacterMoving
-        dex
+        dex                ;Check for Jumping
         beq     Sub_CharJumpIncline
-        dex
-        beq     L1A39
-        dex
+        dex                ;Check for falling
+        beq     Sub_CharacterFalling
+        dex                ;Check for climbing
         beq     Sub_CharacterClimbing
-L1A13   rts
-
-L1A14   ldy     V_CharDirectionLeftRight
-        beq     L1A13
-        dey
-        beq     Sub_CharMoveRight
-        sta     L1B3E
+Exit_CharacterActionSub
         rts
 
-Sub_CharMoveRight
+Sub_CheckCharMoveLeft
+        ldy     V_CharDirectionLeftRight ;01 = Right / 02 = Left
+        beq     Exit_CharacterActionSub
+        dey                ;Check if moving right
+        beq     Sub_CheckCharMoveRight
+        sta     V_ActiveLeftRightMovement ;Sets value to #ff (Left)
+        rts
+
+Sub_CheckCharMoveRight
         dey
-        sty     L1B3E
+        sty     V_ActiveLeftRightMovement ;Sets value to #ff (Right)
         rts
 
 Sub_CharJumpIncline
@@ -2818,41 +2820,42 @@ Sub_CharJumpIncline
         beq     Sub_CharJumpDecline
         dex
         dex
-        stx     L1B3F
-        jmp     L1A14
+        stx     V_ActiveLeftRightMovement+1
+        jmp     Sub_CheckCharMoveLeft
 
 Sub_CharJumpDecline
-        sta     L1B3F
-        jmp     L1A14
+        sta     V_ActiveLeftRightMovement+1
+        jmp     Sub_CheckCharMoveLeft
 
-L1A39   ldx     #$01
-        stx     L1B3F
+Sub_CharacterFalling
+        ldx     #$01
+        stx     V_ActiveLeftRightMovement+1
         jmp     L1A53
 
 Sub_CharacterClimbing
         ldx     V_CharDirectionUpDown
-        beq     L1A13
+        beq     Exit_CharacterActionSub
         dex
         beq     Sub_CharClimbingDown
         dex
         dex
-        stx     L1B3F
+        stx     V_ActiveLeftRightMovement+1
         rts
 
 Sub_CharClimbingDown
-        sta     L1B3F
+        sta     V_ActiveLeftRightMovement+1
         rts
 
 L1A53   dec     L1B63
-        bne     L1A13
+        bne     Exit_CharacterActionSub
         lda     L1B64
         sta     L1B63
         dec     L1B66
-        bne     L1A14
+        bne     Sub_CheckCharMoveLeft
         lda     #$09
         sta     L1B66
         inc     L1B64
-        jmp     L1A14
+        jmp     Sub_CheckCharMoveLeft
 
 Sub_CharacterMoving
         lda     V_StandingOnConveyor
@@ -2865,7 +2868,7 @@ Sub_CharacterMoving
         rts
 
 _L1A7D  lda     #$01
-        jmp     L1A14
+        jmp     Sub_CheckCharMoveLeft
 
         .byte   $00
         .byte   $02
@@ -2950,7 +2953,7 @@ L1B16   .byte   $02
         .byte   $04
         .byte   $00
         .byte   $00
-CharacterAction
+V_CharacterAction
         .byte   $00        ;Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching
 V_CharDirectionLeftRight
         .byte   $00        ;01 = Right / 02 = Left
@@ -2963,8 +2966,8 @@ V_CharDirectionUpDown
         .byte   $00
 L1B2D   .byte   $03
         .fill   16,$00
-L1B3E   .byte   $00
-L1B3F   .fill   5,$00
+V_ActiveLeftRightMovement
+        .fill   6,$00
 L1B44   .byte   $08
 L1B45   .byte   $08
 L1B46   .byte   $08
@@ -2981,10 +2984,11 @@ V_StandingOnConveyor
         .byte   $00
 V_StandingOnLift
         .byte   $00
+V_StandingOnWHAT
         .byte   $00
         .byte   $00
         .byte   $ff
-L1B55   .byte   $01
+        .byte   $01
         .byte   $00
         .byte   $00
         .byte   $01
@@ -3134,7 +3138,7 @@ _L1CD0  sta     ClockSecondMinute
         rts
 
 _L1CDD  lda     #$01
-        sta     CharacterAction-1
+        sta     V_CharacterAction-1
         rts
 
         .fill   29,$fe
@@ -3339,7 +3343,7 @@ _L1D3E  cpy     #$0f
 
 L2118   lda     L1B81
         beq     L2156
-        lda     L1B3E
+        lda     V_ActiveLeftRightMovement
         beq     _L214B
         bmi     _L2133
         inc     LD008
@@ -3372,7 +3376,7 @@ L2156   lda     #$01
         sta     ClockFirstMillisecond-1
         sta     ClockSecondMinute+2
         ldx     L1B00
-        lda     L1B3E
+        lda     V_ActiveLeftRightMovement
         bne     _L216E
         jmp     _L21EB
 
@@ -3381,7 +3385,7 @@ _L216E  cmp     #$ff
         inx
         inx
         lda     #$00
-        sta     L1B3E
+        sta     V_ActiveLeftRightMovement
         cpx     #$08
         bne     _L21EB
         lda     L1B04
@@ -3410,7 +3414,7 @@ _L21A8  inc     ClockSecondMinute+2
 _L21B0  dex
         dex
         lda     #$00
-        sta     L1B3E
+        sta     V_ActiveLeftRightMovement
         cpx     #$fe
         bne     _L21EB
         lda     L1B04
@@ -3436,7 +3440,7 @@ _L21E6  inc     ClockSecondMinute+2
         ldx     #$06
 _L21EB  stx     $03fe
         ldx     L1B01
-        lda     L1B3F
+        lda     V_ActiveLeftRightMovement+1
         bne     _L21F9
         jmp     _L2270
 
@@ -3445,7 +3449,7 @@ _L21F9  cmp     #$ff
         inx
         inx
         lda     #$00
-        sta     L1B3F
+        sta     V_ActiveLeftRightMovement+1
         cpx     #$03
         beq     _L2211
         cpx     #$09
@@ -3473,7 +3477,7 @@ _L2232  inc     ClockSecondMinute+2
 _L2238  dex
         dex
         lda     #$00
-        sta     L1B3F
+        sta     V_ActiveLeftRightMovement+1
         cpx     #$01
         beq     _L224C
         cpx     #$ff
@@ -3515,7 +3519,7 @@ _L2289  jsr     L1700
         sta     V_StandingOnConveyor-1
         rts
 
-L22A1   lda     L1B3F
+L22A1   lda     V_ActiveLeftRightMovement+1
         beq     _L22B4
         bpl     _L22B7
         inc     LD009
@@ -3532,7 +3536,7 @@ _L22B7  dec     LD009
 
         .fill   10,$ff
 
-L22D0   ldx     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+L22D0   ldx     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         beq     _L22EE
         dex
         beq     _L22F3
@@ -3542,7 +3546,7 @@ L22D0   ldx     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 
         beq     _L2322
         dex
         beq     _L2330
-        lda     V_CharDirectionLeftRight
+        lda     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         ldx     #$81
         cmp     #$01
         bne     _L233B
@@ -3553,7 +3557,7 @@ _L22EE  ldx     #$60
         jmp     _L233B
 
 _L22F3  lda     #$61
-        ldx     V_CharDirectionLeftRight
+        ldx     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         cpx     #$02
         beq     _L22FF
         clc
@@ -3568,7 +3572,7 @@ _L2305  inx
 
 _L230C  lda     V_CharDirectionUpDown+1
         ldx     #$71
-        ldy     V_CharDirectionLeftRight
+        ldy     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         cpy     #$01
         bne     _L231A
         inx
@@ -3616,7 +3620,7 @@ _L233B  stx     L43F8
         .byte   $3e
         .byte   $01
 
-L2360   lda     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+L2360   lda     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         cmp     #$05
         beq     _L2386
         lda     #$ad
@@ -3649,15 +3653,15 @@ _L2386  lda     #$ad
 
 Sub_LookDownRoutine
         lda     #$00
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         jsr     _L23F3
         ldx     #$ab
         lda     #$2c
         pha
         ldy     #$c0
 _L23AF  lda     #$01
-        sta     L1B3F
-_L23B4  lda     L1B3F
+        sta     V_ActiveLeftRightMovement+1
+_L23B4  lda     V_ActiveLeftRightMovement+1
         bne     _L23B4
         dex
         dey
@@ -3671,8 +3675,8 @@ _L23B4  lda     L1B3F
         pha
         bne     _L23AF
 _L23CA  lda     #$ff
-        sta     L1B3F
-_L23CF  lda     L1B3F
+        sta     V_ActiveLeftRightMovement+1
+_L23CF  lda     V_ActiveLeftRightMovement+1
         bne     _L23CF
         inx
         iny
@@ -3935,10 +3939,10 @@ _L2594  jsr     L2360
         sta     LD00A
         sta     LD00B
 _L25AE  nop
-        lda     CharacterAction-1
+        lda     V_CharacterAction-1
         bne     _L25D0
         nop
-        lda     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        lda     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         cmp     #$03
         bne     _L25BF
         inc     L1B5A
@@ -4100,7 +4104,7 @@ L26EF   .byte   $fe
 L2700   lda     #$00
         sta     V_StandingOnConveyor
         sta     V_StandingOnLift
-        sta     V_StandingOnLift+1 ;This never seems to change
+        sta     V_StandingOnWHAT ;This never seems to change
         lda     #$42
         sta     $fb
         lda     #$42
@@ -4109,8 +4113,8 @@ L2700   lda     #$00
         sta     $fd
         lda     #$52
         sta     $fe
-        jsr     S_GetJoystickInput
-        ldx     CharacterAction ;Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching
+        jsr     Sub_GetJoystickInput
+        ldx     V_CharacterAction ;Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching
         beq     StandingDetected
         dex
         beq     MovingDetected
@@ -4121,27 +4125,27 @@ L2700   lda     #$00
         dex
         beq     ClimbingDetected
         jsr     StartFallDamage
-        jmp     L2CA3
+        jmp     Sub_StandingConveyorCheck
 
 StandingDetected
         jsr     Sub_standing
-        jmp     L2CA3
+        jmp     Sub_StandingConveyorCheck
 
 MovingDetected
         jsr     Sub_moving
-        jmp     L2CA3
+        jmp     Sub_StandingConveyorCheck
 
 FallingDetected
         jsr     Sub_falling
-        jmp     L2CA3
+        jmp     Sub_StandingConveyorCheck
 
 JumpingDetected
         jsr     Sub_jumping
-        jmp     L2CA3
+        jmp     Sub_StandingConveyorCheck
 
 ClimbingDetected
         jsr     Sub_climbing
-        jmp     L2CA3
+        jmp     Sub_StandingConveyorCheck
 
 Sub_standing
         jsr     L2B4D
@@ -4153,7 +4157,7 @@ Sub_standing
         cpy     #$01
         bne     L2781
         lda     #$04
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$02
         sta     V_CharDirectionUpDown
         rts
@@ -4163,7 +4167,7 @@ L2770   lda     L1B5E
         lda     #$1e
         sta     L1B5B
         lda     #$05
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         rts
 
 L2781   jsr     L2BC1
@@ -4174,7 +4178,7 @@ L2781   jsr     L2BC1
         cpy     #$00
         bne     _L27A3
         lda     #$03
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$00
         sta     L1B5A
         sta     L1B64
@@ -4190,7 +4194,7 @@ _L27A3  dey
 _L27AD  dey
         bne     _L27B7
         iny
-        sty     V_StandingOnLift+1
+        sty     V_StandingOnWHAT
         jmp     _L27BA
 
 _L27B7  sty     V_StandingOnConveyor
@@ -4201,9 +4205,9 @@ _L27BA  lda     V_JoystickFire
         cmp     #$01
         bne     _L27E2
         lda     #$02
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
-        sta     V_CharDirectionLeftRight
+        sta     V_CharDirectionLeftRight ;01 = Right / 02 = Left
 _L27D2  lda     #$02
         sta     V_CharDirectionUpDown
         lda     #$00
@@ -4212,9 +4216,9 @@ _L27D2  lda     #$02
         jmp     Sub_jumping
 
 _L27E2  lda     #$02
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$02
-        sta     V_CharDirectionLeftRight
+        sta     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         jmp     _L27D2
 
 Sub_JoystickLeftRight
@@ -4222,29 +4226,31 @@ Sub_JoystickLeftRight
 
 Sub_JoystickFire
         lda     V_JoystickLeftRight ;#00 = No input / #ff = Left / #01 = Right
-        beq     _L2815     ;If no input, branc
+        beq     Sub_CheckLookingDown ;If no input, branch
         cmp     #$01
-        bne     _L2808     ;Branch as left input received
+        bne     Sub_SetLeftRightMovementValues ;Branch as left input received
         lda     #$01
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
-        sta     V_CharDirectionLeftRight
+        sta     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         jmp     Sub_moving
 
-_L2808  lda     #$01
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+Sub_SetLeftRightMovementValues
+        lda     #$01
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$02
-        sta     V_CharDirectionLeftRight
+        sta     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         jmp     Sub_moving
 
-_L2815  lda     V_JoystickUpDown ;#00 = No input / #ff = Up / #01 = Down
-        beq     Sub_LeftMovementRoutine ;If no Up/Down input detected branch to LeftRight subroutine
+Sub_CheckLookingDown
+        lda     V_JoystickUpDown ;#00 = No input / #ff = Up / #01 = Down
+        beq     ExitMovementRoutine ;If no Up/Down input detected branch to LeftRight subroutine
         cmp     #$01
-        bne     Sub_LeftMovementRoutine ;If no Down input detected branch to LeftRight subroutine
+        bne     ExitMovementRoutine ;If no Down input detected branch to LeftRight subroutine
         lda     V_StandingOnLift
-        bne     Sub_LeftMovementRoutine ;If not on lift branch to LeftRight subroutine
+        bne     ExitMovementRoutine ;If not on lift branch to LeftRight subroutine
         jsr     Sub_LookDownRoutine
-Sub_LeftMovementRoutine
+ExitMovementRoutine
         rts
 
 Sub_moving
@@ -4259,7 +4265,7 @@ _L2831  lda     V_JoystickUpDown ;#00 = No input / #ff = Up / #01 = Down
         cpy     #$01
         bne     _L2847
         lda     #$04
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$02
         sta     V_CharDirectionUpDown
         rts
@@ -4270,7 +4276,7 @@ _L2847  jsr     L2BC1
         cpy     #$05
         bne     _L2858
         lda     #$04
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         rts
 
 _L2858  cpy     #$04
@@ -4284,7 +4290,7 @@ _L2858  cpy     #$04
 _L2868  cpy     #$02
         bne     _L2874
         lda     #$01
-        sta     V_StandingOnLift+1
+        sta     V_StandingOnWHAT
         jmp     _L2893
 
 _L2874  cpy     #$01
@@ -4294,7 +4300,7 @@ _L2874  cpy     #$01
         jmp     _L2893
 
 _L2880  lda     #$03
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
         sta     L1B63
         sta     L1B64
@@ -4312,7 +4318,7 @@ _L2893  lda     L1B00
 _L28A4  lda     V_JoystickFire
         beq     _L28BE
         lda     #$02
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$02
         sta     V_CharDirectionUpDown
         lda     #$00
@@ -4323,7 +4329,7 @@ _L28A4  lda     V_JoystickFire
 _L28BE  lda     V_JoystickLeftRight ;#00 = No input / #ff = Left / #01 = Right
         bne     _L28D0
         lda     #$00
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
         sta     V_CharDirectionUpDown+1
         jmp     Sub_standing
@@ -4331,11 +4337,11 @@ _L28BE  lda     V_JoystickLeftRight ;#00 = No input / #ff = Left / #01 = Right
 _L28D0  cmp     #$01
         bne     _L28DA
         lda     #$01
-        sta     V_CharDirectionLeftRight
+        sta     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         rts
 
 _L28DA  lda     #$02
-        sta     V_CharDirectionLeftRight
+        sta     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         rts
 
 Sub_jumping
@@ -4343,7 +4349,7 @@ Sub_jumping
         cpx     #$01
         bne     Sub_TriggeredOnJumping
         lda     #$03
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$46
         sta     L1B5A
         lda     #$01
@@ -4354,7 +4360,7 @@ Sub_TriggeredOnJumping
         cpy     #$01
         bne     _L290A
         lda     #$04
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
         sta     V_CharDirectionUpDown+1
         jmp     Sub_climbing
@@ -4369,7 +4375,7 @@ _L290A  lda     V_CharDirectionUpDown+1
         cpx     #$01
         bne     Sub_TriggeredOnFalling
         lda     #$03
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$46
         sta     L1B5A
         lda     #$01
@@ -4388,12 +4394,12 @@ Sub_TriggeredOnFalling
         lda     #$46
         sta     L1B5A
         lda     #$03
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
-        lda     V_CharDirectionLeftRight
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        lda     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         cmp     #$01
         beq     _L2966
         lda     #$01
-_L2956  sta     V_CharDirectionLeftRight
+_L2956  sta     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         lda     #$01
         sta     L1B64
         sta     L1B63
@@ -4413,7 +4419,7 @@ L296B   lda     #$01
         lda     #$46
         sta     L1B5A
         lda     #$03
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
         sta     L1B63
         sta     L1B64
@@ -4427,7 +4433,7 @@ _L298F  lda     L1B01
         cpx     #$01
         bne     _L29AA
 _L299D  lda     #$00
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
         sta     V_CharDirectionUpDown+1
         jmp     Sub_standing
@@ -4441,7 +4447,7 @@ _L29AA  cpy     #$01
 _L29B6  cpy     #$02
         bne     _L29C2
         lda     #$01
-        sta     V_StandingOnLift+1
+        sta     V_StandingOnWHAT
         jmp     _L299D
 
 _L29C2  cpy     #$03
@@ -4457,7 +4463,7 @@ _L29CE  cpy     #$04
 _L29D5  cpy     #$05
         bne     L29DE
         lda     #$04
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
 L29DE   jmp     Sub_TriggeredOnFalling
 
 Sub_falling
@@ -4477,7 +4483,7 @@ _L29ED  lda     L1B01
         cmp     #$41
         bcs     _L2A10
         lda     #$00
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
         sta     V_CharDirectionUpDown+1
         rts
@@ -4498,7 +4504,7 @@ _L2A1A  cpy     #$01
 _L2A26  cpy     #$02
         bne     _L2A32
         lda     #$01
-        sta     V_StandingOnLift+1
+        sta     V_StandingOnWHAT
         jmp     _L2A17
 
 _L2A32  cpy     #$03
@@ -4517,7 +4523,7 @@ _L2A45  cpy     #$05
         cmp     #$02
         bne     _L2A55
         lda     #$04
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
 _L2A55  lda     #$00
         rts
 
@@ -4527,7 +4533,7 @@ Sub_climbing
         lda     L1B05
         beq     _L2A6A
         lda     #$03
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         jmp     Sub_falling
 
 _L2A6A  lda     #$02
@@ -4545,9 +4551,9 @@ _L2A82  jsr     L2B4D
         cpy     #$01
         beq     _L2AA4
         lda     #$00
-        sta     V_CharDirectionLeftRight
+        sta     V_CharDirectionLeftRight ;01 = Right / 02 = Left
 _L2A8E  lda     #$03
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$00
         sta     L1B5A
         lda     #$01
@@ -4564,7 +4570,7 @@ _L2AA4  lda     L1B01
         cmp     #$00
         beq     _L2AC3
         lda     #$00
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
         sta     V_CharDirectionUpDown+1
         jsr     L2AF7
@@ -4575,11 +4581,11 @@ _L2AC3  lda     V_JoystickLeftRight ;#00 = No input / #ff = Left / #01 = Right
         cmp     #$01
         bne     _L2AD4
         lda     #$01
-        sta     V_CharDirectionLeftRight
+        sta     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         jmp     _L2A8E
 
 _L2AD4  lda     #$02
-        sta     V_CharDirectionLeftRight
+        sta     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         jmp     _L2A8E
 
 _L2ADC  lda     V_JoystickUpDown ;#00 = No input / #ff = Up / #01 = Down
@@ -4634,7 +4640,7 @@ _L2B32  jsr     Sub_ReduceTime
         rts
 
 _L2B40  lda     #$00
-        sta     CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
         sta     V_CharDirectionUpDown+1
         jmp     Sub_standing
@@ -4771,7 +4777,7 @@ _L2C1E  lda     ($fb),y
         bcs     _L2C30
         ldy     #$02
         ldx     $02
-        sty     V_StandingOnLift+1
+        sty     V_StandingOnWHAT
         rts
 
 _L2C30  iny
@@ -4810,7 +4816,7 @@ _L2C65  ldy     #$00
         ldx     $02
         rts
 
-L2C6A   lda     V_CharDirectionLeftRight
+L2C6A   lda     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         cmp     #$01
         beq     _L2C76
         ldy     #$28
@@ -4847,31 +4853,34 @@ _L2C9A  dey
 _L2CA0  ldx     #$01
         rts
 
-L2CA3   lda     V_StandingOnConveyor
-        beq     _L2CAB
-        jmp     _L2CBC
+Sub_StandingConveyorCheck
+        lda     V_StandingOnConveyor ;#00 False / #01 True
+        beq     Sub_StandingLiftCheck
+        jmp     Sub_StandingOnConveyor
 
-_L2CAB  lda     V_StandingOnLift
+Sub_StandingLiftCheck
+        lda     V_StandingOnLift ;#00 False / #01 True
         beq     _L2CB3
         jmp     L3C01
 
-_L2CB3  lda     V_StandingOnLift+1
+_L2CB3  lda     V_StandingOnWHAT
         beq     _L2CBB
         jmp     L3D39
 
 _L2CBB  rts
 
-_L2CBC  lda     L1B05
+Sub_StandingOnConveyor
+        lda     L1B05
         bne     _L2CCF
         lda     L1B04
         cmp     #$be
         bcs     _L2CCF
-        lda     V_StandingOnLift+3
-        sta     L1B3E
+        lda     V_StandingOnWHAT+2
+        sta     V_ActiveLeftRightMovement
         rts
 
-_L2CCF  lda     L1B55
-        sta     L1B3E
+_L2CCF  lda     V_StandingOnWHAT+3
+        sta     V_ActiveLeftRightMovement
         rts
 
         .fill   42,$00
@@ -4896,7 +4905,7 @@ _L2D0E  lda     _L2D93,x
 _L2D22  stx     $af
         lda     #$00
         sta     LiftPosition+1
-        jsr     S_GetJoystickInput
+        jsr     Sub_GetJoystickInput
         ldx     $af
         lda     V_JoystickFire
         bne     _L2D6E
@@ -5074,7 +5083,7 @@ _L2E14  sec
         bne     _L2E11
         rts
 
-_L2E20  jsr     S_GetJoystickInput
+_L2E20  jsr     Sub_GetJoystickInput
         lda     V_JoystickFire
         bne     _L2E20
         jsr     L2E5D
@@ -5082,7 +5091,7 @@ _L2E20  jsr     S_GetJoystickInput
         sta     LiftPosition+2
         rts
 
-L2E31   jsr     S_GetJoystickInput
+L2E31   jsr     Sub_GetJoystickInput
         lda     V_JoystickFire
         bne     L2E31
         jsr     L2E5D
@@ -5229,7 +5238,7 @@ _L2F26  lda     #$78
         sta     _L2EEC+2
         jmp     _L2EEA
 
-_L2F33  jsr     S_GetJoystickInput
+_L2F33  jsr     Sub_GetJoystickInput
         lda     V_JoystickFire
         beq     _L2F44
         lda     LiftPosition+1

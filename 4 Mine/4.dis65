@@ -109,10 +109,21 @@
 "4007":"01 = Right / 02 = Left.",
 "4030":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "4356":"Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching",
+"4361":"Check for Moving",
+"4364":"Check for Jumping",
+"4367":"Check for falling",
+"4370":"Check for climbing",
+"4374":"01 = Right / 02 = Left",
+"4379":"Check if moving right",
+"4382":"Sets value to #ff (Left)",
+"4387":"Sets value to #ff (Right)",
 "4647":"Standing = 00, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching",
 "4648":"01 = Right / 02 = Left",
 "4649":"01 = Down / 02 = Up",
 "6610":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
+"6627":"01 = Right / 02 = Left",
+"6647":"01 = Right / 02 = Left",
+"6675":"01 = Right / 02 = Left",
 "6754":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "6820":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "7351":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
@@ -124,12 +135,16 @@
 "7828":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "7873":"#00 = No input / #ff = Left / #01 = Right",
 "7884":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
+"7889":"01 = Right / 02 = Left",
 "7910":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
+"7915":"01 = Right / 02 = Left",
 "7924":"#00 = No input / #ff = Left / #01 = Right",
-"7927":"If no input, branc",
+"7927":"If no input, branch",
 "7931":"Branch as left input received",
 "7935":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
+"7940":"01 = Right / 02 = Left",
 "7948":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
+"7953":"01 = Right / 02 = Left",
 "7959":"#00 = No input / #ff = Up / #01 = Down",
 "7962":"If no Up/Down input detected branch to LeftRight subroutine",
 "7966":"If no Down input detected branch to LeftRight subroutine",
@@ -141,10 +156,14 @@
 "8109":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "8128":"#00 = No input / #ff = Left / #01 = Right",
 "8135":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
+"8152":"01 = Right / 02 = Left",
+"8158":"01 = Right / 02 = Left",
 "8171":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "8193":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "8227":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "8268":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
+"8271":"01 = Right / 02 = Left",
+"8280":"01 = Right / 02 = Left",
 "8320":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "8353":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "8413":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
@@ -153,11 +172,17 @@
 "8541":"Usually alway jumps as 1b4d is always #00",
 "8550":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "8568":"#00 = No input / #ff = Up / #01 = Down",
+"8589":"01 = Right / 02 = Left",
 "8594":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "8633":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
 "8645":"#00 = No input / #ff = Left / #01 = Right",
+"8656":"01 = Right / 02 = Left",
+"8664":"01 = Right / 02 = Left",
 "8670":"#00 = No input / #ff = Up / #01 = Down",
 "8772":"00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    ",
+"9068":"01 = Right / 02 = Left",
+"9125":"#00 False / #01 True",
+"9133":"#00 False / #01 True",
 "9269":"#00 = No input / #ff = Left / #01 = Right",
 "9798":"#00 = No input / #ff = Left / #01 = Right",
 "13059":"#00 = No input / #ff = Up / #01 = Down"},
@@ -208,7 +233,7 @@
 
 "UserLabels":{
 "4647":{
-"Label":"CharacterAction",
+"Label":"V_CharacterAction",
 "Value":6949,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -257,7 +282,7 @@
 "LabelAnno":"None"},
 
 "3746":{
-"Label":"S_GetJoystickInput",
+"Label":"Sub_GetJoystickInput",
 "Value":6048,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -544,7 +569,7 @@
 "LabelAnno":"None"},
 
 "4386":{
-"Label":"Sub_CharMoveRight",
+"Label":"Sub_CheckCharMoveRight",
 "Value":6688,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -593,7 +618,7 @@
 "LabelAnno":"None"},
 
 "7976":{
-"Label":"Sub_LeftMovementRoutine",
+"Label":"ExitMovementRoutine",
 "Value":10278,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -602,6 +627,76 @@
 "6818":{
 "Label":"Sub_LookDownRoutine",
 "Value":9120,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7946":{
+"Label":"Sub_SetLeftRightMovementValues",
+"Value":10248,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"7959":{
+"Label":"Sub_CheckLookingDown",
+"Value":10261,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9125":{
+"Label":"Sub_StandingConveyorCheck",
+"Value":11427,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"9133":{
+"Label":"Sub_StandingLiftCheck",
+"Value":11435,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4692":{
+"Label":"V_StandingOnWHAT",
+"Value":6994,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"Uncertain"},
+
+"9150":{
+"Label":"Sub_StandingOnConveyor",
+"Value":11452,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4373":{
+"Label":"Exit_CharacterActionSub",
+"Value":6675,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4411":{
+"Label":"Sub_CharacterFalling",
+"Value":6713,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4374":{
+"Label":"Sub_CheckCharMoveLeft",
+"Value":6676,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4672":{
+"Label":"V_ActiveLeftRightMovement",
+"Value":6974,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
