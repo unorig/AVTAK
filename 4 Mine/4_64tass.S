@@ -7,7 +7,7 @@ V_JoystickFire = $033b
 
 
 *       =       $0900
-Sub_CharacterActions
+Sub_CharSpriteFrames
         ldx     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         beq     NoCharacterMovement
         dex
@@ -21,39 +21,40 @@ Sub_CharacterActions
         rts
 
 CharacterMoveLeftRight
-        ldx     V_CharDirectionUpDown+1
+        ldx     V_Redundant
         inx
         txa
         and     #$07
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         rts
 
 CharacterJumping
-        inc     V_CharDirectionUpDown+1
+        inc     V_Redundant
         rts
 
 CharacterFalling
-        ldx     V_CharDirectionUpDown+1
+        ldx     V_Redundant
         inx
         txa
         and     #$03
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         rts
 
 CharacterClimbing
-        ldx     V_CharDirectionUpDown+1
+        ldx     V_Redundant
         lda     V_CharDirectionUpDown
         beq     L093F
         cmp     #$01
         beq     L0940
         inx
-L0939   txa
+Exit_CharacterActionsSub
+        txa
         and     #$07
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
 L093F   rts
 
 L0940   dex
-        jmp     L0939
+        jmp     Exit_CharacterActionsSub
 
 NoCharacterMovement
         jmp     _L096E
@@ -62,14 +63,14 @@ _L0947  bne     L093F
         lda     #$07
         sta     L1B66
         lda     L1B65
-        ldx     V_CharDirectionUpDown+1
+        ldx     V_Redundant
         cmp     #$01
         bne     _L0963
         dex
         bne     _L095E
         inc     L1B65
 _L095E  txa
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         rts
 
 _L0963  inx
@@ -78,11 +79,11 @@ _L0963  inx
         dec     L1B65
         jmp     _L095E
 
-_L096E  lda     V_CharDirectionUpDown+1
+_L096E  lda     V_Redundant
         cmp     #$03
         bcc     _L097A
         lda     #$01
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
 _L097A  dec     L1B66
         jmp     _L0947
 
@@ -216,7 +217,7 @@ L0A00   sei
         sta     BackgroundColor-1
         sta     BackgroundColor
         lda     #$17
-        sta     ScreenControlRegister2+2
+        sta     V_MemorySetupRegister
         lda     #$04
         sta     $0288
         lda     LDD02
@@ -1411,9 +1412,9 @@ L1000   sei
         lda     #$10
         sta     $0315
         cli
-        lda     IRQ_RasterLine-1
+        lda     Sprite_7_Y_coord+2
         and     #$7f
-        sta     IRQ_RasterLine-1
+        sta     Sprite_7_Y_coord+2
         lda     IRQSatusRegister+1
         ora     #$01
         sta     IRQSatusRegister+1
@@ -1437,14 +1438,14 @@ _L102C  sta     IRQSatusRegister
 
 _L103E  lda     #$8a
         sta     IRQ_RasterLine
-        lda     ScreenControlRegister2+2
+        lda     V_MemorySetupRegister
         and     #$f0
         ora     #$02
-        sta     ScreenControlRegister2+2
-        lda     IRQ_RasterLine-1
+        sta     V_MemorySetupRegister
+        lda     Sprite_7_Y_coord+2
         and     #$f8
         ora     #$0b
-        sta     IRQ_RasterLine-1
+        sta     Sprite_7_Y_coord+2
         lda     ScreenControlRegister2
         and     #$f8
         ora     #$08
@@ -1467,14 +1468,14 @@ _L107E  lda     #$07
         sta     BackgroundColor+2
         lda     #$91
         sta     IRQ_RasterLine
-        lda     IRQ_RasterLine-1
+        lda     Sprite_7_Y_coord+2
         and     #$f0
         ora     L1B01
-        sta     IRQ_RasterLine-1
-        lda     ScreenControlRegister2+2
+        sta     Sprite_7_Y_coord+2
+        lda     V_MemorySetupRegister
         and     #$f0
         ora     #$04
-        sta     ScreenControlRegister2+2
+        sta     V_MemorySetupRegister
         lda     ScreenControlRegister2
         and     #$f0
         ora     L1B00
@@ -1572,24 +1573,24 @@ L1170   lda     #$07
         pha
 _L1173  ldy     #$01
         ldx     #$02
-_L1177  sty     V_ActiveLeftRightMovement+1
-_L117A  lda     V_ActiveLeftRightMovement+1
+_L1177  sty     V_ActiveVerticalDirection
+_L117A  lda     V_ActiveVerticalDirection
         bne     _L117A
         jsr     _L11B7
         dex
         bne     _L1177
         ldy     #$ff
         ldx     #$04
-_L1189  sty     V_ActiveLeftRightMovement+1
-_L118C  lda     V_ActiveLeftRightMovement+1
+_L1189  sty     V_ActiveVerticalDirection
+_L118C  lda     V_ActiveVerticalDirection
         bne     _L118C
         jsr     _L11B7
         dex
         bne     _L1189
         ldy     #$01
         ldx     #$02
-_L119B  sty     V_ActiveLeftRightMovement+1
-_L119E  lda     V_ActiveLeftRightMovement+1
+_L119B  sty     V_ActiveVerticalDirection
+_L119E  lda     V_ActiveVerticalDirection
         bne     _L119E
         jsr     _L11B7
         dex
@@ -2463,9 +2464,9 @@ L17D0   lda     LDD02
         and     #$fc
         ora     #$02
         sta     LDD00
-        lda     ScreenControlRegister2+2
+        lda     V_MemorySetupRegister
         and     #$0f
-        sta     ScreenControlRegister2+2
+        sta     V_MemorySetupRegister
         lda     #$04
         sta     $0288
         lda     #$50
@@ -2793,44 +2794,44 @@ Sub_CharacterActionCheck
         dex                ;Check for Moving
         beq     Sub_CharacterMoving
         dex                ;Check for Jumping
-        beq     Sub_CharJumpIncline
+        beq     Sub_CheckCharJumpDirection
         dex                ;Check for falling
-        beq     Sub_CharacterFalling
+        beq     Sub_SetActiveVerticalDirection
         dex                ;Check for climbing
         beq     Sub_CharacterClimbing
 Exit_CharacterActionSub
         rts
 
-Sub_CheckCharMoveLeft
+Sub_CheckCharMove
         ldy     V_CharDirectionLeftRight ;01 = Right / 02 = Left
-        beq     Exit_CharacterActionSub
+        beq     Exit_CharacterActionSub ;No movement
         dey                ;Check if moving right
-        beq     Sub_CheckCharMoveRight
-        sta     V_ActiveLeftRightMovement ;Sets value to #ff (Left)
+        beq     Sub_SetCharMoveRight
+        sta     V_ActiveMoveDirection ;Sets value to #ff (Left)
         rts
 
-Sub_CheckCharMoveRight
+Sub_SetCharMoveRight
         dey
-        sty     V_ActiveLeftRightMovement ;Sets value to #ff (Right)
+        sty     V_ActiveMoveDirection ;Sets value to #ff (Right)
         rts
 
-Sub_CharJumpIncline
-        ldx     V_CharDirectionUpDown
-        dex
+Sub_CheckCharJumpDirection
+        ldx     V_CharDirectionUpDown ;#01 Standing/Falling / #02 Jumping up
+        dex                ;Check standing/falling
         beq     Sub_CharJumpDecline
         dex
         dex
-        stx     V_ActiveLeftRightMovement+1
-        jmp     Sub_CheckCharMoveLeft
+        stx     V_ActiveVerticalDirection ;Sets value to #ff (Up)
+        jmp     Sub_CheckCharMove
 
 Sub_CharJumpDecline
-        sta     V_ActiveLeftRightMovement+1
-        jmp     Sub_CheckCharMoveLeft
+        sta     V_ActiveVerticalDirection ;Sets value to #01 (Down)
+        jmp     Sub_CheckCharMove
 
-Sub_CharacterFalling
+Sub_SetActiveVerticalDirection
         ldx     #$01
-        stx     V_ActiveLeftRightMovement+1
-        jmp     L1A53
+        stx     V_ActiveVerticalDirection ;Sets value to #01 (Down)
+        jmp     Sub_CharacterFalling
 
 Sub_CharacterClimbing
         ldx     V_CharDirectionUpDown
@@ -2839,36 +2840,38 @@ Sub_CharacterClimbing
         beq     Sub_CharClimbingDown
         dex
         dex
-        stx     V_ActiveLeftRightMovement+1
+        stx     V_ActiveVerticalDirection
         rts
 
 Sub_CharClimbingDown
-        sta     V_ActiveLeftRightMovement+1
+        sta     V_ActiveVerticalDirection
         rts
 
-L1A53   dec     L1B63
+Sub_CharacterFalling
+        dec     L1B63
         bne     Exit_CharacterActionSub
         lda     L1B64
         sta     L1B63
         dec     L1B66
-        bne     Sub_CheckCharMoveLeft
+        bne     Sub_CheckCharMove
         lda     #$09
         sta     L1B66
         inc     L1B64
-        jmp     Sub_CheckCharMoveLeft
+        jmp     Sub_CheckCharMove
 
 Sub_CharacterMoving
         lda     V_StandingOnConveyor
-        beq     _L1A7D
+        beq     Sub_LoopToCheckCharMove
         lda     ClockFirstMillisecond
         and     #$01
-        beq     _L1A7D
+        beq     Sub_LoopToCheckCharMove
         nop
         nop
         rts
 
-_L1A7D  lda     #$01
-        jmp     Sub_CheckCharMoveLeft
+Sub_LoopToCheckCharMove
+        lda     #$01
+        jmp     Sub_CheckCharMove
 
         .byte   $00
         .byte   $02
@@ -2959,6 +2962,7 @@ V_CharDirectionLeftRight
         .byte   $00        ;01 = Right / 02 = Left
 V_CharDirectionUpDown
         .byte   $01        ;01 = Down / 02 = Up
+V_Redundant
         .byte   $01
         .byte   $00
         .byte   $00
@@ -2966,8 +2970,14 @@ V_CharDirectionUpDown
         .byte   $00
 L1B2D   .byte   $03
         .fill   16,$00
-V_ActiveLeftRightMovement
-        .fill   6,$00
+V_ActiveMoveDirection
+        .byte   $00
+V_ActiveVerticalDirection
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
 L1B44   .byte   $08
 L1B45   .byte   $08
 L1B46   .byte   $08
@@ -3343,20 +3353,20 @@ _L1D3E  cpy     #$0f
 
 L2118   lda     L1B81
         beq     L2156
-        lda     V_ActiveLeftRightMovement
+        lda     V_ActiveMoveDirection
         beq     _L214B
         bmi     _L2133
-        inc     LD008
-        inc     LD008
-        inc     LD00A
-        inc     LD00A
+        inc     Sprite_4_X_coord
+        inc     Sprite_4_X_coord
+        inc     Sprite_5_X_coord
+        inc     Sprite_5_X_coord
         jmp     _L214B
 
-_L2133  dec     LD008
-        dec     LD008
-        dec     LD00A
-        dec     LD00A
-        lda     LD00A
+_L2133  dec     Sprite_4_X_coord
+        dec     Sprite_4_X_coord
+        dec     Sprite_5_X_coord
+        dec     Sprite_5_X_coord
+        lda     Sprite_5_X_coord
         cmp     #$1b
         bcs     _L214B
         lda     #$00
@@ -3376,7 +3386,7 @@ L2156   lda     #$01
         sta     ClockFirstMillisecond-1
         sta     ClockSecondMinute+2
         ldx     L1B00
-        lda     V_ActiveLeftRightMovement
+        lda     V_ActiveMoveDirection
         bne     _L216E
         jmp     _L21EB
 
@@ -3385,7 +3395,7 @@ _L216E  cmp     #$ff
         inx
         inx
         lda     #$00
-        sta     V_ActiveLeftRightMovement
+        sta     V_ActiveMoveDirection
         cpx     #$08
         bne     _L21EB
         lda     L1B04
@@ -3414,7 +3424,7 @@ _L21A8  inc     ClockSecondMinute+2
 _L21B0  dex
         dex
         lda     #$00
-        sta     V_ActiveLeftRightMovement
+        sta     V_ActiveMoveDirection
         cpx     #$fe
         bne     _L21EB
         lda     L1B04
@@ -3440,7 +3450,7 @@ _L21E6  inc     ClockSecondMinute+2
         ldx     #$06
 _L21EB  stx     $03fe
         ldx     L1B01
-        lda     V_ActiveLeftRightMovement+1
+        lda     V_ActiveVerticalDirection
         bne     _L21F9
         jmp     _L2270
 
@@ -3449,7 +3459,7 @@ _L21F9  cmp     #$ff
         inx
         inx
         lda     #$00
-        sta     V_ActiveLeftRightMovement+1
+        sta     V_ActiveVerticalDirection
         cpx     #$03
         beq     _L2211
         cpx     #$09
@@ -3477,7 +3487,7 @@ _L2232  inc     ClockSecondMinute+2
 _L2238  dex
         dex
         lda     #$00
-        sta     V_ActiveLeftRightMovement+1
+        sta     V_ActiveVerticalDirection
         cpx     #$01
         beq     _L224C
         cpx     #$ff
@@ -3519,58 +3529,61 @@ _L2289  jsr     L1700
         sta     V_StandingOnConveyor-1
         rts
 
-L22A1   lda     V_ActiveLeftRightMovement+1
+L22A1   lda     V_ActiveVerticalDirection
         beq     _L22B4
         bpl     _L22B7
-        inc     LD009
-        inc     LD009
-        inc     LD00B
-        inc     LD00B
+        inc     Sprite_4_Y_coord
+        inc     Sprite_4_Y_coord
+        inc     Sprite_5_Y_coord
+        inc     Sprite_5_Y_coord
 _L22B4  jmp     L2156
 
-_L22B7  dec     LD009
-        dec     LD009
-        dec     LD00B
-        dec     LD00B
+_L22B7  dec     Sprite_4_Y_coord
+        dec     Sprite_4_Y_coord
+        dec     Sprite_5_Y_coord
+        dec     Sprite_5_Y_coord
         jmp     L2156
 
         .fill   10,$ff
 
 L22D0   ldx     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
-        beq     _L22EE
+        beq     Sub_standing_thing
         dex
-        beq     _L22F3
+        beq     Sub_leftright_thing
         dex
-        beq     _L230C
+        beq     Sub_jumping_thing
         dex
-        beq     _L2322
+        beq     Sub_falling_thing
         dex
-        beq     _L2330
+        beq     Sub_climbing_thing
         lda     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         ldx     #$81
         cmp     #$01
-        bne     _L233B
+        bne     L233B
         inx
-        jmp     _L233B
+        jmp     L233B
 
-_L22EE  ldx     #$60
-        jmp     _L233B
+Sub_standing_thing
+        ldx     #$60
+        jmp     L233B
 
-_L22F3  lda     #$61
+Sub_leftright_thing
+        lda     #$61
         ldx     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         cpx     #$02
         beq     _L22FF
         clc
         adc     #$08
 _L22FF  tax
-        ldy     V_CharDirectionUpDown+1
-        beq     _L233B
+        ldy     V_Redundant
+        beq     L233B
 _L2305  inx
         dey
         bne     _L2305
-        jmp     _L233B
+        jmp     L233B
 
-_L230C  lda     V_CharDirectionUpDown+1
+Sub_jumping_thing
+        lda     V_Redundant
         ldx     #$71
         ldy     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         cpy     #$01
@@ -3580,23 +3593,25 @@ _L230C  lda     V_CharDirectionUpDown+1
 _L231A  cmp     #$06
         bcc     _L231F
         inx
-_L231F  jmp     _L233B
+_L231F  jmp     L233B
 
-_L2322  ldx     #$75
-        ldy     V_CharDirectionUpDown+1
-        beq     _L233B
+Sub_falling_thing
+        ldx     #$75
+        ldy     V_Redundant
+        beq     L233B
 _L2329  inx
         dey
         bne     _L2329
-        jmp     _L233B
+        jmp     L233B
 
-_L2330  ldx     #$79
-        ldy     V_CharDirectionUpDown+1
-        beq     _L233B
+Sub_climbing_thing
+        ldx     #$79
+        ldy     V_Redundant
+        beq     L233B
 _L2337  inx
         dey
         bne     _L2337
-_L233B  stx     L43F8
+L233B   stx     L43F8
         txa
         clc
         adc     #$23
@@ -3620,30 +3635,32 @@ _L233B  stx     L43F8
         .byte   $3e
         .byte   $01
 
-L2360   lda     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
-        cmp     #$05
-        beq     _L2386
+Sub_CharSpritePosition
+        lda     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
+        cmp     #$05       ;Compare to #05 - crouching
+        beq     Sub_CharCrouchSpritePosition ;Branch if crouching
         lda     #$ad
-        sta     LD000
-        sta     LD002
-        sta     LD004
-        sta     LD006
+        sta     Sprite_0_X_coord
+        sta     Sprite_1_X_coord
+        sta     Sprite_2_X_coord
+        sta     Sprite_3_X_coord
         lda     #$c2
-        sta     LD007
+        sta     Sprite_3_Y_coord
         lda     #$ad
-_L237C  sta     LD001
-        sta     LD003
-        sta     LD005
+L237C   sta     Sprite_0_Y_coord
+        sta     Sprite_1_Y_coord
+        sta     Sprite_2_Y_coord
         rts
 
-_L2386  lda     #$ad
-        sta     LD000
-        sta     LD002
-        sta     LD004
+Sub_CharCrouchSpritePosition
+        lda     #$ad
+        sta     Sprite_0_X_coord
+        sta     Sprite_1_X_coord
+        sta     Sprite_2_X_coord
         lda     #$c5
-        sta     LD006
+        sta     Sprite_3_X_coord
         lda     #$c0
-        jmp     _L237C
+        jmp     L237C
 
         .byte   $8d
         .byte   $03
@@ -3660,30 +3677,30 @@ Sub_LookDownRoutine
         pha
         ldy     #$c0
 _L23AF  lda     #$01
-        sta     V_ActiveLeftRightMovement+1
-_L23B4  lda     V_ActiveLeftRightMovement+1
+        sta     V_ActiveVerticalDirection
+_L23B4  lda     V_ActiveVerticalDirection
         bne     _L23B4
         dex
         dey
         dex
         dey
         jsr     _L23E9
-        sty     LD007
+        sty     Sprite_3_Y_coord
         pla
         sec
         sbc     #$01
         pha
         bne     _L23AF
 _L23CA  lda     #$ff
-        sta     V_ActiveLeftRightMovement+1
-_L23CF  lda     V_ActiveLeftRightMovement+1
+        sta     V_ActiveVerticalDirection
+_L23CF  lda     V_ActiveVerticalDirection
         bne     _L23CF
         inx
         iny
         inx
         iny
         jsr     _L23E9
-        sty     LD007
+        sty     Sprite_3_Y_coord
         pla
         clc
         adc     #$01
@@ -3693,9 +3710,9 @@ _L23CF  lda     V_ActiveLeftRightMovement+1
         pla
 _L23E8  rts
 
-_L23E9  stx     LD001
-        stx     LD003
-        stx     LD005
+_L23E9  stx     Sprite_0_Y_coord
+        stx     Sprite_1_Y_coord
+        stx     Sprite_2_Y_coord
         rts
 
 _L23F3  ldx     L1B06
@@ -3923,21 +3940,21 @@ _L2575  jsr     L3000
         bne     _L2594
         nop
         nop
-        jsr     Sub_CharacterActions
+        jsr     Sub_CharSpriteFrames
         ldx     #$03
         stx     L1B2D
         nop
         nop
-_L2594  jsr     L2360
+_L2594  jsr     Sub_CharSpritePosition
         jsr     L22D0
         lda     L1B81
         bne     _L25AE
         lda     #$00
         nop
-        sta     LD008
-        sta     LD009
-        sta     LD00A
-        sta     LD00B
+        sta     Sprite_4_X_coord
+        sta     Sprite_4_Y_coord
+        sta     Sprite_5_X_coord
+        sta     Sprite_5_Y_coord
 _L25AE  nop
         lda     V_CharacterAction-1
         bne     _L25D0
@@ -4211,7 +4228,7 @@ _L27BA  lda     V_JoystickFire
 _L27D2  lda     #$02
         sta     V_CharDirectionUpDown
         lda     #$00
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         sta     L1B5A
         jmp     Sub_jumping
 
@@ -4322,7 +4339,7 @@ _L28A4  lda     V_JoystickFire
         lda     #$02
         sta     V_CharDirectionUpDown
         lda     #$00
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         sta     L1B5A
         jmp     Sub_jumping
 
@@ -4331,7 +4348,7 @@ _L28BE  lda     V_JoystickLeftRight ;#00 = No input / #ff = Left / #01 = Right
         lda     #$00
         sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         jmp     Sub_standing
 
 _L28D0  cmp     #$01
@@ -4353,7 +4370,7 @@ Sub_jumping
         lda     #$46
         sta     L1B5A
         lda     #$01
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         jmp     Sub_falling
 
 Sub_TriggeredOnJumping
@@ -4362,10 +4379,10 @@ Sub_TriggeredOnJumping
         lda     #$04
         sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         jmp     Sub_climbing
 
-_L290A  lda     V_CharDirectionUpDown+1
+_L290A  lda     V_Redundant
         cmp     #$06
         bcs     L296B
         lda     L1B01
@@ -4381,7 +4398,7 @@ _L290A  lda     V_CharDirectionUpDown+1
         lda     #$01
         sta     L1B63
         sta     L1B64
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         rts
 
 Sub_TriggeredOnFalling
@@ -4403,7 +4420,7 @@ _L2956  sta     V_CharDirectionLeftRight ;01 = Right / 02 = Left
         lda     #$01
         sta     L1B64
         sta     L1B63
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         rts
 
 _L2965  rts
@@ -4423,7 +4440,7 @@ L296B   lda     #$01
         lda     #$01
         sta     L1B63
         sta     L1B64
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         jmp     Sub_falling
 
 _L298F  lda     L1B01
@@ -4435,7 +4452,7 @@ _L298F  lda     L1B01
 _L299D  lda     #$00
         sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         jmp     Sub_standing
 
 _L29AA  cpy     #$01
@@ -4485,7 +4502,7 @@ _L29ED  lda     L1B01
         lda     #$00
         sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         rts
 
 _L2A10  jmp     L2770
@@ -4572,7 +4589,7 @@ _L2AA4  lda     L1B01
         lda     #$00
         sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         jsr     L2AF7
         rts
 
@@ -4642,7 +4659,7 @@ _L2B32  jsr     Sub_ReduceTime
 _L2B40  lda     #$00
         sta     V_CharacterAction ;00 = Standing, 01 = moving (left / right) / 02 = Jumping / 03 = falling / 04 = climbing / 05 = crouching    
         lda     #$01
-        sta     V_CharDirectionUpDown+1
+        sta     V_Redundant
         jmp     Sub_standing
 
 L2B4D   ldy     #$01
@@ -4876,11 +4893,11 @@ Sub_StandingOnConveyor
         cmp     #$be
         bcs     _L2CCF
         lda     V_StandingOnWHAT+2
-        sta     V_ActiveLeftRightMovement
+        sta     V_ActiveMoveDirection
         rts
 
 _L2CCF  lda     V_StandingOnWHAT+3
-        sta     V_ActiveLeftRightMovement
+        sta     V_ActiveMoveDirection
         rts
 
         .fill   42,$00
@@ -22900,18 +22917,40 @@ LBF00   .fill   16,$00
         .fill   53,$00
         .byte   $fb
         .fill   4096,$00
-LD000   .byte   $00
-LD001   .byte   $00
-LD002   .byte   $00
-LD003   .byte   $00
-LD004   .byte   $00
-LD005   .byte   $00
-LD006   .byte   $00
-LD007   .byte   $00
-LD008   .byte   $00
-LD009   .byte   $00
-LD00A   .byte   $00
-LD00B   .fill   7,$00
+Sprite_0_X_coord
+        .byte   $00
+Sprite_0_Y_coord
+        .byte   $00
+Sprite_1_X_coord
+        .byte   $00
+Sprite_1_Y_coord
+        .byte   $00
+Sprite_2_X_coord
+        .byte   $00
+Sprite_2_Y_coord
+        .byte   $00
+Sprite_3_X_coord
+        .byte   $00
+Sprite_3_Y_coord
+        .byte   $00
+Sprite_4_X_coord
+        .byte   $00
+Sprite_4_Y_coord
+        .byte   $00
+Sprite_5_X_coord
+        .byte   $00
+Sprite_5_Y_coord
+        .byte   $00
+Sprite_6_X_coord
+        .byte   $00
+Sprite_6_Y_coord
+        .byte   $00
+Sprite_7_X_coord
+        .byte   $00
+Sprite_7_Y_coord
+        .byte   $00
+        .byte   $00
+        .byte   $00
 IRQ_RasterLine
         .byte   $00
         .byte   $00
@@ -22920,6 +22959,7 @@ IRQ_RasterLine
 ScreenControlRegister2
         .byte   $00
         .byte   $00
+V_MemorySetupRegister
         .byte   $00
 IRQSatusRegister
         .fill   8,$00

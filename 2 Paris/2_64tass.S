@@ -2,7 +2,7 @@
 ; 6502bench SourceGen v1.8.3
         .cpu    "6502"
 menu_seletion = $02e0
-MaydayBeginLanding = $02fe
+V_MaydayLanded = $02fe     ;#00 continue circling / #01 Landed
 Line_token_Low = $0304
 EndGameFlag =   $0313      ;#00 Continue / #80 Mayday found / Ends game #27
 IRQ_addr_low =  $0314
@@ -17,6 +17,7 @@ V_CarPositionYLow = $033a
 V_CarPositionYHigh = $033b
 V_CarSpeed =    $0340
 V_RegisterCollision = $0346
+V_MaydayLoopCounter = $034f
 V_CarDirection = $03a0
 damage_count =  $03a1
 V_ForwardReverse = $03a4
@@ -3791,7 +3792,7 @@ _L40A3  lda     L6800,y
         and     #$fe
         sta     $01
         lda     #$00
-        sta     MaydayBeginLanding
+        sta     V_MaydayLanded ;#00 continue circling / #01 Landed
         sta     $02ff
         jsr     _L4140
         ldy     #$34
@@ -3905,14 +3906,14 @@ _L4214  rol     a
         sty     $fc
         pla
         pha
-        tax
-        lda     $ae
+        tax                ;Used to get sprite pointer address in index
+        lda     $ae        ;Value for sprite pointer
         sta     V_SpritePointer,x
-        ldy     $fc
-        lda     $af
+        ldy     $fc        ;Sprite index in collection
+        lda     $af        ;Value for sprite X coord
         sta     V_SpriteCoordinates,y
         iny
-        lda     $ac
+        lda     $ac        ;Value for sprite Y coord
         sta     V_SpriteCoordinates,y
         lda     $02
         beq     _L423F
@@ -3942,29 +3943,29 @@ sub_Joystick
         nop
         lsr     a
         bcs     L_CheckDownInput ;Branch as Up is not detected
-        dey
+        dey                ;Up is detected. Set Y to #FF 
 L_CheckDownInput
         lsr     a
         bcs     L_CheckLeftInput
-        iny
+        iny                ;Down is detected. Set Y to #01
 L_CheckLeftInput
         lsr     a
         bcs     L_CheckRightInput
-        dex
+        dex                ;Left is detected. Set X to #FF 
 L_CheckRightInput
         lsr     a
         bcs     L_FinaliseInputs
-        inx
+        inx                ;Right is detected. Set X to #01
 L_FinaliseInputs
         lsr     a
 L_StoreInputs
-        stx     $fe
-        sty     $fd
-        ldx     #$00
-        bcs     L_StoreFireInput
+        stx     $fe        ;Store Left/Right value
+        sty     $fd        ;Store Up/Down value
+        ldx     #$00       ;Reset X for later
+        bcs     L_StoreFireInput ;Branch if fire detected
         inx
 L_StoreFireInput
-        stx     $02
+        stx     $02        ;Store Fire value
         rts
 
         .fill   5,$ff
@@ -3973,10 +3974,10 @@ L4290   ldx     #$0f
 L4292   lda     MaydayPosHorizontal,x
         sec
         sbc     V_CarPosHorizontalLow
-        sta     $ad
-        lda     L6940,x
+        sta     $ad        ;Store horizontal difference between car and Mayday
+        lda     L6940,x    ;Usually #ff
         sbc     V_CarPosHorizontalHigh
-        sta     $af
+        sta     $af        ;Store vertical difference between car and Mayday
         beq     _L42AF
         cmp     #$01
         bne     L431E
@@ -3993,7 +3994,7 @@ _L42AF  lda     L6980,x
         lda     $fd
         cmp     #$70
         bcs     L431E
-        lda     L6910,x
+        lda     V_HideShowSprite,x
         tay
         bmi     S_Sprite
         and     #$40
@@ -4004,31 +4005,31 @@ _L42AF  lda     L6980,x
         lda     $03c8,y
         and     V_SpriteEnableRegister
         beq     S_Sprite
-        lda     L6910,x
+        lda     V_HideShowSprite,x
         ora     #$40
-        sta     L6910,x
+        sta     V_HideShowSprite,x
         jmp     L4317
 
 S_Sprite
-        lda     L6910,x
-        ora     #$80
-        sta     L6910,x
+        lda     V_HideShowSprite,x
+        ora     #$80       ;Hide sprite
+        sta     V_HideShowSprite,x ;Update spite hide/show
         and     #$07       ;Reduce to first four sprites and isolate current
         sta     $02        ;Store current sprite #
         inc     $02
-        lda     L6920,x
-        sta     $ae
-        txa
+        lda     L6920,x    ;Something to do with sprite pointer
+        sta     $ae        ;Store sprite pointer to $ae for next subroutine
+        txa                ;X is position in array (Mayday is #00)
         pha
         lda     $fd
         clc
         adc     #$90
         tay
         clc
-        lda     $ad
+        lda     $ad        ;Store horizontal difference between car and Mayday
         adc     #$07
         tax
-        lda     $af
+        lda     $af        ;Store vertical difference between car and Mayday
         adc     #$00
         clc
         beq     _L4310
@@ -4043,11 +4044,11 @@ L4317   dex
 
 _L431D  rts
 
-L431E   lda     L6910,x
+L431E   lda     V_HideShowSprite,x
         tay
         bmi     _L4357
 _L4324  and     #$10
-        bne     _L4330
+        bne     _L4330     ;Doesnt ever seem to jump here.
         jmp     _L4375
 
         .fill   5,$ea
@@ -4063,10 +4064,10 @@ _L4330  lda     L6800,x
         lda     L6820,x
         sta     L6920,x
         lda     L6830,x
-        sta     L6930,x
+        sta     V_MaydayDirection,x ;Seems related to Mayday rotation
         jmp     _L4375
 
-_L4357  lda     L6910,x
+_L4357  lda     V_HideShowSprite,x
         and     #$07
         tay
         lda     $03c0,y
@@ -4075,12 +4076,12 @@ _L4357  lda     L6910,x
         lda     $03c0,y
         and     V_SpriteMulticolorModeRegister
         sta     V_SpriteMulticolorModeRegister
-        lda     L6910,y
+        lda     V_HideShowSprite,y
         jmp     _L4324
 
-_L4375  lda     L6910,x
+_L4375  lda     V_HideShowSprite,x
         and     #$07
-        sta     L6910,x
+        sta     V_HideShowSprite,x
         jmp     L4317
 
         .byte   $01
@@ -4429,7 +4430,7 @@ L4570   lda     V_SpriteEnableRegister
         clc
         lda     V_CarPosHorizontalLow
         adc     #$aa
-        sta     L690F
+        sta     V_HideShowSprite-1
         lda     V_CarPosHorizontalHigh
         adc     #$00
         sta     L694F
@@ -4443,7 +4444,7 @@ L4570   lda     V_SpriteEnableRegister
         lda     #$c6
         sta     L691F
         lda     #$ac
-        sta     L692F
+        sta     V_MaydayDirection-1
         lda     V_CarDirection
         sta     L693F
         jsr     L4400
@@ -5130,23 +5131,23 @@ L4A50   lda     LD803
         bne     _L4AA1
         ldy     $034d
         lda     #$02
-        sta     $034e
+        sta     V_MaydayLoopCounter-1
         lda     #$04
         sta     LD803
         sty     $034c
         jmp     _L4A87
 
-_L4A70  ldy     $034e
+_L4A70  ldy     V_MaydayLoopCounter-1
         dey
         bne     _L4A84
         lda     #$02
         sta     LD803
-        sty     $034e
+        sty     V_MaydayLoopCounter-1
         lda     #$00
         sta     LD40B
         rts
 
-_L4A84  sty     $034e
+_L4A84  sty     V_MaydayLoopCounter-1
 _L4A87  lda     #$04
         sta     LD407
         lda     #$3a
@@ -5421,12 +5422,12 @@ L4C00   ldx     #$0f
         jmp     _L4CB2
 
 _L4C07  ldx     $ac
-        lda     L6910,x
+        lda     V_HideShowSprite,x
         and     #$80
         bne     _L4C13
         jmp     _L4D0C
 
-_L4C13  lda     L6910,x
+_L4C13  lda     V_HideShowSprite,x
         and     #$03
         tay
         lda     $03c8,y
@@ -5434,12 +5435,12 @@ _L4C13  lda     L6910,x
         beq     _L4C24
         jmp     _L4D74
 
-_L4C24  lda     L6910,x
+_L4C24  lda     V_HideShowSprite,x
         and     #$20
         beq     _L4C2E
         jmp     _L4D33
 
-_L4C2E  lda     L6910,x
+_L4C2E  lda     V_HideShowSprite,x
         and     #$03
         tay
         lda     $03a2
@@ -5447,7 +5448,7 @@ _L4C2E  lda     L6910,x
         bcs     _L4C3F
         jmp     _L4D0C
 
-_L4C3F  lda     MaydayBeginLanding-1
+_L4C3F  lda     V_MaydayLanded-1
         and     $03c8,y
         beq     _L4C4F
         lda     #$c0
@@ -5497,9 +5498,9 @@ _L4C5A  lda     L6960,x
         bcs     _L4CB0
         and     #$07
         ldx     $ac
-        sta     L6930,x
+        sta     V_MaydayDirection,x ;Seems related to Mayday rotation
 _L4CB0  ldx     $ac
-_L4CB2  lda     L6930,x
+_L4CB2  lda     V_MaydayDirection,x ;Seems related to Mayday rotation
         tay
         lda     L69B0,y
         bmi     _L4CCE
@@ -5579,7 +5580,7 @@ _L4D3B  lda     #$18
         sta     L6920,x
         jmp     _L4D0C
 
-_L4D53  lda     L6910,x
+_L4D53  lda     V_HideShowSprite,x
         and     #$07
         tay
         lda     $03c0,y
@@ -5590,16 +5591,16 @@ _L4D53  lda     L6910,x
         sta     V_SpriteMulticolorModeRegister
         tya
         ora     #$50
-        sta     L6910,x
+        sta     V_HideShowSprite,x
         jmp     _L4D0C
 
 _L4D74  ora     V_SpriteMulticolorModeRegister
         sta     V_SpriteMulticolorModeRegister
         lda     #$00
         sta     $02fc
-        lda     L6910,x
+        lda     V_HideShowSprite,x
         ora     #$70
-        sta     L6910,x
+        sta     V_HideShowSprite,x
         lda     #$10
         sta     L6970,x
         jsr     L4428
@@ -5607,7 +5608,7 @@ _L4D74  ora     V_SpriteMulticolorModeRegister
 
 L4D92   jsr     L4C00
         lda     #$00
-        sta     MaydayBeginLanding-1
+        sta     V_MaydayLanded-1
         sta     $02fc
         rts
 
@@ -6142,7 +6143,7 @@ _L5157  txa
         bne     _L5167
         txa
         and     #$07
-        sta     MaydayBeginLanding-1
+        sta     V_MaydayLanded-1
         jmp     Restore_values_from_stack
 
 _L5167  txa
@@ -6179,7 +6180,7 @@ L5190   txa
         and     V_SpriteMulticolorModeRegister
         bne     Restore_values_from_stack
         tya
-        sta     MaydayBeginLanding-1
+        sta     V_MaydayLanded-1
         jmp     L51A2
 
 L51A2   lda     V_RegisterCollision
@@ -6227,22 +6228,24 @@ _L51F2  jmp     Restore_values_from_stack
 
 sub_Mayday
         lda     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
-        bne     _L5216
-        ldy     $034f
+        bne     Exit_MaydaySubroutine
+        ldy     V_MaydayLoopCounter
         dey
-        sty     $034f
-        bne     _L5216
-        lda     MaydayBeginLanding
-        beq     _L5218
-        jmp     _L52A4
+        sty     V_MaydayLoopCounter
+        bne     Exit_MaydaySubroutine
+        lda     V_MaydayLanded ;#00 continue circling / #01 Landed
+        beq     Sub_UpdateMaydayRotation
+        jmp     L52A4
 
-_L5216  rts
+Exit_MaydaySubroutine
+        rts
 
         .byte   $60
 
-_L5218  ldy     #$07
-        sty     $034f
-        lda     L6930
+Sub_UpdateMaydayRotation
+        ldy     #$07
+        sty     V_MaydayLoopCounter
+        lda     V_MaydayDirection ;Seems related to Mayday rotation
         tay
         lda     L69B0,y
         bmi     _L5239
@@ -6291,20 +6294,20 @@ _L526D  lda     $03e0,y
         nop
         cmp     $d3
         bne     _L5290
-        inc     MaydayBeginLanding
+        inc     V_MaydayLanded ;#00 continue circling / #01 Landed
         jmp     _L5296
 
 _L5290  ldy     L69F9
         sty     L69F8
-_L5296  ldy     L6930
+_L5296  ldy     V_MaydayDirection ;Seems related to Mayday rotation
         dey
         bpl     _L529E
         ldy     #$07
-_L529E  sty     L6930
-_L52A1  jmp     _L5315
+_L529E  sty     V_MaydayDirection ;Seems related to Mayday rotation
+_L52A1  jmp     L5315
 
-_L52A4  ldy     #$08
-        sty     $034f
+L52A4   ldy     #$08
+        sty     V_MaydayLoopCounter
         lda     L6940
         cmp     L69FD
         bcc     _L52D1
@@ -6338,22 +6341,22 @@ _L52DF  lda     L69C0
 _L52EC  lda     L6980
         cmp     L69FE
         bcc     _L5307
-        beq     _L5315
+        beq     L5315
 _L52F6  sec
         lda     L6980
         sbc     #$01
         sta     L6980
-        bcs     _L5315
+        bcs     L5315
         dec     L69C0
-        jmp     _L5315
+        jmp     L5315
 
 _L5307  clc
         lda     L6980
         adc     #$01
         sta     L6980
-        bcc     _L5315
+        bcc     L5315
         inc     L69C0
-_L5315  ldx     _L535C
+L5315   ldx     _L535C
         dex
         stx     _L535C
         bne     _L534D
@@ -9853,8 +9856,9 @@ MaydayPosHorizontal
         .byte   $8c
         .byte   $8c
         .byte   $57
-L690F   .byte   $02
-L6910   .byte   $03
+        .byte   $02
+V_HideShowSprite
+        .byte   $03
         .byte   $00
         .byte   $02
         .byte   $01
@@ -9885,8 +9889,9 @@ L6920   .byte   $92
         .byte   $8c
         .byte   $8c
         .byte   $88
-L692F   .byte   $ac
-L6930   .byte   $02
+        .byte   $ac
+V_MaydayDirection
+        .byte   $02        ;Seems related to Mayday rotation
         .byte   $06
         .byte   $02
         .byte   $02

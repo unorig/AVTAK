@@ -140,23 +140,6 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"MaydayBeginLanding":{
-"DataDescriptor":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Hex",
-"SymbolRef":null},
-
-"Comment":"",
-"HasWidth":false,
-"Direction":"ReadWrite",
-"MultiMask":null,
-"Label":"MaydayBeginLanding",
-"Value":766,
-"Source":"Project",
-"Type":"ExternalAddr",
-"LabelAnno":"None"},
-
 "menu_seletion":{
 "DataDescriptor":{
 "Length":1,
@@ -395,6 +378,40 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"V_MaydayLanded":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"#00 continue circling / #01 Landed",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_MaydayLanded",
+"Value":766,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"V_MaydayLoopCounter":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_MaydayLoopCounter",
+"Value":847,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "V_RegisterCollision":{
 "DataDescriptor":{
 "Length":1,
@@ -566,18 +583,47 @@
 "4098":"Sprites",
 "7170":"Unknown",
 "12402":"#00 Continue / #80 Mayday found / Ends game #27",
+"12521":"#00 continue circling / #01 Landed",
 "12542":"Unknown",
 "12628":"Unknown",
 "12802":"#0-#2 Police, #3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
+"12834":"Used to get sprite pointer address in index",
+"12835":"Value for sprite pointer",
+"12840":"Sprite index in collection",
+"12842":"Value for sprite X coord",
+"12848":"Value for sprite Y coord",
 "12903":"Check if car collision has occured",
 "12906":"Jump over joystick input as car collision occured",
 "12913":"Branch as Up is not detected",
+"12915":"Up is detected. Set Y to #FF ",
+"12919":"Down is detected. Set Y to #01",
+"12923":"Left is detected. Set X to #FF ",
+"12927":"Right is detected. Set X to #01",
+"12929":"Store Left/Right value",
+"12931":"Store Up/Down value",
+"12933":"Reset X for later",
+"12935":"Branch if fire detected",
+"12938":"Store Fire value",
+"12955":"Store horizontal difference between car and Mayday",
+"12957":"Usually #ff",
+"12963":"Store vertical difference between car and Mayday",
+"13036":"Hide sprite",
+"13038":"Update spite hide/show",
 "13041":"Reduce to first four sprites and isolate current",
 "13043":"Store current sprite #",
+"13047":"Something to do with sprite pointer",
+"13050":"Store sprite pointer to $ae for next subroutine",
+"13052":"X is position in array (Mayday is #00)",
+"13061":"Store horizontal difference between car and Mayday",
+"13066":"Store vertical difference between car and Mayday",
 "13076":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
+"13096":"Doesnt ever seem to jump here.",
+"13139":"Seems related to Mayday rotation",
 "14773":"#00 Continue / #80 Mayday found / Ends game #27",
 "15266":"#00 Continue / #80 Mayday found / Ends game #27",
 "15327":"#00 Continue / #80 Mayday found / Ends game #27",
+"15535":"Seems related to Mayday rotation",
+"15540":"Seems related to Mayday rotation",
 "16270":"1=Theme, 2=Effects, 3=Both",
 "16283":"1=Theme, 2=Effects, 3=Both",
 "16291":"Set menu to Theme",
@@ -586,11 +632,17 @@
 "16723":"#00 Continue / #80 Mayday found / Ends game #27",
 "16842":"#00 Continue / #80 Mayday found / Ends game #27",
 "16898":"#00 Continue / #80 Mayday found / Ends game #27",
+"16912":"#00 continue circling / #01 Landed",
+"16927":"Seems related to Mayday rotation",
+"17036":"#00 continue circling / #01 Landed",
+"17048":"Seems related to Mayday rotation",
+"17056":"Seems related to Mayday rotation",
 "17242":"#00 Continue / #80 Mayday found / Ends game #27",
 "17642":"Complete draw screen sub routine when complete",
 "19072":"#00 Continue / #80 Mayday found / Ends game #27",
 "19162":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
-"19259":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond"},
+"19259":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
+"22834":"Seems related to Mayday rotation"},
 
 "LongComments":{
 "-2147483647":{
@@ -1179,6 +1231,34 @@
 "13033":{
 "Label":"S_Sprite",
 "Value":17127,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"22802":{
+"Label":"V_HideShowSprite",
+"Value":26896,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16920":{
+"Label":"Exit_MaydaySubroutine",
+"Value":21014,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16922":{
+"Label":"Sub_UpdateMaydayRotation",
+"Value":21016,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"22834":{
+"Label":"V_MaydayDirection",
+"Value":26928,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
