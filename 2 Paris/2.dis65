@@ -429,6 +429,40 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"V_SprCarDistHorizDiffHigh":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_SprCarDistHorizDiffHigh",
+"Value":175,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"V_SprCarDistHorizDiffLow":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_SprCarDistHorizDiffLow",
+"Value":173,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "V_SpritePointer":{
 "DataDescriptor":{
 "Length":1,
@@ -607,7 +641,8 @@
 "12955":"Store horizontal difference between car and Mayday",
 "12957":"Usually #ff",
 "12963":"Store vertical difference between car and Mayday",
-"13036":"Hide sprite",
+"13033":"Mayday = #00",
+"13036":"Show sprite",
 "13038":"Update spite hide/show",
 "13041":"Reduce to first four sprites and isolate current",
 "13043":"Store current sprite #",
@@ -633,7 +668,7 @@
 "16842":"#00 Continue / #80 Mayday found / Ends game #27",
 "16898":"#00 Continue / #80 Mayday found / Ends game #27",
 "16912":"#00 continue circling / #01 Landed",
-"16927":"Seems related to Mayday rotation",
+"16931":"Load 69b0 with offset of direction",
 "17036":"#00 continue circling / #01 Landed",
 "17048":"Seems related to Mayday rotation",
 "17056":"Seems related to Mayday rotation",
@@ -670,6 +705,12 @@
 "MaxWidth":80,
 "BackgroundColor":-23296},
 
+"12844":{
+"Text":"Sprite coordinates",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-5383962},
+
 "12898":{
 "Text":"Joystick routine",
 "BoxMode":false,
@@ -682,11 +723,11 @@
 "MaxWidth":80,
 "BackgroundColor":-23296},
 
-"13033":{
-"Text":"This could be police car movement subroutube",
+"12946":{
+"Text":"Sprite update",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":-23296},
+"BackgroundColor":-5383962},
 
 "13570":{
 "Text":"Car damage routine",
@@ -823,7 +864,7 @@
 "LabelAnno":"None"},
 
 "22786":{
-"Label":"MaydayPosHorizontal",
+"Label":"V_SprPosHorizLow",
 "Value":26880,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -1229,7 +1270,7 @@
 "LabelAnno":"None"},
 
 "13033":{
-"Label":"S_Sprite",
+"Label":"Sub_ShowSprite",
 "Value":17127,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -1259,6 +1300,41 @@
 "22834":{
 "Label":"V_MaydayDirection",
 "Value":26928,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"13175":{
+"Label":"Sub_HideSprite",
+"Value":17269,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"12946":{
+"Label":"Sub_StartSpriteUpdateLoop",
+"Value":17040,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"12948":{
+"Label":"Sub_ContinueSpriteUpdateLoop",
+"Value":17042,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"13087":{
+"Label":"Exit_SpriteUpdateLoop",
+"Value":17181,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"22850":{
+"Label":"V_SprPosHorizHigh",
+"Value":26944,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
