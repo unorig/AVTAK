@@ -310,7 +310,7 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"V_CarPositionYHigh":{
+"V_CarPositionVertHigh":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -321,13 +321,13 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"V_CarPositionYHigh",
+"Label":"V_CarPositionVertHigh",
 "Value":827,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"V_CarPositionYLow":{
+"V_CarPositionVertLow":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -338,7 +338,7 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"V_CarPositionYLow",
+"Label":"V_CarPositionVertLow",
 "Value":826,
 "Source":"Project",
 "Type":"ExternalAddr",
@@ -655,9 +655,12 @@
 "12933":"Reset X for later",
 "12935":"Branch if fire detected",
 "12938":"Store Fire value",
-"12955":"Store horizontal difference between car and Mayday",
-"12957":"Usually #ff",
-"12963":"Store vertical difference between car and Mayday",
+"12955":"Store horizontal LOW difference between car and Mayday",
+"12963":"Store horizontal HIGH difference between car and Mayday",
+"12965":"Branch if horizontal HIGH is #00",
+"12969":"Branch if 2-4 HIGH blocks away",
+"12992":"Branch as Mayday not in view",
+"13006":"Hide sprite",
 "13033":"Mayday = #00",
 "13036":"Show sprite",
 "13038":"Update spite hide/show",
@@ -741,7 +744,7 @@
 "BackgroundColor":-23296},
 
 "12946":{
-"Text":"Sprite update",
+"Text":"Sprite Show/Hide update",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-5383962},
@@ -832,21 +835,21 @@
 "LabelAnno":"None"},
 
 "13570":{
-"Label":"Sub_car_damage",
+"Label":"Sub_CarDamage",
 "Value":17664,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "13826":{
-"Label":"Sub_3D_car_view",
+"Label":"Sub_3DCarView",
 "Value":17920,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "16898":{
-"Label":"sub_Mayday",
+"Label":"Sub_Mayday",
 "Value":20992,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -1266,7 +1269,7 @@
 "LabelAnno":"None"},
 
 "19042":{
-"Label":"S_MainGameLoop",
+"Label":"Sub_InputRoutines",
 "Value":23136,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -1329,14 +1332,14 @@
 "LabelAnno":"None"},
 
 "12946":{
-"Label":"Sub_StartSpriteUpdateLoop",
+"Label":"Sub_ShowHideSprites",
 "Value":17040,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "12948":{
-"Label":"Sub_ContinueSpriteUpdateLoop",
+"Label":"Sub_ContinueShowHideSpriteLoop",
 "Value":17042,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -1366,6 +1369,34 @@
 "22978":{
 "Label":"V_SprPosVertHigh",
 "Value":27072,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"13088":{
+"Label":"Sub_MaydayLandingCheck",
+"Value":17182,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"12977":{
+"Label":"Sub_CarSpriteClose",
+"Value":17071,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"19048":{
+"Label":"Sub_MainGameLoop",
+"Value":23142,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"14418":{
+"Label":"Sub_MaydayDistanceBeep",
+"Value":18512,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},

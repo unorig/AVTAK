@@ -3,6 +3,7 @@
         .cpu    "6502"
 V_SprCarDistHorizDiffLow = $ad
 V_SprCarDistHorizDiffHigh = $af
+V_SprCarDistVertDiffLow = $fd
 menu_seletion = $02e0
 V_MaydayLanded = $02fe     ;#00 continue circling / #01 Landed
 Line_token_Low = $0304
@@ -15,8 +16,8 @@ NMI_IRQ_addr_low = $0318
 NMI_IRQ_addr_high = $0319
 V_CarPosHorizontalLow = $0338
 V_CarPosHorizontalHigh = $0339
-V_CarPositionYLow = $033a
-V_CarPositionYHigh = $033b
+V_CarPositionVertLow = $033a
+V_CarPositionVertHigh = $033b
 V_CarSpeed =    $0340
 V_RegisterCollision = $0346
 V_MaydayLoopCounter = $034f
@@ -42,7 +43,7 @@ L1005   lda     #$19
         sta     LD418
         ldy     #$00
         lda     ($fb),y
-        sta     $fd
+        sta     V_SprCarDistVertDiffLow
         iny
         lda     ($fb),y
         sta     $fe
@@ -50,7 +51,7 @@ L1005   lda     #$19
         clc
         cld
         lda     $fb
-        adc     $fd
+        adc     V_SprCarDistVertDiffLow
         sta     $02
         lda     $fc
         adc     $fe
@@ -3962,7 +3963,7 @@ L_FinaliseInputs
         lsr     a
 L_StoreInputs
         stx     $fe        ;Store Left/Right value
-        sty     $fd        ;Store Up/Down value
+        sty     V_SprCarDistVertDiffLow ;Store Up/Down value
         ldx     #$00       ;Reset X for later
         bcs     L_StoreFireInput ;Branch if fire detected
         inx
@@ -3972,36 +3973,37 @@ L_StoreFireInput
 
         .fill   5,$ff
 
-Sub_StartSpriteUpdateLoop
+Sub_ShowHideSprites
         ldx     #$0f
-Sub_ContinueSpriteUpdateLoop
+Sub_ContinueShowHideSpriteLoop
         lda     V_SprPosHorizLow,x
         sec
         sbc     V_CarPosHorizontalLow
-        sta     V_SprCarDistHorizDiffLow ;Store horizontal difference between car and Mayday
-        lda     V_SprPosHorizHigh,x ;Usually #ff
+        sta     V_SprCarDistHorizDiffLow ;Store horizontal LOW difference between car and Mayday
+        lda     V_SprPosHorizHigh,x
         sbc     V_CarPosHorizontalHigh
-        sta     V_SprCarDistHorizDiffHigh ;Store vertical difference between car and Mayday
-        beq     _L42AF
+        sta     V_SprCarDistHorizDiffHigh ;Store horizontal HIGH difference between car and Mayday
+        beq     Sub_CarSpriteClose ;Branch if horizontal HIGH is #00
         cmp     #$01
-        bne     L431E
+        bne     Sub_MaydayLandingCheck ;Branch if 2-4 HIGH blocks away
         lda     V_SprCarDistHorizDiffLow
         cmp     #$40
-        bcs     L431E
-_L42AF  lda     L6980,x
+        bcs     Sub_MaydayLandingCheck
+Sub_CarSpriteClose
+        lda     V_SprPosVertLow,x
         sec
-        sbc     V_CarPositionYLow
-        sta     $fd
-        lda     L69C0,x
-        sbc     V_CarPositionYHigh
-        bne     L431E
-        lda     $fd
+        sbc     V_CarPositionVertLow
+        sta     V_SprCarDistVertDiffLow
+        lda     V_SprPosVertHigh,x
+        sbc     V_CarPositionVertHigh
+        bne     Sub_MaydayLandingCheck ;Branch as Mayday not in view
+        lda     V_SprCarDistVertDiffLow
         cmp     #$70
-        bcs     L431E
+        bcs     Sub_MaydayLandingCheck
         lda     V_HideShowSprite,x
         tay
         bmi     Sub_ShowSprite
-        and     #$40
+        and     #$40       ;Hide sprite
         bne     L4317
         tya
         and     #$07
@@ -4025,7 +4027,7 @@ Sub_ShowSprite
         sta     $ae        ;Store sprite pointer to $ae for next subroutine
         txa                ;X is position in array (Mayday is #00)
         pha
-        lda     $fd
+        lda     V_SprCarDistVertDiffLow
         clc
         adc     #$90
         tay
@@ -4044,12 +4046,13 @@ _L4310  lda     $02
         tax
 L4317   dex
         bmi     Exit_SpriteUpdateLoop
-        jmp     Sub_ContinueSpriteUpdateLoop
+        jmp     Sub_ContinueShowHideSpriteLoop
 
 Exit_SpriteUpdateLoop
         rts
 
-L431E   lda     V_HideShowSprite,x
+Sub_MaydayLandingCheck
+        lda     V_HideShowSprite,x
         tay
         bmi     _L4357
 _L4324  and     #$10
@@ -4063,9 +4066,9 @@ _L4330  lda     L6800,x
         lda     L6840,x
         sta     V_SprPosHorizHigh,x
         lda     L6880,x
-        sta     L6980,x
+        sta     V_SprPosVertLow,x
         lda     L68C0,x
-        sta     L69C0,x
+        sta     V_SprPosVertHigh,x
         lda     L6820,x
         sta     L6920,x
         lda     L6830,x
@@ -4232,7 +4235,7 @@ L4450   lda     menu_seletion
         sta     LD414
         lda     #$61
         sta     LD412
-_L4475  jmp     L5A66
+_L4475  jmp     Sub_MainGameLoop
 
         .byte   $00
         .byte   $ff
@@ -4350,7 +4353,7 @@ L4480   lda     #$0f
         .byte   $00
         .byte   $ff
 
-Sub_car_damage
+Sub_CarDamage
         lda     V_CarSpeed
         lsr     a
         and     #$03
@@ -4441,10 +4444,10 @@ L4570   lda     V_SpriteEnableRegister
         adc     #$00
         sta     L694F
         clc
-        lda     V_CarPositionYLow
+        lda     V_CarPositionVertLow
         adc     #$31
         sta     L698F
-        lda     V_CarPositionYHigh
+        lda     V_CarPositionVertHigh
         adc     #$00
         sta     L69CF
         lda     #$c6
@@ -4540,7 +4543,7 @@ _L45AC  rts
         .byte   $00
         .byte   $ff
 
-Sub_3D_car_view
+Sub_3DCarView
         lda     $0336
         bne     _L4606
         rts
@@ -4607,17 +4610,17 @@ _L466E  lda     $ae
         sta     $fc
         ldy     V_CarDirection
         lda     L6B30,y
-        sta     $fd
+        sta     V_SprCarDistVertDiffLow
         lda     #$6d
         sta     $fe
         ldx     #$00
         ldy     #$00
 _L4695  clc
-        lda     ($fd),y
+        lda     (V_SprCarDistVertDiffLow),y
         adc     $fb
         sta     $ae
         iny
-        lda     ($fd),y
+        lda     (V_SprCarDistVertDiffLow),y
         adc     $fc
         sta     V_SprCarDistHorizDiffHigh
         iny
@@ -4844,7 +4847,8 @@ _L4804  lda     $0d09,x
         .byte   $ff
         .byte   $00
 
-L4850   sec
+Sub_MaydayDistanceBeep
+        sec
         lda     V_SprPosHorizLow
         sbc     #$88
         sta     $ea
@@ -4852,10 +4856,10 @@ L4850   sec
         sbc     #$00
         sta     $eb
         sec
-        lda     L6980
+        lda     V_SprPosVertLow
         sbc     #$32
         sta     $ec
-        lda     L69C0
+        lda     V_SprPosVertHigh
         sbc     #$00
         sta     $ed
         nop
@@ -4885,30 +4889,30 @@ _L4895  sec
         lda     $eb
         sbc     V_CarPosHorizontalHigh
         sta     V_SprCarDistHorizDiffHigh
-_L48A4  lda     V_CarPositionYHigh
+_L48A4  lda     V_CarPositionVertHigh
         cmp     $ed
         beq     _L48B0
         bcc     _L48C9
         jmp     _L48B7
 
-_L48B0  lda     V_CarPositionYLow
+_L48B0  lda     V_CarPositionVertLow
         cmp     $ec
         bcc     _L48C9
 _L48B7  sec
-        lda     V_CarPositionYLow
+        lda     V_CarPositionVertLow
         sbc     $ec
         sta     $ac
-        lda     V_CarPositionYHigh
+        lda     V_CarPositionVertHigh
         sbc     $ed
         sta     V_SprCarDistHorizDiffLow
         jmp     _L48D8
 
 _L48C9  sec
         lda     $ec
-        sbc     V_CarPositionYLow
+        sbc     V_CarPositionVertLow
         sta     $ac
         lda     $ed
-        sbc     V_CarPositionYHigh
+        sbc     V_CarPositionVertHigh
         sta     V_SprCarDistHorizDiffLow
 _L48D8  clc
         lda     $ae
@@ -4921,7 +4925,7 @@ _L48D8  clc
         lda     $ac
         ldx     #$28
         jsr     L4AB0
-        lda     $fd
+        lda     V_SprCarDistVertDiffLow
         ora     #$01
         sta     $034d
         rts
@@ -5094,7 +5098,7 @@ L4A00   lda     #$04
         lda     #$d8
         sta     $fc
         lda     #$00
-        sta     $fd
+        sta     V_SprCarDistVertDiffLow
         sta     $fb
         lda     #$8b
         sta     V_SprCarDistHorizDiffHigh
@@ -5106,7 +5110,7 @@ L4A00   lda     #$04
         sta     $ac
 _L4A1E  ldy     #$00
 _L4A20  lda     ($ae),y
-        sta     ($fd),y
+        sta     (V_SprCarDistVertDiffLow),y
         lda     ($ac),y
         sta     ($fb),y
         iny
@@ -5184,13 +5188,13 @@ _L4AA1  sty     $034c
 L4AB0   sta     $ae
         stx     $02
         lda     #$00
-        sta     $fd
+        sta     V_SprCarDistVertDiffLow
         tya
         ldx     #$08
         sec
         sbc     $02
 _L4ABE  php
-        rol     $fd
+        rol     V_SprCarDistVertDiffLow
         asl     $ae
         rol     a
         plp
@@ -5204,7 +5208,7 @@ _L4ACE  dex
         bcs     _L4AD6
         adc     $02
         clc
-_L4AD6  rol     $fd
+_L4AD6  rol     V_SprCarDistVertDiffLow
         sta     $fe
         rts
 
@@ -5468,11 +5472,11 @@ _L4C4F  dec     L6950,x
 
 _L4C5A  lda     L6960,x
         sta     L6950,x
-        lda     L6980,x
-        ldy     L69C0,x
+        lda     V_SprPosVertLow,x
+        ldy     V_SprPosVertHigh,x
         ldx     #$08
         jsr     L4AB0
-        lda     $fd
+        lda     V_SprCarDistVertDiffLow
         ldx     #$7e
         jsr     _L4D17
         sta     $fc
@@ -5484,7 +5488,7 @@ _L4C5A  lda     L6960,x
         jsr     L4AB0
         clc
         lda     $fb
-        adc     $fd
+        adc     V_SprCarDistVertDiffLow
         sta     $fb
         lda     $fc
         adc     #$00
@@ -5529,19 +5533,19 @@ _L4CDC  lda     L69B8,y
         bmi     _L4CF4
         beq     _L4D02
         clc
-        lda     L6980,x
+        lda     V_SprPosVertLow,x
         adc     #$01
-        sta     L6980,x
+        sta     V_SprPosVertLow,x
         bcc     _L4D02
-        inc     L69C0,x
+        inc     V_SprPosVertHigh,x
         jmp     _L4D02
 
 _L4CF4  sec
-        lda     L6980,x
+        lda     V_SprPosVertLow,x
         sbc     #$01
-        sta     L6980,x
+        sta     V_SprPosVertLow,x
         bcs     _L4D02
-        dec     L69C0,x
+        dec     V_SprPosVertHigh,x
 _L4D02  cpx     #$0f
         beq     _L4D0C
         lda     L69A0,y
@@ -5556,7 +5560,7 @@ _L4D16  rts
 
 _L4D17  sta     $fe
         lda     #$00
-        sta     $fd
+        sta     V_SprCarDistVertDiffLow
         stx     $02
         ldx     #$08
 _L4D21  lsr     $02
@@ -5564,11 +5568,11 @@ _L4D21  lsr     $02
         clc
         adc     $fe
 _L4D28  ror     a
-        ror     $fd
+        ror     V_SprCarDistVertDiffLow
         dex
         bne     _L4D21
         sta     $fe
-        ldx     $fd
+        ldx     V_SprCarDistVertDiffLow
         rts
 
 _L4D33  dec     L6990,x
@@ -5896,7 +5900,7 @@ L4F30   sei
 L4F7F   jsr     sub_Joystick
         lda     $02
         bne     _L4FBB
-        lda     $fd
+        lda     V_SprCarDistVertDiffLow
         beq     _L4FA4
         bmi     _L4F99
         ldy     menu_seletion ;1=Theme, 2=Effects, 3=Both
@@ -6232,7 +6236,7 @@ _L51F2  jmp     Restore_values_from_stack
 
         .fill   11,$ff
 
-sub_Mayday
+Sub_Mayday
         lda     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
         bne     Exit_MaydaySubroutine
         ldy     V_MaydayLoopCounter
@@ -6274,19 +6278,19 @@ _L5247  lda     L69B8,y
         bmi     _L525F
         beq     _L526D
         clc
-        lda     L6980
+        lda     V_SprPosVertLow
         adc     #$01
-        sta     L6980
+        sta     V_SprPosVertLow
         bcc     _L526D
-        inc     L69C0
+        inc     V_SprPosVertHigh
         jmp     _L526D
 
 _L525F  sec
-        lda     L6980
+        lda     V_SprPosVertLow
         sbc     #$01
-        sta     L6980
+        sta     V_SprPosVertLow
         bcs     _L526D
-        dec     L69C0
+        dec     V_SprPosVertHigh
 _L526D  lda     $03e0,y
         sta     L6920
         ldy     L69F8
@@ -6338,30 +6342,30 @@ _L52D1  clc
         sta     V_SprPosHorizLow
         bcc     _L52DF
         inc     V_SprPosHorizHigh
-_L52DF  lda     L69C0
+_L52DF  lda     V_SprPosVertHigh
         cmp     L69FF
         bcc     _L5307
         beq     _L52EC
         jmp     _L52F6
 
-_L52EC  lda     L6980
+_L52EC  lda     V_SprPosVertLow
         cmp     L69FE
         bcc     _L5307
         beq     L5315
 _L52F6  sec
-        lda     L6980
+        lda     V_SprPosVertLow
         sbc     #$01
-        sta     L6980
+        sta     V_SprPosVertLow
         bcs     L5315
-        dec     L69C0
+        dec     V_SprPosVertHigh
         jmp     L5315
 
 _L5307  clc
-        lda     L6980
+        lda     V_SprPosVertLow
         adc     #$01
-        sta     L6980
+        sta     V_SprPosVertLow
         bcc     L5315
-        inc     L69C0
+        inc     V_SprPosVertHigh
 L5315   ldx     _L535C
         dex
         stx     _L535C
@@ -7221,7 +7225,7 @@ L5800   sei
 _L585A  lda     _L5880,x
         sta     $fe
         lda     _L5890,x
-        sta     $fd
+        sta     V_SprCarDistVertDiffLow
         clc
         lda     $fb
         adc     #$28
@@ -7292,7 +7296,7 @@ _L5890  .byte   $78
 
 _L58C0  ldy     #$00
 _L58C2  lda     ($fb),y
-        sta     ($fd),y
+        sta     (V_SprCarDistVertDiffLow),y
         cmp     #$15
         beq     _L58D0
         jsr     L4480
@@ -7629,29 +7633,30 @@ L5A30   ldx     $0344
         ldy     #$02
         sty     V_RegisterCollision-1
         stx     $0344
-        jmp     S_MainGameLoop
+        jmp     Sub_InputRoutines
 
         .byte   $8c
         .byte   $45
         .byte   $03
 
 _L5A4C  stx     $0344
-        jmp     L5A66
+        jmp     Sub_MainGameLoop
 
 _L5A52  sty     V_RegisterCollision-1
         jmp     Sub_SteeringWheel
 
         .fill   8,$ea
 
-S_MainGameLoop
+Sub_InputRoutines
         jsr     sub_Joystick
         jmp     Sub_CarControlRoutine
 
-L5A66   jsr     Sub_StartSpriteUpdateLoop
-        jsr     Sub_car_damage
-        jsr     Sub_3D_car_view
-        jsr     L4850
-        jsr     sub_Mayday
+Sub_MainGameLoop
+        jsr     Sub_ShowHideSprites
+        jsr     Sub_CarDamage
+        jsr     Sub_3DCarView
+        jsr     Sub_MaydayDistanceBeep
+        jsr     Sub_Mayday
         jsr     L4D92
         jsr     MapLoadTempLow
         jsr     L4940
@@ -7779,7 +7784,7 @@ Sub_SteeringWheel
 _L5B51  jsr     sub_Joystick
         lda     V_ForwardReverse
         bne     _L5B89
-        lda     $fd
+        lda     V_SprCarDistVertDiffLow
         beq     _L5B86
         bpl     _L5B6F
 _L5B5F  dec     V_CarSpeed
@@ -7800,7 +7805,7 @@ _L5B6F  inc     V_CarSpeed
         sta     V_CarSpeed
 _L5B86  jmp     _L5B92
 
-_L5B89  lda     $fd
+_L5B89  lda     V_SprCarDistVertDiffLow
         beq     _L5B86
         bmi     _L5B6F
         jmp     _L5B5F
@@ -7818,10 +7823,10 @@ _L5B92  lda     $02
         sta     V_HandbrakeTurnFlag
         lda     V_CarDirection
         sta     V_PostHandbrakeDirection
-        jmp     L5A66
+        jmp     Sub_MainGameLoop
 
 _L5BB5  jsr     L4570
-_L5BB8  jmp     L5A66
+_L5BB8  jmp     Sub_MainGameLoop
 
         .fill   19,$ea
         .byte   $84
@@ -7895,11 +7900,11 @@ _L5C6B  cpy     #$09
         ldy     #$01
 _L5C71  sty     V_CarSpeed-1
         sec
-        lda     V_CarPositionYLow
+        lda     V_CarPositionVertLow
         sbc     #$02
-        sta     V_CarPositionYLow
+        sta     V_CarPositionVertLow
         bcs     _L5C82
-        dec     V_CarPositionYHigh
+        dec     V_CarPositionVertHigh
 _L5C82  jmp     _L5CAD
 
 _L5C85  ldy     V_CarSpeed-1
@@ -7915,11 +7920,11 @@ _L5C96  cpy     #$ff
         ldy     #$07
 _L5C9C  sty     V_CarSpeed-1
         clc
-        lda     V_CarPositionYLow
+        lda     V_CarPositionVertLow
         adc     #$02
-        sta     V_CarPositionYLow
+        sta     V_CarPositionVertLow
         bcc     _L5CAD
-        inc     V_CarPositionYHigh
+        inc     V_CarPositionVertHigh
 _L5CAD  lda     #$00
         sta     $0341
         sta     V_RegisterCollision
@@ -9955,7 +9960,8 @@ L6960   .byte   $00
         .byte   $04
         .byte   $00
 L6970   .fill   16,$00
-L6980   .byte   $6f
+V_SprPosVertLow
+        .byte   $6f
         .byte   $28
         .byte   $70
         .byte   $a0
@@ -10007,7 +10013,8 @@ L69B8   .byte   $81
         .byte   $01
         .byte   $00
         .byte   $81
-L69C0   .byte   $02
+V_SprPosVertHigh
+        .byte   $02
         .byte   $00
         .byte   $00
         .byte   $00
