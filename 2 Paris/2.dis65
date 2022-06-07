@@ -259,6 +259,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"V_CarCollision":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_CarCollision",
+"Value":765,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "V_CarDirection":{
 "DataDescriptor":{
 "Length":1,
@@ -548,6 +565,11 @@
 "Hint":"Code"},
 
 {
+"Low":12521,
+"High":12523,
+"Hint":"InlineData"},
+
+{
 "Low":12898,
 "High":12898,
 "Hint":"Code"},
@@ -687,7 +709,9 @@
 "16723":"#00 Continue / #80 Mayday found / Ends game #27",
 "16842":"#00 Continue / #80 Mayday found / Ends game #27",
 "16898":"#00 Continue / #80 Mayday found / Ends game #27",
+"16910":"Usually #07",
 "16912":"#00 continue circling / #01 Landed",
+"16922":"Update loop counter to #07 since reached #00",
 "16931":"Load 69b0 with offset of direction",
 "17036":"#00 continue circling / #01 Landed",
 "17048":"Seems related to Mayday rotation",
