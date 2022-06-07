@@ -5,6 +5,7 @@ V_SprCarDistHorizDiffLow = $ad
 V_SprCarDistHorizDiffHigh = $af
 V_SprCarDistVertDiffLow = $fd
 menu_seletion = $02e0
+V_CarCollision = $02fd
 V_MaydayLanded = $02fe     ;#00 continue circling / #01 Landed
 Line_token_Low = $0304
 EndGameFlag =   $0313      ;#00 Continue / #80 Mayday found / Ends game #27
@@ -5427,8 +5428,8 @@ _L4BDB  lda     #$00
         .byte   $00
         .byte   $ff
 
-L4C00   ldx     #$0f
-        stx     $ac
+L4C00   ldx     #$0f       ;Probably the sprite index
+        stx     $ac        ;Store sprite index
         jmp     _L4CB2
 
 _L4C07  ldx     $ac
@@ -5441,7 +5442,7 @@ _L4C13  lda     V_HideShowSprite,x
         and     #$03
         tay
         lda     $03c8,y
-        and     $02fc
+        and     V_CarCollision-1
         beq     _L4C24
         jmp     _L4D74
 
@@ -5458,7 +5459,7 @@ _L4C2E  lda     V_HideShowSprite,x
         bcs     _L4C3F
         jmp     _L4D0C
 
-_L4C3F  lda     V_MaydayLanded-1
+_L4C3F  lda     V_CarCollision
         and     $03c8,y
         beq     _L4C4F
         lda     #$c0
@@ -5607,7 +5608,7 @@ _L4D53  lda     V_HideShowSprite,x
 _L4D74  ora     V_SpriteMulticolorModeRegister
         sta     V_SpriteMulticolorModeRegister
         lda     #$00
-        sta     $02fc
+        sta     V_CarCollision-1
         lda     V_HideShowSprite,x
         ora     #$70
         sta     V_HideShowSprite,x
@@ -5618,8 +5619,8 @@ _L4D74  ora     V_SpriteMulticolorModeRegister
 
 L4D92   jsr     L4C00
         lda     #$00
-        sta     V_MaydayLanded-1
-        sta     $02fc
+        sta     V_CarCollision
+        sta     V_CarCollision-1
         rts
 
         .byte   $04
@@ -6005,22 +6006,23 @@ L5000   sei
         .byte   $60
 
         lda     V_IRQStatusRegister
-        tax
-        and     #$01
-        bne     _L504C
+        tax                ;Store D019 value to X
+        and     #$01       ;Check if current raster line for IRQ
+        bne     L504C      ;Jump if current raster line 
         lda     $02ff
         beq     _L5036
         jmp     Restore_values_from_stack
 
-_L5036  txa
-        and     #$02
-        beq     _L503E
-        jmp     _L5170
+_L5036  txa                ;Get original IRQ Status register values
+        and     #$02       ;Check Sprite-background collision occurred
+        beq     Sub_SpriteBackgroundCollision
+        jmp     L5170
 
-_L503E  txa
+Sub_SpriteBackgroundCollision
+        txa                ;Get original IRQ Status register values
         and     #$04
         beq     _L5046
-        jmp     _L5137
+        jmp     L5137
 
 _L5046  jmp     Restore_values_from_stack
 
@@ -6028,7 +6030,7 @@ _L5046  jmp     Restore_values_from_stack
         .byte   $8a
         .byte   $51
 
-_L504C  sta     V_IRQStatusRegister
+L504C   sta     V_IRQStatusRegister ;Acknowledge raster interrupt
         lda     V_RasterLine
         cmp     #$8f
         bcc     _L50AF
@@ -6131,7 +6133,7 @@ _L50F9  lda     #$0b
         sta     V_InterruptControlRegister
         jmp     Restore_values_from_stack
 
-_L5137  sta     V_IRQStatusRegister
+L5137   sta     V_IRQStatusRegister
         lda     V_SpriteSpriteCollisionRegister
         tax
         and     #$30
@@ -6153,21 +6155,21 @@ _L5157  txa
         bne     _L5167
         txa
         and     #$07
-        sta     V_MaydayLanded-1
+        sta     V_CarCollision
         jmp     Restore_values_from_stack
 
 _L5167  txa
         and     #$07
-        sta     $02fc
-        jmp     _L517D
+        sta     V_CarCollision-1
+        jmp     L517D
 
-_L5170  sta     V_IRQStatusRegister
+L5170   sta     V_IRQStatusRegister
         lda     V_SpriteBackgroundCollisionReg
         tax
         bmi     L51A2
         and     #$40
         beq     Restore_values_from_stack
-_L517D  lda     #$ff
+L517D   lda     #$ff
         sta     L694F
         sta     L69CF
         nop
@@ -6190,7 +6192,7 @@ L5190   txa
         and     V_SpriteMulticolorModeRegister
         bne     Restore_values_from_stack
         tya
-        sta     V_MaydayLanded-1
+        sta     V_CarCollision
         jmp     L51A2
 
 L51A2   lda     V_RegisterCollision
@@ -6242,7 +6244,7 @@ Sub_Mayday
         ldy     V_MaydayLoopCounter
         dey
         sty     V_MaydayLoopCounter
-        bne     Exit_MaydaySubroutine
+        bne     Exit_MaydaySubroutine ;Usually #07
         lda     V_MaydayLanded ;#00 continue circling / #01 Landed
         beq     Sub_UpdateMaydayRotation
         jmp     L52A4
@@ -6253,7 +6255,7 @@ Exit_MaydaySubroutine
         .byte   $60
 
 Sub_UpdateMaydayRotation
-        ldy     #$07
+        ldy     #$07       ;Update loop counter to #07 since reached #00
         sty     V_MaydayLoopCounter
         lda     V_MaydayDirection
         tay
@@ -7677,7 +7679,15 @@ _L5A8D  jmp     L5A30
         .byte   $ea
         .byte   $30
         .byte   $5a
-        .fill   9,$ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
 StoredLeftRightInput
         .byte   $00
         .byte   $01
@@ -14196,99 +14206,13 @@ L7B9D   .byte   $bd,$c8,$7b,$a8,$bd,$36,$7a,$18,$69,$04,$29,$0f,$9d,$36,$7a,$18
         .byte   $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
         .byte   $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
         .byte   $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$03,$03,$03,$00,$00
-        .byte   $00,$00,$00,$00,$00,$00,$00,$00,$00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $02
-        .byte   $02
-        .byte   $02
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $01
-        .byte   $01
-        .byte   $01
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $04
-        .byte   $04
-        .byte   $04
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $02
-        .byte   $02
-        .byte   $02
-        .byte   $03
-        .byte   $03
-        .byte   $03
-        .byte   $04
-        .byte   $04
-        .byte   $04
-        .byte   $04
-        .byte   $04
-        .byte   $04
-        .byte   $03
-        .byte   $03
-        .byte   $03
-        .byte   $03
-        .byte   $03
-        .byte   $03
-        .byte   $02
-        .byte   $02
-        .byte   $02
-        .byte   $03
-        .byte   $03
-        .byte   $03
-        .byte   $01
-        .byte   $01
-        .byte   $01
-        .byte   $02
-        .byte   $02
-        .byte   $02
-        .byte   $01
-        .byte   $01
-        .byte   $01
-        .byte   $04
-        .byte   $04
-        .byte   $04
-        .byte   $02
-        .byte   $02
-        .byte   $02
-        .byte   $01
-        .byte   $01
-        .byte   $01
-        .byte   $01
+        .byte   $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+        .byte   $02,$02,$02,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+        .byte   $00,$00,$00,$00,$00,$00,$00,$00,$01,$01,$01,$00,$00,$00,$00,$00
+        .byte   $00,$00,$00,$00,$04,$04,$04,$00,$00,$00,$02,$02,$02,$03,$03,$03
+        .byte   $04,$04,$04,$04,$04,$04,$03,$03,$03,$03,$03,$03,$02,$02,$02,$03
+        .byte   $03,$03,$01,$01,$01,$02,$02,$02,$01,$01,$01,$04,$04,$04,$02,$02
+        .byte   $02,$01,$01,$01,$01
         .byte   $01
         .byte   $01
         .byte   $01
