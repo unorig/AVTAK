@@ -21,6 +21,23 @@
 "PlatformSymbolFileIdentifiers":["RT:Commodore/C64-Kernal.sym65"],
 "ExtensionScriptFileIdentifiers":["RT:Commodore/VisC64.cs"],
 "ProjectSyms":{
+"AndWhatIsThis":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"AndWhatIsThis",
+"Value":828,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "BRK_serv_address_high":{
 "DataDescriptor":{
 "Length":1,
@@ -51,23 +68,6 @@
 "MultiMask":null,
 "Label":"BRK_serv_address_low",
 "Value":790,
-"Source":"Project",
-"Type":"ExternalAddr",
-"LabelAnno":"None"},
-
-"damage_count":{
-"DataDescriptor":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Hex",
-"SymbolRef":null},
-
-"Comment":"",
-"HasWidth":false,
-"Direction":"ReadWrite",
-"MultiMask":null,
-"Label":"damage_count",
-"Value":929,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -191,6 +191,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"Screen_DashClock":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"Screen_DashClock",
+"Value":1446,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "screen_speedo_bar":{
 "DataDescriptor":{
 "Length":1,
@@ -276,7 +293,7 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"V_CarDirection":{
+"V_CarDirectionTemp":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -287,7 +304,24 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"V_CarDirection",
+"Label":"V_CarDirectionTemp",
+"Value":839,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"V_CarFacingDirection":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_CarFacingDirection",
 "Value":928,
 "Source":"Project",
 "Type":"ExternalAddr",
@@ -378,6 +412,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"V_DamageCount":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_DamageCount",
+"Value":929,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "V_ForwardReverse":{
 "DataDescriptor":{
 "Length":1,
@@ -391,6 +442,23 @@
 "MultiMask":null,
 "Label":"V_ForwardReverse",
 "Value":932,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"V_HorzRasterScrollLoop":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_HorzRasterScrollLoop",
+"Value":830,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -544,6 +612,40 @@
 "MultiMask":null,
 "Label":"V_SpritePointer5",
 "Value":2045,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"WhatEvenIsThis":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"WhatEvenIsThis",
+"Value":829,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"WhatIsThis":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"WhatIsThis",
+"Value":831,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"}}},
@@ -716,12 +818,27 @@
 "16427":"Store D019 value to X",
 "16428":"Check if current raster line for IRQ",
 "16430":"Jump if current raster line ",
+"16432":"This is always #00",
 "16440":"Get original IRQ Status register values",
 "16441":"Check Sprite-background collision occurred",
 "16448":"Get original IRQ Status register values",
+"16449":"Check Sprite-sprite collision occurred",
+"16451":"Sprites may collide incidentally so need to check",
 "16462":"Acknowledge raster interrupt",
+"16697":"Store #04 to V_IRQStatusRegister",
 "16723":"#00 Continue / #80 Mayday found / Ends game #27",
+"16754":"Acknowledge raster interrupt",
+"16757":"Check which sprite collided",
+"16761":"Branch if collision occured",
+"16807":"Exit routine",
+"16809":"#00 Forward / #08 Reverse",
+"16812":"Switch car direction movement",
+"16814":"#00 Forward / #08 Reverse",
+"16825":"Branch if going slow",
+"16829":"Set car speed",
+"16838":"Branch if V_DamageCount \u003c 28",
 "16842":"#00 Continue / #80 Mayday found / Ends game #27",
+"16848":"Register damage occured so it is not registered agin",
 "16898":"#00 Continue / #80 Mayday found / Ends game #27",
 "16910":"Usually #07",
 "16912":"#00 continue circling / #01 Landed",
@@ -733,8 +850,21 @@
 "17242":"#00 Continue / #80 Mayday found / Ends game #27",
 "17642":"Complete draw screen sub routine when complete",
 "19072":"#00 Continue / #80 Mayday found / Ends game #27",
+"19125":"Branch as not doing a handbrake turn",
+"19138":"#00 Forward / #08 Reverse",
 "19162":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
+"19180":"Check if direction is odd number",
+"19182":"Check if direction is odd number",
+"19184":"01 = 90 degree direction / 00 = 45 degree direction",
 "19259":"#0-#2 Police, 3 Mayday, #4-#5 Steering wheel, #6 Bullet, #7 Bond",
+"19286":"#00 Forward / #08 Reverse",
+"19323":"#00 Forward / #08 Reverse",
+"19328":"#00 Forward / #08 Reverse",
+"19357":"#00 Forward / #08 Reverse",
+"19458":"00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW",
+"19461":"#00 Forward / #08 Reverse",
+"19465":"Load data from array with Forward/Reverse and Direction data",
+"19468":"Branch if going north",
 "22834":"Seems related to Mayday rotation"},
 
 "LongComments":{
@@ -1446,8 +1576,64 @@
 "LabelAnno":"None"},
 
 "16448":{
-"Label":"Sub_SpriteBackgroundCollision",
+"Label":"Sub_CheckSpriteSpriteCollision",
 "Value":20542,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16456":{
+"Label":"Exit_Interrupt",
+"Value":20550,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16440":{
+"Label":"Sub_CheckSpriteBGCollision",
+"Value":20534,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16845":{
+"Label":"Sub_IncreaseDamage",
+"Value":20939,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16829":{
+"Label":"Sub_UpdateSpeed",
+"Value":20923,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16462":{
+"Label":"Sub_NotCurrentRasterLine",
+"Value":20556,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"19107":{
+"Label":"V_Direction90Deg",
+"Value":23201,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"19874":{
+"Label":"S_MapScrolling",
+"Value":23968,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"12658":{
+"Label":"Sub_DashClock",
+"Value":16752,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},

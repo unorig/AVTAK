@@ -19,16 +19,22 @@ V_CarPosHorizontalLow = $0338
 V_CarPosHorizontalHigh = $0339
 V_CarPositionVertLow = $033a
 V_CarPositionVertHigh = $033b
+AndWhatIsThis = $033c
+WhatEvenIsThis = $033d
+V_HorzRasterScrollLoop = $033e
+WhatIsThis =    $033f
 V_CarSpeed =    $0340
 V_RegisterCollision = $0346
+V_CarDirectionTemp = $0347
 V_MaydayLoopCounter = $034f
-V_CarDirection = $03a0
-damage_count =  $03a1
+V_CarFacingDirection = $03a0
+V_DamageCount = $03a1
 V_ForwardReverse = $03a4
 ScreenCounterDigit100 = $04f3
 ScreenCounterDigit10 = $04f4
 ScreenCounterDigit1 = $04f5
 screen_speedo_bar = $0576
+Screen_DashClock = $05a6
 V_SpritePointer = $07f7
 V_SpritePointer4 = $07fc
 V_SpritePointer5 = $07fd
@@ -3713,9 +3719,9 @@ _L4005  dex
         and     #$fe
         sta     LDC0E
         lda     #$04
-        sta     $033e
+        sta     V_HorzRasterScrollLoop
         lda     #$01
-        sta     V_CarSpeed-1
+        sta     WhatIsThis
         sta     L6840
         sta     L68C0
         lda     #$fa
@@ -3824,7 +3830,8 @@ _L4142  lda     _L4152,y
 _L4152  .byte   $00,$00,$00,$01,$01,$05,$09,$09,$09,$09,$09,$00,$5f,$00,$a9,$03 ;Unknown
         .byte   $8d,$e0,$02,$4c,$30,$4f,$ff,$b1,$ff,$ff,$ff,$00,$ff,$00
 
-L4170   ldx     #$00
+Sub_DashClock
+        ldx     #$00
         inc     $0399
         lda     $0399
         cmp     #$3c
@@ -3877,7 +3884,7 @@ _L41E0  ldy     #$00
 _L41E2  clc
         lda     $0390,y
         adc     #$64
-        sta     $05a6,y
+        sta     Screen_DashClock,y
         iny
         cpy     #$08
         bne     _L41E2
@@ -4382,12 +4389,12 @@ _L450E  sta     screen_speedo_bar,y
 
         .fill   6,$ea
 
-_L4530  lda     damage_count
+_L4530  lda     V_DamageCount
         lsr     a
         lsr     a
         lsr     a
         tay
-        lda     damage_count
+        lda     V_DamageCount
         and     #$07
         clc
         adc     #$c4
@@ -4455,7 +4462,7 @@ L4570   lda     V_SpriteEnableRegister
         sta     L691F
         lda     #$ac
         sta     V_MaydayDirection-1
-        lda     V_CarDirection
+        lda     V_CarFacingDirection
         sta     V_SprPosHorizHigh-1
         jsr     L4400
 _L45AC  rts
@@ -4549,7 +4556,7 @@ Sub_3DCarView
         bne     _L4606
         rts
 
-_L4606  ldy     V_CarDirection
+_L4606  ldy     V_CarFacingDirection
         lda     L6BD0,y
         beq     _L4639
         lda     $0335
@@ -4557,18 +4564,18 @@ _L4606  ldy     V_CarDirection
         bmi     _L4627
         clc
         lda     #$7e
-        adc     $033c
+        adc     AndWhatIsThis
         sta     $ae
-        lda     $033d
+        lda     WhatEvenIsThis
         adc     #$00
         sta     V_SprCarDistHorizDiffHigh
         jmp     _L466E
 
 _L4627  sec
-        lda     $033c
+        lda     AndWhatIsThis
         sbc     #$7e
         sta     $ae
-        lda     $033d
+        lda     WhatEvenIsThis
         sbc     #$00
         sta     V_SprCarDistHorizDiffHigh
         jmp     _L466E
@@ -4578,25 +4585,25 @@ _L4639  lda     $0334
         bmi     _L4652
         clc
         lda     #$01
-        adc     $033c
+        adc     AndWhatIsThis
         sta     $ae
-        lda     $033d
+        lda     WhatEvenIsThis
         adc     #$00
         sta     V_SprCarDistHorizDiffHigh
         jmp     _L466E
 
 _L4652  sec
-        lda     $033c
+        lda     AndWhatIsThis
         sbc     #$01
         sta     $ae
-        lda     $033d
+        lda     WhatEvenIsThis
         sbc     #$00
         sta     V_SprCarDistHorizDiffHigh
         jmp     _L466E
 
-_L4664  lda     $033c
+_L4664  lda     AndWhatIsThis
         sta     $ae
-        lda     $033d
+        lda     WhatEvenIsThis
         sta     V_SprCarDistHorizDiffHigh
 _L466E  lda     $ae
         sta     $02fb
@@ -4609,7 +4616,7 @@ _L466E  lda     $ae
         lda     V_SprCarDistHorizDiffHigh
         sbc     #$05
         sta     $fc
-        ldy     V_CarDirection
+        ldy     V_CarFacingDirection
         lda     L6B30,y
         sta     V_SprCarDistVertDiffLow
         lda     #$6d
@@ -5031,10 +5038,10 @@ _L4995  lda     #$00
         .byte   $ea
         .byte   $ea
 
-_L49A0  lda     damage_count
+_L49A0  lda     V_DamageCount
         clc
         adc     #$01
-        sta     damage_count
+        sta     V_DamageCount
         bcs     _L49B3
         cmp     #$28
         bcs     _L49B3
@@ -5723,9 +5730,9 @@ L4D92   jsr     L4C00
         .byte   $ff
 
 MapLoadTempLow
-        lda     $033c
+        lda     AndWhatIsThis
         sta     $ae
-        lda     $033d
+        lda     WhatEvenIsThis
         sta     V_SprCarDistHorizDiffHigh
         lda     $0335
         beq     _L4E2E
@@ -6008,29 +6015,32 @@ L5000   sei
         lda     V_IRQStatusRegister
         tax                ;Store D019 value to X
         and     #$01       ;Check if current raster line for IRQ
-        bne     L504C      ;Jump if current raster line 
-        lda     $02ff
-        beq     _L5036
+        bne     Sub_NotCurrentRasterLine ;Jump if current raster line 
+        lda     $02ff      ;This is always #00
+        beq     Sub_CheckSpriteBGCollision
         jmp     Restore_values_from_stack
 
-_L5036  txa                ;Get original IRQ Status register values
+Sub_CheckSpriteBGCollision
+        txa                ;Get original IRQ Status register values
         and     #$02       ;Check Sprite-background collision occurred
-        beq     Sub_SpriteBackgroundCollision
+        beq     Sub_CheckSpriteSpriteCollision
         jmp     L5170
 
-Sub_SpriteBackgroundCollision
+Sub_CheckSpriteSpriteCollision
         txa                ;Get original IRQ Status register values
-        and     #$04
-        beq     _L5046
+        and     #$04       ;Check Sprite-sprite collision occurred
+        beq     Exit_Interrupt ;Sprites may collide incidentally so need to check
         jmp     L5137
 
-_L5046  jmp     Restore_values_from_stack
+Exit_Interrupt
+        jmp     Restore_values_from_stack
 
         .byte   $4c
         .byte   $8a
         .byte   $51
 
-L504C   sta     V_IRQStatusRegister ;Acknowledge raster interrupt
+Sub_NotCurrentRasterLine
+        sta     V_IRQStatusRegister ;Acknowledge raster interrupt
         lda     V_RasterLine
         cmp     #$8f
         bcc     _L50AF
@@ -6062,8 +6072,8 @@ _L505D  lda     V_InterruptControlRegister
         ora     #$0c
         sta     V_MemorySetupRegister
         jsr     L47FC
-        jsr     L5DA0
-        jsr     L4170
+        jsr     S_MapScrolling
+        jsr     Sub_DashClock
         jmp     L51E0
 
         .byte   $4c
@@ -6094,11 +6104,11 @@ _L50AF  lda     #$06
         sta     V_MemorySetupRegister
         lda     V_ScreenControlRegister
         and     #$f0
-        ora     V_CarSpeed-1
+        ora     WhatIsThis
         sta     V_ScreenControlRegister
         lda     V_ScreenControlRegister2
         and     #$f0
-        ora     $033e
+        ora     V_HorzRasterScrollLoop
         sta     V_ScreenControlRegister2
         lda     #$06
         sta     V_Sprite0Color
@@ -6133,7 +6143,7 @@ _L50F9  lda     #$0b
         sta     V_InterruptControlRegister
         jmp     Restore_values_from_stack
 
-L5137   sta     V_IRQStatusRegister
+L5137   sta     V_IRQStatusRegister ;Store #04 to V_IRQStatusRegister
         lda     V_SpriteSpriteCollisionRegister
         tax
         and     #$30
@@ -6163,10 +6173,10 @@ _L5167  txa
         sta     V_CarCollision-1
         jmp     L517D
 
-L5170   sta     V_IRQStatusRegister
-        lda     V_SpriteBackgroundCollisionReg
+L5170   sta     V_IRQStatusRegister ;Acknowledge raster interrupt
+        lda     V_SpriteBackgroundCollisionReg ;Check which sprite collided
         tax
-        bmi     L51A2
+        bmi     L51A2      ;Branch if collision occured
         and     #$40
         beq     Restore_values_from_stack
 L517D   lda     #$ff
@@ -6196,27 +6206,29 @@ L5190   txa
         jmp     L51A2
 
 L51A2   lda     V_RegisterCollision
-        bne     Restore_values_from_stack
-        lda     V_ForwardReverse
-        eor     #$08
-        sta     V_ForwardReverse
+        bne     Restore_values_from_stack ;Exit routine
+        lda     V_ForwardReverse ;#00 Forward / #08 Reverse
+        eor     #$08       ;Switch car direction movement
+        sta     V_ForwardReverse ;#00 Forward / #08 Reverse
         clc
         lda     V_CarSpeed
         adc     #$03
         cmp     #$40
-        bcc     _L51BB
+        bcc     Sub_UpdateSpeed ;Branch if going slow
         lda     #$3f
-_L51BB  sta     V_CarSpeed
-        ldy     damage_count
+Sub_UpdateSpeed
+        sta     V_CarSpeed ;Set car speed
+        ldy     V_DamageCount
         iny
         cpy     #$28
-        bcc     _L51CB
+        bcc     Sub_IncreaseDamage ;Branch if V_DamageCount < 28
         ldy     #$27
         sty     EndGameFlag ;#00 Continue / #80 Mayday found / Ends game #27
-_L51CB  sty     damage_count
-        inc     V_RegisterCollision
-        lda     $0347
-        sta     V_CarDirection
+Sub_IncreaseDamage
+        sty     V_DamageCount
+        inc     V_RegisterCollision ;Register damage occured so it is not registered agin
+        lda     V_CarDirectionTemp
+        sta     V_CarFacingDirection
         jmp     Restore_values_from_stack
 
         .byte   $fa
@@ -7690,6 +7702,7 @@ _L5A8D  jmp     L5A30
         .byte   $ea
 StoredLeftRightInput
         .byte   $00
+V_Direction90Deg
         .byte   $01
 V_HandbrakeTurnFlag
         .byte   $00
@@ -7710,15 +7723,15 @@ V_PostHandbrakeDirection
 
 Sub_CarControlRoutine
         ldx     V_HandbrakeTurnFlag
-        beq     _L5AE0
+        beq     _L5AE0     ;Branch as not doing a handbrake turn
         ldy     V_PostHandbrakeDirection
         dey
         bpl     _L5ABD
         ldy     #$07
 _L5ABD  dex
         bne     _L5AC6
-        stx     V_ForwardReverse
-        sty     V_CarDirection
+        stx     V_ForwardReverse ;#00 Forward / #08 Reverse
+        sty     V_CarFacingDirection
 _L5AC6  stx     V_HandbrakeTurnFlag
         sty     V_PostHandbrakeDirection
         lda     $03a8,y
@@ -7736,29 +7749,29 @@ _L5AC6  stx     V_HandbrakeTurnFlag
 _L5AE0  lda     $fe
         bne     _L5AF4
         sta     StoredLeftRightInput
-        lda     V_CarDirection
-        and     #$01
-        eor     #$01
-        sta     StoredLeftRightInput+1
+        lda     V_CarFacingDirection
+        and     #$01       ;Check if direction is odd number
+        eor     #$01       ;Check if direction is odd number
+        sta     V_Direction90Deg ;01 = 90 degree direction / 00 = 45 degree direction
         jmp     L5B2A
 
 _L5AF4  cmp     StoredLeftRightInput
         bne     _L5B04
-        dec     StoredLeftRightInput+1
-        lda     StoredLeftRightInput+1
+        dec     V_Direction90Deg
+        lda     V_Direction90Deg
         bmi     Sub_SteeringWheel
         nop
         lda     $fe
 _L5B04  bpl     _L5B16
-        ldx     V_CarDirection
+        ldx     V_CarFacingDirection
         dex
         cpx     #$ff
         bne     _L5B10
         ldx     #$07
-_L5B10  stx     V_CarDirection
+_L5B10  stx     V_CarFacingDirection
         jmp     L5B25
 
-_L5B16  ldx     V_CarDirection
+_L5B16  ldx     V_CarFacingDirection
         inx
         cpx     #$08
         bne     _L5B10
@@ -7770,7 +7783,7 @@ _L5B16  ldx     V_CarDirection
 
 L5B25   lda     $fe
         sta     StoredLeftRightInput
-L5B2A   ldx     V_CarDirection
+L5B2A   ldx     V_CarFacingDirection
         lda     $03a8,x
         sta     $ae
         clc
@@ -7792,7 +7805,7 @@ Sub_SteeringWheel
         dey
         sty     V_SpritePointer4
 _L5B51  jsr     sub_Joystick
-        lda     V_ForwardReverse
+        lda     V_ForwardReverse ;#00 Forward / #08 Reverse
         bne     _L5B89
         lda     V_SprCarDistVertDiffLow
         beq     _L5B86
@@ -7808,9 +7821,9 @@ _L5B6F  inc     V_CarSpeed
         lda     V_CarSpeed
         cmp     #$40
         bne     _L5B86
-        lda     V_ForwardReverse
+        lda     V_ForwardReverse ;#00 Forward / #08 Reverse
         eor     #$08
-        sta     V_ForwardReverse
+        sta     V_ForwardReverse ;#00 Forward / #08 Reverse
         lda     #$3f
         sta     V_CarSpeed
 _L5B86  jmp     _L5B92
@@ -7824,14 +7837,14 @@ _L5B92  lda     $02
         beq     _L5BB8
         lda     V_HandbrakeTurnFlag
         bne     _L5BB8
-        lda     V_ForwardReverse
+        lda     V_ForwardReverse ;#00 Forward / #08 Reverse
         beq     _L5BB5
         lda     V_CarSpeed
         cmp     #$15
         bcs     _L5BB5
         lda     #$04
         sta     V_HandbrakeTurnFlag
-        lda     V_CarDirection
+        lda     V_CarFacingDirection
         sta     V_PostHandbrakeDirection
         jmp     Sub_MainGameLoop
 
@@ -7856,13 +7869,13 @@ _L5BB8  jmp     Sub_MainGameLoop
         .byte   $5a
         .fill   35,$ea
 
-L5C00   lda     V_CarDirection
-        ora     V_ForwardReverse
+L5C00   lda     V_CarFacingDirection ;00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
+        ora     V_ForwardReverse ;#00 Forward / #08 Reverse
         tax
-        lda     $0370,x
-        beq     _L5C53
+        lda     $0370,x    ;Load data from array with Forward/Reverse and Direction data
+        beq     _L5C53     ;Branch if going north
         bmi     _L5C32
-        ldy     $033e
+        ldy     V_HorzRasterScrollLoop
         iny
         iny
         cpy     #$08
@@ -7870,7 +7883,7 @@ L5C00   lda     V_CarDirection
         lda     #$01
         sta     $03a7
         ldy     #$00
-_L5C1E  sty     $033e
+_L5C1E  sty     V_HorzRasterScrollLoop
         sec
         lda     V_CarPosHorizontalLow
         sbc     #$02
@@ -7879,7 +7892,7 @@ _L5C1E  sty     $033e
         dec     V_CarPosHorizontalHigh
 _L5C2F  jmp     _L5C53
 
-_L5C32  ldy     $033e
+_L5C32  ldy     V_HorzRasterScrollLoop
         dey
         dey
         cpy     #$fe
@@ -7887,7 +7900,7 @@ _L5C32  ldy     $033e
         lda     #$01
         sta     $03a7
         ldy     #$06
-_L5C42  sty     $033e
+_L5C42  sty     V_HorzRasterScrollLoop
         clc
         lda     V_CarPosHorizontalLow
         adc     #$02
@@ -7897,7 +7910,7 @@ _L5C42  sty     $033e
 _L5C53  lda     $0380,x
         beq     _L5CAD
         bmi     _L5C85
-        ldy     V_CarSpeed-1
+        ldy     WhatIsThis
         iny
         iny
         cpy     #$03
@@ -7908,7 +7921,7 @@ _L5C53  lda     $0380,x
 _L5C6B  cpy     #$09
         bne     _L5C71
         ldy     #$01
-_L5C71  sty     V_CarSpeed-1
+_L5C71  sty     WhatIsThis
         sec
         lda     V_CarPositionVertLow
         sbc     #$02
@@ -7917,7 +7930,7 @@ _L5C71  sty     V_CarSpeed-1
         dec     V_CarPositionVertHigh
 _L5C82  jmp     _L5CAD
 
-_L5C85  ldy     V_CarSpeed-1
+_L5C85  ldy     WhatIsThis
         dey
         dey
         cpy     #$01
@@ -7928,7 +7941,7 @@ _L5C85  ldy     V_CarSpeed-1
 _L5C96  cpy     #$ff
         bne     _L5C9C
         ldy     #$07
-_L5C9C  sty     V_CarSpeed-1
+_L5C9C  sty     WhatIsThis
         clc
         lda     V_CarPositionVertLow
         adc     #$02
@@ -7949,16 +7962,16 @@ _L5CAD  lda     #$00
 _L5CBE  lda     $03a7
         and     #$01
         beq     _L5D08
-        lda     V_CarDirection
+        lda     V_CarFacingDirection
         ora     V_ForwardReverse
         tax
         lda     $0350,x
         bmi     _L5CED
         clc
-        adc     $033c
-        sta     $033c
+        adc     AndWhatIsThis
+        sta     AndWhatIsThis
         bcc     _L5CDD
-        inc     $033d
+        inc     WhatEvenIsThis
 _L5CDD  ldy     $0334
         dey
         cpy     #$fe
@@ -7968,11 +7981,11 @@ _L5CE7  sty     $0334
         jmp     _L5D08
 
 _L5CED  sec
-        lda     $033c
+        lda     AndWhatIsThis
         sbc     #$01
-        sta     $033c
+        sta     AndWhatIsThis
         bcs     _L5CFB
-        dec     $033d
+        dec     WhatEvenIsThis
 _L5CFB  ldy     $0334
         iny
         cpy     #$02
@@ -7982,16 +7995,16 @@ _L5D05  sty     $0334
 _L5D08  lda     $03a7
         and     #$02
         beq     _L5D52
-        lda     V_CarDirection
+        lda     V_CarFacingDirection
         ora     V_ForwardReverse
         tax
         lda     $0360,x
         bmi     _L5D37
         clc
-        adc     $033c
-        sta     $033c
+        adc     AndWhatIsThis
+        sta     AndWhatIsThis
         bcc     _L5D27
-        inc     $033d
+        inc     WhatEvenIsThis
 _L5D27  ldy     $0335
         dey
         cpy     #$fe
@@ -8001,11 +8014,11 @@ _L5D31  sty     $0335
         jmp     _L5D52
 
 _L5D37  sec
-        lda     $033c
+        lda     AndWhatIsThis
         sbc     #$7e
-        sta     $033c
+        sta     AndWhatIsThis
         bcs     _L5D45
-        dec     $033d
+        dec     WhatEvenIsThis
 _L5D45  ldy     $0335
         iny
         cpy     #$02
@@ -8017,9 +8030,9 @@ _L5D52  ldx     #$0d
         sta     _L5D6F+1
         lda     #$05
         sta     _L5D6F+2
-        lda     $033c
+        lda     AndWhatIsThis
         sta     _L5D6C+1
-        lda     $033d
+        lda     WhatEvenIsThis
         sta     _L5D6C+2
 _L5D6A  ldy     #$28
 _L5D6C  lda     L7B9D+$2834,y
@@ -8049,7 +8062,8 @@ _L5D91  dex
         .byte   $60
         .byte   $60
 
-L5DA0   lda     $02ff
+S_MapScrolling
+        lda     $02ff
         bne     _L5DB9
         ldx     $0342
         dex
@@ -8063,8 +8077,8 @@ L5DA0   lda     $02ff
 _L5DB6  stx     $0342
 _L5DB9  rts
 
-_L5DBA  lda     V_CarDirection
-        sta     $0347
+_L5DBA  lda     V_CarFacingDirection
+        sta     V_CarDirectionTemp
         jsr     L5C00
         rts
 
