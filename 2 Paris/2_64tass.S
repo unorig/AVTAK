@@ -20,17 +20,19 @@ V_CarPosHorizontalLow = $0338
 V_CarPosHorizontalHigh = $0339
 V_CarPositionVertLow = $033a
 V_CarPositionVertHigh = $033b
-AndWhatIsThis = $033c
-WhatEvenIsThis = $033d
+V_MapRow =      $033c
+V_MapLoadAddressLow = $033d
 V_HorzRasterScrollLoop = $033e
 WhatIsThis =    $033f
 V_CarSpeed =    $0340
+V_MapDrawSpeed = $0342
 V_RegisterCollision = $0346
-V_CarDirectionTemp = $0347
+V_CarFacingDirectionTemp = $0347
 V_MaydayLoopCounter = $034f
 V_CarFacingDirection = $03a0 ;00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
 V_DamageCount = $03a1
-V_ForwardReverse = $03a4
+V_ForwardReverse = $03a4   ;#00 Forward / #08 Reverse
+V_ScrollCounter = $03a7
 ScreenCounterDigit100 = $04f3
 ScreenCounterDigit10 = $04f4
 ScreenCounterDigit1 = $04f5
@@ -6215,18 +6217,18 @@ _L4606  ldy     V_CarFacingDirection ;00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW
         bmi     _L4627
         clc
         lda     #$7e
-        adc     AndWhatIsThis
+        adc     V_MapRow
         sta     V_SpritePointerIndex
-        lda     WhatEvenIsThis
+        lda     V_MapLoadAddressLow
         adc     #$00
         sta     V_SprCarDistHorizDiffHigh
         jmp     _L466E
 
 _L4627  sec
-        lda     AndWhatIsThis
+        lda     V_MapRow
         sbc     #$7e
         sta     V_SpritePointerIndex
-        lda     WhatEvenIsThis
+        lda     V_MapLoadAddressLow
         sbc     #$00
         sta     V_SprCarDistHorizDiffHigh
         jmp     _L466E
@@ -6236,25 +6238,25 @@ _L4639  lda     $0334
         bmi     _L4652
         clc
         lda     #$01
-        adc     AndWhatIsThis
+        adc     V_MapRow
         sta     V_SpritePointerIndex
-        lda     WhatEvenIsThis
+        lda     V_MapLoadAddressLow
         adc     #$00
         sta     V_SprCarDistHorizDiffHigh
         jmp     _L466E
 
 _L4652  sec
-        lda     AndWhatIsThis
+        lda     V_MapRow
         sbc     #$01
         sta     V_SpritePointerIndex
-        lda     WhatEvenIsThis
+        lda     V_MapLoadAddressLow
         sbc     #$00
         sta     V_SprCarDistHorizDiffHigh
         jmp     _L466E
 
-_L4664  lda     AndWhatIsThis
+_L4664  lda     V_MapRow
         sta     V_SpritePointerIndex
-        lda     WhatEvenIsThis
+        lda     V_MapLoadAddressLow
         sta     V_SprCarDistHorizDiffHigh
 _L466E  lda     V_SpritePointerIndex
         sta     $02fb
@@ -7381,9 +7383,9 @@ L4D92   jsr     L4C00
         .byte   $ff
 
 MapLoadTempLow
-        lda     AndWhatIsThis
+        lda     V_MapRow
         sta     V_SpritePointerIndex
-        lda     WhatEvenIsThis
+        lda     V_MapLoadAddressLow
         sta     V_SprCarDistHorizDiffHigh
         lda     $0335
         beq     _L4E2E
@@ -7878,7 +7880,7 @@ Sub_UpdateSpeed
 Sub_IncreaseDamage
         sty     V_DamageCount
         inc     V_RegisterCollision ;Register damage occured so it is not registered agin
-        lda     V_CarDirectionTemp
+        lda     V_CarFacingDirectionTemp
         sta     V_CarFacingDirection ;00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
         jmp     Restore_values_from_stack
 
@@ -9460,8 +9462,8 @@ Sub_SteeringWheel
         sty     V_SpritePointer4 ;Update other part of steering wheel
 _L5B51  jsr     sub_Joystick ;Get Joystick inputs
         lda     V_ForwardReverse ;#00 Forward / #08 Reverse
-        bne     _L5B89
-        lda     V_SprCarDistVertDiffLow
+        bne     _L5B89     ;Branch if no forward/back input received
+        lda     V_SprCarDistVertDiffLow ;Seems always to be #00
         beq     _L5B86
         bpl     _L5B6F
 _L5B5F  dec     V_CarSpeed
@@ -9527,61 +9529,61 @@ L5C00   lda     V_CarFacingDirection ;00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW
         ora     V_ForwardReverse ;#00 Forward / #08 Reverse
         tax
         lda     $0370,x    ;Load data from array with Forward/Reverse and Direction data
-        beq     _L5C53     ;Branch if going north
-        bmi     _L5C32
-        ldy     V_HorzRasterScrollLoop
+        beq     _L5C53     ;Branch for vertical scroll
+        bmi     _L5C32     ;Branch for horizontal scroll
+        ldy     V_HorzRasterScrollLoop ;Continue for diagonal scroll
         iny
         iny
         cpy     #$08
         bne     _L5C1E
         lda     #$01
-        sta     $03a7
+        sta     V_ScrollCounter
         ldy     #$00
-_L5C1E  sty     V_HorzRasterScrollLoop
+_L5C1E  sty     V_HorzRasterScrollLoop ;Location used by other sprites for positioning.
         sec
-        lda     V_CarPosHorizontalLow
+        lda     V_CarPosHorizontalLow ;Location used by other sprites for positioning.
         sbc     #$02
-        sta     V_CarPosHorizontalLow
+        sta     V_CarPosHorizontalLow ;Location used by other sprites for positioning.
         bcs     _L5C2F
-        dec     V_CarPosHorizontalHigh
+        dec     V_CarPosHorizontalHigh ;Location used by other sprites for positioning.
 _L5C2F  jmp     _L5C53
 
-_L5C32  ldy     V_HorzRasterScrollLoop
+_L5C32  ldy     V_HorzRasterScrollLoop ;Load loop value. Starts at #06.
         dey
         dey
-        cpy     #$fe
-        bne     _L5C42
+        cpy     #$fe       ;Subtract #fe from Y
+        bne     _L5C42     ;Branch if Y equal to #fe
         lda     #$01
-        sta     $03a7
-        ldy     #$06
-_L5C42  sty     V_HorzRasterScrollLoop
+        sta     V_ScrollCounter ;Store #01 to $03a7
+        ldy     #$06       ;Reset loop
+_L5C42  sty     V_HorzRasterScrollLoop ;Set loop value
         clc
-        lda     V_CarPosHorizontalLow
-        adc     #$02
-        sta     V_CarPosHorizontalLow
+        lda     V_CarPosHorizontalLow ;Location used by other sprites for positioning.
+        adc     #$02       ;Add #02 to V_CarPosHorizontalLow
+        sta     V_CarPosHorizontalLow ;Store value back to V_CarPosHorizontalLow
         bcc     _L5C53
-        inc     V_CarPosHorizontalHigh
-_L5C53  lda     $0380,x
-        beq     _L5CAD
-        bmi     _L5C85
+        inc     V_CarPosHorizontalHigh ;Location used by other sprites for positioning.
+_L5C53  lda     $0380,x    ;Load the value from $0380,x which is $0380, Direction (e.g. 02 for east)
+        beq     _L5CAD     ;Branch if not North/South direction
+        bmi     _L5C85     ;Branch if South
         ldy     WhatIsThis
         iny
         iny
         cpy     #$03
         bne     _L5C6B
-        lda     $03a7
+        lda     V_ScrollCounter
         ora     #$02
-        sta     $03a7
+        sta     V_ScrollCounter
 _L5C6B  cpy     #$09
         bne     _L5C71
         ldy     #$01
 _L5C71  sty     WhatIsThis
         sec
-        lda     V_CarPositionVertLow
+        lda     V_CarPositionVertLow ;Location used by other sprites for positioning.
         sbc     #$02
-        sta     V_CarPositionVertLow
+        sta     V_CarPositionVertLow ;Location used by other sprites for positioning.
         bcs     _L5C82
-        dec     V_CarPositionVertHigh
+        dec     V_CarPositionVertHigh ;Location used by other sprites for positioning.
 _L5C82  jmp     _L5CAD
 
 _L5C85  ldy     WhatIsThis
@@ -9589,43 +9591,44 @@ _L5C85  ldy     WhatIsThis
         dey
         cpy     #$01
         bne     _L5C96
-        lda     $03a7
+        lda     V_ScrollCounter
         ora     #$02
-        sta     $03a7
+        sta     V_ScrollCounter
 _L5C96  cpy     #$ff
         bne     _L5C9C
         ldy     #$07
 _L5C9C  sty     WhatIsThis
         clc
-        lda     V_CarPositionVertLow
+        lda     V_CarPositionVertLow ;Location used by other sprites for positioning.
         adc     #$02
-        sta     V_CarPositionVertLow
+        sta     V_CarPositionVertLow ;Location used by other sprites for positioning.
         bcc     _L5CAD
-        inc     V_CarPositionVertHigh
+        inc     V_CarPositionVertHigh ;Location used by other sprites for positioning.
 _L5CAD  lda     #$00
-        sta     $0341
+        sta     V_MapDrawSpeed-1
         sta     V_RegisterCollision ;Reset car collision value
-        lda     $03a7
-        bne     _L5CBE
+        lda     V_ScrollCounter
+        bne     Sub_LoadNewMapRow
         rts
 
         .byte   $60
         .byte   $60
         .byte   $ea
 
-_L5CBE  lda     $03a7
-        and     #$01
-        beq     _L5D08
+Sub_LoadNewMapRow
+        lda     V_ScrollCounter ;North/South = #02. East/West = #01.
+        and     #$01       ;North/South = #00. East/West = #01.
+        beq     _L5D08     ;Branch if North/South
         lda     V_CarFacingDirection ;00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
-        ora     V_ForwardReverse
+        ora     V_ForwardReverse ;#00 Forward / #08 Reverse
         tax
         lda     $0350,x
         bmi     _L5CED
         clc
-        adc     AndWhatIsThis
-        sta     AndWhatIsThis
+        adc     V_MapRow
+        sta     V_MapRow
         bcc     _L5CDD
-        inc     WhatEvenIsThis
+        inc     V_MapLoadAddressLow
 _L5CDD  ldy     $0334
         dey
         cpy     #$fe
@@ -9635,30 +9638,30 @@ _L5CE7  sty     $0334
         jmp     _L5D08
 
 _L5CED  sec
-        lda     AndWhatIsThis
+        lda     V_MapRow
         sbc     #$01
-        sta     AndWhatIsThis
+        sta     V_MapRow
         bcs     _L5CFB
-        dec     WhatEvenIsThis
+        dec     V_MapLoadAddressLow
 _L5CFB  ldy     $0334
         iny
         cpy     #$02
         bne     _L5D05
         ldy     #$ff
 _L5D05  sty     $0334
-_L5D08  lda     $03a7
-        and     #$02
+_L5D08  lda     V_ScrollCounter ;North/South = #02. East/West = #01.
+        and     #$02       ;North/South = #02. East/West = #00.
         beq     _L5D52
         lda     V_CarFacingDirection ;00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
-        ora     V_ForwardReverse
+        ora     V_ForwardReverse ;#00 Forward / #08 Reverse
         tax
-        lda     $0360,x
+        lda     $0360,x    ;North = #fe
         bmi     _L5D37
         clc
-        adc     AndWhatIsThis
-        sta     AndWhatIsThis
+        adc     V_MapRow
+        sta     V_MapRow
         bcc     _L5D27
-        inc     WhatEvenIsThis
+        inc     V_MapLoadAddressLow
 _L5D27  ldy     $0335
         dey
         cpy     #$fe
@@ -9668,11 +9671,11 @@ _L5D31  sty     $0335
         jmp     _L5D52
 
 _L5D37  sec
-        lda     AndWhatIsThis
-        sbc     #$7e
-        sta     AndWhatIsThis
+        lda     V_MapRow   ;Load map address
+        sbc     #$7e       ;#7e = 126 which is the width of the map
+        sta     V_MapRow   ;Update map row
         bcs     _L5D45
-        dec     WhatEvenIsThis
+        dec     V_MapLoadAddressLow
 _L5D45  ldy     $0335
         iny
         cpy     #$02
@@ -9681,34 +9684,36 @@ _L5D45  ldy     $0335
 _L5D4F  sty     $0335
 _L5D52  ldx     #$0d
         lda     #$df
-        sta     _L5D6F+1   ;Self-modifying code
+        sta     V_ScreenAddress+1 ;Self-modifying code
         lda     #$05
-        sta     _L5D6F+2   ;Self-modifying code
-        lda     AndWhatIsThis
-        sta     _L5D6C+1
-        lda     WhatEvenIsThis
-        sta     _L5D6C+2   ;Self-modifying code
-_L5D6A  ldy     #$28       ;#28 = 40. This would be a row of the map.
-_L5D6C  lda     LA3D1,y
-_L5D6F  sta     V_MapScreen,y ;Update map
+        sta     V_ScreenAddress+2 ;Self-modifying code
+        lda     V_MapRow
+        sta     Loop_MapScreenUpdate+1 ;V_MapLoadAddressHigh
+        lda     V_MapLoadAddressLow
+        sta     Loop_MapScreenUpdate+2 ;Self-modifying code
+L5D6A   ldy     #$28       ;#28 = 40. This would be a row of the map.
+Loop_MapScreenUpdate
+        lda     LA3D1,y
+V_ScreenAddress
+        sta     V_MapScreen,y ;Update map
         dey
-        bne     _L5D6C
+        bne     Loop_MapScreenUpdate ;Loop until 40 characters are updated
         clc
-        lda     _L5D6C+1
+        lda     Loop_MapScreenUpdate+1
         adc     #$7e
-        sta     _L5D6C+1   ;Self-modifying code
+        sta     Loop_MapScreenUpdate+1 ;Self-modifying code
         bcc     _L5D83
-        inc     _L5D6C+2   ;Self-modifying code
+        inc     Loop_MapScreenUpdate+2 ;Self-modifying code
 _L5D83  clc
-        lda     _L5D6F+1
+        lda     V_ScreenAddress+1
         adc     #$28
-        sta     _L5D6F+1   ;Self-modifying code
+        sta     V_ScreenAddress+1 ;Self-modifying code
         bcc     _L5D91
-        inc     _L5D6F+2   ;Self-modifying code
+        inc     V_ScreenAddress+2 ;Self-modifying code
 _L5D91  dex
-        bne     _L5D6A     ;Continue to update the screen row until zero.
+        bne     L5D6A      ;Continue to update the screen row until zero.
         lda     #$00
-        sta     $03a7
+        sta     V_ScrollCounter
         inc     $0336      ;Used to synchronise the 3D view
         rts
 
@@ -9717,22 +9722,22 @@ _L5D91  dex
         .byte   $60
 
 S_MapScrolling
-        lda     $02ff
+        lda     $02ff      ;Seems to always be #00
         bne     _L5DB9
-        ldx     $0342
+        ldx     V_MapDrawSpeed
         dex
         bpl     _L5DB6
         lda     V_CarSpeed
-        lsr     a
-        lsr     a
-        sta     $0342
+        lsr     a          ;Halve value
+        lsr     a          ;Halve value
+        sta     V_MapDrawSpeed
         jmp     _L5DBA
 
-_L5DB6  stx     $0342
+_L5DB6  stx     V_MapDrawSpeed
 _L5DB9  rts
 
 _L5DBA  lda     V_CarFacingDirection ;00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
-        sta     V_CarDirectionTemp
+        sta     V_CarFacingDirectionTemp
         jsr     L5C00
         rts
 

@@ -21,23 +21,6 @@
 "PlatformSymbolFileIdentifiers":["RT:Commodore/C64-Kernal.sym65"],
 "ExtensionScriptFileIdentifiers":["RT:Commodore/VisC64.cs"],
 "ProjectSyms":{
-"AndWhatIsThis":{
-"DataDescriptor":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Hex",
-"SymbolRef":null},
-
-"Comment":"",
-"HasWidth":false,
-"Direction":"ReadWrite",
-"MultiMask":null,
-"Label":"AndWhatIsThis",
-"Value":828,
-"Source":"Project",
-"Type":"ExternalAddr",
-"LabelAnno":"None"},
-
 "BRK_serv_address_high":{
 "DataDescriptor":{
 "Length":1,
@@ -276,23 +259,6 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"V_CarDirectionTemp":{
-"DataDescriptor":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Hex",
-"SymbolRef":null},
-
-"Comment":"",
-"HasWidth":false,
-"Direction":"ReadWrite",
-"MultiMask":null,
-"Label":"V_CarDirectionTemp",
-"Value":839,
-"Source":"Project",
-"Type":"ExternalAddr",
-"LabelAnno":"None"},
-
 "V_CarFacingDirection":{
 "DataDescriptor":{
 "Length":1,
@@ -306,6 +272,23 @@
 "MultiMask":null,
 "Label":"V_CarFacingDirection",
 "Value":928,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"V_CarFacingDirectionTemp":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_CarFacingDirectionTemp",
+"Value":839,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -419,7 +402,7 @@
 "SubFormat":"Hex",
 "SymbolRef":null},
 
-"Comment":"",
+"Comment":"#00 Forward / #08 Reverse",
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
@@ -442,6 +425,57 @@
 "MultiMask":null,
 "Label":"V_HorzRasterScrollLoop",
 "Value":830,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"V_MapDrawSpeed":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_MapDrawSpeed",
+"Value":834,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"V_MapLoadAddressLow":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_MapLoadAddressLow",
+"Value":829,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"V_MapRow":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_MapRow",
+"Value":828,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -527,6 +561,23 @@
 "MultiMask":null,
 "Label":"V_RegisterCollision",
 "Value":838,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"V_ScrollCounter":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_ScrollCounter",
+"Value":935,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -646,23 +697,6 @@
 "MultiMask":null,
 "Label":"V_SpritePointerIndex",
 "Value":174,
-"Source":"Project",
-"Type":"ExternalAddr",
-"LabelAnno":"None"},
-
-"WhatEvenIsThis":{
-"DataDescriptor":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Hex",
-"SymbolRef":null},
-
-"Comment":"",
-"HasWidth":false,
-"Direction":"ReadWrite",
-"MultiMask":null,
-"Label":"WhatEvenIsThis",
-"Value":829,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -981,27 +1015,70 @@
 "19280":"Update other part of steering wheel",
 "19283":"Get Joystick inputs",
 "19286":"#00 Forward / #08 Reverse",
+"19289":"Branch if no forward/back input received",
+"19291":"Seems always to be #00",
 "19323":"#00 Forward / #08 Reverse",
 "19328":"#00 Forward / #08 Reverse",
 "19357":"#00 Forward / #08 Reverse",
 "19458":"00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW",
 "19461":"#00 Forward / #08 Reverse",
 "19465":"Load data from array with Forward/Reverse and Direction data",
-"19468":"Branch if going north",
+"19468":"Branch for vertical scroll",
+"19470":"Branch for horizontal scroll",
+"19472":"Continue for diagonal scroll",
+"19488":"Location used by other sprites for positioning.",
+"19492":"Location used by other sprites for positioning.",
+"19497":"Location used by other sprites for positioning.",
+"19502":"Location used by other sprites for positioning.",
+"19508":"Load loop value. Starts at #06.",
+"19513":"Subtract #fe from Y",
+"19515":"Branch if Y equal to #fe",
+"19519":"Store #01 to $03a7",
+"19522":"Reset loop",
+"19524":"Set loop value",
+"19528":"Location used by other sprites for positioning.",
+"19531":"Add #02 to V_CarPosHorizontalLow",
+"19533":"Store value back to V_CarPosHorizontalLow",
+"19538":"Location used by other sprites for positioning.",
+"19541":"Load the value from $0380,x which is $0380, Direction (e.g. 02 for east)",
+"19544":"Branch if not North/South direction",
+"19546":"Branch if South",
+"19575":"Location used by other sprites for positioning.",
+"19580":"Location used by other sprites for positioning.",
+"19585":"Location used by other sprites for positioning.",
+"19618":"Location used by other sprites for positioning.",
+"19623":"Location used by other sprites for positioning.",
+"19628":"Location used by other sprites for positioning.",
 "19636":"Reset car collision value",
+"19648":"North/South = #02. East/West = #01.",
+"19651":"North/South = #00. East/West = #01.",
+"19653":"Branch if North/South",
 "19655":"00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW",
+"19658":"#00 Forward / #08 Reverse",
+"19722":"North/South = #02. East/West = #01.",
+"19725":"North/South = #02. East/West = #00.",
 "19729":"00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW",
+"19732":"#00 Forward / #08 Reverse",
+"19736":"North = #fe",
+"19770":"Load map address",
+"19773":"#7e = 126 which is the width of the map",
+"19775":"Update map row",
 "19800":"Self-modifying code",
 "19805":"Self-modifying code",
+"19811":"V_MapLoadAddressHigh",
 "19817":"Self-modifying code",
 "19820":"#28 = 40. This would be a row of the map.",
 "19825":"Update map",
+"19829":"Loop until 40 characters are updated",
 "19837":"Self-modifying code",
 "19842":"Self-modifying code",
 "19851":"Self-modifying code",
 "19856":"Self-modifying code",
 "19860":"Continue to update the screen row until zero.",
 "19867":"Used to synchronise the 3D view",
+"19874":"Seems to always be #00",
+"19888":"Halve value",
+"19889":"Halve value",
 "19900":"00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW",
 "22834":"Seems related to Mayday rotation"},
 
@@ -1035,7 +1112,7 @@
 "Text":"Sprite coordinates",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":-5383962},
+"BackgroundColor":-256},
 
 "12898":{
 "Text":"Joystick routine",
@@ -1799,6 +1876,27 @@
 "19190":{
 "Label":"Sub_LeftRightInput",
 "Value":23284,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"19825":{
+"Label":"V_ScreenAddress",
+"Value":23919,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"19648":{
+"Label":"Sub_LoadNewMapRow",
+"Value":23742,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"19822":{
+"Label":"Loop_MapScreenUpdate",
+"Value":23916,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
