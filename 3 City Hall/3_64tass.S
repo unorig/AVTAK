@@ -1,6 +1,12 @@
 ; Target assembler: 64tass v1.56.2625 [--ascii --case-sensitive -Wall]
 ; 6502bench SourceGen v1.8.3
         .cpu    "6502"
+V_LeftRightInput = $0339
+V_UpDownInput = $033a
+V_FireEvent =   $033b
+BASIN   =       $ffcf      ;($0324/ichrin) input vector, chrin
+BSOUT   =       $ffd2      ;($0326/ichrout) output vector, chrout
+
 *       =       $09d0
         .byte   $ff
         .byte   $48
@@ -14,7 +20,11 @@
         .byte   $02
         .byte   $68
         .byte   $60
-        .fill   5,$68
+        .byte   $68
+        .byte   $68
+        .byte   $68
+        .byte   $68
+        .byte   $68
         .byte   $4c
         .byte   $76
         .byte   $09
@@ -97,7 +107,10 @@
         .byte   $01
         .byte   $99
         .byte   $00
-        .text   "X",$99,"pX"
+        .byte   $d8
+        .byte   $99
+        .byte   $50
+        .byte   $d8
         .byte   $88
         .byte   $d0
         .byte   $ed
@@ -120,10 +133,189 @@
         .byte   $c8
         .byte   $d0
         .byte   $f3
-        .text   "lm",$0a,"         congratulations 007                         "
-        .text   "                           mission complete                   "
-        .text   "     your code for the next program is                     ilv"
-        .text   "ct "
+        .byte   $4c
+        .byte   $4d
+        .byte   $0a
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $43
+        .byte   $4f
+        .byte   $4e
+        .byte   $47
+        .byte   $52
+        .byte   $41
+        .byte   $54
+        .byte   $55
+        .byte   $4c
+        .byte   $41
+        .byte   $54
+        .byte   $49
+        .byte   $4f
+        .byte   $4e
+        .byte   $53
+        .byte   $20
+        .byte   $30
+        .byte   $30
+        .byte   $37
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $4d
+        .byte   $49
+        .byte   $53
+        .byte   $53
+        .byte   $49
+        .byte   $4f
+        .byte   $4e
+        .byte   $20
+        .byte   $43
+        .byte   $4f
+        .byte   $4d
+        .byte   $50
+        .byte   $4c
+        .byte   $45
+        .byte   $54
+        .byte   $45
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $59
+        .byte   $4f
+        .byte   $55
+        .byte   $52
+        .byte   $20
+        .byte   $43
+        .byte   $4f
+        .byte   $44
+        .byte   $45
+        .byte   $20
+        .byte   $46
+        .byte   $4f
+        .byte   $52
+        .byte   $20
+        .byte   $54
+        .byte   $48
+        .byte   $45
+        .byte   $20
+        .byte   $4e
+        .byte   $45
+        .byte   $58
+        .byte   $54
+        .byte   $20
+        .byte   $50
+        .byte   $52
+        .byte   $4f
+        .byte   $47
+        .byte   $52
+        .byte   $41
+        .byte   $4d
+        .byte   $20
+        .byte   $49
+        .byte   $53
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $49
+        .byte   $4c
+        .byte   $56
+        .byte   $43
+        .byte   $54
+        .byte   $20
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -184,7 +376,18 @@
         .byte   $40
         .byte   $48
         .byte   $f4
-        .text   "@nes",$0d,$0d,$0d,"Jex o"
+        .byte   $40
+        .byte   $4e
+        .byte   $45
+        .byte   $53
+        .byte   $0d
+        .byte   $0d
+        .byte   $0d
+        .byte   $ca
+        .byte   $45
+        .byte   $58
+        .byte   $20
+        .byte   $4f
         .byte   $06
         .byte   $c3
         .byte   $03
@@ -196,11 +399,34 @@
         .byte   $12
         .byte   $e2
         .byte   $09
-        .text   "f nmn",$05,") ? mmr",$0a,"e"
+        .byte   $46
+        .byte   $20
+        .byte   $4e
+        .byte   $4d
+        .byte   $4e
+        .byte   $05
+        .byte   $29
+        .byte   $20
+        .byte   $3f
+        .byte   $20
+        .byte   $4d
+        .byte   $4d
+        .byte   $52
+        .byte   $0a
+        .byte   $45
         .byte   $03
-        .text   "t fil",$05," "
+        .byte   $54
+        .byte   $20
+        .byte   $46
+        .byte   $49
+        .byte   $4c
+        .byte   $05
+        .byte   $20
         .byte   $0e
-        .text   "ame "
+        .byte   $41
+        .byte   $4d
+        .byte   $45
+        .byte   $20
         .byte   $7f
         .byte   $a0
         .byte   $aa
@@ -291,7 +517,10 @@
         .byte   $07
         .byte   $1d
         .byte   $f0
-        .text   "-B-C"
+        .byte   $2d
+        .byte   $c2
+        .byte   $2d
+        .byte   $c3
         .byte   $16
         .byte   $c7
         .byte   $06
@@ -334,19 +563,93 @@
         .byte   $a6
         .byte   $b6
         .byte   $ae
-        .text   $9f,"@=@"
+        .byte   $9f
+        .byte   $40
+        .byte   $3d
+        .byte   $40
         .byte   $04
-        .fill   65,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
         .byte   $bf
         .byte   $00
         .byte   $7d
-        .text   "M5@",$9f
+        .byte   $cd
+        .byte   $35
+        .byte   $40
+        .byte   $9f
         .byte   $00
         .byte   $a2
         .byte   $00
         .byte   $0c
-        .text   "@5b?K"
+        .byte   $40
+        .byte   $35
+        .byte   $42
+        .byte   $3f
+        .byte   $cb
         .byte   $8e
         .byte   $c8
         .byte   $09
@@ -376,13 +679,21 @@
         .byte   $79
         .byte   $48
         .byte   $7f
-        .text   "o",$98,"h $"
+        .byte   $4f
+        .byte   $98
+        .byte   $48
+        .byte   $20
+        .byte   $24
         .byte   $7d
         .byte   $e2
         .byte   $01
         .byte   $ce
         .byte   $bb
-        .text   "H B=@"
+        .byte   $c8
+        .byte   $20
+        .byte   $c2
+        .byte   $3d
+        .byte   $40
         .byte   $7d
         .byte   $d8
         .byte   $4c
@@ -487,7 +798,11 @@
         .byte   $ff
         .byte   $eb
         .byte   $0c
-        .text   $90,"'@5q"
+        .byte   $90
+        .byte   $27
+        .byte   $40
+        .byte   $35
+        .byte   $51
         .byte   $ff
         .byte   $00
         .byte   $ae
@@ -578,7 +893,10 @@
         .byte   $bf
         .byte   $00
         .byte   $b9
-        .text   "P5@",$9f
+        .byte   $d0
+        .byte   $35
+        .byte   $40
+        .byte   $9f
         .byte   $00
         .byte   $ac
         .byte   $6b
@@ -606,12 +924,20 @@
         .byte   $07
         .byte   $a9
         .byte   $00
-        .text   " clH"
+        .byte   $20
+        .byte   $43
+        .byte   $4c
+        .byte   $c8
         .byte   $ff
         .byte   $a9
         .byte   $2b
         .byte   $00
-        .text   "Ic]h 3"
+        .byte   $c9
+        .byte   $43
+        .byte   $5d
+        .byte   $48
+        .byte   $20
+        .byte   $33
         .byte   $1b
         .byte   $24
         .byte   $01
@@ -654,7 +980,10 @@
         .byte   $bf
         .byte   $80
         .byte   $bf
-        .text   "@",$22,"@?"
+        .byte   $40
+        .byte   $22
+        .byte   $40
+        .byte   $3f
         .byte   $80
         .byte   $bf
         .byte   $80
@@ -700,7 +1029,12 @@
         .byte   $c5
         .byte   $06
         .byte   $f2
-        .text   "=B=@-t"
+        .byte   $3d
+        .byte   $c2
+        .byte   $3d
+        .byte   $40
+        .byte   $2d
+        .byte   $54
         .byte   $08
         .byte   $cb
         .byte   $bf
@@ -789,7 +1123,11 @@
         .byte   $bf
         .byte   $00
         .byte   $03
-        .text   "l",$9c,"u=@"
+        .byte   $4c
+        .byte   $9c
+        .byte   $55
+        .byte   $3d
+        .byte   $40
         .byte   $bf
         .byte   $c9
         .byte   $ab
@@ -821,15 +1159,27 @@
         .byte   $08
         .byte   $c2
         .byte   $ad
-        .text   "B=lhu "
+        .byte   $c2
+        .byte   $3d
+        .byte   $4c
+        .byte   $48
+        .byte   $55
+        .byte   $20
         .byte   $fe
         .byte   $16
-        .text   "Nuh0p"
+        .byte   $ce
+        .byte   $55
+        .byte   $48
+        .byte   $30
+        .byte   $50
         .byte   $bf
         .byte   $00
         .byte   $bf
         .byte   $00
-        .text   " cl@"
+        .byte   $20
+        .byte   $43
+        .byte   $4c
+        .byte   $40
         .byte   $15
         .byte   $a9
         .byte   $13
@@ -935,7 +1285,10 @@
         .byte   $15
         .byte   $ad
         .byte   $6c
-        .text   "=b=B"
+        .byte   $3d
+        .byte   $42
+        .byte   $3d
+        .byte   $c2
         .byte   $ad
         .byte   $ef
         .byte   $08
@@ -1043,7 +1396,10 @@
         .byte   $20
         .byte   $9f
         .byte   $00
-        .text   "?@u@"
+        .byte   $3f
+        .byte   $40
+        .byte   $55
+        .byte   $40
         .byte   $f0
         .byte   $40
         .byte   $fd
@@ -1053,14 +1409,25 @@
         .byte   $3d
         .byte   $c2
         .byte   $df
-        .text   "@)c,B"
+        .byte   $40
+        .byte   $29
+        .byte   $43
+        .byte   $2c
+        .byte   $c2
         .byte   $af
-        .text   "B=h p"
+        .byte   $c2
+        .byte   $3d
+        .byte   $48
+        .byte   $20
+        .byte   $50
         .byte   $8c
         .byte   $da
         .byte   $08
         .byte   $a8
-        .text   "@cpa"
+        .byte   $40
+        .byte   $43
+        .byte   $50
+        .byte   $41
         .byte   $bf
         .byte   $00
         .byte   $bf
@@ -1173,8 +1540,26 @@
         .byte   $bf
         .byte   $8a
         .byte   $ac
-        .text   "Z=b="
-        .fill   16,$ff
+        .byte   $da
+        .byte   $3d
+        .byte   $42
+        .byte   $3d
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $20
         .byte   $e4
         .byte   $ff
@@ -1185,394 +1570,2735 @@
         .byte   $4c
         .byte   $00
         .byte   $10
-        .fill   22,$fe
-        .byte   $78
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $20
-        .byte   $d0
-        .byte   $8d
-        .byte   $21
-        .byte   $d0
-        .byte   $8d
-        .byte   $22
-        .byte   $d0
-        .byte   $8d
-        .byte   $23
-        .byte   $d0
-        .byte   $a9
-        .byte   $10
-        .byte   $8d
-        .byte   $18
-        .byte   $10
-        .byte   $a0
-        .byte   $00
-        .byte   $b9
-        .byte   $29
-        .byte   $10
-        .byte   $c9
-        .byte   $ff
-        .byte   $f0
-        .byte   $6b
-        .byte   $20
-        .byte   $d2
-        .byte   $ff
-        .byte   $c8
-        .byte   $d0
-        .byte   $f3
-        .byte   $ee
-        .byte   $18
-        .byte   $10
-        .byte   $4c
-        .byte   $16
-        .byte   $10
-        .byte   $93
-        .byte   $08
-        .byte   $11
-        .fill   9,$1d
-        .text   $9e,"please enter code",$0d
-        .fill   6,$11
-        .text   $96,"if you have not completed paris",$0d
-        .byte   $11
-        .text   "please hit return",$0d
-        .fill   5,$11
-        .byte   $ff
-        .byte   $a0
-        .byte   $00
-        .byte   $20
-        .byte   $cf
-        .byte   $ff
-        .byte   $c9
-        .byte   $00
-        .byte   $f0
-        .byte   $f9
-        .byte   $99
-        .byte   $ce
-        .byte   $10
-        .byte   $c8
-        .byte   $c9
-        .byte   $0d
-        .byte   $f0
-        .byte   $2d
-        .byte   $c0
-        .byte   $05
-        .byte   $d0
-        .byte   $ed
-        .byte   $a0
-        .byte   $00
-        .byte   $b9
-        .byte   $ce
-        .byte   $10
-        .byte   $d9
-        .byte   $d8
-        .byte   $10
-        .byte   $d0
-        .byte   $0d
-        .byte   $c8
-        .byte   $c0
-        .byte   $05
-        .byte   $d0
-        .byte   $f3
-        .byte   $a9
-        .byte   $01
-        .byte   $8d
-        .byte   $a0
-        .byte   $1b
-        .byte   $4c
-        .byte   $00
-        .byte   $18
-        .byte   $a9
-        .byte   $0d
-        .byte   $20
-        .byte   $d2
-        .byte   $ff
-        .byte   $a9
-        .byte   $91
-        .byte   $20
-        .byte   $d2
-        .byte   $ff
-        .byte   $a9
-        .byte   $20
-        .byte   $20
-        .byte   $d2
-        .byte   $ff
-        .byte   $4c
-        .byte   $88
-        .byte   $10
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $a0
-        .byte   $1b
-        .byte   $4c
-        .byte   $00
-        .byte   $18
-        .byte   $20
-        .byte   $0d
-        .fill   8,$00
-        .text   "ccphj"
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .fill   32,$fe
-        .byte   $7f
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
-        .byte   $02
-        .fill   31,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
-        .byte   $a0
-        .byte   $1f
-        .byte   $b9
-        .byte   $10
-        .byte   $12
-        .byte   $99
-        .byte   $60
-        .byte   $48
-        .byte   $88
-        .byte   $10
-        .byte   $f7
-        .byte   $60
-        .byte   $ff
-        .byte   $ff
-        .byte   $ff
-        .byte   $ff
-        .byte   $3f
-        .byte   $40
-        .fill   6,$80
-        .byte   $fc
-        .byte   $02
-        .fill   6,$01
-        .fill   6,$80
-        .byte   $40
-        .byte   $3f
-        .fill   6,$01
-        .byte   $02
-        .byte   $fc
-        .byte   $00
-        .fill   16,$ff
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$ff
-        .fill   32,$fe
-        .fill   16,$ff
-        .byte   $ab
-        .fill   15,$ff
-        .fill   32,$fe
-        .byte   $78
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $15
-        .byte   $d0
-        .byte   $8d
-        .byte   $21
-        .byte   $d0
-        .byte   $a9
-        .byte   $17
-        .byte   $8d
-        .byte   $18
-        .byte   $d0
-        .byte   $ea
-        .byte   $a0
-        .byte   $00
-        .byte   $a9
-        .byte   $20
-        .byte   $99
-        .byte   $00
-        .byte   $04
-        .byte   $99
-        .byte   $00
-        .byte   $05
-        .byte   $a9
-        .byte   $01
-        .byte   $99
-        .byte   $00
-        .text   "X",$99,"hX"
-        .byte   $88
-        .byte   $d0
-        .byte   $ef
-        .byte   $b9
-        .byte   $34
-        .byte   $13
-        .byte   $c9
-        .byte   $ff
-        .byte   $f0
-        .byte   $06
-        .byte   $99
-        .byte   $28
-        .byte   $04
-        .byte   $c8
-        .byte   $d0
-        .byte   $f3
-        .byte   $4c
-        .byte   $31
-        .byte   $13
-        .text   "         congratulations 007                                  "
-        .text   "                  mission complete                        your"
-        .text   " code for the next program is                     db4ct "
-        .byte   $ff
-        .fill   23,$00
-        .byte   $77
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
-        .fill   32,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
-        .byte   $77
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
-        .fill   32,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
-        .byte   $7f
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
-        .fill   32,$ff
-        .fill   32,$fe
-        .fill   15,$ff
         .byte   $fe
-        .fill   16,$ff
-        .fill   32,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+
+        sei
+        lda     #$00       ;Load black
+        sta     LD020      ;Set border
+        sta     LD021      ;Set background color
+        sta     LD022      ;Set extra background Color
+        sta     LD023      ;Extended color mode
+        lda     #$10       ;Load #$10
+        sta     L1016+2    ;Set high byte of load address
+        ldy     #$00       ;Set loop value
+L1016   lda     _L1029,y   ;Load data from 1029,y
+        cmp     #$ff       ;Check if end of data (#ff is end character)
+        beq     _L1088     ;Branch if end character reached
+        jsr     BSOUT      ;Write character to screen
+        iny                ;Increase Y
+        bne     L1016      ;Continue reading using loop
+        inc     L1016+2
+        jmp     L1016
+
+_L1029  .byte   $93
+        .byte   $08
+        .byte   $11
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $9e
+        .enc    "screen"
+        .text   "PLEASE ENTER CODE"
+        .byte   $0d
+        .byte   $11
+        .byte   $11
+        .byte   $11
+        .byte   $11
+        .byte   $11
+        .byte   $11
+        .byte   $96
+        .text   "IF YOU HAVE NOT COMPLETED PARIS"
+        .byte   $0d
+        .byte   $11
+        .text   "PLEASE HIT RETURN"
+        .byte   $0d
+        .byte   $11
+        .byte   $11
+        .byte   $11
+        .byte   $11
+        .byte   $11
+        .byte   $ff
+
+_L1088  ldy     #$00
+_L108A  jsr     BASIN      ;Get input and present to screen. On enter check code.
+        cmp     #$00
+        beq     _L108A     ;Loop if nothing entered
+        sta     _L10CE,y
+        iny
+        cmp     #$0d
+        beq     _L10C6
+        cpy     #$05
+        bne     _L108A     ;Loop if not #05
+        ldy     #$00
+_L109F  lda     _L10CE,y
+        cmp     _L10D8,y
+        bne     _L10B4
+        iny
+        cpy     #$05
+        bne     _L109F
+        lda     #$01
+        sta     _L1BA0
+        jmp     _L1800
+
+_L10B4  lda     #$0d
+        jsr     BSOUT
+        lda     #$91
+        jsr     BSOUT
+        lda     #$20
+        jsr     BSOUT
+        jmp     _L1088
+
+_L10C6  lda     #$00
+        sta     _L1BA0
+        jmp     _L1800
+
+_L10CE  .byte   $20
+        .byte   $0d
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+_L10D8  .byte   $43
+        .byte   $43
+        .byte   $50
+        .byte   $48
+        .byte   $4a
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
-        .fill   32,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
-        .byte   $78
-        .byte   $a9
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .byte   $8d
-        .byte   $20
-        .byte   $d0
-        .byte   $8d
-        .byte   $21
-        .byte   $d0
-        .byte   $8d
-        .byte   $22
-        .byte   $d0
-        .byte   $8d
-        .byte   $23
-        .byte   $d0
-        .byte   $a9
-        .byte   $18
-        .byte   $8d
-        .byte   $18
-        .byte   $18
-        .byte   $a0
         .byte   $00
-        .byte   $b9
-        .byte   $37
-        .byte   $19
-        .byte   $c9
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $02
         .byte   $ff
-        .byte   $f0
-        .byte   $0c
-        .byte   $20
-        .byte   $d2
         .byte   $ff
-        .byte   $c8
-        .byte   $d0
-        .byte   $f3
-        .byte   $ee
-        .byte   $18
-        .byte   $18
-        .byte   $4c
-        .byte   $16
-        .byte   $18
-        .byte   $20
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+
+_L1200  ldy     #$1f
+_L1202  lda     _L1210,y
+        sta     _L4860,y
+        dey
+        bpl     _L1202
+        rts
+
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+_L1210  .byte   $3f
+        .byte   $40
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $fc
+        .byte   $02
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $40
+        .byte   $3f
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $02
+        .byte   $fc
         .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ab
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+
+_L1300  sei
+        lda     #$00
+        sta     _LD015
+        sta     LD021
+        lda     #$17
+        sta     _LD018
+        nop
+        ldy     #$00
+        lda     #$20
+_L1313  sta     $0400,y
+        sta     $0500,y
+        lda     #$01
+        sta     LD800,y
+        sta     LD848,y
+        dey
+        bne     _L1313
+_L1324  lda     _L1334,y
+        cmp     #$ff
+        beq     _L1331
+        sta     $0428,y
+        iny
+        bne     _L1324
+_L1331  jmp     _L1331
+
+_L1334  .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $43
+        .byte   $4f
+        .byte   $4e
         .byte   $47
-        .byte   $ad
-        .byte   $3b
-        .byte   $03
-        .byte   $f0
-        .byte   $f8
-        .byte   $a2
-        .byte   $f0
-        .byte   $9a
+        .byte   $52
+        .byte   $41
+        .byte   $54
+        .byte   $55
         .byte   $4c
+        .byte   $41
+        .byte   $54
+        .byte   $49
+        .byte   $4f
+        .byte   $4e
+        .byte   $53
+        .byte   $20
+        .byte   $30
+        .byte   $30
+        .byte   $37
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $4d
+        .byte   $49
+        .byte   $53
+        .byte   $53
+        .byte   $49
+        .byte   $4f
+        .byte   $4e
+        .byte   $20
+        .byte   $43
+        .byte   $4f
+        .byte   $4d
+        .byte   $50
+        .byte   $4c
+        .byte   $45
+        .byte   $54
+        .byte   $45
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $59
+        .byte   $4f
+        .byte   $55
+        .byte   $52
+        .byte   $20
+        .byte   $43
+        .byte   $4f
+        .byte   $44
+        .byte   $45
+        .byte   $20
+        .byte   $46
+        .byte   $4f
+        .byte   $52
+        .byte   $20
+        .byte   $54
+        .byte   $48
+        .byte   $45
+        .byte   $20
+        .byte   $4e
+        .byte   $45
+        .byte   $58
+        .byte   $54
+        .byte   $20
+        .byte   $50
+        .byte   $52
+        .byte   $4f
+        .byte   $47
+        .byte   $52
+        .byte   $41
+        .byte   $4d
+        .byte   $20
+        .byte   $49
+        .byte   $53
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $44
+        .byte   $42
+        .byte   $34
+        .byte   $43
+        .byte   $54
+        .byte   $20
+        .byte   $ff
         .byte   $00
-        .byte   $86
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $77
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $77
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $7f
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $7f
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+
+_L1800  sei
+        lda     #$00
+        sta     LD020
+        sta     LD021
+        sta     LD022
+        sta     LD023
+        lda     #$18
+        sta     _L1816+2
+        ldy     #$00
+_L1816  lda     _L1937,y
+        cmp     #$ff
+        beq     _L1829
+        jsr     BSOUT
+        iny
+        bne     _L1816
+        inc     _L1816+2
+        jmp     _L1816
+
+_L1829  jsr     _L4700
+        lda     V_FireEvent
+        beq     _L1829     ;Loop if no fire event
+        ldx     #$f0
+        txs
+        jmp     _L8600
+
         .byte   $93
         .byte   $08
         .byte   $11
-        .fill   9,$1d
-        .text   $9e,"press fire to start",$0d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $1d
+        .byte   $9e
+        .byte   $50
+        .byte   $52
+        .byte   $45
+        .byte   $53
+        .byte   $53
+        .byte   $20
+        .byte   $46
+        .byte   $49
+        .byte   $52
+        .byte   $45
+        .byte   $20
+        .byte   $54
+        .byte   $4f
+        .byte   $20
+        .byte   $53
+        .byte   $54
+        .byte   $41
+        .byte   $52
+        .byte   $54
+        .byte   $0d
         .byte   $11
         .byte   $11
         .byte   $1d
         .byte   $1d
         .byte   $1d
-        .text   $96,"memo from ",$22,"m",$22,"...",$0d,$9a
+        .byte   $96
+        .byte   $4d
+        .byte   $45
+        .byte   $4d
+        .byte   $4f
+        .byte   $20
+        .byte   $46
+        .byte   $52
+        .byte   $4f
+        .byte   $4d
+        .byte   $20
+        .byte   $22
+        .byte   $4d
+        .byte   $22
+        .byte   $2e
+        .byte   $2e
+        .byte   $2e
+        .byte   $0d
+        .byte   $9a
         .byte   $1d
         .byte   $11
-        .text   "bond! i hope you succeeded in capturing"
+        .byte   $42
+        .byte   $4f
+        .byte   $4e
+        .byte   $44
+        .byte   $21
+        .byte   $20
+        .byte   $49
+        .byte   $20
+        .byte   $48
+        .byte   $4f
+        .byte   $50
+        .byte   $45
+        .byte   $20
+        .byte   $59
+        .byte   $4f
+        .byte   $55
+        .byte   $20
+        .byte   $53
+        .byte   $55
+        .byte   $43
+        .byte   $43
+        .byte   $45
+        .byte   $45
+        .byte   $44
+        .byte   $45
+        .byte   $44
+        .byte   $20
+        .byte   $49
+        .byte   $4e
+        .byte   $20
+        .byte   $43
+        .byte   $41
+        .byte   $50
+        .byte   $54
+        .byte   $55
+        .byte   $52
+        .byte   $49
+        .byte   $4e
+        .byte   $47
         .byte   $00
         .byte   $1d
-        .text   "mayday. i haven't heard anything from",$0d
+        .byte   $4d
+        .byte   $41
+        .byte   $59
+        .byte   $44
+        .byte   $41
+        .byte   $59
+        .byte   $2e
+        .byte   $20
+        .byte   $49
+        .byte   $20
+        .byte   $48
+        .byte   $41
+        .byte   $56
+        .byte   $45
+        .byte   $4e
+        .byte   $27
+        .byte   $54
+        .byte   $20
+        .byte   $48
+        .byte   $45
+        .byte   $41
+        .byte   $52
+        .byte   $44
+        .byte   $20
+        .byte   $41
+        .byte   $4e
+        .byte   $59
+        .byte   $54
+        .byte   $48
+        .byte   $49
+        .byte   $4e
+        .byte   $47
+        .byte   $20
+        .byte   $46
+        .byte   $52
+        .byte   $4f
+        .byte   $4d
+        .byte   $0d
         .byte   $1d
-        .text   "you for days. if you did, your code",$0d
+        .byte   $59
+        .byte   $4f
+        .byte   $55
+        .byte   $20
+        .byte   $46
+        .byte   $4f
+        .byte   $52
+        .byte   $20
+        .byte   $44
+        .byte   $41
+        .byte   $59
+        .byte   $53
+        .byte   $2e
+        .byte   $20
+        .byte   $49
+        .byte   $46
+        .byte   $20
+        .byte   $59
+        .byte   $4f
+        .byte   $55
+        .byte   $20
+        .byte   $44
+        .byte   $49
+        .byte   $44
+        .byte   $2c
+        .byte   $20
+        .byte   $59
+        .byte   $4f
+        .byte   $55
+        .byte   $52
+        .byte   $20
+        .byte   $43
+        .byte   $4f
+        .byte   $44
+        .byte   $45
+        .byte   $0d
         .byte   $1d
-        .text   "will help you. if you have no code ",$0d
+        .byte   $57
+        .byte   $49
+        .byte   $4c
+        .byte   $4c
+        .byte   $20
+        .byte   $48
+        .byte   $45
+        .byte   $4c
+        .byte   $50
+        .byte   $20
+        .byte   $59
+        .byte   $4f
+        .byte   $55
+        .byte   $2e
+        .byte   $20
+        .byte   $49
+        .byte   $46
+        .byte   $20
+        .byte   $59
+        .byte   $4f
+        .byte   $55
+        .byte   $20
+        .byte   $48
+        .byte   $41
+        .byte   $56
+        .byte   $45
+        .byte   $20
+        .byte   $4e
+        .byte   $4f
+        .byte   $20
+        .byte   $43
+        .byte   $4f
+        .byte   $44
+        .byte   $45
+        .byte   $20
+        .byte   $0d
         .byte   $1d
-        .text   "you'll just have to try harder. don't",$0d
+        .byte   $59
+        .byte   $4f
+        .byte   $55
+        .byte   $27
+        .byte   $4c
+        .byte   $4c
+        .byte   $20
+        .byte   $4a
+        .byte   $55
+        .byte   $53
+        .byte   $54
+        .byte   $20
+        .byte   $48
+        .byte   $41
+        .byte   $56
+        .byte   $45
+        .byte   $20
+        .byte   $54
+        .byte   $4f
+        .byte   $20
+        .byte   $54
+        .byte   $52
+        .byte   $59
+        .byte   $20
+        .byte   $48
+        .byte   $41
+        .byte   $52
+        .byte   $44
+        .byte   $45
+        .byte   $52
+        .byte   $2e
+        .byte   $20
+        .byte   $44
+        .byte   $4f
+        .byte   $4e
+        .byte   $27
+        .byte   $54
+        .byte   $0d
         .byte   $1d
-        .text   "fail me james, i'm very fond of that ",$0d
+        .byte   $46
+        .byte   $41
+        .byte   $49
+        .byte   $4c
+_L1937  .byte   $20
+        .byte   $4d
+        .byte   $45
+        .byte   $20
+        .byte   $4a
+        .byte   $41
+        .byte   $4d
+        .byte   $45
+        .byte   $53
+        .byte   $2c
+        .byte   $20
+        .byte   $49
+        .byte   $27
+        .byte   $4d
+        .byte   $20
+        .byte   $56
+        .byte   $45
+        .byte   $52
+        .byte   $59
+        .byte   $20
+        .byte   $46
+        .byte   $4f
+        .byte   $4e
+        .byte   $44
+        .byte   $20
+        .byte   $4f
+        .byte   $46
+        .byte   $20
+        .byte   $54
+        .byte   $48
+        .byte   $41
+        .byte   $54
+        .byte   $20
+        .byte   $0d
         .byte   $1d
-        .text   "girl!",$0d
+        .byte   $47
+        .byte   $49
+        .byte   $52
+        .byte   $4c
+        .byte   $21
+        .byte   $0d
         .byte   $11
         .byte   $11
         .byte   $1d
         .byte   $1d
         .byte   $1d
         .byte   $03
-        .text   "memo from ",$22,"q",$22,"...",$0d
+        .byte   $4d
+        .byte   $45
+        .byte   $4d
+        .byte   $4f
+        .byte   $20
+        .byte   $46
+        .byte   $52
+        .byte   $4f
+        .byte   $4d
+        .byte   $20
+        .byte   $22
+        .byte   $51
+        .byte   $22
+        .byte   $2e
+        .byte   $2e
+        .byte   $2e
+        .byte   $0d
         .byte   $1d
         .byte   $11
-        .text   "don't play around with that thing ",$0d
+        .byte   $44
+        .byte   $4f
+        .byte   $4e
+        .byte   $27
+        .byte   $54
+        .byte   $20
+        .byte   $50
+        .byte   $4c
+        .byte   $41
+        .byte   $59
+        .byte   $20
+        .byte   $41
+        .byte   $52
+        .byte   $4f
+        .byte   $55
+        .byte   $4e
+        .byte   $44
+        .byte   $20
+        .byte   $57
+        .byte   $49
+        .byte   $54
+        .byte   $48
+        .byte   $20
+        .byte   $54
+        .byte   $48
+        .byte   $41
+        .byte   $54
+        .byte   $20
+        .byte   $54
+        .byte   $48
+        .byte   $49
+        .byte   $4e
+        .byte   $47
+        .byte   $20
+        .byte   $0d
         .byte   $1d
-        .text   "james! you've got work to do. remember",$0d
+        .byte   $4a
+        .byte   $41
+        .byte   $4d
+        .byte   $45
+        .byte   $53
+        .byte   $21
+        .byte   $20
+        .byte   $59
+        .byte   $4f
+        .byte   $55
+        .byte   $27
+        .byte   $56
+        .byte   $45
+        .byte   $20
+        .byte   $47
+        .byte   $4f
+        .byte   $54
+        .byte   $20
+        .byte   $57
+        .byte   $4f
+        .byte   $52
+        .byte   $4b
+        .byte   $20
+        .byte   $54
+        .byte   $4f
+        .byte   $20
+        .byte   $44
+        .byte   $4f
+        .byte   $2e
+        .byte   $20
+        .byte   $52
+        .byte   $45
+        .byte   $4d
+        .byte   $45
+        .byte   $4d
+        .byte   $42
+        .byte   $45
+        .byte   $52
+        .byte   $0d
         .byte   $1d
-        .text   "to use the gadgets i gave you carefully"
+        .byte   $54
+        .byte   $4f
+        .byte   $20
+        .byte   $55
+        .byte   $53
+        .byte   $45
+        .byte   $20
+        .byte   $54
+        .byte   $48
+        .byte   $45
+        .byte   $20
+        .byte   $47
+        .byte   $41
+        .byte   $44
+        .byte   $47
+        .byte   $45
+        .byte   $54
+        .byte   $53
+        .byte   $20
+        .byte   $49
+        .byte   $20
+        .byte   $47
+        .byte   $41
+        .byte   $56
+        .byte   $45
+        .byte   $20
+        .byte   $59
+        .byte   $4f
+        .byte   $55
+        .byte   $20
+        .byte   $43
+        .byte   $41
+        .byte   $52
+        .byte   $45
+        .byte   $46
+        .byte   $55
+        .byte   $4c
+        .byte   $4c
+        .byte   $59
         .byte   $1d
-        .text   "some of them are very dangerous."
+        .byte   $53
+        .byte   $4f
+        .byte   $4d
+        .byte   $45
+        .byte   $20
+        .byte   $4f
+        .byte   $46
+        .byte   $20
+        .byte   $54
+        .byte   $48
+        .byte   $45
+        .byte   $4d
+        .byte   $20
+        .byte   $41
+        .byte   $52
+        .byte   $45
+        .byte   $20
+        .byte   $56
+        .byte   $45
+        .byte   $52
+        .byte   $59
+        .byte   $20
+        .byte   $44
+        .byte   $41
+        .byte   $4e
+        .byte   $47
+        .byte   $45
+        .byte   $52
+        .byte   $4f
+        .byte   $55
+        .byte   $53
+        .byte   $2e
         .byte   $ff
         .byte   $ff
         .byte   $ff
-        .fill   16,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
-        .fill   32,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $50
         .byte   $ff
         .byte   $ff
         .byte   $bf
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c1
-        .fill   52,$ff
-        .fill   6,$00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -1583,13 +4309,20 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .byte   $07
-        .byte   $08
+_L1B50  .byte   $07
+_L1B51  .byte   $08
         .byte   $14
-        .fill   8,$00
-        .byte   $27
-        .byte   $27
         .byte   $00
+        .byte   $00
+_L1B55  .byte   $00
+_L1B56  .byte   $00
+_L1B57  .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+_L1B5B  .byte   $27
+_L1B5C  .byte   $27
+_L1B5D  .byte   $00
         .byte   $00
         .byte   $00
         .byte   $04
@@ -1608,23 +4341,92 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fb
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $04
-        .byte   $00
+_L1B80  .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $bf
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c1
-        .fill   9,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
-        .fill   10,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+_L1BA0  .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
-        .fill   31,$ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -1635,11 +4437,28 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $09
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $32
         .byte   $00
         .byte   $00
@@ -1657,17 +4476,85 @@
         .byte   $00
         .byte   $00
         .byte   $fb
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $86
         .byte   $ff
         .byte   $ff
         .byte   $ff
         .byte   $bf
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c1
-        .fill   52,$ff
-        .fill   6,$00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -1678,11 +4565,28 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $09
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $32
         .byte   $00
         .byte   $00
@@ -1693,19 +4597,92 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fb
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $82
         .byte   $ff
         .byte   $ff
         .byte   $ff
         .byte   $bf
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c1
-        .fill   52,$ff
-        .fill   6,$00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -1716,11 +4693,28 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $09
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $32
         .byte   $00
         .byte   $00
@@ -1731,19 +4725,92 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fb
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $04
         .byte   $ff
         .byte   $ff
         .byte   $ff
         .byte   $bf
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c1
-        .fill   52,$ff
-        .fill   6,$00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -1754,11 +4821,28 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $09
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $32
         .byte   $00
         .byte   $00
@@ -1769,19 +4853,92 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fb
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $04
         .byte   $ff
         .byte   $ff
         .byte   $ff
         .byte   $bf
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c1
-        .fill   52,$ff
-        .fill   6,$00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -1792,11 +4949,28 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $09
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $32
         .byte   $00
         .byte   $00
@@ -1807,19 +4981,92 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fb
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $02
         .byte   $ff
         .byte   $ff
         .byte   $ff
         .byte   $bf
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c1
-        .fill   52,$ff
-        .fill   6,$00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -1830,11 +5077,28 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $09
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $55
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $32
         .byte   $00
         .byte   $00
@@ -1845,19 +5109,92 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fb
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $86
         .byte   $ff
         .byte   $ff
         .byte   $ff
         .byte   $bf
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c1
-        .fill   52,$ff
-        .fill   6,$00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -1868,11 +5205,28 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $09
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $32
         .byte   $00
         .byte   $00
@@ -1883,19 +5237,92 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fb
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
         .byte   $bf
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c1
-        .fill   52,$ff
-        .fill   6,$00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -1906,11 +5333,28 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $09
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $32
         .byte   $00
         .byte   $00
@@ -1921,19 +5365,92 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fb
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
         .byte   $bf
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c1
-        .fill   52,$ff
-        .fill   6,$00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -1944,11 +5461,28 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $09
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $32
         .byte   $00
         .byte   $00
@@ -1959,9 +5493,20 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fb
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $86
         .byte   $00
@@ -4516,7 +8061,11 @@
         .byte   $80
         .byte   $00
         .byte   $e0
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $e0
         .byte   $00
         .byte   $16
@@ -5408,7 +8957,11 @@
         .byte   $00
         .byte   $00
         .byte   $e0
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $e0
         .byte   $00
         .byte   $4a
@@ -5532,7 +9085,11 @@
         .byte   $00
         .byte   $00
         .byte   $e0
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $e0
         .byte   $00
         .byte   $00
@@ -6424,7 +9981,11 @@
         .byte   $00
         .byte   $00
         .byte   $a0
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $a0
         .byte   $00
         .byte   $4a
@@ -6548,7 +10109,11 @@
         .byte   $00
         .byte   $00
         .byte   $a0
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $a0
         .byte   $00
         .byte   $00
@@ -7064,7 +10629,7 @@
         .byte   $02
         .byte   $80
         .byte   $0c
-        .byte   $57
+_L3400  .byte   $57
         .byte   $1b
         .byte   $d0
         .byte   $be
@@ -7192,7 +10757,13 @@
         .byte   $00
         .byte   $1c
         .byte   $af
-        .fill   7,$00
+_L3480  .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $3e
         .byte   $00
         .byte   $00
@@ -7314,9 +10885,794 @@
         .byte   $36
         .byte   $00
         .byte   $af
-        .fill   768,$ff
-        .fill   8,$00
-        .fill   12,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fc
         .byte   $fc
         .byte   $fc
@@ -7329,8 +11685,22 @@
         .byte   $c0
         .byte   $c0
         .byte   $c0
-        .fill   8,$fe
-        .fill   8,$fb
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fb
+        .byte   $fb
+        .byte   $fb
+        .byte   $fb
+        .byte   $fb
+        .byte   $fb
+        .byte   $fb
+        .byte   $fb
         .byte   $ef
         .byte   $ef
         .byte   $ef
@@ -7363,7 +11733,10 @@
         .byte   $f8
         .byte   $f8
         .byte   $f8
-        .text   "??OO"
+        .byte   $3f
+        .byte   $3f
+        .byte   $cf
+        .byte   $cf
         .byte   $f3
         .byte   $f3
         .byte   $fc
@@ -7372,13 +11745,31 @@
         .byte   $fc
         .byte   $f3
         .byte   $f3
-        .text   "OO??"
-        .fill   8,$f0
-        .fill   5,$fe
+        .byte   $cf
+        .byte   $cf
+        .byte   $3f
+        .byte   $3f
+        .byte   $f0
+        .byte   $f0
+        .byte   $f0
+        .byte   $f0
+        .byte   $f0
+        .byte   $f0
+        .byte   $f0
+        .byte   $f0
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $f8
         .byte   $fc
         .byte   $fe
-        .fill   5,$7f
+        .byte   $7f
+        .byte   $7f
+        .byte   $7f
+        .byte   $7f
+        .byte   $7f
         .byte   $1f
         .byte   $3f
         .byte   $7f
@@ -7390,7 +11781,14 @@
         .byte   $83
         .byte   $83
         .byte   $83
-        .fill   8,$03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
         .byte   $fe
         .byte   $fe
         .byte   $fe
@@ -7407,7 +11805,14 @@
         .byte   $b0
         .byte   $b0
         .byte   $b0
-        .fill   8,$f0
+        .byte   $f0
+        .byte   $f0
+        .byte   $f0
+        .byte   $f0
+        .byte   $f0
+        .byte   $f0
+        .byte   $f0
+        .byte   $f0
         .byte   $e0
         .byte   $e0
         .byte   $e0
@@ -7425,12 +11830,36 @@
         .byte   $00
         .byte   $00
         .byte   $5f
-        .text   "uuuwuuu"
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $57
+        .byte   $55
+        .byte   $55
+        .byte   $55
         .byte   $f5
-        .text   "uuuUuuu"
-        .fill   8,$7d
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $d5
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $7d
+        .byte   $7d
+        .byte   $7d
+        .byte   $7d
+        .byte   $7d
+        .byte   $7d
+        .byte   $7d
+        .byte   $7d
         .byte   $00
-        .text   "<<<<<<"
+        .byte   $3c
+        .byte   $3c
+        .byte   $3c
+        .byte   $3c
+        .byte   $3c
+        .byte   $3c
         .byte   $00
         .byte   $00
         .byte   $18
@@ -7449,10 +11878,20 @@
         .byte   $42
         .byte   $7c
         .byte   $00
-        .text   "<b@@@b<"
+        .byte   $3c
+        .byte   $42
+        .byte   $40
+        .byte   $40
+        .byte   $40
+        .byte   $42
+        .byte   $3c
         .byte   $00
         .byte   $78
-        .text   "dbbbd"
+        .byte   $44
+        .byte   $42
+        .byte   $42
+        .byte   $42
+        .byte   $44
         .byte   $78
         .byte   $00
         .byte   $7e
@@ -7471,7 +11910,13 @@
         .byte   $40
         .byte   $40
         .byte   $00
-        .text   "<b@@nb<"
+        .byte   $3c
+        .byte   $42
+        .byte   $40
+        .byte   $40
+        .byte   $4e
+        .byte   $42
+        .byte   $3c
         .byte   $00
         .byte   $42
         .byte   $42
@@ -7482,7 +11927,11 @@
         .byte   $42
         .byte   $00
         .byte   $7c
-        .fill   5,$10
+        .byte   $10
+        .byte   $10
+        .byte   $10
+        .byte   $10
+        .byte   $10
         .byte   $7c
         .byte   $00
         .byte   $3e
@@ -7501,19 +11950,36 @@
         .byte   $48
         .byte   $44
         .byte   $00
-        .text   "@@@@@@"
+        .byte   $40
+        .byte   $40
+        .byte   $40
+        .byte   $40
+        .byte   $40
+        .byte   $40
         .byte   $7e
         .byte   $00
         .byte   $42
         .byte   $66
-        .text   "zbbbb"
+        .byte   $5a
+        .byte   $42
+        .byte   $42
+        .byte   $42
+        .byte   $42
         .byte   $00
         .byte   $42
         .byte   $62
-        .text   "rjfbb"
+        .byte   $52
+        .byte   $4a
+        .byte   $46
+        .byte   $42
+        .byte   $42
         .byte   $00
         .byte   $18
-        .text   "$bbb$"
+        .byte   $24
+        .byte   $42
+        .byte   $42
+        .byte   $42
+        .byte   $24
         .byte   $18
         .byte   $00
         .byte   $78
@@ -7524,7 +11990,13 @@
         .byte   $40
         .byte   $40
         .byte   $00
-        .text   "<bbbjf="
+        .byte   $3c
+        .byte   $42
+        .byte   $42
+        .byte   $42
+        .byte   $4a
+        .byte   $46
+        .byte   $3d
         .byte   $00
         .byte   $78
         .byte   $44
@@ -7534,20 +12006,43 @@
         .byte   $48
         .byte   $44
         .byte   $00
-        .text   ">@@<"
+        .byte   $3e
+        .byte   $40
+        .byte   $40
+        .byte   $3c
         .byte   $02
         .byte   $02
         .byte   $7c
         .byte   $00
         .byte   $7c
-        .fill   6,$10
+        .byte   $10
+        .byte   $10
+        .byte   $10
+        .byte   $10
+        .byte   $10
+        .byte   $10
         .byte   $00
-        .text   "bbbbbb<"
+        .byte   $42
+        .byte   $42
+        .byte   $42
+        .byte   $42
+        .byte   $42
+        .byte   $42
+        .byte   $3c
         .byte   $00
-        .text   "bbbb$$"
+        .byte   $42
+        .byte   $42
+        .byte   $42
+        .byte   $42
+        .byte   $24
+        .byte   $24
         .byte   $18
         .byte   $00
-        .text   "bbbbz"
+        .byte   $42
+        .byte   $42
+        .byte   $42
+        .byte   $42
+        .byte   $5a
         .byte   $66
         .byte   $42
         .byte   $00
@@ -7575,7 +12070,10 @@
         .byte   $40
         .byte   $7e
         .byte   $00
-        .text   "<fjr"
+        .byte   $3c
+        .byte   $46
+        .byte   $4a
+        .byte   $52
         .byte   $62
         .byte   $42
         .byte   $3c
@@ -7636,9 +12134,18 @@
         .byte   $08
         .byte   $08
         .byte   $00
-        .text   "<bb<bb<"
+        .byte   $3c
+        .byte   $42
+        .byte   $42
+        .byte   $3c
+        .byte   $42
+        .byte   $42
+        .byte   $3c
         .byte   $00
-        .text   $1e,$22,$22,$1e
+        .byte   $1e
+        .byte   $22
+        .byte   $22
+        .byte   $1e
         .byte   $02
         .byte   $02
         .byte   $02
@@ -7650,25 +12157,46 @@
         .byte   $4a
         .byte   $2c
         .byte   $10
-        .text   "uuuuuu"
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
         .byte   $7d
         .byte   $7d
-        .text   "uuwww"
+        .byte   $55
+        .byte   $55
+        .byte   $57
+        .byte   $57
+        .byte   $57
         .byte   $5f
         .byte   $5f
         .byte   $5f
-        .text   "uuUUU"
+        .byte   $55
+        .byte   $55
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
         .byte   $f5
         .byte   $f5
         .byte   $f5
         .byte   $5f
         .byte   $5f
         .byte   $5f
-        .text   "wwwuu"
+        .byte   $57
+        .byte   $57
+        .byte   $57
+        .byte   $55
+        .byte   $55
         .byte   $f5
         .byte   $f5
         .byte   $f5
-        .text   "UUUuu"
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $55
+        .byte   $55
         .byte   $00
         .byte   $18
         .byte   $18
@@ -7677,11 +12205,134 @@
         .byte   $18
         .byte   $18
         .byte   $00
-        .text   "WWWWWWWWwwwwwwwwUUUUUUUU"
+        .byte   $d7
+        .byte   $d7
+        .byte   $d7
+        .byte   $d7
+        .byte   $d7
+        .byte   $d7
+        .byte   $d7
+        .byte   $d7
+        .byte   $57
+        .byte   $57
+        .byte   $57
+        .byte   $57
+        .byte   $57
+        .byte   $57
+        .byte   $57
+        .byte   $57
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
         .byte   $ff
         .byte   $ff
-        .text   "uuuuuu"
-        .fill   96,$00
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ef
         .byte   $ef
         .byte   $df
@@ -7722,7 +12373,78 @@
         .byte   $00
         .byte   $3b
         .byte   $3b
-        .fill   72,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fe
         .byte   $fd
         .byte   $fd
@@ -7763,7 +12485,78 @@
         .byte   $3b
         .byte   $00
         .byte   $3f
-        .fill   72,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $bf
         .byte   $bf
         .byte   $7f
@@ -7807,8 +12600,75 @@
         .byte   $00
         .byte   $00
         .byte   $00
-        .text   ">ai]a"
-        .fill   64,$00
+        .byte   $3e
+        .byte   $41
+        .byte   $49
+        .byte   $5d
+        .byte   $41
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fb
         .byte   $fb
         .byte   $f7
@@ -7847,8 +12707,80 @@
         .byte   $3f
         .byte   $3f
         .byte   $00
-        .text   ";;a]ia>"
-        .fill   67,$00
+        .byte   $3b
+        .byte   $3b
+        .byte   $41
+        .byte   $5d
+        .byte   $49
+        .byte   $41
+        .byte   $3e
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $7f
         .byte   $ff
         .byte   $fe
@@ -7889,7 +12821,78 @@
         .byte   $3b
         .byte   $00
         .byte   $3f
-        .fill   72,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $f7
         .byte   $ef
         .byte   $ef
@@ -7929,10 +12932,311 @@
         .byte   $00
         .byte   $3f
         .byte   $3f
-        .fill   290,$00
-        .fill   7,$03
         .byte   $00
-        .fill   7,$c0
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+_L3D80  .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $00
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
         .byte   $3f
         .byte   $3f
         .byte   $1f
@@ -7951,17 +13255,46 @@
         .byte   $00
         .byte   $3f
         .byte   $40
-        .fill   6,$80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $fc
         .byte   $02
-        .fill   6,$01
-        .fill   6,$80
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $40
         .byte   $3f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $02
         .byte   $fc
-        .text   "uuuuuuuuww"
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $57
+        .byte   $57
         .byte   $5c
         .byte   $5c
         .byte   $70
@@ -7970,7 +13303,11 @@
         .byte   $ff
         .byte   $ff
         .byte   $0c
-        .text   "0?033"
+        .byte   $30
+        .byte   $3f
+        .byte   $30
+        .byte   $33
+        .byte   $33
         .byte   $ff
         .byte   $ff
         .byte   $00
@@ -8021,13 +13358,26 @@
         .byte   $30
         .byte   $ff
         .byte   $c0
-        .text   "LLLLL"
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
         .byte   $c0
         .byte   $ff
-        .text   "CCCCCO"
+        .byte   $c3
+        .byte   $c3
+        .byte   $c3
+        .byte   $c3
+        .byte   $c3
+        .byte   $cf
         .byte   $c0
         .byte   $ff
-        .fill   5,$0c
+        .byte   $0c
+        .byte   $0c
+        .byte   $0c
+        .byte   $0c
+        .byte   $0c
         .byte   $3c
         .byte   $00
         .byte   $ff
@@ -8106,11 +13456,19 @@
         .byte   $00
         .byte   $ff
         .byte   $00
-        .text   "CCCCC"
+        .byte   $c3
+        .byte   $c3
+        .byte   $c3
+        .byte   $c3
+        .byte   $c3
         .byte   $00
         .byte   $ff
         .byte   $00
-        .fill   5,$0c
+        .byte   $0c
+        .byte   $0c
+        .byte   $0c
+        .byte   $0c
+        .byte   $0c
         .byte   $c0
         .byte   $c0
         .byte   $f0
@@ -8136,7 +13494,12 @@
         .byte   $c0
         .byte   $ff
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $03
@@ -8146,7 +13509,13 @@
         .byte   $30
         .byte   $c0
         .byte   $c0
-        .text   "uUU55",$0d,$0d
+        .byte   $55
+        .byte   $d5
+        .byte   $d5
+        .byte   $35
+        .byte   $35
+        .byte   $0d
+        .byte   $0d
         .byte   $03
         .byte   $ff
         .byte   $03
@@ -8154,55 +13523,169 @@
         .byte   $0f
         .byte   $3b
         .byte   $3b
-        .fill   12,$eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
         .byte   $ee
         .byte   $ee
         .byte   $fa
         .byte   $fa
         .byte   $ea
         .byte   $ea
-        .fill   8,$aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
         .byte   $ff
         .byte   $ff
         .byte   $ff
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ea
         .byte   $ee
         .byte   $ef
-        .fill   5,$ec
+        .byte   $ec
+        .byte   $ec
+        .byte   $ec
+        .byte   $ec
+        .byte   $ec
         .byte   $ab
         .byte   $af
         .byte   $ff
-        .fill   5,$8f
+        .byte   $8f
+        .byte   $8f
+        .byte   $8f
+        .byte   $8f
+        .byte   $8f
         .byte   $ea
         .byte   $fa
         .byte   $ff
-        .fill   5,$f2
+        .byte   $f2
+        .byte   $f2
+        .byte   $f2
+        .byte   $f2
+        .byte   $f2
         .byte   $ab
         .byte   $bb
         .byte   $fb
-        .text   ";;;;;"
-        .fill   8,$ec
-        .fill   8,$8f
-        .fill   8,$f2
-        .text   ";;;;;;;;"
-        .fill   5,$ec
+        .byte   $3b
+        .byte   $3b
+        .byte   $3b
+        .byte   $3b
+        .byte   $3b
+        .byte   $ec
+        .byte   $ec
+        .byte   $ec
+        .byte   $ec
+        .byte   $ec
+        .byte   $ec
+        .byte   $ec
+        .byte   $ec
+        .byte   $8f
+        .byte   $8f
+        .byte   $8f
+        .byte   $8f
+        .byte   $8f
+        .byte   $8f
+        .byte   $8f
+        .byte   $8f
+        .byte   $f2
+        .byte   $f2
+        .byte   $f2
+        .byte   $f2
+        .byte   $f2
+        .byte   $f2
+        .byte   $f2
+        .byte   $f2
+        .byte   $3b
+        .byte   $3b
+        .byte   $3b
+        .byte   $3b
+        .byte   $3b
+        .byte   $3b
+        .byte   $3b
+        .byte   $3b
+        .byte   $ec
+        .byte   $ec
+        .byte   $ec
+        .byte   $ec
+        .byte   $ec
         .byte   $ef
         .byte   $ee
         .byte   $ea
-        .fill   5,$8f
+        .byte   $8f
+        .byte   $8f
+        .byte   $8f
+        .byte   $8f
+        .byte   $8f
         .byte   $ff
         .byte   $af
         .byte   $ab
-        .fill   5,$f2
+        .byte   $f2
+        .byte   $f2
+        .byte   $f2
+        .byte   $f2
+        .byte   $f2
         .byte   $ff
         .byte   $fa
         .byte   $ea
-        .text   ";;;;;"
+        .byte   $3b
+        .byte   $3b
+        .byte   $3b
+        .byte   $3b
+        .byte   $3b
         .byte   $fb
         .byte   $bb
         .byte   $ab
-        .fill   33,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $f0
         .byte   $f0
         .byte   $f0
@@ -8218,40 +13701,23 @@
         .byte   $0f
         .byte   $0b
         .byte   $fe
-        .byte   $78
-        .byte   $a9
-        .byte   $22
-        .byte   $8d
-        .byte   $14
-        .byte   $03
-        .byte   $a9
-        .byte   $40
-        .byte   $8d
-        .byte   $15
-        .byte   $03
-        .byte   $ad
-        .byte   $11
-        .byte   $d0
-        .byte   $29
-        .byte   $7f
-        .byte   $8d
-        .byte   $11
-        .byte   $d0
-        .byte   $ad
-        .byte   $1a
-        .byte   $d0
-        .byte   $09
-        .byte   $01
-        .byte   $8d
-        .byte   $1a
-        .byte   $d0
-        .byte   $a9
-        .byte   $20
-        .byte   $8d
-        .byte   $12
-        .byte   $d0
-        .byte   $58
-        .byte   $60
+
+_L4000  sei
+        lda     #$22
+        sta     $0314
+        lda     #$40
+        sta     $0315
+        lda     _LD011
+        and     #$7f
+        sta     _LD011
+        lda     _LD01A
+        ora     #$01
+        sta     _LD01A
+        lda     #$20
+        sta     _LD012
+        cli
+        rts
+
         .byte   $ad
         .byte   $19
         .byte   $d0
@@ -8267,7 +13733,13 @@
         .byte   $d0
         .byte   $58
         .byte   $ad
-        .text   $12,"PI2",$90,"#I"
+        .byte   $12
+        .byte   $d0
+        .byte   $c9
+        .byte   $32
+        .byte   $90
+        .byte   $23
+        .byte   $c9
         .byte   $6e
         .byte   $90
         .byte   $2f
@@ -8311,7 +13783,11 @@
         .byte   $a9
         .byte   $6a
         .byte   $8d
-        .text   $12,"Pl@",$96
+        .byte   $12
+        .byte   $d0
+        .byte   $4c
+        .byte   $40
+        .byte   $96
         .byte   $ea
         .byte   $ea
         .byte   $a9
@@ -8384,374 +13860,283 @@
         .byte   $4c
         .byte   $74
         .byte   $40
-        .byte   $a9
-        .byte   $80
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $3a
-        .byte   $85
-        .byte   $fc
-        .byte   $a2
-        .byte   $03
-        .byte   $a0
-        .byte   $00
-        .byte   $a9
-        .byte   $00
-        .byte   $91
-        .byte   $fb
-        .byte   $88
-        .byte   $d0
-        .byte   $fb
-        .byte   $e6
-        .byte   $fc
-        .byte   $ca
-        .byte   $30
-        .byte   $06
-        .byte   $d0
-        .byte   $f2
-        .byte   $a0
-        .byte   $7f
-        .byte   $d0
-        .byte   $ee
-        .byte   $a9
-        .byte   $44
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $05
-        .byte   $85
-        .byte   $fc
-        .byte   $a0
-        .byte   $0e
-        .byte   $a9
-        .byte   $bf
-        .byte   $a2
-        .byte   $08
-        .byte   $91
-        .byte   $fb
-        .byte   $38
-        .byte   $e9
-        .byte   $01
-        .byte   $88
-        .byte   $d0
-        .byte   $f8
-        .byte   $a0
-        .byte   $0e
-        .byte   $48
-        .byte   $a5
-        .byte   $fb
-        .byte   $38
-        .byte   $e9
-        .byte   $28
-        .byte   $85
-        .byte   $fb
-        .byte   $a5
-        .byte   $fc
-        .byte   $e9
-        .byte   $00
-        .byte   $85
-        .byte   $fc
-        .byte   $68
-        .byte   $ca
-        .byte   $d0
-        .byte   $e4
-        .byte   $8e
-        .byte   $80
-        .byte   $3d
-        .byte   $60
+
+_L40B0  lda     #$80
+        sta     $fb
+        lda     #$3a
+        sta     $fc
+        ldx     #$03
+        ldy     #$00
+_L40BC  lda     #$00
+_L40BE  sta     ($fb),y
+        dey
+        bne     _L40BE
+        inc     $fc
+        dex
+        bmi     _L40CE
+        bne     _L40BC
+        ldy     #$7f
+        bne     _L40BC
+
+_L40CE  lda     #$44
+        sta     $fb
+        lda     #$05
+        sta     $fc
+        ldy     #$0e
+        lda     #$bf
+        ldx     #$08
+_L40DC  sta     ($fb),y
+        sec
+        sbc     #$01
+        dey
+        bne     _L40DC
+        ldy     #$0e
+        pha
+        lda     $fb
+        sec
+        sbc     #$28
+        sta     $fb
+        lda     $fc
+        sbc     #$00
+        sta     $fc
+        pla
+        dex
+        bne     _L40DC
+        stx     _L3D80
+        rts
+
         .byte   $fe
         .byte   $fe
         .byte   $fe
         .byte   $fe
-        .byte   $a0
+
+_L4100  ldy     #$01
+        lda     ($3f),y
+        sta     _L1B50
+        iny
+        lda     ($3f),y
+        tay
+        jsr     _L4127
+        ldy     #$03
+        lda     ($3f),y
+        tay
+        jsr     _L418A
+        ldy     #$10
+        lda     ($3f),y
+        tay
+        jsr     _L4162
+        ldy     #$11
+        lda     ($3f),y
+        tay
+        jsr     _L41CC
+        rts
+
+_L4127  lda     #$29
+        sta     $fb
+        lda     #$d8
+        sta     $fc
+        tya
+        clc
+        adc     #$08
+        ldx     #$0c
+        ldy     #$03
+        sty     $fd
+_L4139  sta     ($fb),y
+        dey
+        bpl     _L4139
+        pha
+        lda     $fb
+        clc
+        adc     #$28
+        sta     $fb
+        lda     $fc
+        adc     #$00
+        sta     $fc
+        dex
+        bmi     _L4160
+        cpx     #$06
+        bcs     _L415A
+        txa
+        and     #$01
+        beq     _L415A
+        dec     $fd
+_L415A  ldy     $fd
+        pla
+        jmp     _L4139
+
+_L4160  pla
+        rts
+
+_L4162  lda     #$3b
+        sta     $fb
+        lda     #$d8
+        sta     $fc
+        tya
+        clc
+        adc     #$08
+        ldx     #$0d
+_L4170  ldy     #$02
+_L4172  sta     ($fb),y
+        dey
+        bpl     _L4172
+        pha
+        lda     $fb
+        clc
+        adc     #$28
+        sta     $fb
+        lda     $fc
+        adc     #$00
+        sta     $fc
+        pla
+        dex
+        bne     _L4170
+        rts
+
+_L418A  cpy     #$00
+        beq     _L4193
+        cpy     #$06
+        beq     _L4193
+        rts
+
+_L4193  lda     #$51
+        sta     $fb
+        lda     #$04
+        sta     $fc
+        ldy     #$02
+        ldx     #$06
+_L419F  lda     #$01
+_L41A1  sta     ($fb),y
+        dey
+        bpl     _L41A1
+        ldy     #$02
+        lda     $fb
+        clc
+        adc     #$28
+        sta     $fb
+        lda     $fc
+        adc     #$00
+        sta     $fc
+        dex
+        bne     _L419F
+        lda     #$01
+        sta     $0541
+        sta     $0569
+        sta     $0591
+        sta     $05b9
+        lda     #$02
+        sta     $0543
+        rts
+
+_L41CC  cpy     #$00
+        beq     _L41D5
+        cpy     #$06
+        beq     _L41D5
+        rts
+
+_L41D5  lda     #$63
+        sta     $fb
+        lda     #$04
+        sta     $fc
+        ldy     #$02
+        ldx     #$06
+_L41E1  lda     #$01
+_L41E3  sta     ($fb),y
+        dey
+        bpl     _L41E3
+        ldy     #$02
+        lda     $fb
+        clc
+        adc     #$28
+        sta     $fb
+        lda     $fc
+        adc     #$00
+        sta     $fc
+        dex
+        bne     _L41E1
+        lda     #$01
+        sta     $0553
+        sta     $057b
+        sta     $05a3
+        sta     $05cb
+        lda     #$02
+        sta     $0555
+        rts
+
         .byte   $01
-        .byte   $b1
-        .byte   $3f
-        .byte   $8d
-        .byte   $50
-        .byte   $1b
-        .byte   $c8
-        .byte   $b1
-        .byte   $3f
-        .byte   $a8
-        .byte   $20
-        .byte   $27
-        .byte   $41
-        .byte   $a0
-        .byte   $03
-        .byte   $b1
-        .byte   $3f
-        .byte   $a8
-        .byte   $20
-        .byte   $8a
-        .byte   $41
-        .byte   $a0
-        .byte   $10
-        .byte   $b1
-        .byte   $3f
-        .byte   $a8
-        .byte   $20
-        .byte   $62
-        .byte   $41
-        .byte   $a0
-        .byte   $11
-        .byte   $b1
-        .byte   $3f
-        .byte   $a8
-        .byte   $20
-        .byte   $cc
-        .byte   $41
-        .byte   $60
-        .byte   $a9
-        .byte   $29
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $d8
-        .byte   $85
-        .byte   $fc
-        .byte   $98
-        .byte   $18
-        .byte   $69
-        .byte   $08
-        .byte   $a2
-        .byte   $0c
-        .byte   $a0
-        .byte   $03
-        .byte   $84
-        .byte   $fd
-        .byte   $91
-        .byte   $fb
-        .byte   $88
-        .byte   $10
-        .byte   $fb
-        .byte   $48
-        .byte   $a5
-        .byte   $fb
-        .byte   $18
-        .byte   $69
-        .byte   $28
-        .byte   $85
-        .byte   $fb
-        .byte   $a5
-        .byte   $fc
-        .byte   $69
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .byte   $85
-        .byte   $fc
-        .byte   $ca
-        .byte   $30
-        .byte   $11
-        .byte   $e0
-        .byte   $06
-        .byte   $b0
-        .byte   $07
-        .byte   $8a
-        .byte   $29
-        .byte   $01
-        .byte   $f0
-        .byte   $02
-        .byte   $c6
-        .byte   $fd
-        .byte   $a4
-        .byte   $fd
-        .byte   $68
-        .byte   $4c
-        .byte   $39
-        .byte   $41
-        .byte   $68
-        .byte   $60
-        .byte   $a9
-        .byte   $3b
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $d8
-        .byte   $85
-        .byte   $fc
-        .byte   $98
-        .byte   $18
-        .byte   $69
-        .byte   $08
-        .byte   $a2
-        .byte   $0d
-        .byte   $a0
-        .byte   $02
-        .byte   $91
-        .byte   $fb
-        .byte   $88
-        .byte   $10
-        .byte   $fb
-        .byte   $48
-        .byte   $a5
-        .byte   $fb
-        .byte   $18
-        .byte   $69
-        .byte   $28
-        .byte   $85
-        .byte   $fb
-        .byte   $a5
-        .byte   $fc
-        .byte   $69
         .byte   $00
-        .byte   $85
-        .byte   $fc
-        .byte   $68
-        .byte   $ca
-        .byte   $d0
-        .byte   $e7
-        .byte   $60
-        .byte   $c0
         .byte   $00
-        .byte   $f0
-        .byte   $05
-        .byte   $c0
-        .byte   $06
-        .byte   $f0
-        .byte   $01
-        .byte   $60
-        .byte   $a9
-        .byte   $51
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $04
-        .byte   $85
-        .byte   $fc
-        .byte   $a0
-        .byte   $02
-        .byte   $a2
-        .byte   $06
-        .byte   $a9
-        .byte   $01
-        .byte   $91
-        .byte   $fb
-        .byte   $88
-        .byte   $10
-        .byte   $fb
-        .byte   $a0
-        .byte   $02
-        .byte   $a5
-        .byte   $fb
-        .byte   $18
-        .byte   $69
-        .byte   $28
-        .byte   $85
-        .byte   $fb
-        .byte   $a5
-        .byte   $fc
-        .byte   $69
         .byte   $00
-        .byte   $85
-        .byte   $fc
-        .byte   $ca
-        .byte   $d0
-        .byte   $e7
-        .byte   $a9
-        .byte   $01
-        .byte   $8d
-        .byte   $41
-        .byte   $05
-        .byte   $8d
-        .byte   $69
-        .byte   $05
-        .byte   $8d
-        .byte   $91
-        .byte   $05
-        .byte   $8d
-        .byte   $b9
-        .byte   $05
-        .byte   $a9
-        .byte   $02
-        .byte   $8d
-        .byte   $43
-        .byte   $05
-        .byte   $60
-        .byte   $c0
         .byte   $00
-        .byte   $f0
-        .byte   $05
-        .byte   $c0
-        .byte   $06
-        .byte   $f0
-        .byte   $01
-        .byte   $60
-        .byte   $a9
-        .byte   $63
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $04
-        .byte   $85
-        .byte   $fc
-        .byte   $a0
-        .byte   $02
-        .byte   $a2
-        .byte   $06
-        .byte   $a9
-        .byte   $01
-        .byte   $91
-        .byte   $fb
-        .byte   $88
-        .byte   $10
-        .byte   $fb
-        .byte   $a0
-        .byte   $02
-        .byte   $a5
-        .byte   $fb
-        .byte   $18
-        .byte   $69
-        .byte   $28
-        .byte   $85
-        .byte   $fb
-        .byte   $a5
-        .byte   $fc
-        .byte   $69
         .byte   $00
-        .byte   $85
-        .byte   $fc
-        .byte   $ca
-        .byte   $d0
-        .byte   $e7
-        .byte   $a9
-        .byte   $01
-        .byte   $8d
-        .byte   $53
-        .byte   $05
-        .byte   $8d
-        .byte   $7b
-        .byte   $05
-        .byte   $8d
-        .byte   $a3
-        .byte   $05
-        .byte   $8d
-        .byte   $cb
-        .byte   $05
-        .byte   $a9
-        .byte   $02
-        .byte   $8d
-        .byte   $55
-        .byte   $05
-        .byte   $60
-        .fill   18,$01
-        .fill   16,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $55
         .byte   $07
-        .fill   10,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $0f
         .byte   $02
         .byte   $03
         .byte   $06
         .byte   $04
-        .fill   9,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $0e
         .byte   $03
         .byte   $05
         .byte   $07
         .byte   $04
-        .fill   9,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $0b
         .byte   $04
         .byte   $04
@@ -8775,7 +14160,11 @@
         .byte   $f0
         .byte   $3a
         .byte   $0e
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $05
         .byte   $06
         .byte   $06
@@ -8799,7 +14188,11 @@
         .byte   $10
         .byte   $3b
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $08
         .byte   $07
@@ -8808,7 +14201,12 @@
         .byte   $01
         .byte   $a8
         .byte   $3a
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $09
         .byte   $03
@@ -8832,7 +14230,10 @@
         .byte   $00
         .byte   $00
         .byte   $00
-        .text   $05,"h;",$05
+        .byte   $05
+        .byte   $48
+        .byte   $3b
+        .byte   $05
         .byte   $00
         .byte   $03
         .byte   $0b
@@ -8843,7 +14244,11 @@
         .byte   $90
         .byte   $3b
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $0c
         .byte   $01
@@ -8979,7 +14384,11 @@
         .byte   $88
         .byte   $3b
         .byte   $0e
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $16
         .byte   $03
@@ -9003,7 +14412,11 @@
         .byte   $a8
         .byte   $3a
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $18
         .byte   $04
@@ -9041,7 +14454,11 @@
         .byte   $70
         .byte   $3b
         .byte   $0c
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $1b
         .byte   $07
@@ -9065,7 +14482,11 @@
         .byte   $90
         .byte   $3b
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $1d
         .byte   $05
@@ -9131,7 +14552,11 @@
         .byte   $68
         .byte   $3b
         .byte   $0c
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $22
         .byte   $04
@@ -9197,7 +14622,11 @@
         .byte   $a8
         .byte   $3a
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $27
         .byte   $07
@@ -9207,7 +14636,10 @@
         .byte   $70
         .byte   $3b
         .byte   $0b
-        .text   $05,"@;",$05
+        .byte   $05
+        .byte   $40
+        .byte   $3b
+        .byte   $05
         .byte   $00
         .byte   $03
         .byte   $28
@@ -9218,7 +14650,11 @@
         .byte   $68
         .byte   $3b
         .byte   $0f
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $29
         .byte   $05
@@ -9228,7 +14664,11 @@
         .byte   $10
         .byte   $3c
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $2a
         .byte   $07
@@ -9350,7 +14790,11 @@
         .byte   $80
         .byte   $3b
         .byte   $0c
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $33
         .byte   $07
@@ -9374,7 +14818,11 @@
         .byte   $d0
         .byte   $3b
         .byte   $0c
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $35
         .byte   $05
@@ -9384,7 +14832,11 @@
         .byte   $a8
         .byte   $3a
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $36
         .byte   $04
@@ -9408,7 +14860,11 @@
         .byte   $00
         .byte   $3c
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $38
         .byte   $06
@@ -9446,7 +14902,11 @@
         .byte   $20
         .byte   $3c
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $3b
         .byte   $05
@@ -9484,7 +14944,11 @@
         .byte   $00
         .byte   $3c
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $3e
         .byte   $04
@@ -9494,13 +14958,19 @@
         .byte   $00
         .byte   $3c
         .byte   $00
-        .text   $05,"h;",$05
+        .byte   $05
+        .byte   $48
+        .byte   $3b
+        .byte   $05
         .byte   $00
         .byte   $03
         .byte   $3f
         .byte   $07
         .byte   $01
-        .text   $05,$0d,$90,"<"
+        .byte   $05
+        .byte   $0d
+        .byte   $90
+        .byte   $3c
         .byte   $00
         .byte   $13
         .byte   $50
@@ -9530,7 +15000,11 @@
         .byte   $90
         .byte   $3b
         .byte   $09
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $42
         .byte   $04
@@ -9582,7 +15056,11 @@
         .byte   $f0
         .byte   $3b
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $46
         .byte   $03
@@ -9606,7 +15084,10 @@
         .byte   $e8
         .byte   $3b
         .byte   $0b
-        .text   $05,"0;",$05
+        .byte   $05
+        .byte   $30
+        .byte   $3b
+        .byte   $05
         .byte   $00
         .byte   $03
         .byte   $48
@@ -9669,83 +15150,338 @@
         .byte   $07
         .byte   $00
         .byte   $07
-        .fill   9,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
-        .fill   8,$01
-        .fill   32,$00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fe
         .byte   $fe
         .byte   $fe
         .byte   $ff
         .byte   $fe
-        .fill   11,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   32,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $ff
         .byte   $fe
         .byte   $fe
         .byte   $ff
         .byte   $fe
-        .fill   11,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   32,$fe
-        .byte   $ad
-        .byte   $00
-        .byte   $dc
-        .byte   $a0
-        .byte   $00
-        .byte   $a2
-        .byte   $00
-        .byte   $4a
-        .byte   $b0
-        .byte   $01
-        .byte   $88
-        .byte   $4a
-        .byte   $b0
-        .byte   $01
-        .byte   $c8
-        .byte   $4a
-        .byte   $b0
-        .byte   $01
-        .byte   $ca
-        .byte   $4a
-        .byte   $b0
-        .byte   $01
-        .byte   $e8
-        .byte   $4a
-        .byte   $8e
-        .byte   $39
-        .byte   $03
-        .byte   $8c
-        .byte   $3a
-        .byte   $03
-        .byte   $a2
-        .byte   $00
-        .byte   $b0
-        .byte   $01
-        .byte   $e8
-        .byte   $8e
-        .byte   $3b
-        .byte   $03
-        .byte   $60
-        .byte   $01
-        .fill   7,$00
-        .byte   $01
-        .fill   16,$00
-        .fill   32,$01
-        .fill   15,$00
-        .byte   $01
-        .fill   16,$00
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   16,$ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+
+_L4700  lda     LDC00      ;Read joystick input
+        ldy     #$00       ;Set Up/Down register
+        ldx     #$00       ;Set Left/Right register
+        lsr     a          ;LSR on joystick input
+        bcs     _L470B
+        dey                ;Up detected. Y = #ff.
+_L470B  lsr     a
+        bcs     _L470F
+        iny                ;Down detected. Y = #01.
+_L470F  lsr     a
+        bcs     _L4713
+        dex                ;Left detected. X = #ff.
+_L4713  lsr     a
+        bcs     _L4717
+        inx                ;Right detected. X = 01.
+_L4717  lsr     a
+        stx     V_LeftRightInput ;Store Left/Right input.
+        sty     V_UpDownInput ;Store Up/Down input
+        ldx     #$00
+        bcs     _L4723
+        inx
+_L4723  stx     V_FireEvent ;Store fire event
+        rts
+
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
         .byte   $01
         .byte   $03
         .byte   $03
-        .text   $07,$07,$07,$07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
         .byte   $00
         .byte   $80
         .byte   $c0
@@ -9754,11 +15490,29 @@
         .byte   $e0
         .byte   $e0
         .byte   $e0
-        .text   $07,$07,$07,$07,$07,$07,$07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
         .byte   $0f
-        .fill   7,$e0
+        .byte   $e0
+        .byte   $e0
+        .byte   $e0
+        .byte   $e0
+        .byte   $e0
+        .byte   $e0
+        .byte   $e0
         .byte   $f0
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $2a
         .byte   $00
         .byte   $00
@@ -9770,17 +15524,33 @@
         .byte   $f3
         .byte   $fc
         .byte   $3f
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $33
         .byte   $ff
         .byte   $3f
         .byte   $1e
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $70
         .byte   $f8
         .byte   $fc
         .byte   $cf
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $07
         .byte   $02
         .byte   $ff
@@ -9793,25 +15563,53 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   10,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $20
         .byte   $3f
         .byte   $3f
         .byte   $01
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fc
         .byte   $fa
         .byte   $fc
         .byte   $b8
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fc
         .byte   $3c
         .byte   $1e
         .byte   $1e
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $07
         .byte   $0f
-        .text   $1c,"34+*"
+        .byte   $1c
+        .byte   $33
+        .byte   $34
+        .byte   $2b
+        .byte   $2a
         .byte   $00
         .byte   $e0
         .byte   $f8
@@ -9868,16 +15666,36 @@
         .byte   $30
         .byte   $c0
         .byte   $00
-        .byte   $3f
+_L4860  .byte   $3f
         .byte   $40
-        .fill   6,$80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $fc
         .byte   $02
-        .fill   6,$01
-        .fill   6,$80
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $40
         .byte   $3f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $02
         .byte   $fc
         .byte   $00
@@ -9899,11 +15717,22 @@
         .byte   $2a
         .byte   $17
         .byte   $1f
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $a8
         .byte   $d0
         .byte   $f0
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $3e
         .byte   $6c
@@ -9912,14 +15741,28 @@
         .byte   $00
         .byte   $00
         .byte   $00
-        .text   "B%h*%F"
+        .byte   $c2
+        .byte   $25
+        .byte   $48
+        .byte   $2a
+        .byte   $25
+        .byte   $c6
         .byte   $6c
         .byte   $38
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $41
         .byte   $2d
         .byte   $12
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $07
         .byte   $0f
         .byte   $1f
@@ -9949,12 +15792,21 @@
         .byte   $7f
         .byte   $9c
         .byte   $08
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $f0
         .byte   $f0
         .byte   $ff
         .byte   $ff
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $70
         .byte   $ff
         .byte   $ff
@@ -9968,7 +15820,13 @@
         .byte   $00
         .byte   $ff
         .byte   $ff
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $0f
         .byte   $30
         .byte   $c0
@@ -9988,7 +15846,10 @@
         .byte   $ff
         .byte   $ff
         .byte   $7f
-        .text   "??",$1f,$1f
+        .byte   $3f
+        .byte   $3f
+        .byte   $1f
+        .byte   $1f
         .byte   $fb
         .byte   $fe
         .byte   $f8
@@ -9997,7 +15858,17 @@
         .byte   $e0
         .byte   $c0
         .byte   $c0
-        .fill   11,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $02
         .byte   $04
@@ -10012,7 +15883,14 @@
         .byte   $a0
         .byte   $a0
         .byte   $c0
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $80
         .byte   $aa
@@ -10062,9 +15940,19 @@
         .byte   $48
         .byte   $1e
         .byte   $13
-        .text   $12,$12,$12,$12,$12,$1f,"hH"
+        .byte   $12
+        .byte   $12
+        .byte   $12
+        .byte   $12
+        .byte   $12
+        .byte   $1f
+        .byte   $48
+        .byte   $c8
         .byte   $78
-        .text   "hhhh"
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
         .byte   $f8
         .byte   $ff
         .byte   $80
@@ -10186,7 +16074,11 @@
         .byte   $00
         .byte   $80
         .byte   $ff
-        .fill   5,$dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
         .byte   $5d
         .byte   $1d
         .byte   $dd
@@ -10198,7 +16090,14 @@
         .byte   $dd
         .byte   $dd
         .byte   $dc
-        .fill   8,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fc
         .byte   $fc
         .byte   $fc
@@ -10232,7 +16131,13 @@
         .byte   $01
         .byte   $fd
         .byte   $dc
-        .fill   7,$dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
         .byte   $ff
         .byte   $7f
         .byte   $7f
@@ -10241,7 +16146,14 @@
         .byte   $df
         .byte   $cf
         .byte   $cf
-        .fill   8,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c4
         .byte   $c4
         .byte   $c4
@@ -10254,7 +16166,10 @@
         .byte   $44
         .byte   $46
         .byte   $ff
-        .text   "eedd"
+        .byte   $45
+        .byte   $45
+        .byte   $44
+        .byte   $44
         .byte   $01
         .byte   $01
         .byte   $01
@@ -10263,7 +16178,11 @@
         .byte   $00
         .byte   $80
         .byte   $7f
-        .fill   5,$dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
         .byte   $5d
         .byte   $1d
         .byte   $dd
@@ -10275,7 +16194,14 @@
         .byte   $dd
         .byte   $de
         .byte   $de
-        .fill   8,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fc
         .byte   $fc
         .byte   $fc
@@ -10308,15 +16234,41 @@
         .byte   $05
         .byte   $01
         .byte   $fd
-        .fill   8,$de
-        .fill   15,$ff
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
         .byte   $f6
         .byte   $ee
         .byte   $ce
         .byte   $df
         .byte   $b6
-        .text   "667@@@"
+        .byte   $36
+        .byte   $36
+        .byte   $37
+        .byte   $40
+        .byte   $40
+        .byte   $40
         .byte   $ff
         .byte   $40
         .byte   $40
@@ -10330,7 +16282,11 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   5,$de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
         .byte   $5e
         .byte   $1e
         .byte   $de
@@ -10364,7 +16320,11 @@
         .byte   $7f
         .byte   $c0
         .byte   $80
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $00
         .byte   $00
@@ -10378,7 +16338,12 @@
         .byte   $0e
         .byte   $06
         .byte   $02
-        .fill   6,$dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
         .byte   $9d
         .byte   $dd
         .byte   $cf
@@ -10389,7 +16354,14 @@
         .byte   $dd
         .byte   $dd
         .byte   $dc
-        .fill   8,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $9d
         .byte   $9d
         .byte   $9d
@@ -10399,20 +16371,34 @@
         .byte   $81
         .byte   $fd
         .byte   $dc
-        .fill   7,$dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
         .byte   $ff
         .byte   $7f
         .byte   $7f
         .byte   $bf
         .byte   $df
         .byte   $df
-        .text   "OO",$81,$81,$81
+        .byte   $cf
+        .byte   $cf
+        .byte   $81
+        .byte   $81
+        .byte   $81
         .byte   $ff
         .byte   $80
         .byte   $80
         .byte   $80
         .byte   $ff
-        .fill   5,$dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
+        .byte   $dd
         .byte   $5d
         .byte   $1d
         .byte   $dd
@@ -10440,7 +16426,14 @@
         .byte   $05
         .byte   $01
         .byte   $fd
-        .fill   8,$de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
         .byte   $80
         .byte   $80
         .byte   $80
@@ -10457,7 +16450,11 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   5,$de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
+        .byte   $de
         .byte   $5e
         .byte   $1e
         .byte   $de
@@ -10485,8 +16482,30 @@
         .byte   $06
         .byte   $02
         .byte   $fe
-        .fill   8,$f7
-        .fill   16,$ff
+        .byte   $f7
+        .byte   $f7
+        .byte   $f7
+        .byte   $f7
+        .byte   $f7
+        .byte   $f7
+        .byte   $f7
+        .byte   $f7
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $f7
         .byte   $f7
         .byte   $f7
@@ -10503,10 +16522,22 @@
         .byte   $7f
         .byte   $bf
         .byte   $bf
-        .fill   8,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $e2
         .byte   $e6
-        .text   "FF",$96,$96,"66"
+        .byte   $c6
+        .byte   $c6
+        .byte   $96
+        .byte   $96
+        .byte   $36
+        .byte   $36
         .byte   $df
         .byte   $df
         .byte   $ef
@@ -10515,9 +16546,22 @@
         .byte   $f7
         .byte   $f3
         .byte   $f3
-        .fill   8,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $76
-        .fill   7,$f6
+        .byte   $f6
+        .byte   $f6
+        .byte   $f6
+        .byte   $f6
+        .byte   $f6
+        .byte   $f6
+        .byte   $f6
         .byte   $f5
         .byte   $f5
         .byte   $f6
@@ -10534,9 +16578,21 @@
         .byte   $7f
         .byte   $bf
         .byte   $bf
-        .fill   7,$f6
+        .byte   $f6
+        .byte   $f6
+        .byte   $f6
+        .byte   $f6
+        .byte   $f6
+        .byte   $f6
+        .byte   $f6
         .byte   $f0
-        .fill   7,$f7
+        .byte   $f7
+        .byte   $f7
+        .byte   $f7
+        .byte   $f7
+        .byte   $f7
+        .byte   $f7
+        .byte   $f7
         .byte   $00
         .byte   $9f
         .byte   $9f
@@ -10554,13 +16610,37 @@
         .byte   $bf
         .byte   $bf
         .byte   $7f
-        .fill   16,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $0f
-        .text   $1f,$1f,"??"
+        .byte   $1f
+        .byte   $1f
+        .byte   $3f
+        .byte   $3f
         .byte   $7f
         .byte   $7f
         .byte   $80
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
         .byte   $ff
         .byte   $ff
@@ -10583,10 +16663,20 @@
         .byte   $ff
         .byte   $ec
         .byte   $ec
-        .fill   6,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
         .byte   $00
-        .fill   6,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $03
         .byte   $03
         .byte   $ff
@@ -10601,10 +16691,36 @@
         .byte   $b0
         .byte   $b0
         .byte   $cc
-        .fill   6,$c0
-        .fill   9,$00
-        .fill   8,$01
-        .fill   7,$80
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $00
         .byte   $0f
         .byte   $3f
@@ -10616,14 +16732,25 @@
         .byte   $0f
         .byte   $f0
         .byte   $fc
-        .text   "<",$1c,$1c,"<"
+        .byte   $3c
+        .byte   $1c
+        .byte   $1c
+        .byte   $3c
         .byte   $fc
         .byte   $f0
-        .fill   5,$06
+        .byte   $06
+        .byte   $06
+        .byte   $06
+        .byte   $06
+        .byte   $06
         .byte   $1e
         .byte   $1f
         .byte   $1b
-        .fill   5,$60
+        .byte   $60
+        .byte   $60
+        .byte   $60
+        .byte   $60
+        .byte   $60
         .byte   $78
         .byte   $f8
         .byte   $d8
@@ -10638,7 +16765,11 @@
         .byte   $00
         .byte   $00
         .byte   $00
-        .fill   5,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
         .byte   $00
         .byte   $00
@@ -10664,52 +16795,134 @@
         .byte   $ff
         .byte   $ff
         .byte   $ff
-        .text   $1e,$1e,$1c,$1e
+        .byte   $1e
+        .byte   $1e
+        .byte   $1c
+        .byte   $1e
         .byte   $1d
         .byte   $ff
         .byte   $ff
         .byte   $f3
-        .fill   5,$af
+        .byte   $af
+        .byte   $af
+        .byte   $af
+        .byte   $af
+        .byte   $af
         .byte   $ff
-        .byte   $ff
-        .fill   8,$c0
-        .fill   7,$eb
-        .byte   $ff
-        .text   $12,$12,$12,$12,$12,$12,$12
-        .byte   $ff
-        .fill   7,$df
-        .byte   $ff
-        .fill   8,$c0
         .byte   $ff
         .byte   $c0
-        .text   "EEEE"
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $ff
+        .byte   $12
+        .byte   $12
+        .byte   $12
+        .byte   $12
+        .byte   $12
+        .byte   $12
+        .byte   $12
+        .byte   $ff
+        .byte   $df
+        .byte   $df
+        .byte   $df
+        .byte   $df
+        .byte   $df
+        .byte   $df
+        .byte   $df
+        .byte   $ff
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $ff
+        .byte   $c0
+        .byte   $c5
+        .byte   $c5
+        .byte   $c5
+        .byte   $c5
         .byte   $e5
         .byte   $ff
         .byte   $ff
         .byte   $3a
-        .fill   5,$ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
         .byte   $ff
         .byte   $ff
         .byte   $0f
-        .fill   5,$af
+        .byte   $af
+        .byte   $af
+        .byte   $af
+        .byte   $af
+        .byte   $af
         .byte   $ff
-        .fill   9,$c0
-        .fill   5,$ff
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c0
         .byte   $ff
         .byte   $00
-        .fill   5,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
         .byte   $ff
         .byte   $0f
-        .fill   5,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $8c
         .byte   $fc
         .byte   $c0
         .byte   $c0
         .byte   $c0
         .byte   $c0
-        .fill   13,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $04
         .byte   $0c
         .byte   $1c
@@ -10717,7 +16930,12 @@
         .byte   $fc
         .byte   $fc
         .byte   $fc
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $0f
         .byte   $3f
         .byte   $78
@@ -10745,7 +16963,11 @@
         .byte   $c0
         .byte   $c0
         .byte   $06
-        .text   $1e,">'?",$1f
+        .byte   $1e
+        .byte   $3e
+        .byte   $27
+        .byte   $3f
+        .byte   $1f
         .byte   $00
         .byte   $00
         .byte   $c0
@@ -10754,12 +16976,40 @@
         .byte   $c8
         .byte   $f8
         .byte   $f0
-        .fill   10,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $03
-        .text   $05,$07,$07,$07,$07,$07
-        .fill   8,$00
-        .text   $07,$07,$07,$07,$07,$05,$07,$07
+        .byte   $05
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $05
+        .byte   $07
+        .byte   $07
         .byte   $00
         .byte   $01
         .byte   $03
@@ -10790,15 +17040,40 @@
         .byte   $06
         .byte   $04
         .byte   $04
-        .fill   15,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $3f
         .byte   $7f
         .byte   $7f
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $c0
         .byte   $e0
         .byte   $e0
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $7f
         .byte   $7b
         .byte   $7f
@@ -10816,7 +17091,13 @@
         .byte   $60
         .byte   $e0
         .byte   $01
-        .fill   7,$03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -10845,7 +17126,18 @@
         .byte   $03
         .byte   $03
         .byte   $03
-        .fill   12,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $0f
         .byte   $0f
         .byte   $3f
@@ -10870,7 +17162,14 @@
         .byte   $ff
         .byte   $ff
         .byte   $aa
-        .fill   8,$bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -10879,7 +17178,14 @@
         .byte   $ff
         .byte   $ff
         .byte   $aa
-        .fill   8,$bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -10920,7 +17226,14 @@
         .byte   $ff
         .byte   $ff
         .byte   $aa
-        .fill   8,$bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -10929,7 +17242,14 @@
         .byte   $ff
         .byte   $ff
         .byte   $aa
-        .fill   8,$bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -10938,7 +17258,14 @@
         .byte   $ff
         .byte   $ff
         .byte   $aa
-        .fill   8,$bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
+        .byte   $bc
         .byte   $ff
         .byte   $ff
         .byte   $ff
@@ -10955,7 +17282,14 @@
         .byte   $b0
         .byte   $80
         .byte   $c0
-        .fill   8,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $ff
         .byte   $ff
         .byte   $aa
@@ -10998,22 +17332,63 @@
         .byte   $68
         .byte   $1f
         .byte   $1f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $ff
         .byte   $ff
-        .fill   6,$80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $d8
         .byte   $d8
-        .fill   6,$18
-        .fill   8,$01
-        .fill   8,$80
-        .fill   8,$18
+        .byte   $18
+        .byte   $18
+        .byte   $18
+        .byte   $18
+        .byte   $18
+        .byte   $18
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $18
+        .byte   $18
+        .byte   $18
+        .byte   $18
+        .byte   $18
+        .byte   $18
+        .byte   $18
+        .byte   $18
         .byte   $03
         .byte   $06
         .byte   $0c
         .byte   $1f
         .byte   $1f
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $00
@@ -11043,10 +17418,20 @@
         .byte   $f7
         .byte   $f7
         .byte   $f7
-        .text   "??????"
+        .byte   $3f
+        .byte   $3f
+        .byte   $3f
+        .byte   $3f
+        .byte   $3f
+        .byte   $3f
         .byte   $0f
         .byte   $0f
-        .fill   6,$dc
+        .byte   $dc
+        .byte   $dc
+        .byte   $dc
+        .byte   $dc
+        .byte   $dc
+        .byte   $dc
         .byte   $f0
         .byte   $f0
         .byte   $0f
@@ -11065,10 +17450,20 @@
         .byte   $f7
         .byte   $f7
         .byte   $f7
-        .text   "??????"
+        .byte   $3f
+        .byte   $3f
+        .byte   $3f
+        .byte   $3f
+        .byte   $3f
+        .byte   $3f
         .byte   $0f
         .byte   $0f
-        .fill   6,$dc
+        .byte   $dc
+        .byte   $dc
+        .byte   $dc
+        .byte   $dc
+        .byte   $dc
+        .byte   $dc
         .byte   $f0
         .byte   $f0
         .byte   $00
@@ -11080,15 +17475,43 @@
         .byte   $04
         .byte   $07
         .byte   $7f
-        .fill   5,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $01
         .byte   $ff
         .byte   $fc
@@ -11099,7 +17522,14 @@
         .byte   $bc
         .byte   $3c
         .byte   $fc
-        .text   $07,$07,$07,$07,$07,$07,$07,$07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
         .byte   $fc
         .byte   $fd
         .byte   $fd
@@ -11140,8 +17570,22 @@
         .byte   $7f
         .byte   $00
         .byte   $63
-        .fill   8,$fc
-        .text   $07,$07,$07,$07,$07,$07,$07,$07
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
+        .byte   $07
         .byte   $7d
         .byte   $7d
         .byte   $7d
@@ -11151,11 +17595,29 @@
         .byte   $fd
         .byte   $fd
         .byte   $ff
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $7f
         .byte   $7f
         .byte   $00
@@ -11180,13 +17642,36 @@
         .byte   $07
         .byte   $08
         .byte   $0f
-        .fill   6,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $01
         .byte   $ff
         .byte   $fc
@@ -11237,7 +17722,14 @@
         .byte   $ff
         .byte   $ff
         .byte   $ff
-        .fill   8,$fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
         .byte   $0f
         .byte   $0f
         .byte   $0f
@@ -11247,9 +17739,29 @@
         .byte   $0e
         .byte   $0e
         .byte   $80
-        .fill   15,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $7f
         .byte   $7f
         .byte   $00
@@ -11274,7 +17786,11 @@
         .byte   $24
         .byte   $22
         .byte   $01
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $1f
         .byte   $2f
         .byte   $4f
@@ -11282,7 +17798,12 @@
         .byte   $02
         .byte   $06
         .byte   $0e
-        .text   $1e,"<8 GC"
+        .byte   $1e
+        .byte   $3c
+        .byte   $38
+        .byte   $20
+        .byte   $c7
+        .byte   $c3
         .byte   $f0
         .byte   $f8
         .byte   $bc
@@ -11309,7 +17830,10 @@
         .byte   $02
         .byte   $06
         .byte   $0e
-        .text   $1e,"<8 "
+        .byte   $1e
+        .byte   $3c
+        .byte   $38
+        .byte   $20
         .byte   $80
         .byte   $c0
         .byte   $b0
@@ -11350,16 +17874,40 @@
         .byte   $f0
         .byte   $f0
         .byte   $e0
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $07
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $f8
         .byte   $fc
         .byte   $fe
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $07
-        .fill   10,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $07
         .byte   $07
@@ -11422,9 +17970,22 @@
         .byte   $f8
         .byte   $f8
         .byte   $38
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
-        .text   "? ",$1f,"   ?"
+        .byte   $3f
+        .byte   $20
+        .byte   $1f
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $3f
         .byte   $80
         .byte   $fe
         .byte   $02
@@ -11433,26 +17994,78 @@
         .byte   $02
         .byte   $02
         .byte   $fe
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $0f
         .byte   $0f
         .byte   $0f
         .byte   $3f
         .byte   $3f
         .byte   $3f
-        .fill   18,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fc
         .byte   $f0
         .byte   $f0
-        .text   "LL<<"
+        .byte   $cc
+        .byte   $cc
+        .byte   $3c
+        .byte   $3c
         .byte   $fc
         .byte   $ea
-        .fill   7,$eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
         .byte   $aa
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $aa
-        .fill   7,$fe
-        .fill   8,$fc
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
         .byte   $ef
         .byte   $f5
         .byte   $d5
@@ -11464,40 +18077,112 @@
         .byte   $ff
         .byte   $55
         .byte   $55
-        .fill   5,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
         .byte   $56
         .byte   $56
-        .fill   5,$fe
-        .fill   8,$fc
-        .fill   7,$eb
-        .byte   $ef
-        .fill   8,$ff
-        .fill   8,$fe
-        .fill   8,$fc
-        .byte   $f5
-        .byte   $d5
-        .byte   $ff
-        .fill   5,$eb
-        .byte   $55
-        .byte   $55
-        .fill   6,$ff
-        .byte   $56
-        .byte   $56
-        .fill   6,$fe
-        .fill   8,$fc
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
         .byte   $eb
         .byte   $eb
         .byte   $eb
         .byte   $eb
         .byte   $ef
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
         .byte   $f5
         .byte   $d5
-        .fill   6,$ff
+        .byte   $ff
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
         .byte   $55
         .byte   $55
         .byte   $ff
-        .fill   5,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $56
+        .byte   $56
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $ef
+        .byte   $f5
+        .byte   $d5
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $55
+        .byte   $55
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $56
         .byte   $56
         .byte   $ff
@@ -11515,32 +18200,182 @@
         .byte   $3f
         .byte   $3f
         .byte   $3f
-        .fill   18,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fc
         .byte   $f0
         .byte   $f0
-        .text   "LL<<"
+        .byte   $cc
+        .byte   $cc
+        .byte   $3c
+        .byte   $3c
         .byte   $fc
-        .text   "UUUUUUUU]]]]]]]]uuuuuuuu"
-        .fill   8,$fc
-        .text   "UUUUUUUU]]]]]]]]uuuuuuuu"
-        .fill   8,$fc
-        .text   "UUUUUUUU"
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
         .byte   $dd
         .byte   $dd
         .byte   $dd
         .byte   $dd
-        .text   "]]]]UUUUuuuu"
-        .fill   8,$fc
-        .text   "UUUUUUUU]]]]]]]]uuuuuuuu"
-        .fill   8,$fc
-        .text   "UUUUUU"
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
+        .byte   $d5
         .byte   $ff
         .byte   $ff
-        .text   "]]]]]]"
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
+        .byte   $5d
         .byte   $ff
         .byte   $ff
-        .text   "uuuuuu"
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
+        .byte   $55
         .byte   $ff
         .byte   $ff
         .byte   $fc
@@ -11559,10 +18394,19 @@
         .byte   $1f
         .byte   $3f
         .byte   $7f
-        .fill   6,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fc
         .byte   $f1
-        .fill   5,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $1f
         .byte   $87
         .byte   $61
@@ -11613,7 +18457,11 @@
         .byte   $c7
         .byte   $f3
         .byte   $e3
-        .text   "Ax[[["
+        .byte   $c1
+        .byte   $58
+        .byte   $5b
+        .byte   $5b
+        .byte   $5b
         .byte   $bb
         .byte   $ff
         .byte   $06
@@ -11634,7 +18482,14 @@
         .byte   $78
         .byte   $f8
         .byte   $fc
-        .fill   8,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
         .byte   $e2
         .byte   $86
@@ -11651,10 +18506,22 @@
         .byte   $ca
         .byte   $fa
         .byte   $02
-        .fill   8,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $ff
         .byte   $ff
-        .text   "LUADEU"
+        .byte   $cc
+        .byte   $d5
+        .byte   $c1
+        .byte   $c4
+        .byte   $c5
+        .byte   $d5
         .byte   $ef
         .byte   $cf
         .byte   $86
@@ -11671,7 +18538,14 @@
         .byte   $a0
         .byte   $ae
         .byte   $ae
-        .fill   8,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $cd
         .byte   $c0
         .byte   $ff
@@ -11689,7 +18563,15 @@
         .byte   $e1
         .byte   $fe
         .byte   $a8
-        .fill   9,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $fc
         .byte   $f8
         .byte   $f0
@@ -11704,7 +18586,22 @@
         .byte   $1f
         .byte   $3f
         .byte   $7f
-        .fill   16,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
         .byte   $fc
         .byte   $fa
@@ -11714,18 +18611,37 @@
         .byte   $be
         .byte   $7e
         .byte   $80
-        .fill   5,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $e1
         .byte   $df
         .byte   $00
-        .fill   5,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $bc
         .byte   $5b
         .byte   $00
-        .fill   5,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $42
         .byte   $ee
-        .fill   8,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $cf
         .byte   $f7
         .byte   $fb
@@ -11734,17 +18650,38 @@
         .byte   $ff
         .byte   $ff
         .byte   $ff
-        .text   "x[[["
+        .byte   $58
+        .byte   $5b
+        .byte   $5b
+        .byte   $5b
         .byte   $bb
         .byte   $ff
         .byte   $06
         .byte   $fe
-        .fill   5,$ee
+        .byte   $ee
+        .byte   $ee
+        .byte   $ee
+        .byte   $ee
+        .byte   $ee
         .byte   $fe
         .byte   $02
         .byte   $fa
-        .fill   8,$fe
-        .fill   8,$ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
         .byte   $fe
         .byte   $8e
@@ -11753,17 +18690,38 @@
         .byte   $fe
         .byte   $06
         .byte   $06
-        .fill   5,$fa
+        .byte   $fa
+        .byte   $fa
+        .byte   $fa
+        .byte   $fa
+        .byte   $fa
         .byte   $ca
         .byte   $fa
         .byte   $02
-        .fill   8,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $ff
         .byte   $ff
-        .text   "LUUTUU"
+        .byte   $cc
+        .byte   $d5
+        .byte   $d5
+        .byte   $d4
+        .byte   $d5
+        .byte   $d5
         .byte   $ff
         .byte   $ff
-        .text   "Vvrtvv"
+        .byte   $d6
+        .byte   $56
+        .byte   $52
+        .byte   $54
+        .byte   $56
+        .byte   $56
         .byte   $fe
         .byte   $fe
         .byte   $ac
@@ -11772,13 +18730,40 @@
         .byte   $ac
         .byte   $ae
         .byte   $ae
-        .fill   8,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $cd
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $56
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $a8
-        .fill   9,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $fc
         .byte   $f8
         .byte   $f0
@@ -11802,11 +18787,26 @@
         .byte   $55
         .byte   $51
         .byte   $00
-        .fill   7,$c0
-        .text   $0d,$0d,$0d,$0d,"?3"
         .byte   $c0
         .byte   $c0
-        .text   "qqqqw"
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $0d
+        .byte   $0d
+        .byte   $0d
+        .byte   $0d
+        .byte   $3f
+        .byte   $33
+        .byte   $c0
+        .byte   $c0
+        .byte   $51
+        .byte   $51
+        .byte   $51
+        .byte   $51
+        .byte   $57
         .byte   $ff
         .byte   $fc
         .byte   $00
@@ -11834,9 +18834,20 @@
         .byte   $fa
         .byte   $ea
         .byte   $ea
-        .fill   8,$fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
         .byte   $eb
-        .fill   5,$ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
         .byte   $ff
         .byte   $ff
         .byte   $ea
@@ -11847,13 +18858,62 @@
         .byte   $aa
         .byte   $ff
         .byte   $ff
-        .fill   5,$fc
-        .text   "LLLLLLLLLLL"
-        .fill   8,$00
-        .text   "LLLLLLLL"
-        .fill   8,$c0
-        .fill   8,$00
-        .fill   8,$c0
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
         .byte   $ef
         .byte   $ef
         .byte   $df
@@ -11894,7 +18954,14 @@
         .byte   $00
         .byte   $3b
         .byte   $3b
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fe
         .byte   $fd
         .byte   $fd
@@ -11935,7 +19002,14 @@
         .byte   $3b
         .byte   $00
         .byte   $3f
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $bf
         .byte   $bf
         .byte   $7f
@@ -11979,7 +19053,11 @@
         .byte   $00
         .byte   $00
         .byte   $00
-        .text   ">ai]a"
+        .byte   $3e
+        .byte   $41
+        .byte   $49
+        .byte   $5d
+        .byte   $41
         .byte   $fb
         .byte   $fb
         .byte   $f7
@@ -12018,7 +19096,13 @@
         .byte   $3f
         .byte   $3f
         .byte   $00
-        .text   ";;a]ia>"
+        .byte   $3b
+        .byte   $3b
+        .byte   $41
+        .byte   $5d
+        .byte   $49
+        .byte   $41
+        .byte   $3e
         .byte   $00
         .byte   $00
         .byte   $00
@@ -12062,7 +19146,14 @@
         .byte   $3b
         .byte   $00
         .byte   $3f
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $f7
         .byte   $ef
         .byte   $ef
@@ -12102,34 +19193,151 @@
         .byte   $00
         .byte   $3f
         .byte   $3f
-        .fill   9,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
-        .fill   6,$ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
         .byte   $ff
         .byte   $ff
-        .fill   6,$aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
         .byte   $ff
         .byte   $ff
-        .fill   6,$ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
         .byte   $ff
         .byte   $ff
-        .fill   6,$aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
         .byte   $ff
         .byte   $ff
-        .fill   6,$ab
-        .fill   8,$00
-        .fill   8,$ea
-        .fill   8,$aa
-        .fill   8,$ba
-        .fill   8,$aa
-        .fill   8,$ab
-        .fill   8,$00
-        .fill   8,$ea
-        .fill   8,$aa
-        .fill   8,$ba
-        .fill   8,$aa
-        .fill   8,$ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
         .byte   $00
         .byte   $00
         .byte   $ff
@@ -12138,11 +19346,46 @@
         .byte   $d7
         .byte   $d7
         .byte   $eb
-        .fill   8,$ea
-        .fill   8,$aa
-        .fill   8,$ba
-        .fill   8,$aa
-        .fill   8,$ab
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
         .byte   $eb
         .byte   $d7
         .byte   $d7
@@ -12151,35 +19394,133 @@
         .byte   $ff
         .byte   $00
         .byte   $00
-        .fill   8,$ea
-        .fill   8,$aa
-        .fill   8,$ba
-        .fill   8,$aa
-        .fill   8,$ab
-        .fill   8,$00
-        .fill   6,$ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
         .byte   $ff
         .byte   $ff
-        .fill   6,$aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
         .byte   $ff
         .byte   $ff
-        .fill   6,$ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
+        .byte   $ba
         .byte   $ff
         .byte   $ff
-        .fill   6,$aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
         .byte   $ff
         .byte   $ff
-        .fill   6,$ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
+        .byte   $ab
         .byte   $ff
         .byte   $ff
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $0f
         .byte   $0f
         .byte   $0f
         .byte   $3f
         .byte   $3f
         .byte   $3f
-        .fill   25,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
         .byte   $fc
         .byte   $f8
@@ -12189,15 +19530,86 @@
         .byte   $bc
         .byte   $bc
         .byte   $bc
-        .fill   8,$eb
-        .fill   16,$00
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $02
-        .fill   7,$03
-        .fill   8,$fc
-        .fill   8,$eb
-        .fill   16,$00
-        .fill   8,$03
-        .fill   8,$fc
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $eb
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+_L57AD  .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
+        .byte   $fc
         .byte   $ef
         .byte   $ef
         .byte   $fa
@@ -12239,9 +19651,21 @@
         .byte   $c0
         .byte   $c0
         .byte   $00
-        .fill   7,$03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
+        .byte   $03
         .byte   $00
-        .fill   7,$c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
+        .byte   $c0
         .byte   $3f
         .byte   $3f
         .byte   $1f
@@ -12268,11 +19692,26 @@
         .byte   $80
         .byte   $fc
         .byte   $02
-        .fill   6,$01
-        .fill   6,$80
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $40
         .byte   $3f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $02
         .byte   $fc
         .byte   $3f
@@ -12285,17 +19724,36 @@
         .byte   $80
         .byte   $fc
         .byte   $02
-        .text   $81,$81,$81,"A",$81
+        .byte   $81
+        .byte   $81
+        .byte   $81
+        .byte   $c1
+        .byte   $81
         .byte   $01
-        .fill   6,$80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $40
         .byte   $3f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $02
         .byte   $fc
         .byte   $3f
         .byte   $40
-        .fill   6,$80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $fc
         .byte   $02
         .byte   $05
@@ -12304,18 +19762,38 @@
         .byte   $15
         .byte   $09
         .byte   $01
-        .fill   6,$80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $40
         .byte   $3f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $02
         .byte   $fc
         .byte   $3f
         .byte   $40
-        .fill   6,$80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $fc
         .byte   $02
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $b8
         .byte   $88
         .byte   $b8
@@ -12324,15 +19802,30 @@
         .byte   $80
         .byte   $40
         .byte   $3f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $02
         .byte   $fc
         .byte   $3f
         .byte   $40
-        .fill   6,$80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $fc
         .byte   $02
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $80
         .byte   $83
         .byte   $80
@@ -12351,11 +19844,26 @@
         .byte   $fc
         .byte   $3f
         .byte   $40
-        .fill   6,$80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $fc
         .byte   $02
-        .fill   6,$01
-        .fill   6,$80
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
+        .byte   $80
         .byte   $40
         .byte   $3f
         .byte   $09
@@ -12398,7 +19906,14 @@
         .byte   $1d
         .byte   $01
         .byte   $ff
-        .text   $1f,"? ! ?  "
+        .byte   $1f
+        .byte   $3f
+        .byte   $20
+        .byte   $21
+        .byte   $20
+        .byte   $3f
+        .byte   $20
+        .byte   $20
         .byte   $fc
         .byte   $fc
         .byte   $0c
@@ -12407,7 +19922,14 @@
         .byte   $fc
         .byte   $0c
         .byte   $0c
-        .text   "! ?  ! ?"
+        .byte   $21
+        .byte   $20
+        .byte   $3f
+        .byte   $20
+        .byte   $20
+        .byte   $21
+        .byte   $20
+        .byte   $3f
         .byte   $0c
         .byte   $0c
         .byte   $fc
@@ -12416,328 +19938,1800 @@
         .byte   $0c
         .byte   $0c
         .byte   $f8
-        .fill   16,$01
-        .fill   7,$00
         .byte   $01
-        .fill   7,$00
         .byte   $01
-        .fill   16,$00
-        .fill   32,$01
-        .fill   15,$00
         .byte   $01
-        .fill   16,$00
-        .fill   7,$ff
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
-        .fill   33,$00
-        .fill   15,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   7,$ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
-        .fill   33,$00
-        .fill   15,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   7,$ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
-        .fill   33,$00
-        .fill   15,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   7,$ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $77
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
-        .fill   33,$00
-        .fill   15,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   7,$ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   14,$01
-        .byte   $00
-        .fill   16,$01
-        .fill   7,$00
         .byte   $01
-        .fill   7,$00
         .byte   $01
-        .fill   16,$00
-        .fill   16,$01
-        .byte   $a9
-        .byte   $04
-        .byte   $85
-        .byte   $fe
-        .byte   $a9
-        .byte   $d8
-        .byte   $85
-        .byte   $fc
-        .byte   $a9
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .byte   $85
-        .byte   $fd
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $8d
-        .byte   $85
-        .byte   $af
-        .byte   $a9
-        .byte   $20
-        .byte   $85
-        .byte   $ae
-        .byte   $a9
-        .byte   $91
-        .byte   $85
-        .byte   $ad
-        .byte   $a9
-        .byte   $08
-        .byte   $85
-        .byte   $ac
-        .byte   $a0
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .byte   $b1
-        .byte   $ae
-        .byte   $91
-        .byte   $fd
-        .byte   $b1
-        .byte   $ac
-        .byte   $91
-        .byte   $fb
-        .byte   $c8
-        .byte   $f0
-        .byte   $07
-        .byte   $c0
-        .byte   $e8
-        .byte   $d0
-        .byte   $f1
-        .byte   $4c
-        .byte   $8d
-        .byte   $5e
-        .byte   $e6
-        .byte   $fe
-        .byte   $e6
-        .byte   $fc
-        .byte   $e6
-        .byte   $af
-        .byte   $e6
-        .byte   $ad
-        .byte   $4c
-        .byte   $6e
-        .byte   $5e
-        .byte   $a5
-        .byte   $fe
-        .byte   $c9
-        .byte   $07
-        .byte   $d0
-        .byte   $dd
-        .byte   $60
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+
+_L5E50  lda     #$04
+        sta     $fe
+        lda     #$d8
+        sta     $fc
+        lda     #$00
+        sta     $fd
+        sta     $fb
+        lda     #$8d
+        sta     $af
+        lda     #$20
+        sta     $ae
+        lda     #$91
+        sta     $ad
+        lda     #$08
+        sta     $ac
+_L5E6E  ldy     #$00
+_L5E70  lda     ($ae),y
+        sta     ($fd),y
+        lda     ($ac),y
+        sta     ($fb),y
+        iny
+        beq     _L5E82
+        cpy     #$e8
+        bne     _L5E70
+        jmp     _L5E8D
+
+_L5E82  inc     $fe
+        inc     $fc
+        inc     $af
+        inc     $ad
+        jmp     _L5E6E
+
+_L5E8D  lda     $fe
+        cmp     #$07
+        bne     _L5E70
+        rts
+
         .byte   $60
         .byte   $41
         .byte   $41
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $ff
         .byte   $02
-        .fill   7,$fe
-        .byte   $ff
-        .fill   7,$fe
-        .byte   $ff
-        .fill   16,$fe
-        .fill   32,$ff
-        .fill   15,$fe
-        .byte   $ff
-        .fill   16,$fe
-        .byte   $7f
-        .fill   31,$01
-        .fill   7,$00
-        .byte   $01
-        .fill   7,$00
-        .byte   $01
-        .fill   16,$00
-        .fill   32,$01
-        .fill   15,$00
-        .byte   $01
-        .fill   16,$00
-        .fill   32,$ff
-        .fill   7,$fe
-        .byte   $ff
-        .fill   7,$fe
-        .byte   $ff
-        .fill   16,$fe
-        .fill   32,$ff
-        .fill   15,$fe
-        .byte   $ff
-        .fill   16,$fe
-        .byte   $a2
-        .byte   $02
-        .byte   $86
-        .byte   $02
-        .byte   $a0
-        .byte   $04
-        .byte   $b1
-        .byte   $3f
-        .byte   $48
-        .byte   $c8
-        .byte   $b1
-        .byte   $3f
-        .byte   $85
-        .byte   $fb
-        .byte   $c8
-        .byte   $b1
-        .byte   $3f
-        .byte   $85
-        .byte   $fc
-        .byte   $c8
-        .byte   $b1
-        .byte   $3f
-        .byte   $85
-        .byte   $fd
-        .byte   $68
-        .byte   $f0
-        .byte   $2f
-        .byte   $4c
-        .byte   $c0
-        .byte   $6f
-        .byte   $ea
-        .byte   $ea
-        .byte   $ea
-        .byte   $18
-        .byte   $69
-        .byte   $07
-        .byte   $ca
-        .byte   $d0
-        .byte   $fa
-        .byte   $a8
-        .byte   $b9
-        .byte   $e8
-        .byte   $60
-        .byte   $85
-        .byte   $ae
-        .byte   $b9
-        .byte   $e9
-        .byte   $60
-        .byte   $85
-        .byte   $af
-        .byte   $b9
-        .byte   $ea
-        .byte   $60
-        .byte   $85
         .byte   $fe
-        .byte   $b9
-        .byte   $eb
-        .byte   $60
-        .byte   $aa
-        .byte   $b9
-        .byte   $e6
-        .byte   $60
-        .byte   $8d
-        .byte   $48
-        .byte   $60
-        .byte   $b9
-        .byte   $e7
-        .byte   $60
-        .byte   $8d
-        .byte   $49
-        .byte   $60
-        .byte   $20
-        .byte   $51
-        .byte   $60
-        .byte   $a0
-        .byte   $08
-        .byte   $c6
-        .byte   $02
-        .byte   $d0
-        .byte   $b6
-        .byte   $60
-        .byte   $4c
-        .byte   $6b
-        .byte   $60
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $7f
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+
+_L6000  ldx     #$02
+        stx     $02
+        ldy     #$04
+_L6006  lda     ($3f),y
+        pha
+        iny
+        lda     ($3f),y
+        sta     $fb
+        iny
+        lda     ($3f),y
+        sta     $fc
+        iny
+        lda     ($3f),y
+        sta     $fd
+        pla
+        beq     _L604A
+        jmp     _L6FC0
+
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+
+_L6021  clc
+        adc     #$07
+        dex
+        bne     _L6021
+_L6027  tay
+        lda     _L60E8,y
+        sta     $ae
+        lda     _L60E9,y
+        sta     $af
+        lda     _L60EA,y
+        sta     $fe
+        lda     _L60EB,y
+        tax
+        lda     _L60E8-2,y
+        sta     _L6047+1
+        lda     _L60E8-1,y
+        sta     _L6047+2
+_L6047  jsr     _L6051
+_L604A  ldy     #$08
+        dec     $02
+        bne     _L6006
+        rts
+
+_L6051  jmp     _L606B
+
         .byte   $20
         .byte   $6b
         .byte   $60
@@ -12761,135 +21755,75 @@
         .byte   $91
         .byte   $fb
         .byte   $60
-        .byte   $a5
-        .byte   $fe
-        .byte   $8d
-        .byte   $3d
-        .byte   $03
-        .byte   $06
-        .byte   $fe
-        .byte   $06
-        .byte   $fe
-        .byte   $06
-        .byte   $fe
-        .byte   $a5
-        .byte   $fb
-        .byte   $8d
-        .byte   $3e
-        .byte   $03
-        .byte   $a5
-        .byte   $fc
-        .byte   $8d
-        .byte   $3f
-        .byte   $03
-        .byte   $8e
-        .byte   $3c
-        .byte   $03
-        .byte   $a4
-        .byte   $fe
-        .byte   $88
-        .byte   $b1
-        .byte   $ae
-        .byte   $91
-        .byte   $fb
-        .byte   $88
-        .byte   $10
-        .byte   $f9
-        .byte   $a5
-        .byte   $ae
-        .byte   $18
-        .byte   $65
-        .byte   $fe
-        .byte   $85
-        .byte   $ae
-        .byte   $a5
-        .byte   $af
-        .byte   $69
-        .byte   $00
-        .byte   $85
-        .byte   $af
-        .byte   $a5
-        .byte   $fb
-        .byte   $18
-        .byte   $69
-        .byte   $70
-        .byte   $85
-        .byte   $fb
-        .byte   $a5
-        .byte   $fc
-        .byte   $69
-        .byte   $00
-        .byte   $85
-        .byte   $fc
-        .byte   $ca
-        .byte   $d0
-        .byte   $d9
-        .byte   $ae
-        .byte   $3c
-        .byte   $03
-        .byte   $18
-        .byte   $6e
-        .byte   $3f
-        .byte   $03
-        .byte   $6e
-        .byte   $3e
-        .byte   $03
-        .byte   $18
-        .byte   $6e
-        .byte   $3f
-        .byte   $03
-        .byte   $6e
-        .byte   $3e
-        .byte   $03
-        .byte   $ad
-        .byte   $3e
-        .byte   $03
-        .byte   $38
-        .byte   $e9
-        .byte   $a0
-        .byte   $a8
-        .byte   $b9
-        .byte   $b3
-        .byte   $61
-        .byte   $85
-        .byte   $fb
-        .byte   $b9
-        .byte   $b4
-        .byte   $61
-        .byte   $85
-        .byte   $fc
-        .byte   $a5
-        .byte   $fd
-        .byte   $ac
-        .byte   $3d
-        .byte   $03
-        .byte   $88
-        .byte   $91
-        .byte   $fb
-        .byte   $88
-        .byte   $10
-        .byte   $fb
-        .byte   $a5
-        .byte   $fb
-        .byte   $18
-        .byte   $69
-        .byte   $28
-        .byte   $85
-        .byte   $fb
-        .byte   $a5
-        .byte   $fc
-        .byte   $69
-        .byte   $00
-        .byte   $85
-        .byte   $fc
-        .byte   $ca
-        .byte   $d0
-        .byte   $e5
-        .byte   $60
-        .byte   $01
-        .byte   $51
-        .byte   $60
-        .byte   $10
+
+_L606B  lda     $fe
+        sta     $033d
+        asl     $fe
+        asl     $fe
+        asl     $fe
+        lda     $fb
+        sta     $033e
+        lda     $fc
+        sta     $033f
+        stx     $033c
+_L6083  ldy     $fe
+        dey
+_L6086  lda     ($ae),y
+        sta     ($fb),y
+        dey
+        bpl     _L6086
+        lda     $ae
+        clc
+        adc     $fe
+        sta     $ae
+        lda     $af
+        adc     #$00
+        sta     $af
+        lda     $fb
+        clc
+        adc     #$70
+        sta     $fb
+        lda     $fc
+        adc     #$00
+        sta     $fc
+        dex
+        bne     _L6083
+        ldx     $033c
+        clc
+        ror     $033f
+        ror     $033e
+        clc
+        ror     $033f
+        ror     $033e
+        lda     $033e
+        sec
+        sbc     #$a0
+        tay
+        lda     _L61B3,y
+        sta     $fb
+        lda     _L61B4,y
+        sta     $fc
+_L60CC  lda     $fd
+        ldy     $033d
+        dey
+_L60D2  sta     ($fb),y
+        dey
+        bpl     _L60D2
+        lda     $fb
+        clc
+        adc     #$28
+        sta     $fb
+        lda     $fc
+        adc     #$00
+        sta     $fc
+        dex
+        bne     _L60CC
+        rts
+
+_L60E8  .byte   $01
+_L60E9  .byte   $51
+_L60EA  .byte   $60
+_L60EB  .byte   $10
         .byte   $55
         .byte   $06
         .byte   $06
@@ -13028,7 +21962,7 @@
         .byte   $03
         .byte   $15
         .byte   $51
-        .byte   $60
+_L6176  .byte   $60
         .byte   $20
         .byte   $00
         .byte   $02
@@ -13089,7 +22023,48 @@
         .byte   $53
         .byte   $04
         .byte   $06
-        .text   "-X.X/X0X1X2X3X4X5X6X7X8X9X:XuXvXwXxXyXzX[X"
+_L61B3  .byte   $2d
+_L61B4  .byte   $d8
+        .byte   $2e
+        .byte   $d8
+        .byte   $2f
+        .byte   $d8
+        .byte   $30
+        .byte   $d8
+        .byte   $31
+        .byte   $d8
+        .byte   $32
+        .byte   $d8
+        .byte   $33
+        .byte   $d8
+        .byte   $34
+        .byte   $d8
+        .byte   $35
+        .byte   $d8
+        .byte   $36
+        .byte   $d8
+        .byte   $37
+        .byte   $d8
+        .byte   $38
+        .byte   $d8
+        .byte   $39
+        .byte   $d8
+        .byte   $3a
+        .byte   $d8
+        .byte   $55
+        .byte   $d8
+        .byte   $56
+        .byte   $d8
+        .byte   $57
+        .byte   $d8
+        .byte   $58
+        .byte   $d8
+        .byte   $59
+        .byte   $d8
+        .byte   $5a
+        .byte   $d8
+        .byte   $5b
+        .byte   $d8
         .byte   $5c
         .byte   $d8
         .byte   $5d
@@ -13159,1791 +22134,1679 @@
         .byte   $b1
         .byte   $d8
         .byte   $b2
-        .text   "XMXNXOXPXQXRXSXTXUXVXWXXXYXZX"
-        .byte   $f5
         .byte   $d8
-        .byte   $f6
-        .byte   $d8
-        .byte   $f7
-        .byte   $d8
-        .byte   $f8
-        .byte   $d8
-        .byte   $f9
-        .byte   $d8
-        .byte   $fa
-        .byte   $d8
-        .byte   $fb
-        .byte   $d8
-        .byte   $fc
-        .byte   $d8
-        .byte   $fd
-        .byte   $d8
-        .byte   $fe
-        .byte   $d8
-        .byte   $ff
-        .byte   $d8
-        .byte   $00
-        .byte   $d9
-        .byte   $01
-        .byte   $d9
-        .byte   $02
-        .byte   $d9
-        .byte   $1d
-        .text   "Y",$1e,"Y",$1f,"Y Y!Y",$22,"Y#Y$Y%Y&Y'Y(Y)Y*YeYfYgYhYiYjYkYlYm"
-        .text   "YnYoYpYqYrY"
-        .fill   13,$ff
-        .byte   $a0
-        .byte   $01
-        .byte   $a2
-        .byte   $5b
-        .byte   $a9
-        .byte   $d0
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $63
-        .byte   $85
-        .byte   $fc
-        .byte   $b1
-        .byte   $fb
         .byte   $cd
-        .byte   $51
-        .byte   $1b
-        .byte   $f0
-        .byte   $0f
-        .byte   $a5
-        .byte   $fb
-        .byte   $18
-        .byte   $69
-        .byte   $08
-        .byte   $85
-        .byte   $fb
-        .byte   $90
-        .byte   $02
-        .byte   $e6
-        .byte   $fc
-        .byte   $ca
-        .byte   $d0
-        .byte   $eb
-        .byte   $60
-        .byte   $8a
-        .text   "hHHHH"
-        .byte   $b1
-        .byte   $fb
-        .byte   $d0
-        .byte   $03
-        .byte   $4c
-        .byte   $85
-        .byte   $63
-        .byte   $a9
-        .byte   $40
-        .byte   $85
-        .byte   $ae
-        .byte   $a9
-        .byte   $3c
-        .byte   $85
-        .byte   $af
-        .byte   $a2
-        .byte   $0d
-        .byte   $a9
-        .byte   $b0
-        .byte   $85
-        .byte   $fd
-        .byte   $a9
-        .byte   $3c
-        .byte   $85
-        .byte   $fe
-        .byte   $a0
-        .byte   $0f
-        .byte   $b1
-        .byte   $ae
-        .byte   $d0
-        .byte   $0a
-        .byte   $b1
-        .byte   $fd
-        .byte   $d0
-        .byte   $06
-        .byte   $88
-        .byte   $10
-        .byte   $f5
-        .byte   $4c
-        .byte   $09
-        .byte   $63
-        .byte   $a5
-        .byte   $ae
-        .byte   $18
-        .byte   $69
-        .byte   $08
-        .byte   $85
-        .byte   $ae
-        .byte   $a5
-        .byte   $fd
-        .byte   $18
-        .byte   $69
-        .byte   $08
-        .byte   $85
-        .byte   $fd
-        .byte   $90
-        .byte   $02
-        .byte   $e6
-        .byte   $fe
-        .byte   $ca
-        .byte   $d0
-        .byte   $db
-        .byte   $4c
-        .byte   $85
-        .byte   $63
-        .byte   $a0
-        .byte   $03
-        .byte   $a2
-        .byte   $02
-        .byte   $a5
-        .byte   $ae
-        .byte   $8d
-        .byte   $3c
-        .byte   $03
-        .byte   $a5
-        .byte   $af
-        .byte   $8d
-        .byte   $3d
-        .byte   $03
-        .byte   $b1
-        .byte   $fb
-        .byte   $85
-        .byte   $fd
-        .byte   $c8
-        .byte   $b1
-        .byte   $fb
-        .byte   $85
-        .byte   $fe
-        .byte   $a0
-        .byte   $0f
-        .byte   $b1
-        .byte   $fd
-        .byte   $91
-        .byte   $ae
-        .byte   $88
-        .byte   $10
-        .byte   $f9
-        .byte   $a5
-        .byte   $ae
-        .byte   $18
-        .byte   $69
-        .byte   $70
-        .byte   $85
-        .byte   $ae
-        .byte   $a5
-        .byte   $af
-        .byte   $69
-        .byte   $00
-        .byte   $85
-        .byte   $af
-        .byte   $a5
-        .byte   $fd
-        .byte   $18
-        .byte   $69
-        .byte   $10
-        .byte   $85
-        .byte   $fd
-        .byte   $a5
-        .byte   $fe
-        .byte   $69
-        .byte   $00
-        .byte   $85
-        .byte   $fe
-        .byte   $a0
-        .byte   $0f
-        .byte   $ca
-        .byte   $d0
-        .byte   $da
-        .byte   $a0
-        .byte   $06
-        .byte   $b1
-        .byte   $fb
-        .byte   $aa
-        .byte   $4e
-        .byte   $3d
-        .byte   $03
-        .byte   $6e
-        .byte   $3c
-        .byte   $03
-        .byte   $4e
-        .byte   $3d
-        .byte   $03
-        .byte   $6e
-        .byte   $3c
-        .byte   $03
-        .byte   $ad
-        .byte   $3c
-        .byte   $03
-        .byte   $38
-        .byte   $e9
-        .byte   $10
-        .byte   $a8
-        .byte   $b9
-        .byte   $a8
-        .byte   $66
-        .byte   $85
-        .byte   $ae
-        .byte   $b9
-        .byte   $a9
-        .byte   $66
-        .byte   $85
-        .byte   $af
-        .byte   $a0
-        .byte   $01
-        .byte   $8a
-        .byte   $91
-        .byte   $ae
-        .byte   $88
-        .byte   $91
-        .byte   $ae
-        .byte   $a5
-        .byte   $ae
-        .byte   $18
-        .byte   $69
-        .byte   $28
-        .byte   $85
-        .byte   $ae
-        .byte   $90
-        .byte   $02
-        .byte   $e6
-        .byte   $af
-        .byte   $8a
-        .byte   $a0
-        .byte   $01
-        .byte   $91
-        .byte   $ae
-        .byte   $88
-        .byte   $91
-        .byte   $ae
-        .byte   $68
-        .byte   $aa
-        .byte   $a0
-        .byte   $01
-        .byte   $4c
-        .byte   $b3
-        .byte   $62
-        .byte   $02
-        .byte   $ff
-        .byte   $ff
-        .byte   $fe
-        .byte   $ff
-        .byte   $ff
-        .byte   $ff
-        .byte   $02
-        .byte   $ff
-        .byte   $ff
-        .byte   $ff
-        .byte   $fe
-        .byte   $ff
-        .byte   $ff
-        .byte   $02
-        .byte   $ff
-        .byte   $ff
-        .byte   $ff
-        .byte   $ff
-        .fill   33,$fe
-        .fill   15,$ff
-        .byte   $fe
-        .byte   $01
-        .byte   $04
-        .byte   $19
-        .byte   $48
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $01
-        .byte   $02
-        .byte   $80
-        .byte   $19
-        .byte   $48
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $01
-        .byte   $03
-        .byte   $22
-        .byte   $19
-        .byte   $48
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $01
-        .byte   $04
-        .byte   $31
-        .byte   $19
-        .byte   $48
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $01
-        .byte   $05
-        .byte   $40
-        .byte   $19
-        .byte   $48
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $01
-        .byte   $06
-        .byte   $0c
-        .byte   $19
-        .byte   $48
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $01
-        .byte   $07
-        .byte   $1b
-        .byte   $19
-        .byte   $48
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $01
-        .byte   $08
-        .byte   $2a
-        .byte   $19
-        .byte   $48
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $01
-        .byte   $09
-        .byte   $39
-        .byte   $19
-        .byte   $48
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $01
-        .byte   $0a
-        .byte   $48
-        .byte   $19
-        .byte   $48
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $01
-        .byte   $0b
-        .byte   $80
-        .byte   $0a
-        .byte   $28
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $02
-        .byte   $0c
-        .byte   $80
-        .byte   $0a
-        .byte   $28
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $02
-        .byte   $0d
-        .byte   $80
-        .byte   $0a
-        .byte   $28
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $02
-        .byte   $0e
-        .byte   $80
-        .byte   $0a
-        .byte   $28
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $02
-        .byte   $0f
-        .byte   $80
-        .byte   $0a
-        .byte   $28
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $02
-        .byte   $10
-        .byte   $80
-        .byte   $0a
-        .byte   $28
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $02
-        .byte   $11
-        .byte   $80
-        .byte   $0a
-        .byte   $28
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $02
-        .byte   $12
-        .byte   $80
-        .byte   $0a
-        .byte   $28
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $02
-        .byte   $13
-        .byte   $80
-        .byte   $0a
-        .byte   $28
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $02
-        .byte   $14
-        .byte   $80
-        .byte   $0a
-        .byte   $28
-        .byte   $4f
-        .byte   $01
-        .byte   $08
-        .byte   $02
-        .byte   $15
-        .text   $1e,"( h"
-        .byte   $01
-        .byte   $00
-        .byte   $03
-        .byte   $16
-        .byte   $39
-        .byte   $0a
-        .byte   $80
-        .byte   $48
-        .byte   $01
-        .byte   $06
-        .byte   $04
-        .byte   $17
-        .byte   $2d
-        .byte   $0a
-        .byte   $80
-        .byte   $49
-        .byte   $00
-        .byte   $00
-        .byte   $05
-        .byte   $18
-        .byte   $06
-        .byte   $02
-        .byte   $40
-        .byte   $49
-        .byte   $00
-        .byte   $00
-        .byte   $06
-        .byte   $19
-        .byte   $25
-        .byte   $02
-        .byte   $40
-        .byte   $49
-        .byte   $00
-        .byte   $03
-        .byte   $06
-        .byte   $1a
-        .byte   $35
-        .byte   $02
-        .byte   $40
-        .byte   $49
-        .byte   $00
-        .byte   $05
-        .byte   $06
-        .byte   $1b
-        .byte   $29
-        .byte   $02
-        .byte   $40
-        .byte   $49
-        .byte   $00
-        .byte   $01
-        .byte   $06
-        .byte   $1c
-        .byte   $38
-        .byte   $02
-        .byte   $40
-        .byte   $49
-        .byte   $00
-        .byte   $04
-        .byte   $06
-        .byte   $1d
-        .byte   $41
-        .byte   $02
-        .byte   $40
-        .byte   $49
-        .byte   $00
-        .byte   $06
-        .byte   $06
-        .byte   $1e
-        .byte   $09
-        .byte   $02
-        .byte   $c0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $07
-        .byte   $1f
-        .byte   $19
-        .byte   $02
-        .byte   $c0
-        .byte   $47
-        .byte   $00
-        .byte   $06
-        .byte   $07
-        .byte   $20
-        .byte   $0e
-        .byte   $02
-        .byte   $c0
-        .byte   $47
-        .byte   $00
-        .byte   $04
-        .byte   $07
-        .byte   $21
-        .byte   $33
-        .byte   $02
-        .byte   $c0
-        .byte   $47
-        .byte   $00
-        .byte   $05
-        .byte   $07
-        .byte   $22
-        .fill   7,$00
-        .byte   $23
-        .byte   $3d
-        .byte   $02
-        .byte   $c0
-        .byte   $47
-        .byte   $00
-        .byte   $01
-        .byte   $07
-        .byte   $24
-        .byte   $80
-        .byte   $02
-        .byte   $c0
-        .byte   $47
-        .byte   $00
-        .byte   $03
-        .byte   $07
-        .byte   $25
-        .byte   $16
-        .byte   $05
-        .byte   $e0
-        .byte   $47
-        .byte   $00
-        .byte   $06
-        .byte   $08
-        .byte   $26
-        .byte   $2e
-        .byte   $05
-        .byte   $e0
-        .byte   $47
-        .byte   $00
-        .byte   $03
-        .byte   $08
-        .byte   $27
-        .byte   $37
-        .byte   $05
-        .byte   $e0
-        .byte   $47
-        .byte   $00
-        .byte   $02
-        .byte   $08
-        .byte   $28
-        .byte   $3c
-        .byte   $05
-        .byte   $e0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $08
-        .byte   $29
-        .byte   $0a
-        .byte   $05
-        .byte   $e0
-        .byte   $47
-        .byte   $00
-        .byte   $05
-        .byte   $08
-        .byte   $2a
-        .byte   $14
-        .byte   $05
-        .byte   $e0
-        .byte   $47
-        .byte   $00
-        .byte   $01
-        .byte   $08
-        .byte   $2b
-        .byte   $07
-        .byte   $05
-        .byte   $00
-        .byte   $48
-        .byte   $01
-        .byte   $00
-        .byte   $09
-        .byte   $2c
-        .byte   $0b
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $2d
-        .byte   $0b
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $2e
-        .byte   $0b
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $2f
-        .byte   $1c
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $30
-        .byte   $1c
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $31
-        .byte   $16
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $32
-        .byte   $80
-        .byte   $02
-        .byte   $60
-        .byte   $49
-        .byte   $00
-        .byte   $05
-        .byte   $0b
-        .byte   $33
-        .byte   $80
-        .byte   $00
-        .byte   $c0
-        .byte   $48
-        .byte   $00
-        .byte   $00
-        .byte   $0c
-        .byte   $34
-        .byte   $80
-        .byte   $05
-        .byte   $e0
-        .byte   $48
-        .byte   $00
-        .byte   $00
-        .byte   $0d
-        .byte   $35
-        .byte   $1d
-        .byte   $02
-        .byte   $a0
-        .byte   $48
-        .byte   $00
-        .byte   $02
-        .byte   $0e
-        .byte   $36
-        .byte   $00
-        .byte   $00
-        .byte   $60
-        .byte   $48
-        .byte   $00
-        .byte   $00
-        .byte   $0f
-        .byte   $37
-        .byte   $0f
-        .byte   $0a
-        .byte   $20
-        .byte   $49
-        .byte   $00
-        .byte   $04
-        .byte   $10
-        .byte   $38
-        .byte   $18
-        .byte   $00
-        .byte   $a0
-        .byte   $49
-        .byte   $00
-        .byte   $00
-        .byte   $11
-        .byte   $39
-        .byte   $80
-        .byte   $00
-        .byte   $c0
-        .byte   $49
-        .byte   $00
-        .byte   $00
-        .byte   $12
-        .byte   $3a
-        .byte   $1e
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $3b
-        .byte   $1e
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $3c
-        .byte   $0d
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $3d
-        .byte   $80
-        .byte   $05
-        .byte   $00
-        .byte   $49
-        .byte   $00
-        .byte   $05
-        .byte   $13
-        .byte   $3e
-        .byte   $23
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $3f
-        .byte   $23
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $40
-        .byte   $24
-        .byte   $02
-        .byte   $40
-        .byte   $48
-        .byte   $00
-        .byte   $04
-        .byte   $14
-        .byte   $41
-        .byte   $80
-        .byte   $05
-        .byte   $00
-        .byte   $49
-        .byte   $00
-        .byte   $05
-        .byte   $13
-        .byte   $42
-        .byte   $80
-        .byte   $05
-        .byte   $00
-        .byte   $49
-        .byte   $00
-        .byte   $05
-        .byte   $13
-        .byte   $43
-        .byte   $34
-        .byte   $02
-        .byte   $40
-        .byte   $48
-        .byte   $00
-        .byte   $04
-        .byte   $14
-        .byte   $44
-        .byte   $80
-        .byte   $05
-        .byte   $00
-        .byte   $49
-        .byte   $00
-        .byte   $05
-        .byte   $13
-        .byte   $45
-        .byte   $42
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $46
-        .byte   $3d
-        .byte   $02
-        .byte   $d0
-        .byte   $58
-        .byte   $00
-        .byte   $00
-        .byte   $15
-        .byte   $47
-        .byte   $3d
-        .byte   $02
-        .byte   $40
-        .byte   $48
-        .byte   $00
-        .byte   $04
-        .byte   $14
-        .byte   $48
-        .byte   $3d
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $49
-        .byte   $3d
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $4a
-        .byte   $80
-        .byte   $05
-        .byte   $00
-        .byte   $49
-        .byte   $00
-        .byte   $05
-        .byte   $13
-        .byte   $4b
-        .byte   $80
-        .byte   $05
-        .byte   $00
-        .byte   $49
-        .byte   $00
-        .byte   $05
-        .byte   $13
-        .byte   $4c
-        .byte   $80
-        .byte   $05
-        .byte   $00
-        .byte   $49
-        .byte   $00
-        .byte   $05
-        .byte   $13
-        .byte   $4d
-        .byte   $36
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $4e
-        .byte   $46
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $4f
-        .byte   $46
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $50
-        .byte   $46
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $51
-        .byte   $2b
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .byte   $0a
-        .byte   $52
-        .byte   $80
-        .byte   $02
-        .byte   $60
-        .byte   $49
-        .byte   $00
-        .byte   $05
-        .byte   $0b
-        .byte   $53
-        .byte   $80
-        .byte   $02
-        .byte   $60
-        .byte   $49
-        .byte   $00
-        .byte   $05
-        .byte   $0b
-        .byte   $54
-        .byte   $80
-        .byte   $00
-        .byte   $10
-        .byte   $58
-        .byte   $00
-        .byte   $00
-        .byte   $16
-        .byte   $55
-        .byte   $80
-        .byte   $00
-        .byte   $30
-        .byte   $58
-        .byte   $00
-        .byte   $00
-        .byte   $16
-        .byte   $56
-        .byte   $37
-        .byte   $00
-        .byte   $50
-        .byte   $58
-        .byte   $00
-        .byte   $00
-        .byte   $16
-        .byte   $57
-        .byte   $80
-        .byte   $00
-        .byte   $70
-        .byte   $58
-        .byte   $00
-        .byte   $00
-        .byte   $16
-        .byte   $58
-        .byte   $3d
-        .byte   $00
-        .byte   $90
-        .byte   $58
-        .byte   $00
-        .byte   $00
-        .byte   $16
-        .byte   $59
-        .byte   $80
-        .byte   $00
-        .byte   $b0
-        .byte   $58
-        .byte   $00
-        .byte   $00
-        .byte   $16
-        .byte   $5a
-        .byte   $80
-        .byte   $6e
-        .byte   $f0
-        .byte   $58
-        .byte   $00
-        .byte   $00
-        .byte   $17
-        .byte   $5b
-        .byte   $3d
-        .byte   $02
-        .byte   $a0
-        .byte   $47
-        .byte   $00
-        .byte   $00
-        .text   $0a,"MXNXOXPXQXRXSXTXUXVXWXXXYXZX"
-        .fill   11,$ff
-        .byte   $fe
-        .byte   $20
-        .byte   $00
-        .byte   $47
-        .byte   $ad
-        .byte   $3b
-        .byte   $03
-        .byte   $f0
-        .byte   $03
-        .byte   $4c
-        .byte   $00
-        .byte   $7a
-        .byte   $ad
-        .byte   $39
-        .byte   $03
-        .byte   $f0
-        .byte   $05
-        .byte   $30
-        .byte   $13
-        .byte   $4c
-        .byte   $1d
-        .byte   $67
-        .byte   $ad
-        .byte   $3a
-        .byte   $03
-        .byte   $f0
-        .byte   $05
-        .byte   $10
-        .byte   $59
-        .byte   $4c
-        .byte   $64
-        .byte   $67
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $04
-        .byte   $6f
-        .byte   $60
-        .byte   $ae
-        .byte   $02
-        .byte   $6f
-        .byte   $ca
-        .byte   $e0
-        .byte   $18
-        .byte   $b0
-        .byte   $14
-        .byte   $ac
-        .byte   $03
-        .byte   $6f
-        .byte   $8a
-        .byte   $d9
-        .byte   $f1
-        .byte   $67
-        .byte   $b0
-        .byte   $0b
-        .byte   $c0
-        .byte   $08
-        .byte   $90
-        .byte   $ea
-        .byte   $c0
-        .byte   $20
-        .byte   $b0
-        .byte   $e6
-        .byte   $4c
-        .byte   $81
-        .byte   $67
-        .byte   $a9
-        .byte   $01
-        .byte   $8d
-        .byte   $04
-        .byte   $6f
-        .byte   $8e
-        .byte   $02
-        .byte   $6f
+        .byte   $d8
         .byte   $ce
-        .byte   $00
-        .byte   $6f
-        .byte   $60
-        .byte   $ae
-        .byte   $02
-        .byte   $6f
-        .byte   $e8
-        .byte   $e0
-        .byte   $7a
-        .byte   $90
-        .byte   $14
-        .byte   $ac
-        .byte   $03
-        .byte   $6f
-        .byte   $8a
-        .byte   $d9
-        .byte   $23
-        .byte   $68
-        .byte   $90
-        .byte   $0b
-        .byte   $c0
-        .byte   $08
-        .byte   $90
-        .byte   $c2
-        .byte   $c0
-        .byte   $20
-        .byte   $b0
-        .byte   $be
-        .byte   $4c
-        .byte   $aa
-        .byte   $67
-        .byte   $a9
-        .byte   $03
-        .byte   $8d
-        .byte   $04
-        .byte   $6f
-        .byte   $8e
-        .byte   $02
-        .byte   $6f
-        .byte   $ee
-        .byte   $00
-        .byte   $6f
-        .byte   $60
-        .byte   $ae
-        .byte   $03
-        .byte   $6f
-        .byte   $e8
-        .byte   $e0
-        .byte   $30
-        .byte   $b0
-        .byte   $a7
-        .byte   $8e
-        .byte   $03
-        .byte   $6f
-        .byte   $ee
-        .byte   $01
-        .byte   $6f
-        .byte   $a9
-        .byte   $04
-        .byte   $8d
-        .byte   $04
-        .byte   $6f
-        .byte   $8a
-        .byte   $29
-        .byte   $01
-        .byte   $f0
-        .byte   $97
-        .byte   $ce
-        .byte   $00
-        .byte   $6f
-        .byte   $ce
-        .byte   $02
-        .byte   $6f
-        .byte   $60
-        .byte   $ae
-        .byte   $03
-        .byte   $6f
-        .byte   $ca
-        .byte   $f0
-        .byte   $8a
-        .byte   $8e
-        .byte   $03
-        .byte   $6f
-        .byte   $ce
-        .byte   $01
-        .byte   $6f
-        .byte   $a9
-        .byte   $02
-        .byte   $8d
-        .byte   $04
-        .byte   $6f
-        .byte   $8a
-        .byte   $29
-        .byte   $01
-        .byte   $f0
-        .byte   $2f
-        .byte   $ee
-        .byte   $00
-        .byte   $6f
-        .byte   $ee
-        .byte   $02
-        .byte   $6f
-        .byte   $60
-        .byte   $a0
-        .byte   $03
-        .byte   $b1
-        .byte   $3f
-        .byte   $c9
-        .byte   $04
-        .byte   $d0
-        .byte   $20
-        .byte   $a5
-        .byte   $3f
-        .byte   $38
-        .byte   $e9
-        .byte   $0e
-        .byte   $85
-        .byte   $3f
-        .byte   $a5
-        .byte   $40
-        .byte   $e9
-        .byte   $00
-        .byte   $85
-        .byte   $40
-        .byte   $20
-        .byte   $c0
-        .byte   $68
-        .byte   $a9
-        .byte   $80
-        .byte   $8d
-        .byte   $02
-        .byte   $6f
-        .byte   $a9
-        .byte   $a0
-        .byte   $8d
-        .byte   $00
-        .byte   $6f
-        .byte   $ce
-        .byte   $51
-        .byte   $1b
-        .byte   $4c
+        .byte   $d8
         .byte   $cf
-        .byte   $67
-        .byte   $60
-        .byte   $a0
-        .byte   $11
-        .byte   $b1
-        .byte   $3f
-        .byte   $c9
-        .byte   $04
+        .byte   $d8
         .byte   $d0
-        .byte   $f7
-        .byte   $a5
-        .byte   $3f
-        .byte   $18
-        .byte   $69
-        .byte   $0e
-        .byte   $85
-        .byte   $3f
-        .byte   $a5
-        .byte   $40
-        .byte   $69
-        .byte   $00
-        .byte   $85
-        .byte   $40
-        .byte   $20
-        .byte   $20
-        .byte   $69
-        .byte   $a9
-        .byte   $18
-        .byte   $8d
-        .byte   $02
-        .byte   $6f
-        .byte   $a9
-        .byte   $38
-        .byte   $8d
-        .byte   $00
-        .byte   $6f
-        .byte   $ee
-        .byte   $51
-        .byte   $1b
-        .byte   $20
-        .byte   $50
-        .byte   $5e
-        .byte   $20
-        .byte   $00
-        .byte   $41
-        .byte   $20
-        .byte   $b0
-        .byte   $40
-        .byte   $20
-        .byte   $00
-        .byte   $60
-        .byte   $20
-        .byte   $a0
-        .byte   $62
-        .byte   $20
-        .byte   $15
-        .byte   $89
-        .fill   15,$ea
-        .byte   $60
-        .byte   $18
-        .byte   $18
-        .byte   $17
-        .byte   $17
-        .byte   $16
-        .byte   $16
-        .byte   $15
-        .byte   $15
-        .byte   $14
-        .byte   $14
-        .byte   $13
-        .byte   $13
-        .byte   $12
-        .byte   $12
-        .byte   $11
-        .byte   $11
-        .byte   $10
-        .byte   $10
-        .byte   $0f
-        .byte   $0f
-        .byte   $0e
-        .byte   $0e
-        .byte   $0d
-        .byte   $0d
-        .byte   $0c
-        .byte   $0c
-        .byte   $0b
-        .byte   $0b
-        .byte   $0a
-        .byte   $0a
-        .byte   $09
-        .byte   $09
-        .byte   $08
-        .byte   $08
-        .byte   $07
-        .byte   $07
-        .byte   $06
-        .byte   $06
-        .byte   $05
-        .byte   $05
-        .byte   $04
-        .byte   $04
-        .byte   $03
-        .byte   $03
-        .byte   $02
-        .byte   $02
-        .byte   $01
-        .byte   $01
-        .byte   $00
-        .byte   $00
-        .byte   $92
-        .byte   $92
-        .byte   $91
-        .byte   $91
-        .byte   $90
-        .byte   $90
-        .byte   $8f
-        .byte   $8f
-        .byte   $8e
-        .byte   $8e
-        .byte   $8d
-        .byte   $8d
-        .byte   $8c
-        .byte   $8c
-        .byte   $8b
-        .byte   $8b
-        .byte   $8a
-        .byte   $8a
-        .byte   $89
-        .byte   $89
-        .byte   $88
-        .byte   $88
-        .byte   $87
-        .byte   $87
-        .byte   $86
-        .byte   $86
-        .byte   $85
-        .byte   $85
-        .byte   $84
-        .byte   $84
-        .byte   $83
-        .byte   $83
-        .byte   $82
-        .byte   $82
-        .byte   $81
-        .byte   $81
-        .byte   $80
-        .byte   $80
-        .byte   $7f
-        .byte   $7f
-        .byte   $7e
-        .byte   $7e
-        .byte   $7d
-        .byte   $7d
-        .byte   $7c
-        .byte   $7c
-        .byte   $7b
-        .byte   $7b
-        .byte   $7a
-        .byte   $7a
-        .fill   10,$01
-        .byte   $00
-        .byte   $ae
-        .byte   $04
-        .byte   $6f
-        .byte   $f0
-        .byte   $0c
-        .byte   $ca
-        .byte   $f0
-        .byte   $0e
-        .byte   $ca
-        .byte   $f0
-        .byte   $20
-        .byte   $ca
-        .byte   $f0
-        .byte   $18
-        .byte   $4c
-        .byte   $90
-        .byte   $68
-        .byte   $a2
-        .byte   $c0
-        .byte   $4c
-        .byte   $95
-        .byte   $68
-        .byte   $a2
-        .byte   $80
-        .byte   $ac
-        .byte   $05
-        .byte   $6f
-        .byte   $f0
-        .byte   $18
-        .byte   $e8
-        .byte   $e8
-        .byte   $ea
-        .byte   $88
-        .byte   $d0
-        .byte   $fa
-        .byte   $4c
-        .byte   $95
-        .byte   $68
-        .byte   $a2
-        .byte   $90
-        .byte   $4c
-        .byte   $78
-        .byte   $68
-        .byte   $a2
-        .byte   $a0
-        .byte   $4c
-        .byte   $78
-        .byte   $68
-        .byte   $a2
-        .byte   $b0
-        .byte   $4c
-        .byte   $78
-        .byte   $68
-        .byte   $8e
-        .byte   $f8
-        .byte   $07
-        .byte   $e8
-        .byte   $8e
-        .byte   $f9
-        .byte   $07
-        .byte   $ea
-        .byte   $ea
-        .byte   $ea
-        .byte   $ea
-        .byte   $ad
-        .byte   $00
-        .byte   $6f
-        .byte   $8d
-        .byte   $00
-        .byte   $d0
-        .byte   $8d
-        .byte   $02
-        .byte   $d0
-        .byte   $ea
-        .byte   $ea
-        .byte   $ea
-        .byte   $ad
-        .byte   $01
-        .byte   $6f
-        .byte   $8d
-        .byte   $01
-        .byte   $d0
-        .byte   $8d
-        .byte   $03
-        .byte   $d0
-        .byte   $18
-        .byte   $69
-        .byte   $15
-        .byte   $8d
-        .byte   $03
-        .byte   $d0
-        .byte   $60
-        .byte   $69
-        .byte   $15
-        .byte   $8d
-        .byte   $05
-        .byte   $a2
-        .byte   $01
-        .byte   $a9
-        .byte   $04
-        .byte   $85
-        .byte   $ae
-        .byte   $a9
-        .byte   $0a
-        .byte   $85
-        .byte   $af
-        .byte   $a9
-        .byte   $52
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $04
-        .byte   $85
-        .byte   $fc
-        .byte   $a0
-        .byte   $01
-        .byte   $bd
-        .byte   $65
-        .byte   $69
-        .byte   $91
-        .byte   $fb
-        .byte   $ca
-        .byte   $88
-        .byte   $bd
-        .byte   $65
-        .byte   $69
-        .byte   $91
-        .byte   $fb
-        .byte   $a5
-        .byte   $fb
-        .byte   $18
-        .byte   $69
-        .byte   $28
-        .byte   $85
-        .byte   $fb
-        .byte   $a5
-        .byte   $fc
-        .byte   $69
-        .byte   $00
-        .byte   $85
-        .byte   $fc
-        .byte   $e8
-        .byte   $e8
-        .byte   $e8
-        .byte   $c6
-        .byte   $af
-        .byte   $d0
-        .byte   $de
-        .byte   $86
-        .byte   $02
-        .byte   $a2
-        .byte   $50
-        .byte   $88
-        .byte   $d0
-        .byte   $fd
-        .byte   $ca
-        .byte   $d0
-        .byte   $fa
-        .byte   $a6
-        .byte   $02
-        .byte   $c6
-        .byte   $ae
-        .byte   $d0
-        .byte   $c2
-        .byte   $60
-        .fill   27,$01
-        .byte   $a2
-        .byte   $01
-        .byte   $a9
-        .byte   $04
-        .byte   $85
-        .byte   $ae
-        .byte   $a9
-        .byte   $0a
-        .byte   $85
-        .byte   $af
-        .byte   $a9
-        .byte   $64
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $04
-        .byte   $85
-        .byte   $fc
-        .byte   $a0
-        .byte   $01
-        .byte   $bd
-        .byte   $65
-        .byte   $69
-        .byte   $91
-        .byte   $fb
-        .byte   $ca
-        .byte   $88
-        .byte   $bd
-        .byte   $65
-        .byte   $69
-        .byte   $91
-        .byte   $fb
-        .byte   $a5
-        .byte   $fb
-        .byte   $18
-        .byte   $69
-        .byte   $28
-        .byte   $85
-        .byte   $fb
-        .byte   $a5
-        .byte   $fc
-        .byte   $69
-        .byte   $00
-        .byte   $85
-        .byte   $fc
-        .byte   $e8
-        .byte   $e8
-        .byte   $e8
-        .byte   $c6
-        .byte   $af
-        .byte   $d0
-        .byte   $de
-        .byte   $86
-        .byte   $02
-        .byte   $a2
-        .byte   $50
-        .byte   $88
-        .byte   $d0
-        .byte   $fd
-        .byte   $ca
-        .byte   $d0
-        .byte   $fa
-        .byte   $a6
-        .byte   $02
-        .byte   $c6
-        .byte   $ae
-        .byte   $d0
-        .byte   $c2
-        .byte   $60
-        .byte   $01
-        .byte   $08
-        .byte   $07
-        .byte   $05
-        .byte   $06
-        .byte   $05
-        .byte   $01
-        .byte   $05
-        .byte   $01
-        .byte   $05
-        .byte   $01
-        .byte   $05
-        .byte   $01
-        .byte   $09
-        .byte   $01
-        .byte   $03
-        .byte   $02
-        .byte   $00
-        .byte   $03
-        .byte   $00
-        .byte   $01
-        .byte   $0f
-        .byte   $07
-        .byte   $10
-        .byte   $06
-        .byte   $10
-        .byte   $01
-        .byte   $10
-        .byte   $01
-        .byte   $10
-        .byte   $01
-        .byte   $10
-        .byte   $01
-        .byte   $15
-        .byte   $01
-        .byte   $00
-        .byte   $02
-        .byte   $00
-        .byte   $03
-        .byte   $00
-        .byte   $01
-        .byte   $0f
-        .byte   $11
-        .byte   $10
-        .byte   $12
-        .byte   $10
-        .byte   $13
-        .byte   $10
-        .byte   $13
-        .byte   $10
-        .byte   $13
-        .byte   $10
-        .byte   $13
-        .byte   $15
-        .byte   $13
-        .byte   $00
-        .byte   $13
-        .byte   $00
-        .byte   $03
-        .byte   $00
-        .byte   $01
-        .byte   $0f
-        .byte   $11
-        .byte   $10
-        .byte   $14
-        .byte   $10
-        .byte   $00
-        .byte   $10
-        .byte   $00
-        .byte   $10
-        .byte   $00
-        .byte   $10
-        .byte   $00
-        .byte   $15
-        .fill   6,$00
-        .fill   11,$fe
-        .byte   $ad
-        .byte   $02
-        .byte   $6f
-        .byte   $c9
-        .byte   $78
-        .byte   $b0
-        .byte   $09
-        .byte   $ad
-        .byte   $1b
-        .byte   $d0
-        .byte   $29
-        .byte   $fc
-        .byte   $8d
-        .byte   $1b
-        .byte   $d0
-        .byte   $60
-        .byte   $ad
-        .byte   $1b
-        .byte   $d0
-        .byte   $09
-        .byte   $0f
-        .byte   $8d
-        .byte   $1b
-        .byte   $d0
-        .byte   $60
-        .byte   $02
-        .byte   $02
-        .byte   $ff
-        .byte   $ff
-        .byte   $ff
-        .byte   $ff
-        .byte   $fe
-        .byte   $a2
-        .byte   $0f
-        .byte   $a9
-        .byte   $15
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $05
-        .byte   $85
-        .byte   $fc
-        .byte   $a0
-        .byte   $00
-        .byte   $a9
-        .byte   $45
-        .byte   $91
-        .byte   $fb
-        .byte   $a5
-        .byte   $fb
-        .byte   $18
-        .byte   $69
-        .byte   $28
-        .byte   $85
-        .byte   $fb
-        .byte   $a5
-        .byte   $fc
-        .byte   $69
-        .byte   $00
-        .byte   $85
-        .byte   $fc
-        .byte   $ca
-        .byte   $8a
-        .byte   $a0
-        .byte   $0d
+        .byte   $d8
         .byte   $d1
-        .byte   $3f
-        .byte   $f0
+        .byte   $d8
+        .byte   $d2
+        .byte   $d8
+        .byte   $d3
+        .byte   $d8
+        .byte   $d4
+        .byte   $d8
+        .byte   $d5
+        .byte   $d8
+        .byte   $d6
+        .byte   $d8
+        .byte   $d7
+        .byte   $d8
+        .byte   $d8
+        .byte   $d8
+        .byte   $d9
+        .byte   $d8
+        .byte   $da
+        .byte   $d8
+        .byte   $f5
+        .byte   $d8
+        .byte   $f6
+        .byte   $d8
+        .byte   $f7
+        .byte   $d8
+        .byte   $f8
+        .byte   $d8
+        .byte   $f9
+        .byte   $d8
+        .byte   $fa
+        .byte   $d8
+        .byte   $fb
+        .byte   $d8
+        .byte   $fc
+        .byte   $d8
+        .byte   $fd
+        .byte   $d8
+        .byte   $fe
+        .byte   $d8
+        .byte   $ff
+        .byte   $d8
+        .byte   $00
+        .byte   $d9
+        .byte   $01
+        .byte   $d9
+        .byte   $02
+        .byte   $d9
+        .byte   $1d
+        .byte   $d9
+        .byte   $1e
+        .byte   $d9
+        .byte   $1f
+        .byte   $d9
+        .byte   $20
+        .byte   $d9
+        .byte   $21
+        .byte   $d9
+        .byte   $22
+        .byte   $d9
+        .byte   $23
+        .byte   $d9
+        .byte   $24
+        .byte   $d9
+        .byte   $25
+        .byte   $d9
+        .byte   $26
+        .byte   $d9
+        .byte   $27
+        .byte   $d9
+        .byte   $28
+        .byte   $d9
+        .byte   $29
+        .byte   $d9
+        .byte   $2a
+        .byte   $d9
+        .byte   $45
+        .byte   $d9
+        .byte   $46
+        .byte   $d9
+        .byte   $47
+        .byte   $d9
+        .byte   $48
+        .byte   $d9
+        .byte   $49
+        .byte   $d9
+        .byte   $4a
+        .byte   $d9
+        .byte   $4b
+        .byte   $d9
+        .byte   $4c
+        .byte   $d9
+        .byte   $4d
+        .byte   $d9
+        .byte   $4e
+        .byte   $d9
+        .byte   $4f
+        .byte   $d9
+        .byte   $50
+        .byte   $d9
+        .byte   $51
+        .byte   $d9
+        .byte   $52
+        .byte   $d9
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+
+_L62A0  ldy     #$01
+        ldx     #$5b
+        lda     #$d0
+        sta     $fb
+        lda     #$63
+        sta     $fc
+_L62AC  lda     ($fb),y
+        cmp     _L1B51
+        beq     _L62C2
+_L62B3  lda     $fb
+        clc
+        adc     #$08
+        sta     $fb
+        bcc     _L62BE
+        inc     $fc
+_L62BE  dex
+        bne     _L62AC
+        rts
+
+_L62C2  txa
+        pha
+        iny
+        iny
+        iny
+        iny
+        lda     ($fb),y
+        bne     _L62CF
+        jmp     _L6385
+
+_L62CF  lda     #$40
+        sta     $ae
+        lda     #$3c
+        sta     $af
+        ldx     #$0d
+        lda     #$b0
+        sta     $fd
+        lda     #$3c
+        sta     $fe
+_L62E1  ldy     #$0f
+_L62E3  lda     ($ae),y
+        bne     _L62F1
+        lda     ($fd),y
+        bne     _L62F1
+        dey
+        bpl     _L62E3
+        jmp     _L6309
+
+_L62F1  lda     $ae
+        clc
+        adc     #$08
+        sta     $ae
+        lda     $fd
+        clc
+        adc     #$08
+        sta     $fd
+        bcc     _L6303
+        inc     $fe
+_L6303  dex
+        bne     _L62E1
+        jmp     _L6385
+
+_L6309  ldy     #$03
+        ldx     #$02
+        lda     $ae
+        sta     $033c
+        lda     $af
+        sta     $033d
+        lda     ($fb),y
+        sta     $fd
+        iny
+        lda     ($fb),y
+        sta     $fe
+        ldy     #$0f
+_L6322  lda     ($fd),y
+        sta     ($ae),y
+        dey
+        bpl     _L6322
+        lda     $ae
+        clc
+        adc     #$70
+        sta     $ae
+        lda     $af
+        adc     #$00
+        sta     $af
+        lda     $fd
+        clc
+        adc     #$10
+        sta     $fd
+        lda     $fe
+        adc     #$00
+        sta     $fe
+        ldy     #$0f
+        dex
+        bne     _L6322
+        ldy     #$06
+        lda     ($fb),y
+        tax
+        lsr     $033d
+        ror     $033c
+        lsr     $033d
+        ror     $033c
+        lda     $033c
+        sec
+        sbc     #$10
+        tay
+        lda     _L66A8,y
+        sta     $ae
+        lda     _L66A9,y
+        sta     $af
+        ldy     #$01
+        txa
+        sta     ($ae),y
+        dey
+        sta     ($ae),y
+        lda     $ae
+        clc
+        adc     #$28
+        sta     $ae
+        bcc     _L637D
+        inc     $af
+_L637D  txa
+        ldy     #$01
+        sta     ($ae),y
+        dey
+        sta     ($ae),y
+_L6385  pla
+        tax
+        ldy     #$01
+        jmp     _L62B3
+
+        .byte   $02
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $02
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $02
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $01
+        .byte   $04
+        .byte   $19
+        .byte   $48
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $01
+        .byte   $02
+        .byte   $80
+        .byte   $19
+        .byte   $48
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $01
+        .byte   $03
+        .byte   $22
+        .byte   $19
+        .byte   $48
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $01
+        .byte   $04
+        .byte   $31
+        .byte   $19
+        .byte   $48
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $01
+        .byte   $05
+        .byte   $40
+        .byte   $19
+        .byte   $48
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $01
+        .byte   $06
+        .byte   $0c
+        .byte   $19
+        .byte   $48
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $01
         .byte   $07
-        .byte   $90
+        .byte   $1b
+        .byte   $19
+        .byte   $48
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $01
+        .byte   $08
+        .byte   $2a
+        .byte   $19
+        .byte   $48
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $01
+        .byte   $09
+        .byte   $39
+        .byte   $19
+        .byte   $48
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $01
+        .byte   $0a
+        .byte   $48
+        .byte   $19
+        .byte   $48
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $01
+        .byte   $0b
+        .byte   $80
+        .byte   $0a
+        .byte   $28
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $02
+        .byte   $0c
+        .byte   $80
+        .byte   $0a
+        .byte   $28
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $02
+        .byte   $0d
+        .byte   $80
+        .byte   $0a
+        .byte   $28
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $02
+        .byte   $0e
+        .byte   $80
+        .byte   $0a
+        .byte   $28
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $02
+        .byte   $0f
+        .byte   $80
+        .byte   $0a
+        .byte   $28
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $02
+        .byte   $10
+        .byte   $80
+        .byte   $0a
+        .byte   $28
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $02
+        .byte   $11
+        .byte   $80
+        .byte   $0a
+        .byte   $28
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $02
+        .byte   $12
+        .byte   $80
+        .byte   $0a
+        .byte   $28
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $02
+        .byte   $13
+        .byte   $80
+        .byte   $0a
+        .byte   $28
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $02
+        .byte   $14
+        .byte   $80
+        .byte   $0a
+        .byte   $28
+        .byte   $4f
+        .byte   $01
+        .byte   $08
+        .byte   $02
+        .byte   $15
+        .byte   $1e
+        .byte   $28
+        .byte   $20
+        .byte   $48
+        .byte   $01
+        .byte   $00
+        .byte   $03
+        .byte   $16
+        .byte   $39
+        .byte   $0a
+        .byte   $80
+        .byte   $48
+        .byte   $01
+        .byte   $06
+        .byte   $04
+        .byte   $17
+        .byte   $2d
+        .byte   $0a
+        .byte   $80
+        .byte   $49
+        .byte   $00
+        .byte   $00
+        .byte   $05
+        .byte   $18
+        .byte   $06
+        .byte   $02
+        .byte   $40
+        .byte   $49
+        .byte   $00
+        .byte   $00
+        .byte   $06
+        .byte   $19
+        .byte   $25
+        .byte   $02
+        .byte   $40
+        .byte   $49
+        .byte   $00
+        .byte   $03
+        .byte   $06
+        .byte   $1a
+        .byte   $35
+        .byte   $02
+        .byte   $40
+        .byte   $49
+        .byte   $00
+        .byte   $05
+        .byte   $06
+        .byte   $1b
+        .byte   $29
+        .byte   $02
+        .byte   $40
+        .byte   $49
+        .byte   $00
+        .byte   $01
+        .byte   $06
+        .byte   $1c
+        .byte   $38
+        .byte   $02
+        .byte   $40
+        .byte   $49
+        .byte   $00
+        .byte   $04
+        .byte   $06
+        .byte   $1d
+        .byte   $41
+        .byte   $02
+        .byte   $40
+        .byte   $49
+        .byte   $00
+        .byte   $06
+        .byte   $06
+        .byte   $1e
+        .byte   $09
+        .byte   $02
+        .byte   $c0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $07
+        .byte   $1f
+        .byte   $19
+        .byte   $02
+        .byte   $c0
+        .byte   $47
+        .byte   $00
+        .byte   $06
+        .byte   $07
+        .byte   $20
+        .byte   $0e
+        .byte   $02
+        .byte   $c0
+        .byte   $47
+        .byte   $00
+        .byte   $04
+        .byte   $07
+        .byte   $21
+        .byte   $33
+        .byte   $02
+        .byte   $c0
+        .byte   $47
+        .byte   $00
+        .byte   $05
+        .byte   $07
+        .byte   $22
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $23
+        .byte   $3d
+        .byte   $02
+        .byte   $c0
+        .byte   $47
+        .byte   $00
+        .byte   $01
+        .byte   $07
+        .byte   $24
+        .byte   $80
+        .byte   $02
+        .byte   $c0
+        .byte   $47
+        .byte   $00
+        .byte   $03
+        .byte   $07
+        .byte   $25
+        .byte   $16
         .byte   $05
         .byte   $e0
+        .byte   $47
         .byte   $00
-        .byte   $d0
-        .byte   $df
-        .byte   $60
-        .byte   $a9
-        .byte   $18
-        .byte   $a0
-        .byte   $00
+        .byte   $06
+        .byte   $08
+        .byte   $26
+        .byte   $2e
+        .byte   $05
         .byte   $e0
+        .byte   $47
         .byte   $00
-        .byte   $d0
-        .byte   $da
+        .byte   $03
+        .byte   $08
+        .byte   $27
+        .byte   $37
+        .byte   $05
+        .byte   $e0
+        .byte   $47
+        .byte   $00
+        .byte   $02
+        .byte   $08
+        .byte   $28
+        .byte   $3c
+        .byte   $05
+        .byte   $e0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $08
+        .byte   $29
+        .byte   $0a
+        .byte   $05
+        .byte   $e0
+        .byte   $47
+        .byte   $00
+        .byte   $05
+        .byte   $08
+        .byte   $2a
+        .byte   $14
+        .byte   $05
+        .byte   $e0
+        .byte   $47
+        .byte   $00
+        .byte   $01
+        .byte   $08
+        .byte   $2b
+        .byte   $07
+        .byte   $05
+        .byte   $00
+        .byte   $48
+        .byte   $01
+        .byte   $00
+        .byte   $09
+        .byte   $2c
+        .byte   $0b
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $2d
+        .byte   $0b
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $2e
+        .byte   $0b
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $2f
+        .byte   $1c
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $30
+        .byte   $1c
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $31
+        .byte   $16
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $32
+        .byte   $80
+        .byte   $02
         .byte   $60
+        .byte   $49
+        .byte   $00
+        .byte   $05
+        .byte   $0b
+        .byte   $33
+        .byte   $80
+        .byte   $00
+        .byte   $c0
+        .byte   $48
+        .byte   $00
+        .byte   $00
+        .byte   $0c
+        .byte   $34
+        .byte   $80
+        .byte   $05
+        .byte   $e0
+        .byte   $48
+        .byte   $00
+        .byte   $00
+        .byte   $0d
+        .byte   $35
+        .byte   $1d
+        .byte   $02
+        .byte   $a0
+        .byte   $48
+        .byte   $00
+        .byte   $02
+        .byte   $0e
+        .byte   $36
+        .byte   $00
+        .byte   $00
+        .byte   $60
+        .byte   $48
+        .byte   $00
+        .byte   $00
+        .byte   $0f
+        .byte   $37
+        .byte   $0f
+        .byte   $0a
+        .byte   $20
+        .byte   $49
+        .byte   $00
+        .byte   $04
+        .byte   $10
+        .byte   $38
+        .byte   $18
+        .byte   $00
+        .byte   $a0
+        .byte   $49
+        .byte   $00
+        .byte   $00
+        .byte   $11
+        .byte   $39
+        .byte   $80
+        .byte   $00
+        .byte   $c0
+        .byte   $49
+        .byte   $00
+        .byte   $00
+        .byte   $12
+        .byte   $3a
+        .byte   $1e
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $3b
+        .byte   $1e
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $3c
+        .byte   $0d
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $3d
+        .byte   $80
+        .byte   $05
+        .byte   $00
+        .byte   $49
+        .byte   $00
+        .byte   $05
+        .byte   $13
+        .byte   $3e
+        .byte   $23
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $3f
+        .byte   $23
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $40
+        .byte   $24
+        .byte   $02
+        .byte   $40
+        .byte   $48
+        .byte   $00
+        .byte   $04
+        .byte   $14
+        .byte   $41
+        .byte   $80
+        .byte   $05
+        .byte   $00
+        .byte   $49
+        .byte   $00
+        .byte   $05
+        .byte   $13
+        .byte   $42
+        .byte   $80
+        .byte   $05
+        .byte   $00
+        .byte   $49
+        .byte   $00
+        .byte   $05
+        .byte   $13
+        .byte   $43
+        .byte   $34
+        .byte   $02
+        .byte   $40
+        .byte   $48
+        .byte   $00
+        .byte   $04
+        .byte   $14
+        .byte   $44
+        .byte   $80
+        .byte   $05
+        .byte   $00
+        .byte   $49
+        .byte   $00
+        .byte   $05
+        .byte   $13
+        .byte   $45
+        .byte   $42
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $46
+        .byte   $3d
+        .byte   $02
+        .byte   $d0
+        .byte   $58
+        .byte   $00
+        .byte   $00
+        .byte   $15
+        .byte   $47
+        .byte   $3d
+        .byte   $02
+        .byte   $40
+        .byte   $48
+        .byte   $00
+        .byte   $04
+        .byte   $14
+        .byte   $48
+        .byte   $3d
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $49
+        .byte   $3d
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $4a
+        .byte   $80
+        .byte   $05
+        .byte   $00
+        .byte   $49
+        .byte   $00
+        .byte   $05
+        .byte   $13
+        .byte   $4b
+        .byte   $80
+        .byte   $05
+        .byte   $00
+        .byte   $49
+        .byte   $00
+        .byte   $05
+        .byte   $13
+        .byte   $4c
+        .byte   $80
+        .byte   $05
+        .byte   $00
+        .byte   $49
+        .byte   $00
+        .byte   $05
+        .byte   $13
+        .byte   $4d
+        .byte   $36
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $4e
+        .byte   $46
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $4f
+        .byte   $46
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $50
+        .byte   $46
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $51
+        .byte   $2b
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+        .byte   $52
+        .byte   $80
+        .byte   $02
+        .byte   $60
+        .byte   $49
+        .byte   $00
+        .byte   $05
+        .byte   $0b
+        .byte   $53
+        .byte   $80
+        .byte   $02
+        .byte   $60
+        .byte   $49
+        .byte   $00
+        .byte   $05
+        .byte   $0b
+        .byte   $54
+        .byte   $80
+        .byte   $00
+        .byte   $10
+        .byte   $58
+        .byte   $00
+        .byte   $00
+        .byte   $16
+        .byte   $55
+        .byte   $80
+        .byte   $00
+        .byte   $30
+        .byte   $58
+        .byte   $00
+        .byte   $00
+        .byte   $16
+        .byte   $56
+        .byte   $37
+        .byte   $00
+        .byte   $50
+        .byte   $58
+        .byte   $00
+        .byte   $00
+        .byte   $16
+        .byte   $57
+        .byte   $80
+        .byte   $00
+        .byte   $70
+        .byte   $58
+        .byte   $00
+        .byte   $00
+        .byte   $16
+        .byte   $58
+        .byte   $3d
+        .byte   $00
+        .byte   $90
+        .byte   $58
+        .byte   $00
+        .byte   $00
+        .byte   $16
+        .byte   $59
+        .byte   $80
+        .byte   $00
+        .byte   $b0
+        .byte   $58
+        .byte   $00
+        .byte   $00
+        .byte   $16
+        .byte   $5a
+        .byte   $80
+        .byte   $6e
+        .byte   $f0
+        .byte   $58
+        .byte   $00
+        .byte   $00
+        .byte   $17
+        .byte   $5b
+        .byte   $3d
+        .byte   $02
+        .byte   $a0
+        .byte   $47
+        .byte   $00
+        .byte   $00
+        .byte   $0a
+_L66A8  .byte   $cd
+_L66A9  .byte   $d8
+        .byte   $ce
+        .byte   $d8
+        .byte   $cf
+        .byte   $d8
+        .byte   $d0
+        .byte   $d8
+        .byte   $d1
+        .byte   $d8
+        .byte   $d2
+        .byte   $d8
+        .byte   $d3
+        .byte   $d8
+        .byte   $d4
+        .byte   $d8
+        .byte   $d5
+        .byte   $d8
+        .byte   $d6
+        .byte   $d8
+        .byte   $d7
+        .byte   $d8
+        .byte   $d8
+        .byte   $d8
+        .byte   $d9
+        .byte   $d8
+        .byte   $da
+        .byte   $d8
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+
+_L66D0  jsr     _L4700     ;Get joystick inputs
+        lda     V_FireEvent
+        beq     _L66DB
+        jmp     _L7A00
+
+_L66DB  lda     V_LeftRightInput
+        beq     _L66E5
+        bmi     _L66F5
+        jmp     _L671D
+
+_L66E5  lda     V_UpDownInput
+        beq     _L66EF
+        bpl     _L6745
+        jmp     _L6764
+
+_L66EF  lda     #$00
+        sta     _L6F04
+_L66F4  rts
+
+_L66F5  ldx     _L6F02
+        dex
+        cpx     #$18
+        bcs     _L6711
+        ldy     _L6F03
+        txa
+        cmp     _L67F1,y
+        bcs     _L6711
+        cpy     #$08
+        bcc     _L66F4
+        cpy     #$20
+        bcs     _L66F4
+        jmp     _L6781
+
+_L6711  lda     #$01
+        sta     _L6F04
+        stx     _L6F02
+        dec     _L6F00
+        rts
+
+_L671D  ldx     _L6F02
+        inx
+        cpx     #$7a
+        bcc     _L6739
+        ldy     _L6F03
+        txa
+        cmp     _L6823,y
+        bcc     _L6739
+        cpy     #$08
+        bcc     _L66F4
+        cpy     #$20
+        bcs     _L66F4
+        jmp     _L67AA
+
+_L6739  lda     #$03
+        sta     _L6F04
+        stx     _L6F02
+        inc     _L6F00
+        rts
+
+_L6745  ldx     _L6F03
+        inx
+        cpx     #$30
+        bcs     _L66F4
+        stx     _L6F03
+        inc     _L6F01
+        lda     #$04
+        sta     _L6F04
+        txa
+        and     #$01
+        beq     _L66F4
+        dec     _L6F00
+        dec     _L6F02
+        rts
+
+_L6764  ldx     _L6F03
+        dex
+        beq     _L66F4
+        stx     _L6F03
+        dec     _L6F01
+        lda     #$02
+        sta     _L6F04
+        txa
+        and     #$01
+        beq     _L67A9
+        inc     _L6F00
+        inc     _L6F02
+        rts
+
+_L6781  ldy     #$03
+        lda     ($3f),y
+        cmp     #$04
+        bne     _L67A9
+        lda     $3f
+        sec
+        sbc     #$0e
+        sta     $3f
+        lda     $40
+        sbc     #$00
+        sta     $40
+        jsr     _L68C0
+        lda     #$80
+        sta     _L6F02
+        lda     #$a0
+        sta     _L6F00
+        dec     _L1B51
+        jmp     _L67CF
+
+_L67A9  rts
+
+_L67AA  ldy     #$11
+        lda     ($3f),y
+        cmp     #$04
+        bne     _L67A9
+        lda     $3f
+        clc
+        adc     #$0e
+        sta     $3f
+        lda     $40
+        adc     #$00
+        sta     $40
+        jsr     _L6920
+        lda     #$18
+        sta     _L6F02
+        lda     #$38
+        sta     _L6F00
+        inc     _L1B51
+_L67CF  jsr     _L5E50
+        jsr     _L4100
+        jsr     _L40B0
+        jsr     _L6000
+        jsr     _L62A0
+        jsr     _L8915
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        rts
+
+_L67F1  .byte   $18
+        .byte   $18
+        .byte   $17
+        .byte   $17
+        .byte   $16
+        .byte   $16
+        .byte   $15
+        .byte   $15
+        .byte   $14
+        .byte   $14
+        .byte   $13
+        .byte   $13
+        .byte   $12
+        .byte   $12
+        .byte   $11
+        .byte   $11
+        .byte   $10
+        .byte   $10
+        .byte   $0f
+        .byte   $0f
+        .byte   $0e
+        .byte   $0e
+        .byte   $0d
+        .byte   $0d
+        .byte   $0c
+        .byte   $0c
+        .byte   $0b
+        .byte   $0b
+        .byte   $0a
+        .byte   $0a
+        .byte   $09
+        .byte   $09
+        .byte   $08
+        .byte   $08
+        .byte   $07
+        .byte   $07
+        .byte   $06
+        .byte   $06
+        .byte   $05
+        .byte   $05
+        .byte   $04
+        .byte   $04
+        .byte   $03
+        .byte   $03
+        .byte   $02
+        .byte   $02
         .byte   $01
         .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $00
+_L6823  .byte   $92
+        .byte   $92
+        .byte   $91
+        .byte   $91
+        .byte   $90
+        .byte   $90
+        .byte   $8f
+        .byte   $8f
+        .byte   $8e
+        .byte   $8e
+        .byte   $8d
+        .byte   $8d
+        .byte   $8c
+        .byte   $8c
+        .byte   $8b
+        .byte   $8b
+        .byte   $8a
+        .byte   $8a
+        .byte   $89
+        .byte   $89
+        .byte   $88
+        .byte   $88
+        .byte   $87
+        .byte   $87
+        .byte   $86
+        .byte   $86
+        .byte   $85
+        .byte   $85
+        .byte   $84
+        .byte   $84
+        .byte   $83
+        .byte   $83
+        .byte   $82
+        .byte   $82
+        .byte   $81
+        .byte   $81
+        .byte   $80
+        .byte   $80
+        .byte   $7f
+        .byte   $7f
+        .byte   $7e
+        .byte   $7e
+        .byte   $7d
+        .byte   $7d
+        .byte   $7c
+        .byte   $7c
+        .byte   $7b
+        .byte   $7b
+        .byte   $7a
+        .byte   $7a
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+
+_L6860  ldx     _L6F04
+        beq     _L6871
+        dex
+        beq     _L6876
+        dex
+        beq     _L688B
+        dex
+        beq     _L6886
+        jmp     _L6890
+
+_L6871  ldx     #$c0
+        jmp     _L6895
+
+_L6876  ldx     #$80
+_L6878  ldy     _L6F05
+        beq     _L6895
+_L687D  inx
+        inx
+        nop
+        dey
+        bne     _L687D
+        jmp     _L6895
+
+_L6886  ldx     #$90
+        jmp     _L6878
+
+_L688B  ldx     #$a0
+        jmp     _L6878
+
+_L6890  ldx     #$b0
+        jmp     _L6878
+
+_L6895  stx     $07f8
+        inx
+        stx     $07f9
+        nop
+        nop
+        nop
+        nop
+        lda     _L6F00
+        sta     _LD000
+        sta     _LD002
+        nop
+        nop
+        nop
+        lda     _L6F01
+        sta     _LD001
+        sta     _LD003
+        clc
+        adc     #$15
+        sta     _LD003
+        rts
+
+        .byte   $69
+        .byte   $15
+        .byte   $8d
+        .byte   $05
+
+_L68C0  ldx     #$01
+        lda     #$04
+        sta     $ae
+_L68C6  lda     #$0a
+        sta     $af
+        lda     #$52
+        sta     $fb
+        lda     #$04
+        sta     $fc
+_L68D2  ldy     #$01
+        lda     _L6965,x
+        sta     ($fb),y
+        dex
+        dey
+        lda     _L6965,x
+        sta     ($fb),y
+        lda     $fb
+        clc
+        adc     #$28
+        sta     $fb
+        lda     $fc
+        adc     #$00
+        sta     $fc
+        inx
+        inx
+        inx
+        dec     $af
+        bne     _L68D2
+        stx     $02
+        ldx     #$50
+_L68F8  dey
+        bne     _L68F8
+        dex
+        bne     _L68F8
+        ldx     $02
+        dec     $ae
+        bne     _L68C6
+        rts
+
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+
+_L6920  ldx     #$01
+        lda     #$04
+        sta     $ae
+_L6926  lda     #$0a
+        sta     $af
+        lda     #$64
+        sta     $fb
+        lda     #$04
+        sta     $fc
+_L6932  ldy     #$01
+        lda     _L6965,x
+        sta     ($fb),y
+        dex
+        dey
+        lda     _L6965,x
+        sta     ($fb),y
+        lda     $fb
+        clc
+        adc     #$28
+        sta     $fb
+        lda     $fc
+        adc     #$00
+        sta     $fc
+        inx
+        inx
+        inx
+        dec     $af
+        bne     _L6932
+        stx     $02
+        ldx     #$50
+_L6958  dey
+        bne     _L6958
+        dex
+        bne     _L6958
+        ldx     $02
+        dec     $ae
+        bne     _L6926
+        rts
+
+_L6965  .byte   $01
+        .byte   $08
+        .byte   $07
+        .byte   $05
+        .byte   $06
+        .byte   $05
+        .byte   $01
+        .byte   $05
+        .byte   $01
+        .byte   $05
+        .byte   $01
+        .byte   $05
+        .byte   $01
+        .byte   $09
+        .byte   $01
+        .byte   $03
+        .byte   $02
+        .byte   $00
+        .byte   $03
+        .byte   $00
+        .byte   $01
+        .byte   $0f
+        .byte   $07
+        .byte   $10
+        .byte   $06
+        .byte   $10
+        .byte   $01
+        .byte   $10
+        .byte   $01
+        .byte   $10
+        .byte   $01
+        .byte   $10
+        .byte   $01
+        .byte   $15
+        .byte   $01
+        .byte   $00
+        .byte   $02
+        .byte   $00
+        .byte   $03
+        .byte   $00
+        .byte   $01
+        .byte   $0f
+        .byte   $11
+        .byte   $10
+        .byte   $12
+        .byte   $10
+        .byte   $13
+        .byte   $10
+        .byte   $13
+        .byte   $10
+        .byte   $13
+        .byte   $10
+        .byte   $13
+        .byte   $15
+        .byte   $13
+        .byte   $00
+        .byte   $13
+        .byte   $00
+        .byte   $03
+        .byte   $00
+        .byte   $01
+        .byte   $0f
+        .byte   $11
+        .byte   $10
+        .byte   $14
+        .byte   $10
+        .byte   $00
+        .byte   $10
+        .byte   $00
+        .byte   $10
+        .byte   $00
+        .byte   $10
+        .byte   $00
+        .byte   $15
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+
+_L69C0  lda     _L6F02
+        cmp     #$78
+        bcs     _L69D0
+        lda     _LD01B
+        and     #$fc
+        sta     _LD01B
+        rts
+
+_L69D0  lda     _LD01B
+        ora     #$0f
+        sta     _LD01B
+        rts
+
+        .byte   $02
+        .byte   $02
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+
+_L69E0  ldx     #$0f
+        lda     #$15
+        sta     $fb
+        lda     #$05
+        sta     $fc
+_L69EA  ldy     #$00
+        lda     #$45
+_L69EE  sta     ($fb),y
+        lda     $fb
+        clc
+        adc     #$28
+        sta     $fb
+        lda     $fc
+        adc     #$00
+        sta     $fc
+        dex
+        txa
+        ldy     #$0d
+        cmp     ($3f),y
+        beq     _L6A0C
+        bcc     _L6A0C
+        cpx     #$00
+        bne     _L69EA
+        rts
+
+_L6A0C  lda     #$18
+        ldy     #$00
+        cpx     #$00
+        bne     _L69EE
+        rts
+
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
         .byte   $a9
         .byte   $05
@@ -14978,7 +23841,10 @@
         .byte   $a9
         .byte   $3e
         .byte   $9d
-        .text   "A",$07,"lk"
+        .byte   $c1
+        .byte   $07
+        .byte   $4c
+        .byte   $4b
         .byte   $6a
         .byte   $a9
         .byte   $19
@@ -15031,7 +23897,10 @@
         .byte   $d0
         .byte   $be
         .byte   $60
-        .text   "I>PN"
+        .byte   $c9
+        .byte   $3e
+        .byte   $d0
+        .byte   $ce
         .byte   $00
         .byte   $00
         .byte   $00
@@ -15091,40 +23960,173 @@
         .byte   $d0
         .byte   $d9
         .byte   $60
-        .fill   7,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $01
-        .fill   144,$00
-        .byte   $a9
+_L6AC0  .byte   $00
         .byte   $00
-        .byte   $8d
-        .byte   $0b
-        .byte   $d4
-        .byte   $a9
-        .byte   $32
-        .byte   $8d
-        .byte   $07
-        .byte   $d4
-        .byte   $a9
-        .byte   $20
-        .byte   $8d
-        .byte   $08
-        .byte   $d4
-        .byte   $a9
-        .byte   $09
-        .byte   $8d
-        .byte   $0c
-        .byte   $d4
-        .byte   $a9
-        .byte   $09
-        .byte   $8d
-        .byte   $0d
-        .byte   $d4
-        .byte   $a9
-        .byte   $11
-        .byte   $8d
-        .byte   $0b
-        .byte   $d4
-        .byte   $60
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+
+_L6B50  lda     #$00
+        sta     LD40B
+        lda     #$32
+        sta     LD407
+        lda     #$20
+        sta     LD408
+        lda     #$09
+        sta     LD40C
+        lda     #$09
+        sta     LD40D
+        lda     #$11
+        sta     LD40B
+        rts
+
         .byte   $60
         .byte   $a9
         .byte   $00
@@ -15189,7 +24191,23 @@
         .byte   $12
         .byte   $d4
         .byte   $60
-        .fill   17,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $a9
         .byte   $01
         .byte   $48
@@ -15263,193 +24281,183 @@
         .byte   $6c
         .byte   $60
         .byte   $00
-        .byte   $07
-        .fill   85,$00
-        .byte   $60
-        .byte   $ad
-        .byte   $03
-        .byte   $6f
-        .byte   $c9
-        .byte   $01
-        .byte   $d0
-        .byte   $13
-        .byte   $a0
-        .byte   $08
-        .byte   $b1
-        .byte   $3f
-        .byte   $c9
-        .byte   $08
-        .byte   $f0
-        .byte   $0c
-        .byte   $c9
-        .byte   $09
-        .byte   $f0
-        .text   "lI",$0a,"P"
-        .byte   $03
-        .byte   $4c
-        .byte   $04
-        .byte   $6d
-        .byte   $60
-        .byte   $ad
-        .byte   $02
-        .byte   $6f
-        .byte   $c9
-        .byte   $53
-        .byte   $b0
-        .byte   $f8
-        .byte   $c9
-        .byte   $41
-        .byte   $90
-        .byte   $f4
-        .byte   $a9
-        .byte   $04
-        .byte   $8d
-        .byte   $03
-        .byte   $6f
-        .byte   $a9
-        .byte   $4d
-        .byte   $8d
-        .byte   $01
-        .byte   $6f
-        .byte   $a9
-        .byte   $58
-        .byte   $8d
-        .byte   $02
-        .byte   $6f
-        .byte   $a9
-        .byte   $78
-        .byte   $8d
+_L6C09  .byte   $07
         .byte   $00
-        .byte   $6f
-        .byte   $a5
-        .byte   $3f
-        .byte   $38
-        .byte   $e9
-        .byte   $d2
-        .byte   $85
-        .byte   $3f
-        .byte   $a5
-        .byte   $40
-        .byte   $e9
         .byte   $00
-        .byte   $85
-        .byte   $40
-        .byte   $ad
-        .byte   $51
-        .byte   $1b
-        .byte   $e9
-        .byte   $0f
-        .byte   $8d
-        .byte   $51
-        .byte   $1b
-        .byte   $20
-        .byte   $50
-        .byte   $5e
-        .byte   $20
-        .byte   $b0
-        .byte   $40
-        .byte   $20
         .byte   $00
-        .byte   $41
-        .byte   $20
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $00
         .byte   $60
-        .byte   $20
-        .byte   $a0
-        .byte   $62
-        .byte   $60
-        .byte   $ad
-        .byte   $02
-        .byte   $6f
-        .byte   $c9
-        .byte   $53
-        .byte   $b0
-        .byte   $b4
-        .byte   $c9
-        .byte   $41
-        .byte   $90
-        .byte   $b0
-        .byte   $a9
-        .byte   $04
-        .byte   $8d
-        .byte   $03
-        .byte   $6f
-        .byte   $a9
-        .byte   $4d
-        .byte   $8d
-        .byte   $01
-        .byte   $6f
-        .byte   $a9
-        .byte   $58
-        .byte   $8d
-        .byte   $02
-        .byte   $6f
-        .byte   $a9
-        .byte   $78
-        .byte   $8d
-        .byte   $00
-        .byte   $6f
-        .byte   $a5
-        .byte   $3f
-        .byte   $18
-        .byte   $69
-        .byte   $d2
-        .byte   $85
-        .byte   $3f
-        .byte   $a5
-        .byte   $40
-        .byte   $69
-        .byte   $00
-        .byte   $85
-        .byte   $40
-        .byte   $ad
-        .byte   $51
-        .byte   $1b
-        .byte   $18
-        .byte   $69
-        .byte   $0f
-        .byte   $8d
-        .byte   $51
-        .byte   $1b
-        .byte   $20
-        .byte   $50
-        .byte   $5e
-        .byte   $20
-        .byte   $b0
-        .byte   $40
-        .byte   $20
-        .byte   $00
-        .byte   $41
-        .byte   $20
-        .byte   $00
-        .byte   $60
-        .byte   $20
-        .byte   $a0
-        .byte   $62
-        .byte   $60
-        .byte   $ad
-        .byte   $02
-        .byte   $6f
-        .byte   $c9
-        .byte   $6c
-        .byte   $b0
-        .byte   $0f
-        .byte   $c9
-        .byte   $41
-        .byte   $90
-        .byte   $0b
-        .byte   $c9
-        .byte   $53
-        .byte   $90
-        .byte   $b7
-        .byte   $c9
-        .byte   $5e
-        .byte   $90
-        .byte   $03
-        .byte   $4c
-        .byte   $86
-        .byte   $6c
-        .byte   $60
+
+_L6C60  lda     _L6F03
+        cmp     #$01
+        bne     _L6C7A
+        ldy     #$08
+        lda     ($3f),y
+        cmp     #$08
+        beq     _L6C7B
+        cmp     #$09
+        beq     _L6CBF
+        cmp     #$0a
+        bne     _L6C7A
+        jmp     _L6D04
+
+_L6C7A  rts
+
+_L6C7B  lda     _L6F02
+        cmp     #$53
+        bcs     _L6C7A
+        cmp     #$41
+        bcc     _L6C7A
+_L6C86  lda     #$04
+        sta     _L6F03
+        lda     #$4d
+        sta     _L6F01
+        lda     #$58
+        sta     _L6F02
+        lda     #$78
+        sta     _L6F00
+        lda     $3f
+        sec
+        sbc     #$d2
+        sta     $3f
+        lda     $40
+        sbc     #$00
+        sta     $40
+        lda     _L1B51
+        sbc     #$0f
+        sta     _L1B51
+        jsr     _L5E50
+        jsr     _L40B0
+        jsr     _L4100
+        jsr     _L6000
+        jsr     _L62A0
+        rts
+
+_L6CBF  lda     _L6F02
+        cmp     #$53
+        bcs     _L6C7A
+        cmp     #$41
+        bcc     _L6C7A
+_L6CCA  lda     #$04
+        sta     _L6F03
+        lda     #$4d
+        sta     _L6F01
+        lda     #$58
+        sta     _L6F02
+        lda     #$78
+        sta     _L6F00
+        lda     $3f
+        clc
+        adc     #$d2
+        sta     $3f
+        lda     $40
+        adc     #$00
+        sta     $40
+        lda     _L1B51
+        clc
+        adc     #$0f
+        sta     _L1B51
+        jsr     _L5E50
+        jsr     _L40B0
+        jsr     _L4100
+        jsr     _L6000
+        jsr     _L62A0
+        rts
+
+_L6D04  lda     _L6F02
+        cmp     #$6c
+        bcs     _L6D1A
+        cmp     #$41
+        bcc     _L6D1A
+        cmp     #$53
+        bcc     _L6CCA
+        cmp     #$5e
+        bcc     _L6D1A
+        jmp     _L6C86
+
+_L6D1A  rts
+
         .byte   $6d
         .byte   $60
         .byte   $ea
@@ -15468,15 +24476,41 @@
         .byte   $4c
         .byte   $70
         .byte   $6d
-        .fill   8,$ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
         .byte   $a9
         .byte   $02
         .byte   $a0
-        .text   $0a,$99,"@X"
+        .byte   $0a
+        .byte   $99
+        .byte   $40
+        .byte   $d8
         .byte   $88
         .byte   $d0
         .byte   $fa
-        .fill   17,$ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
         .byte   $ce
         .byte   $60
         .byte   $1b
@@ -15531,24 +24565,25 @@
         .byte   $d0
         .byte   $02
         .byte   $a9
-        .text   $07,$99,"@X"
+        .byte   $07
+        .byte   $99
+        .byte   $40
+        .byte   $d8
         .byte   $88
         .byte   $d0
         .byte   $fa
         .byte   $60
         .byte   $60
         .byte   $60
-        .byte   $a9
-        .byte   $02
-        .byte   $a0
-        .byte   $0a
-        .byte   $99
-        .byte   $e0
-        .text   "X",$99,"@X"
-        .byte   $88
-        .byte   $d0
-        .byte   $f7
-        .byte   $60
+
+_L6D90  lda     #$02
+        ldy     #$0a
+_L6D94  sta     LD8E0,y
+        sta     LD840,y
+        dey
+        bne     _L6D94
+        rts
+
         .byte   $02
         .byte   $fe
         .byte   $ad
@@ -15564,7 +24599,25 @@
         .byte   $20
         .byte   $6d
         .byte   $60
-        .fill   19,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $ce
         .byte   $f0
         .byte   $1b
@@ -15608,14 +24661,26 @@
         .byte   $10
         .byte   $f6
         .byte   $60
-        .fill   5,$ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
         .byte   $b2
-        .text   "jt",$92,"th8"
+        .byte   $4a
+        .byte   $54
+        .byte   $92
+        .byte   $54
+        .byte   $48
+        .byte   $38
         .byte   $10
         .byte   $89
         .byte   $49
         .byte   $8a
-        .text   "tr",$22,"$"
+        .byte   $54
+        .byte   $52
+        .byte   $22
+        .byte   $24
         .byte   $18
         .byte   $10
         .byte   $49
@@ -15625,7 +24690,13 @@
         .byte   $4a
         .byte   $2c
         .byte   $10
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
         .byte   $ce
         .byte   $f3
@@ -15696,7 +24767,10 @@
         .byte   $ad
         .byte   $97
         .byte   $03
-        .text   "I",$0a,$90,"w"
+        .byte   $c9
+        .byte   $0a
+        .byte   $90
+        .byte   $57
         .byte   $8e
         .byte   $97
         .byte   $03
@@ -15719,7 +24793,10 @@
         .byte   $ad
         .byte   $94
         .byte   $03
-        .text   "I",$0a,$90,"="
+        .byte   $c9
+        .byte   $0a
+        .byte   $90
+        .byte   $3d
         .byte   $8e
         .byte   $94
         .byte   $03
@@ -15766,7 +24843,15 @@
         .byte   $02
         .byte   $90
         .byte   $0f
-        .fill   9,$ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
         .byte   $8e
         .byte   $90
         .byte   $03
@@ -15780,12 +24865,20 @@
         .byte   $90
         .byte   $03
         .byte   $69
-        .text   "4",$99,"R",$05,"H"
+        .byte   $34
+        .byte   $99
+        .byte   $d2
+        .byte   $05
+        .byte   $c8
         .byte   $c0
         .byte   $08
         .byte   $d0
         .byte   $f2
-        .fill   5,$60
+        .byte   $60
+        .byte   $60
+        .byte   $60
+        .byte   $60
+        .byte   $60
         .byte   $ff
         .byte   $ff
         .byte   $02
@@ -15845,284 +24938,662 @@
         .byte   $8e
         .byte   $bb
         .byte   $05
-        .byte   $4c
-        .byte   $65
-        .byte   $2c
-        .byte   $1c
-        .byte   $00
-        .byte   $00
+_L6F00  .byte   $4c
+_L6F01  .byte   $65
+_L6F02  .byte   $2c
+_L6F03  .byte   $1c
+_L6F04  .byte   $00
+_L6F05  .byte   $00
         .byte   $0e
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
-        .fill   17,$00
-        .byte   $04
-        .fill   15,$00
-        .fill   15,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   7,$ff
-        .byte   $fe
-        .fill   7,$ff
-        .byte   $fe
-        .fill   7,$ff
-        .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .byte   $c9
-        .byte   $15
-        .byte   $f0
-        .byte   $0c
-        .byte   $aa
-        .byte   $a9
-        .byte   $03
-        .byte   $ca
-        .byte   $f0
-        .byte   $03
-        .byte   $4c
-        .byte   $21
-        .byte   $60
-        .byte   $4c
-        .byte   $27
-        .byte   $60
-        .byte   $ac
-        .byte   $76
-        .byte   $61
-        .byte   $d0
-        .byte   $ef
-        .byte   $a2
-        .byte   $b8
-        .byte   $8e
-        .byte   $42
-        .byte   $05
-        .byte   $e8
-        .byte   $8e
-        .byte   $43
-        .byte   $05
-        .byte   $e8
-        .byte   $8e
-        .byte   $6a
-        .byte   $05
-        .byte   $e8
-        .byte   $8e
-        .byte   $6b
-        .byte   $05
-        .byte   $e8
-        .byte   $8e
-        .byte   $92
-        .byte   $05
-        .byte   $e8
-        .byte   $8e
-        .byte   $93
-        .byte   $05
-        .byte   $e8
-        .byte   $8e
-        .byte   $ba
-        .byte   $05
-        .byte   $e8
-        .byte   $8e
-        .byte   $bb
-        .byte   $05
-        .byte   $4c
-        .byte   $4a
-        .byte   $60
-        .byte   $8e
-        .byte   $ba
-        .byte   $05
-        .byte   $e8
-        .byte   $8e
-        .byte   $bb
-        .byte   $05
-        .byte   $ad
-        .byte   $0e
-        .byte   $dc
-        .byte   $29
-        .byte   $fe
-        .byte   $8d
-        .byte   $0e
-        .byte   $dc
-        .byte   $ad
-        .byte   $16
-        .byte   $d0
-        .byte   $09
-        .byte   $10
-        .byte   $8d
-        .byte   $16
-        .byte   $d0
-        .byte   $a9
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+_L6F30  .byte   $04
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .byte   $8d
-        .byte   $15
-        .byte   $d0
-        .byte   $20
-        .byte   $00
-        .byte   $40
-        .byte   $20
-        .byte   $50
-        .byte   $5e
-        .byte   $20
-        .byte   $b0
-        .byte   $40
-        .byte   $20
-        .byte   $00
-        .byte   $60
-        .byte   $20
-        .byte   $00
-        .byte   $41
-        .byte   $20
-        .byte   $a0
-        .byte   $62
-        .byte   $20
-        .byte   $d0
-        .byte   $66
-        .byte   $20
-        .byte   $60
-        .byte   $68
-        .byte   $a2
-        .byte   $08
-        .byte   $a0
-        .byte   $00
-        .byte   $88
-        .byte   $d0
-        .byte   $fd
-        .byte   $ca
-        .byte   $d0
-        .byte   $fa
-        .byte   $20
-        .byte   $c0
-        .byte   $69
-        .byte   $20
-        .byte   $e0
-        .byte   $69
-        .byte   $ea
-        .byte   $ea
-        .byte   $ea
-        .byte   $a9
-        .byte   $03
-        .byte   $8d
-        .byte   $22
-        .byte   $d0
-        .byte   $a9
-        .byte   $02
-        .byte   $8d
-        .byte   $23
-        .byte   $d0
-        .byte   $4c
-        .byte   $80
-        .byte   $70
-        .byte   $ae
-        .byte   $05
-        .byte   $6f
-        .byte   $e8
-        .byte   $8a
-        .byte   $29
-        .byte   $07
-        .byte   $8d
-        .byte   $05
-        .byte   $6f
-        .byte   $a9
-        .byte   $3f
-        .byte   $8d
-        .byte   $18
-        .byte   $d4
-        .byte   $20
-        .byte   $60
-        .byte   $6c
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $80
-        .byte   $1b
-        .byte   $20
-        .byte   $90
-        .byte   $6d
-        .byte   $a0
-        .byte   $0c
-        .byte   $b1
-        .byte   $3f
-        .byte   $d0
-        .byte   $23
-        .byte   $ad
-        .byte   $57
-        .byte   $1b
-        .byte   $f0
-        .byte   $06
-        .byte   $ad
-        .byte   $51
-        .byte   $1b
-        .byte   $8d
-        .byte   $5d
-        .byte   $1b
-        .byte   $4c
-        .byte   $27
-        .byte   $70
-        .fill   5,$00
-        .byte   $ce
-        .byte   $30
-        .byte   $6f
-        .byte   $d0
-        .byte   $d2
-        .byte   $a9
-        .byte   $04
-        .byte   $8d
-        .byte   $30
-        .byte   $6f
-        .byte   $ad
-        .byte   $51
-        .byte   $1b
-        .text   "IlP",$0d
-        .byte   $ad
-        .byte   $57
-        .byte   $1b
-        .byte   $f0
-        .byte   $0b
-        .byte   $ad
-        .byte   $a0
-        .byte   $1b
-        .byte   $f0
-        .byte   $06
-        .byte   $4c
-        .byte   $00
-        .byte   $13
-        .byte   $4c
-        .byte   $4d
-        .byte   $70
-        .byte   $4c
-        .byte   $00
-        .byte   $86
-        .fill   28,$fe
-        .byte   $02
-        .fill   14,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+
+_L6FC0  cmp     #$15
+        beq     _L6FD0
+_L6FC4  tax
+        lda     #$03
+        dex
+        beq     _L6FCD
+        jmp     _L6021
+
+_L6FCD  jmp     _L6027
+
+_L6FD0  ldy     _L6176
+        bne     _L6FC4
+        ldx     #$b8
+        stx     $0542
+        inx
+        stx     $0543
+        inx
+        stx     $056a
+        inx
+        stx     $056b
+        inx
+        stx     $0592
+        inx
+        stx     $0593
+        inx
+        stx     $05ba
+        inx
+        stx     $05bb
+        jmp     _L604A
+
+        .byte   $8e
+        .byte   $ba
+        .byte   $05
+        .byte   $e8
+        .byte   $8e
+        .byte   $bb
+        .byte   $05
+
+_L7000  lda     LDC0E
+        and     #$fe
+        sta     LDC0E
+        lda     _LD016
+        ora     #$10
+        sta     _LD016
+        lda     #$ff
+        sta     _LD015
+        jsr     _L4000
+        jsr     _L5E50
+        jsr     _L40B0
+        jsr     _L6000
+        jsr     _L4100
+        jsr     _L62A0
+_L7027  jsr     _L66D0
+        jsr     _L6860
+        ldx     #$08
+        ldy     #$00
+_L7031  dey
+        bne     _L7031
+        dex
+        bne     _L7031
+        jsr     _L69C0
+        jsr     _L69E0
+        nop
+        nop
+        nop
+        lda     #$03
+        sta     LD022
+        lda     #$02
+        sta     LD023
+        jmp     _L7080
+
+_L704D  ldx     _L6F05
+        inx
+        txa
+        and     #$07
+        sta     _L6F05
+_L7057  lda     #$3f
+        sta     LD418
+        jsr     _L6C60
+        lda     #$00
+        sta     _L1B80
+        jsr     _L6D90
+        ldy     #$0c
+        lda     ($3f),y
+        bne     _L7090
+        lda     _L1B57
+        beq     _L7078
+        lda     _L1B51
+        sta     _L1B5D
+_L7078  jmp     _L7027
+
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+
+_L7080  dec     _L6F30
+        bne     _L7057
+        lda     #$04
+        sta     _L6F30
+        lda     _L1B51
+        cmp     #$4c
+        .byte   $d0
+_L7090  .byte   $0d
+        lda     _L1B57
+        beq     _L70A1
+        lda     _L1BA0
+        beq     _L70A1
+        jmp     _L1300
+
+_L709E  jmp     _L704D
+
+_L70A1  jmp     _L8600
+
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $02
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $77
-        .fill   31,$01
-        .fill   7,$00
         .byte   $01
-        .fill   7,$00
         .byte   $01
-        .fill   16,$00
-        .fill   32,$01
-        .fill   15,$00
         .byte   $01
-        .fill   16,$00
-        .fill   7,$ff
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $a9
         .byte   $02
         .byte   $ae
@@ -16136,17 +25607,31 @@
         .byte   $07
         .byte   $a0
         .byte   $14
-        .text   $99,")X",$99,"qX",$99
+        .byte   $99
+        .byte   $29
+        .byte   $d8
+        .byte   $99
+        .byte   $51
+        .byte   $d8
+        .byte   $99
         .byte   $79
         .byte   $d8
         .byte   $99
         .byte   $a1
-        .text   "X",$99,"IX",$99
+        .byte   $d8
+        .byte   $99
+        .byte   $c9
+        .byte   $d8
+        .byte   $99
         .byte   $f1
         .byte   $d8
         .byte   $99
         .byte   $19
-        .text   "Y",$99,"aY",$99
+        .byte   $d9
+        .byte   $99
+        .byte   $41
+        .byte   $d9
+        .byte   $99
         .byte   $69
         .byte   $d9
         .byte   $99
@@ -16175,496 +25660,2367 @@
         .byte   $4c
         .byte   $00
         .byte   $86
-        .fill   13,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   7,$ff
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
-        .fill   33,$00
-        .fill   15,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   7,$ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   31,$01
-        .fill   7,$00
         .byte   $01
-        .fill   7,$00
         .byte   $01
-        .fill   16,$00
-        .fill   32,$01
-        .fill   15,$00
         .byte   $01
-        .fill   16,$00
-        .fill   32,$ff
-        .fill   7,$fe
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   7,$fe
         .byte   $ff
-        .fill   16,$fe
-        .fill   32,$ff
-        .fill   15,$fe
         .byte   $ff
-        .fill   16,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $77
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
-        .fill   33,$00
-        .fill   15,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   32,$ff
-        .fill   7,$fe
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   7,$fe
         .byte   $ff
-        .fill   16,$fe
-        .fill   32,$ff
-        .fill   15,$fe
         .byte   $ff
-        .fill   16,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
-        .fill   33,$00
-        .fill   15,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   32,$ff
-        .fill   7,$fe
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .fill   7,$fe
         .byte   $ff
-        .fill   16,$fe
-        .fill   32,$ff
-        .fill   15,$fe
         .byte   $ff
-        .fill   16,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   31,$01
-        .fill   7,$00
         .byte   $01
-        .fill   7,$00
         .byte   $01
-        .fill   16,$00
-        .fill   32,$01
-        .fill   15,$00
         .byte   $01
-        .fill   16,$00
-        .fill   7,$ff
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
-        .fill   33,$00
-        .fill   15,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   7,$ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   6,$01
-        .byte   $00
-        .fill   7,$01
-        .byte   $00
-        .fill   7,$01
-        .byte   $00
-        .fill   7,$01
-        .fill   33,$00
-        .fill   15,$01
-        .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   32,$ff
-        .fill   7,$fe
-        .byte   $ff
-        .fill   7,$fe
-        .byte   $ff
-        .fill   16,$fe
-        .fill   32,$ff
-        .fill   15,$fe
-        .byte   $ff
-        .fill   16,$fe
-        .byte   $20
-        .byte   $31
-        .byte   $81
-        .byte   $a9
-        .byte   $ff
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $7d
-        .byte   $85
-        .byte   $fc
-        .byte   $a0
-        .byte   $5a
-        .byte   $a9
-        .byte   $fe
-        .byte   $91
-        .byte   $fb
-        .byte   $88
-        .byte   $d0
-        .byte   $fb
-        .byte   $a9
-        .byte   $ff
-        .byte   $8d
         .byte   $01
-        .byte   $7e
-        .byte   $8d
-        .byte   $04
-        .byte   $7e
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $02
-        .byte   $7e
-        .byte   $a9
-        .byte   $36
-        .byte   $8d
-        .byte   $03
-        .byte   $7e
-        .byte   $a0
         .byte   $01
-        .byte   $b9
-        .byte   $c0
-        .byte   $6a
-        .byte   $f0
-        .byte   $08
-        .byte   $99
-        .byte   $03
-        .byte   $7e
-        .byte   $c8
-        .byte   $c0
-        .byte   $90
-        .byte   $d0
-        .byte   $f3
-        .byte   $a9
-        .byte   $ff
-        .byte   $99
-        .byte   $03
-        .byte   $7e
-        .byte   $a2
         .byte   $01
-        .byte   $86
-        .byte   $ff
-        .byte   $a6
-        .byte   $ff
-        .byte   $8a
-        .byte   $a8
-        .byte   $c8
-        .byte   $c8
-        .byte   $c8
-        .byte   $84
-        .byte   $ad
-        .byte   $a9
-        .byte   $6a
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $d8
-        .byte   $85
-        .byte   $fc
-        .byte   $a9
-        .byte   $00
-        .byte   $85
-        .byte   $fd
-        .byte   $a9
-        .byte   $3e
-        .byte   $85
-        .byte   $fe
-        .byte   $bd
-        .byte   $00
-        .byte   $7e
-        .byte   $c9
-        .byte   $ff
-        .byte   $d0
-        .byte   $03
-        .byte   $4c
-        .byte   $0e
-        .byte   $7b
-        .byte   $c9
-        .byte   $00
-        .byte   $f0
-        .byte   $6a
-        .byte   $38
-        .byte   $e9
         .byte   $01
-        .byte   $a0
-        .byte   $00
-        .byte   $84
-        .byte   $af
-        .byte   $0a
-        .byte   $26
-        .byte   $af
-        .byte   $0a
-        .byte   $26
-        .byte   $af
-        .byte   $0a
-        .byte   $26
-        .byte   $af
-        .byte   $18
-        .byte   $69
-        .byte   $d0
-        .byte   $85
-        .byte   $ae
-        .byte   $a5
-        .byte   $af
-        .byte   $69
-        .byte   $63
-        .byte   $85
-        .byte   $af
-        .byte   $a0
-        .byte   $03
-        .byte   $b1
-        .byte   $ae
-        .byte   $8d
-        .byte   $90
-        .byte   $7a
-        .byte   $c8
-        .byte   $b1
-        .byte   $ae
-        .byte   $8d
-        .byte   $91
-        .byte   $7a
-        .byte   $a0
-        .byte   $1f
-        .byte   $b9
-        .byte   $60
-        .byte   $48
-        .byte   $91
-        .byte   $fd
-        .byte   $88
-        .byte   $10
-        .byte   $f8
-        .byte   $bd
-        .byte   $00
-        .byte   $7e
-        .byte   $d0
-        .byte   $03
-        .byte   $4c
-        .byte   $a3
-        .byte   $7a
-        .byte   $a0
-        .byte   $06
-        .byte   $b1
-        .byte   $ae
-        .byte   $a0
         .byte   $01
-        .byte   $91
-        .byte   $fb
-        .byte   $88
-        .byte   $91
-        .byte   $fb
-        .byte   $a0
-        .byte   $29
-        .byte   $91
-        .byte   $fb
-        .byte   $88
-        .byte   $91
-        .byte   $fb
-        .byte   $a5
-        .byte   $fd
-        .byte   $18
-        .byte   $69
-        .byte   $20
-        .byte   $85
-        .byte   $fd
-        .byte   $a5
-        .byte   $fe
-        .byte   $69
-        .byte   $00
-        .byte   $85
-        .byte   $fe
-        .byte   $e6
-        .byte   $fb
-        .byte   $e6
-        .byte   $fb
-        .byte   $e6
-        .byte   $fb
-        .byte   $e8
-        .byte   $20
-        .byte   $0f
-        .byte   $81
-        .byte   $e4
-        .byte   $ad
-        .byte   $d0
-        .byte   $8b
-        .byte   $4c
-        .byte   $dc
-        .byte   $7a
-        .byte   $a9
-        .byte   $f0
-        .byte   $8d
-        .byte   $90
-        .byte   $7a
-        .byte   $a9
-        .byte   $57
-        .byte   $8d
-        .byte   $91
-        .byte   $7a
-        .byte   $4c
-        .byte   $8d
-        .byte   $7a
-        .byte   $20
-        .byte   $00
-        .byte   $47
-        .byte   $ad
-        .byte   $3b
-        .byte   $03
-        .byte   $f0
-        .byte   $03
-        .byte   $4c
-        .byte   $1a
-        .byte   $7b
-        .byte   $ad
-        .byte   $39
-        .byte   $03
-        .byte   $f0
-        .byte   $f0
-        .byte   $10
-        .byte   $11
-        .byte   $a6
-        .byte   $ff
-        .byte   $e8
-        .byte   $e8
-        .byte   $e8
-        .byte   $bd
-        .byte   $00
-        .byte   $7e
-        .byte   $c9
-        .byte   $fe
-        .byte   $f0
-        .byte   $e2
-        .byte   $e6
-        .byte   $ff
-        .byte   $4c
-        .byte   $3e
-        .byte   $7a
-        .byte   $a6
-        .byte   $ff
-        .byte   $ca
-        .byte   $bd
-        .byte   $00
-        .byte   $7e
-        .byte   $c9
-        .byte   $fe
-        .byte   $f0
-        .byte   $d3
-        .byte   $c6
-        .byte   $ff
-        .byte   $4c
-        .byte   $3e
-        .byte   $7a
-        .byte   $a0
-        .byte   $1f
-        .byte   $a9
-        .byte   $00
-        .byte   $91
-        .byte   $fd
-        .byte   $88
-        .byte   $10
-        .byte   $fb
-        .byte   $4c
-        .byte   $b1
-        .byte   $7a
-        .byte   $ad
-        .byte   $55
-        .byte   $1b
-        .byte   $f0
         .byte   $01
-        .byte   $60
-        .byte   $4c
         .byte   $00
-        .byte   $80
-        .fill   29,$00
-        .fill   15,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   7,$ff
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
         .byte   $fe
-        .fill   7,$ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
-        .text   "  ",$81," p"
-        .byte   $6b
-        .byte   $60
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+
+_L7A00  jsr     _L8131
+        lda     #$ff
+        sta     $fb
+        lda     #$7d
+        sta     $fc
+        ldy     #$5a
+        lda     #$fe
+_L7A0F  sta     ($fb),y
+        dey
+        bne     _L7A0F
+        lda     #$ff
+        sta     _L7E01
+        sta     _L7E04
+        lda     #$00
+        sta     _L7E02
+        lda     #$36
+        sta     _L7E03
+        ldy     #$01
+_L7A28  lda     _L6AC0,y
+        beq     _L7A35
+        sta     _L7E03,y
+        iny
+        cpy     #$90
+        bne     _L7A28
+_L7A35  lda     #$ff
+        sta     _L7E03,y
+        ldx     #$01
+        stx     $ff
+_L7A3E  ldx     $ff
+        txa
+        tay
+        iny
+        iny
+        iny
+        sty     $ad
+        lda     #$6a
+        sta     $fb
+        lda     #$d8
+        sta     $fc
+        lda     #$00
+        sta     $fd
+        lda     #$3e
+        sta     $fe
+_L7A57  lda     _L7E00,x
+        cmp     #$ff
+        bne     _L7A61
+        jmp     _L7B0E
+
+_L7A61  cmp     #$00
+        beq     _L7ACF
+        sec
+        sbc     #$01
+        ldy     #$00
+        sty     $af
+        asl     a
+        rol     $af
+        asl     a
+        rol     $af
+        asl     a
+        rol     $af
+        clc
+        adc     #$d0
+        sta     $ae
+        lda     $af
+        adc     #$63
+        sta     $af
+        ldy     #$03
+        lda     ($ae),y
+        sta     _L7A8F+1
+        iny
+        lda     ($ae),y
+        sta     _L7A8F+2
+_L7A8D  ldy     #$1f
+_L7A8F  lda     _L4860,y
+        sta     ($fd),y
+        dey
+        bpl     _L7A8F
+        lda     _L7E00,x
+        bne     _L7A9F
+        jmp     _L7AA3
+
+_L7A9F  ldy     #$06
+        lda     ($ae),y
+_L7AA3  ldy     #$01
+        sta     ($fb),y
+        dey
+        sta     ($fb),y
+        ldy     #$29
+        sta     ($fb),y
+        dey
+        sta     ($fb),y
+_L7AB1  lda     $fd
+        clc
+        adc     #$20
+        sta     $fd
+        lda     $fe
+        adc     #$00
+        sta     $fe
+        inc     $fb
+        inc     $fb
+        inc     $fb
+        inx
+        jsr     _L810F
+        cpx     $ad
+        bne     _L7A57
+        jmp     _L7ADC
+
+_L7ACF  lda     #$f0
+        sta     _L7A8F+1
+        lda     #$57
+        sta     _L7A8F+2
+        jmp     _L7A8D
+
+_L7ADC  jsr     _L4700
+        lda     V_FireEvent
+        beq     _L7AE7
+        jmp     _L7B1A
+
+_L7AE7  lda     V_LeftRightInput
+        beq     _L7ADC
+        bpl     _L7AFF
+        ldx     $ff
+        inx
+        inx
+        inx
+        lda     _L7E00,x
+        cmp     #$fe
+        beq     _L7ADC
+        inc     $ff
+        jmp     _L7A3E
+
+_L7AFF  ldx     $ff
+        dex
+        lda     _L7E00,x
+        cmp     #$fe
+        beq     _L7ADC
+        dec     $ff
+        jmp     _L7A3E
+
+_L7B0E  ldy     #$1f
+        lda     #$00
+_L7B12  sta     ($fd),y
+        dey
+        bpl     _L7B12
+        jmp     _L7AB1
+
+_L7B1A  lda     _L1B55
+        beq     _L7B20
+        rts
+
+_L7B20  jmp     _L8000
+
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+
+_L7C00  jsr     _L8120
+        jsr     _L6B50
+        rts
+
         .byte   $a6
         .byte   $ff
         .byte   $e0
@@ -16973,7 +28329,12 @@
         .byte   $4c
         .byte   $00
         .byte   $80
-        .text   "It",$90,$07,"Iz"
+        .byte   $c9
+        .byte   $54
+        .byte   $90
+        .byte   $07
+        .byte   $c9
+        .byte   $5a
         .byte   $b0
         .byte   $03
         .byte   $4c
@@ -17165,12 +28526,96 @@
         .byte   $50
         .byte   $6b
         .byte   $00
+_L7E00  .byte   $fe
+_L7E01  .byte   $ff
+_L7E02  .byte   $00
+_L7E03  .byte   $36
+_L7E04  .byte   $ff
         .byte   $fe
-        .byte   $ff
-        .byte   $00
-        .byte   $36
-        .byte   $ff
-        .fill   85,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $28
         .byte   $b9
         .byte   $90
@@ -17195,11 +28640,35 @@
         .byte   $4c
         .byte   $6f
         .byte   $7e
-        .fill   14,$00
-        .text   "111122"
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $31
+        .byte   $31
+        .byte   $31
+        .byte   $31
+        .byte   $32
+        .byte   $32
         .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
         .byte   $17
         .byte   $05
@@ -17209,7 +28678,14 @@
         .byte   $04
         .byte   $0f
         .byte   $0e
-        .text   $05," 007   "
+        .byte   $05
+        .byte   $20
+        .byte   $30
+        .byte   $30
+        .byte   $37
+        .byte   $20
+        .byte   $20
+        .byte   $20
         .byte   $19
         .byte   $0f
         .byte   $15
@@ -17222,11 +28698,90 @@
         .byte   $20
         .byte   $09
         .byte   $13
-        .text   "                    "
-        .fill   15,$ff
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $20
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $ad
         .byte   $51
         .byte   $1b
@@ -17299,9 +28854,17 @@
         .byte   $3b
         .byte   $7f
         .byte   $09
-        .text   $0a,"/0bc"
+        .byte   $0a
+        .byte   $2f
+        .byte   $30
+        .byte   $42
+        .byte   $43
         .byte   $11
-        .text   $12,$1f," 9:"
+        .byte   $12
+        .byte   $1f
+        .byte   $20
+        .byte   $39
+        .byte   $3a
         .byte   $bd
         .byte   $00
         .byte   $7e
@@ -17353,164 +28916,297 @@
         .byte   $38
         .byte   $00
         .byte   $00
-        .text   ",-hi"
+        .byte   $2c
+        .byte   $2d
+        .byte   $48
+        .byte   $49
         .byte   $ff
         .byte   $ff
         .byte   $02
-        .fill   51,$ff
-        .fill   64,$00
-        .byte   $a9
-        .byte   $09
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $05
-        .byte   $85
-        .byte   $fc
-        .byte   $a0
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $00
-        .byte   $a2
         .byte   $00
-        .byte   $86
-        .byte   $02
-        .byte   $bd
-        .byte   $95
-        .byte   $80
-        .byte   $91
-        .byte   $fb
-        .byte   $e8
-        .byte   $c8
-        .byte   $c0
-        .byte   $0a
-        .byte   $d0
-        .byte   $f5
-        .byte   $a2
         .byte   $00
-        .byte   $86
-        .byte   $af
-        .byte   $20
-        .byte   $20
-        .byte   $81
-        .byte   $a6
-        .byte   $af
-        .byte   $86
-        .byte   $af
-        .byte   $a9
         .byte   $00
-        .byte   $8d
-        .byte   $55
-        .byte   $1b
-        .byte   $20
         .byte   $00
-        .byte   $47
-        .byte   $a6
-        .byte   $af
-        .byte   $ad
-        .byte   $3b
-        .byte   $03
-        .byte   $d0
-        .byte   $3b
-        .byte   $ad
-        .byte   $39
-        .byte   $03
-        .byte   $f0
-        .byte   $ea
-        .byte   $30
-        .byte   $19
-        .byte   $a5
-        .byte   $02
-        .byte   $f0
-        .byte   $e4
-        .byte   $a6
-        .byte   $af
-        .byte   $8a
-        .byte   $38
-        .byte   $e9
-        .byte   $0a
-        .byte   $85
-        .byte   $ae
-        .byte   $ca
-        .byte   $20
-        .byte   $fd
-        .byte   $80
-        .byte   $e4
-        .byte   $ae
-        .byte   $d0
-        .byte   $f8
-        .byte   $c6
-        .byte   $02
-        .byte   $4c
-        .byte   $22
-        .byte   $80
-        .byte   $a5
-        .byte   $02
-        .byte   $c9
-        .byte   $07
-        .byte   $f0
-        .byte   $c9
-        .byte   $8a
-        .byte   $18
-        .byte   $69
-        .byte   $0a
-        .byte   $85
-        .byte   $ae
-        .byte   $e8
-        .byte   $20
-        .byte   $fd
-        .byte   $80
-        .byte   $ea
-        .byte   $ea
-        .byte   $e4
-        .byte   $ae
-        .byte   $d0
-        .byte   $f6
-        .byte   $e6
-        .byte   $02
-        .byte   $4c
-        .byte   $22
-        .byte   $80
-        .byte   $a5
-        .byte   $02
-        .byte   $0a
-        .byte   $a8
-        .byte   $b9
-        .byte   $e5
-        .byte   $80
-        .byte   $8d
-        .byte   $7f
-        .byte   $80
-        .byte   $b9
-        .byte   $e6
-        .byte   $80
-        .byte   $8d
-        .byte   $80
-        .byte   $80
-        .byte   $4c
         .byte   $00
-        .byte   $7c
         .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+
+_L8000  lda     #$09
+        sta     $fb
+        lda     #$05
+        sta     $fc
+        ldy     #$00
+        ldx     #$00
+        stx     $02
+_L800E  lda     _L8095,x
+        sta     ($fb),y
+        inx
+        iny
+        cpy     #$0a
+        bne     _L800E
+        ldx     #$00
+        stx     $af
+        jsr     _L8120
+        ldx     $af
+_L8022  stx     $af
+        lda     #$00
+        sta     _L1B55
+        jsr     _L4700
+        ldx     $af
+        lda     V_FireEvent
+        bne     _L806E
+        lda     V_LeftRightInput
+        beq     _L8022
+        bmi     _L8053
+        lda     $02
+        beq     _L8022
+        ldx     $af
+        txa
+        sec
+        sbc     #$0a
+        sta     $ae
+_L8046  dex
+        jsr     _L80FD
+        cpx     $ae
+        bne     _L8046
+        dec     $02
+        jmp     _L8022
+
+_L8053  lda     $02
+        cmp     #$07
+        beq     _L8022
+        txa
+        clc
+        adc     #$0a
+        sta     $ae
+_L805F  inx
+        jsr     _L80FD
+        nop
+        nop
+        cpx     $ae
+        bne     _L805F
+        inc     $02
+        jmp     _L8022
+
+_L806E  lda     $02
+        asl     a
+        tay
+        lda     _L80E5,y
+        sta     _L8081-2
+        lda     _L80E6,y
+        sta     _L8081-1
+        jmp     _L7C00
+
+_L8081  .byte   $00
         .byte   $82
         .byte   $ff
         .byte   $ff
         .byte   $ff
         .byte   $ff
         .byte   $fe
-        .fill   5,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $2a
         .byte   $2a
         .byte   $02
-        .text   "eturndd+",$1e,"-.+'ddddd"
+        .byte   $45
+        .byte   $54
+        .byte   $55
+        .byte   $52
+        .byte   $4e
+_L8095  .byte   $44
+        .byte   $44
+        .byte   $2b
+        .byte   $1e
+        .byte   $2d
+        .byte   $2e
+        .byte   $2b
+        .byte   $27
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
         .byte   $1d
-        .text   "+()ddddd,",$1e
+        .byte   $2b
+        .byte   $28
+        .byte   $29
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $2c
+        .byte   $1e
         .byte   $1a
-        .text   "+",$1c,"!ddddd.,",$1e,"dddddd",$1f,"(%%(0ddddd,-"
+        .byte   $2b
+        .byte   $1c
+        .byte   $21
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $2e
+        .byte   $2c
+        .byte   $1e
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $1f
+        .byte   $28
+        .byte   $25
+        .byte   $25
+        .byte   $28
+        .byte   $30
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $2c
+        .byte   $2d
         .byte   $1a
-        .text   "2dddddd ",$22,"/",$1e,"ddddd"
+        .byte   $32
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $20
+        .byte   $22
+        .byte   $2f
+        .byte   $1e
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
+        .byte   $44
         .byte   $1a
         .byte   $1b
-        .text   "(+-ddd"
-        .byte   $00
-        .byte   $7c
+        .byte   $28
+        .byte   $2b
+        .byte   $2d
+        .byte   $44
+        .byte   $44
+        .byte   $44
+_L80E5  .byte   $00
+_L80E6  .byte   $7c
         .byte   $07
         .byte   $7c
         .byte   $d6
@@ -17533,75 +29229,46 @@
         .byte   $81
         .byte   $a0
         .byte   $00
-        .byte   $a0
-        .byte   $00
-        .byte   $bd
-        .byte   $95
-        .byte   $80
-        .byte   $91
-        .byte   $fb
-        .byte   $e8
-        .byte   $c8
-        .byte   $c0
-        .byte   $0a
-        .byte   $d0
-        .byte   $f5
-        .byte   $8a
-        .byte   $38
-        .byte   $e9
-        .byte   $0a
-        .byte   $aa
-        .byte   $a9
-        .byte   $10
-        .byte   $48
-        .byte   $a9
-        .byte   $ff
-        .byte   $38
-        .byte   $e9
-        .byte   $01
-        .byte   $d0
-        .byte   $fb
-        .byte   $68
-        .byte   $38
-        .byte   $e9
-        .byte   $01
-        .byte   $d0
-        .byte   $f2
-        .byte   $60
-        .byte   $20
-        .byte   $00
-        .byte   $47
-        .byte   $ad
-        .byte   $3b
-        .byte   $03
-        .byte   $d0
-        .byte   $f8
-        .byte   $20
-        .byte   $5d
-        .byte   $81
-        .byte   $a9
-        .byte   $01
-        .byte   $8d
-        .byte   $80
-        .byte   $1b
-        .byte   $60
-        .byte   $20
-        .byte   $00
-        .byte   $47
-        .byte   $ad
-        .byte   $3b
-        .byte   $03
-        .byte   $d0
-        .byte   $f8
-        .byte   $20
-        .byte   $5d
-        .byte   $81
-        .byte   $a9
-        .byte   $02
-        .byte   $8d
-        .byte   $80
-        .byte   $1b
-        .byte   $60
+
+_L80FD  ldy     #$00
+_L80FF  lda     _L8095,x
+        sta     ($fb),y
+        inx
+        iny
+        cpy     #$0a
+        bne     _L80FF
+        txa
+        sec
+        sbc     #$0a
+        tax
+_L810F  lda     #$10
+_L8111  pha
+        lda     #$ff
+_L8114  sec
+        sbc     #$01
+        bne     _L8114
+        pla
+        sec
+        sbc     #$01
+        bne     _L8111
+        rts
+
+_L8120  jsr     _L4700
+        lda     V_FireEvent
+        bne     _L8120
+        jsr     _L815D
+        lda     #$01
+        sta     _L1B80
+        rts
+
+_L8131  jsr     _L4700
+        lda     V_FireEvent
+        bne     _L8131
+        jsr     _L815D
+        lda     #$02
+        sta     _L1B80
+        rts
+
         .byte   $85
         .byte   $2b
         .byte   $a9
@@ -17629,57 +29296,165 @@
         .byte   $4c
         .byte   $52
         .byte   $81
-        .byte   $a9
-        .byte   $40
-        .byte   $48
-        .byte   $a9
+
+_L815D  lda     #$40
+_L815F  pha
+        lda     #$ff
+_L8162  sec
+        sbc     #$01
+        bne     _L8162
+        pla
+        sec
+        sbc     #$01
+        bne     _L815F
+        rts
+
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
-        .byte   $38
-        .byte   $e9
-        .byte   $01
-        .byte   $d0
-        .byte   $fb
-        .byte   $68
-        .byte   $38
-        .byte   $e9
-        .byte   $01
-        .byte   $d0
-        .byte   $f2
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $20
+        .byte   $0f
+        .byte   $81
+        .byte   $20
+        .byte   $0f
+        .byte   $81
+        .byte   $20
+        .byte   $0f
+        .byte   $81
+        .byte   $20
+        .byte   $20
+        .byte   $81
+        .byte   $20
+        .byte   $0f
+        .byte   $81
+        .byte   $20
+        .byte   $0f
+        .byte   $81
         .byte   $60
-        .fill   18,$00
-        .fill   7,$ff
         .byte   $fe
-        .fill   7,$ff
         .byte   $fe
-        .fill   7,$ff
         .byte   $fe
-        .fill   7,$ff
         .byte   $fe
-        .byte   $20
-        .byte   $0f
-        .byte   $81
-        .byte   $20
-        .byte   $0f
-        .byte   $81
-        .byte   $20
-        .byte   $0f
-        .text   $81,"  ",$81," "
-        .byte   $0f
-        .byte   $81
-        .byte   $20
-        .byte   $0f
-        .byte   $81
-        .byte   $60
-        .fill   13,$fe
-        .fill   5,$ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $02
         .byte   $ff
         .byte   $ff
         .byte   $02
-        .fill   6,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $bd
         .byte   $00
         .byte   $7e
@@ -17693,7 +29468,10 @@
         .byte   $cd
         .byte   $51
         .byte   $1b
-        .text   "Pc",$98,$0a
+        .byte   $d0
+        .byte   $43
+        .byte   $98
+        .byte   $0a
         .byte   $a8
         .byte   $b9
         .byte   $5b
@@ -17762,7 +29540,10 @@
         .byte   $4c
         .byte   $70
         .byte   $6b
-        .text   $05,"!ai"
+        .byte   $05
+        .byte   $21
+        .byte   $41
+        .byte   $49
         .byte   $1a
         .byte   $28
         .byte   $f2
@@ -17787,7 +29568,12 @@
         .byte   $00
         .byte   $69
         .byte   $66
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $71
         .byte   $66
         .byte   $e9
@@ -18459,7 +30245,11 @@
         .byte   $00
         .byte   $80
         .byte   $10
-        .text   "x0xpx"
+        .byte   $58
+        .byte   $30
+        .byte   $58
+        .byte   $50
+        .byte   $58
         .byte   $70
         .byte   $58
         .byte   $90
@@ -18519,7 +30309,11 @@
         .byte   $50
         .byte   $6b
         .byte   $10
-        .text   "x0xpx"
+        .byte   $58
+        .byte   $30
+        .byte   $58
+        .byte   $50
+        .byte   $58
         .byte   $70
         .byte   $58
         .byte   $90
@@ -18559,18 +30353,109 @@
         .byte   $68
         .byte   $11
         .byte   $68
-        .fill   5,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   10,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $20
         .byte   $00
         .byte   $08
@@ -18594,390 +30479,183 @@
         .byte   $86
         .byte   $fe
         .byte   $fe
-        .byte   $a9
-        .byte   $92
-        .byte   $85
-        .byte   $3f
-        .byte   $a9
-        .byte   $42
-        .byte   $85
-        .byte   $40
-        .byte   $a9
-        .byte   $08
-        .byte   $8d
-        .byte   $51
-        .byte   $1b
-        .byte   $a9
-        .byte   $00
-        .byte   $85
-        .byte   $38
-        .byte   $a9
-        .byte   $01
-        .byte   $85
-        .byte   $39
-        .byte   $20
-        .byte   $00
-        .byte   $87
-        .byte   $a9
-        .byte   $02
-        .byte   $8d
-        .byte   $09
-        .byte   $6c
-        .byte   $a9
-        .byte   $c0
-        .byte   $8d
-        .byte   $10
-        .byte   $d0
-        .byte   $a9
-        .byte   $e8
-        .byte   $8d
-        .byte   $08
-        .byte   $d0
-        .byte   $8d
-        .byte   $0a
-        .byte   $d0
-        .byte   $a9
-        .byte   $10
-        .byte   $8d
-        .byte   $0c
-        .byte   $d0
-        .byte   $8d
-        .byte   $0e
-        .byte   $d0
-        .byte   $a9
-        .byte   $c0
-        .byte   $8d
-        .byte   $09
-        .byte   $d0
-        .byte   $8d
-        .byte   $0d
-        .byte   $d0
-        .byte   $a9
-        .byte   $d5
-        .byte   $8d
-        .byte   $0b
-        .byte   $d0
-        .byte   $8d
-        .byte   $0f
-        .byte   $d0
-        .byte   $a2
-        .byte   $d0
-        .byte   $8e
-        .byte   $fc
-        .byte   $07
-        .byte   $e8
-        .byte   $8e
-        .byte   $fd
-        .byte   $07
-        .byte   $e8
-        .byte   $8e
+
+_L8600  lda     #$92
+        sta     $3f
+        lda     #$42
+        sta     $40
+        lda     #$08
+        sta     _L1B51
+        lda     #$00
+        sta     $38
+        lda     #$01
+        sta     $39
+        jsr     _L8700
+        lda     #$02
+        sta     _L6C09
+        lda     #$c0
+        sta     _LD010
+        lda     #$e8
+        sta     _LD008
+        sta     _LD00A
+        lda     #$10
+        sta     _LD00C
+        sta     _LD00E
+        lda     #$c0
+        sta     _LD009
+        sta     _LD00D
+        lda     #$d5
+        sta     _LD00B
+        sta     _LD00F
+        ldx     #$d0
+        stx     $07fc
+        inx
+        stx     $07fd
+        inx
+        stx     $07fe
+        inx
+        stx     $07ff
+        lda     #$01
+        sta     _LD01C
+        lda     #$0a
+        sta     LD025
+        lda     #$01
+        sta     LD026
+        lda     #$00
+        sta     LD027
+        sta     LD028
+        lda     #$00
+        sta     _LD017
+        lda     #$20
+        sta     $0392
+        lda     #$20
+        sta     $0395
+        lda     #$00
+        sta     LD028
+        lda     #$04
+        sta     _L6F30
+        lda     #$01
+        sta     LD02D
+        sta     LD02E
+        sta     LD02B
+        sta     LD02C
+        lda     #$2a
+        sta     _L1B5B
+        sta     _L1B5C
+        lda     #$00
+        sta     _L1B57
+        lda     #$00
+        sta     _L1B56
+        lda     #$07
+        sta     LD029
+        sta     LD02A
+        lda     #$0c
+        sta     _LD01D
+        lda     _LD010
+        ora     #$08
+        sta     _LD010
+        lda     #$e0
+        sta     _LD004
+        lda     #$00
+        sta     _LD006
+        lda     #$3e
+        sta     _LD005
+        sta     _LD007
+        lda     #$0c
+        sta     _LD01B
+        lda     #$30
+        sta     $07fa
+        sta     $07fb
+        jsr     _LC640
+        lda     #$01
+        sta     $0390
+        lda     #$00
+        sta     $0391
+        sta     $0393
+        sta     $0394
+        sta     $0396
+        sta     $0397
+        jsr     _L1200
+        jmp     _L7000
+
         .byte   $fe
-        .byte   $07
-        .byte   $e8
-        .byte   $8e
-        .byte   $ff
-        .byte   $07
-        .byte   $a9
-        .byte   $01
-        .byte   $8d
-        .byte   $1c
-        .byte   $d0
-        .byte   $a9
-        .byte   $0a
-        .byte   $8d
-        .byte   $25
-        .byte   $d0
-        .byte   $a9
-        .byte   $01
-        .byte   $8d
-        .byte   $26
-        .byte   $d0
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $27
-        .byte   $d0
-        .byte   $8d
-        .byte   $28
-        .byte   $d0
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $17
-        .byte   $d0
-        .byte   $a9
-        .byte   $20
-        .byte   $8d
-        .byte   $92
-        .byte   $03
-        .byte   $a9
-        .byte   $20
-        .byte   $8d
-        .byte   $95
-        .byte   $03
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $28
-        .byte   $d0
-        .byte   $a9
-        .byte   $04
-        .byte   $8d
-        .byte   $30
-        .byte   $6f
-        .byte   $a9
-        .byte   $01
-        .byte   $8d
-        .byte   $2d
-        .byte   $d0
-        .byte   $8d
-        .byte   $2e
-        .byte   $d0
-        .byte   $8d
-        .byte   $2b
-        .byte   $d0
-        .byte   $8d
-        .byte   $2c
-        .byte   $d0
-        .byte   $a9
-        .byte   $2a
-        .byte   $8d
-        .byte   $5b
-        .byte   $1b
-        .byte   $8d
-        .byte   $5c
-        .byte   $1b
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $57
-        .byte   $1b
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $56
-        .byte   $1b
-        .byte   $a9
-        .byte   $07
-        .byte   $8d
-        .byte   $29
-        .byte   $d0
-        .byte   $8d
-        .byte   $2a
-        .byte   $d0
-        .byte   $a9
-        .byte   $0c
-        .byte   $8d
-        .byte   $1d
-        .byte   $d0
-        .byte   $ad
-        .byte   $10
-        .byte   $d0
-        .byte   $09
-        .byte   $08
-        .byte   $8d
-        .byte   $10
-        .byte   $d0
-        .byte   $a9
-        .byte   $e0
-        .byte   $8d
-        .byte   $04
-        .byte   $d0
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $06
-        .byte   $d0
-        .byte   $a9
-        .byte   $3e
-        .byte   $8d
-        .byte   $05
-        .byte   $d0
-        .byte   $8d
-        .byte   $07
-        .byte   $d0
-        .byte   $a9
-        .byte   $0c
-        .byte   $8d
-        .byte   $1b
-        .byte   $d0
-        .byte   $a9
-        .byte   $30
-        .byte   $8d
-        .byte   $fa
-        .byte   $07
-        .byte   $8d
-        .byte   $fb
-        .text   $07," @F"
-        .byte   $a9
-        .byte   $01
-        .byte   $8d
-        .byte   $90
-        .byte   $03
-        .byte   $a9
-        .byte   $00
-        .byte   $8d
-        .byte   $91
-        .byte   $03
-        .byte   $8d
-        .byte   $93
-        .byte   $03
-        .byte   $8d
-        .byte   $94
-        .byte   $03
-        .byte   $8d
-        .byte   $96
-        .byte   $03
-        .byte   $8d
-        .byte   $97
-        .byte   $03
-        .byte   $20
-        .byte   $00
-        .byte   $12
-        .byte   $4c
-        .byte   $00
-        .byte   $70
-        .fill   10,$fe
-        .byte   $a5
-        .byte   $01
-        .byte   $29
         .byte   $fe
-        .byte   $85
-        .byte   $01
-        .byte   $a9
-        .byte   $c0
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $6a
-        .byte   $85
-        .byte   $fc
-        .byte   $a0
-        .byte   $8a
-        .byte   $20
-        .byte   $00
-        .byte   $88
-        .byte   $a9
-        .byte   $0a
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $6c
-        .byte   $85
-        .byte   $fc
-        .byte   $a0
-        .byte   $54
-        .byte   $20
-        .byte   $00
-        .byte   $88
-        .byte   $a9
-        .byte   $e4
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $95
-        .byte   $85
-        .byte   $fc
-        .byte   $a0
-        .byte   $4c
-        .byte   $20
-        .byte   $00
-        .byte   $88
-        .byte   $a9
-        .byte   $30
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $46
-        .byte   $85
-        .byte   $fc
-        .byte   $a9
-        .byte   $00
-        .byte   $85
-        .byte   $fd
-        .byte   $a9
-        .byte   $a4
-        .byte   $85
         .byte   $fe
-        .byte   $a2
-        .byte   $04
-        .byte   $a0
-        .byte   $d0
-        .byte   $20
-        .byte   $10
-        .byte   $88
-        .byte   $a9
-        .byte   $d0
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $65
-        .byte   $85
-        .byte   $fc
-        .byte   $a9
-        .byte   $00
-        .byte   $85
-        .byte   $fd
-        .byte   $a9
-        .byte   $a7
-        .byte   $85
         .byte   $fe
-        .byte   $a2
-        .byte   $02
-        .byte   $a0
-        .byte   $ff
-        .byte   $20
-        .byte   $10
-        .byte   $88
-        .byte   $a9
-        .byte   $50
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $1b
-        .byte   $85
-        .byte   $fc
-        .byte   $a9
-        .byte   $00
-        .byte   $85
-        .byte   $fd
-        .byte   $a9
-        .byte   $a9
-        .byte   $85
         .byte   $fe
-        .byte   $a2
-        .byte   $00
-        .byte   $a0
-        .byte   $40
-        .byte   $20
-        .byte   $10
-        .byte   $88
-        .byte   $a9
-        .byte   $00
-        .byte   $85
-        .byte   $fb
-        .byte   $a9
-        .byte   $6f
-        .byte   $85
-        .byte   $fc
-        .byte   $a9
-        .byte   $00
-        .byte   $85
-        .byte   $fd
-        .byte   $a9
-        .byte   $aa
-        .byte   $85
         .byte   $fe
-        .byte   $a0
-        .byte   $10
-        .byte   $a2
-        .byte   $00
-        .byte   $20
-        .byte   $10
-        .byte   $88
-        .byte   $4c
-        .byte   $a0
-        .byte   $87
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+
+_L8700  lda     $01
+        and     #$fe
+        sta     $01
+        lda     #$c0
+        sta     $fb
+        lda     #$6a
+        sta     $fc
+        ldy     #$8a
+        jsr     _L8800
+        lda     #$0a
+        sta     $fb
+        lda     #$6c
+        sta     $fc
+        ldy     #$54
+        jsr     _L8800
+        lda     #$e4
+        sta     $fb
+        lda     #$95
+        sta     $fc
+        ldy     #$4c
+        jsr     _L8800
+        lda     #$30
+        sta     $fb
+        lda     #$46
+        sta     $fc
+        lda     #$00
+        sta     $fd
+        lda     #$a4
+        sta     $fe
+        ldx     #$04
+        ldy     #$d0
+        jsr     _L8810
+        lda     #$d0
+        sta     $fb
+        lda     #$65
+        sta     $fc
+        lda     #$00
+        sta     $fd
+        lda     #$a7
+        sta     $fe
+        ldx     #$02
+        ldy     #$ff
+        jsr     _L8810
+        lda     #$50
+        sta     $fb
+        lda     #$1b
+        sta     $fc
+        lda     #$00
+        sta     $fd
+        lda     #$a9
+        sta     $fe
+        ldx     #$00
+        ldy     #$40
+        jsr     _L8810
+        lda     #$00
+        sta     $fb
+        lda     #$6f
+        sta     $fc
+        lda     #$00
+        sta     $fd
+        lda     #$aa
+        sta     $fe
+        ldy     #$10
+        ldx     #$00
+        jsr     _L8810
+        jmp     _L87A0
+
         .byte   $fb
         .byte   $a9
         .byte   $60
@@ -18998,72 +30676,352 @@
         .byte   $20
         .byte   $10
         .byte   $88
-        .byte   $60
-        .fill   6,$fe
+
+_L87A0  rts
+
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $ff
-        .fill   7,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $ff
-        .fill   16,$fe
-        .fill   11,$ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $02
-        .fill   20,$ff
-        .fill   15,$fe
         .byte   $ff
-        .fill   16,$fe
-        .byte   $a9
-        .byte   $00
-        .byte   $91
-        .byte   $fb
-        .byte   $88
-        .byte   $c0
         .byte   $ff
-        .byte   $d0
-        .byte   $f9
-        .byte   $60
-        .fill   6,$ea
-        .byte   $b1
-        .byte   $fd
-        .byte   $91
-        .byte   $fb
-        .byte   $88
-        .byte   $c0
         .byte   $ff
-        .byte   $d0
-        .byte   $f7
-        .byte   $c6
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .byte   $c6
-        .byte   $fc
-        .byte   $ca
-        .byte   $e0
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $ff
-        .byte   $d0
-        .byte   $ee
-        .byte   $60
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+
+_L8800  lda     #$00
+_L8802  sta     ($fb),y
+        dey
+        cpy     #$ff
+        bne     _L8802
+        rts
+
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+        .byte   $ea
+
+_L8810  lda     ($fd),y
+        sta     ($fb),y
+        dey
+        cpy     #$ff
+        bne     _L8810
+        dec     $fe
+        dec     $fc
+        dex
+        cpx     #$ff
+        bne     _L8810
+        rts
+
         .byte   $00
         .byte   $00
         .byte   $00
         .byte   $00
         .byte   $01
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
-        .fill   16,$00
-        .fill   32,$01
-        .fill   15,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
-        .fill   16,$00
-        .fill   7,$ff
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $ce
         .byte   $63
         .byte   $1b
@@ -19085,143 +31043,76 @@
         .byte   $8e
         .byte   $5b
         .byte   $1b
-        .byte   $a0
-        .byte   $7f
-        .byte   $b9
-        .byte   $19
-        .byte   $8a
-        .byte   $99
-        .byte   $00
-        .byte   $34
-        .byte   $88
-        .byte   $10
-        .byte   $f7
-        .byte   $a2
-        .byte   $00
-        .byte   $a0
-        .byte   $7e
-        .byte   $b9
-        .byte   $99
-        .byte   $89
-        .byte   $99
-        .byte   $00
-        .byte   $34
-        .byte   $88
-        .byte   $b9
-        .byte   $99
-        .byte   $89
-        .byte   $99
-        .byte   $00
-        .byte   $34
-        .byte   $88
-        .byte   $b9
-        .byte   $99
-        .byte   $89
-        .byte   $99
-        .byte   $00
-        .byte   $34
-        .byte   $ec
-        .byte   $5b
-        .byte   $1b
-        .byte   $f0
-        .byte   $0b
-        .byte   $88
-        .byte   $e8
-        .byte   $c0
-        .byte   $3f
-        .byte   $d0
-        .byte   $e1
-        .byte   $88
-        .byte   $4c
-        .byte   $24
-        .byte   $89
+
+_L8915  ldy     #$7f
+_L8917  lda     _L8A19,y
+        sta     _L3400,y
+        dey
+        bpl     _L8917
+        ldx     #$00
+        ldy     #$7e
+_L8924  lda     _L8998+1,y
+        sta     _L3400,y
+        dey
+        lda     _L8998+1,y
+        sta     _L3400,y
+        dey
+        lda     _L8998+1,y
+        sta     _L3400,y
+        cpx     _L1B5B
+        beq     _L8948
+        dey
+        inx
+        cpy     #$3f
+        bne     _L8924
+        dey
+        jmp     _L8924
+
         .byte   $60
-        .byte   $ae
-        .byte   $5c
-        .byte   $1b
-        .byte   $ca
-        .byte   $e0
-        .byte   $ff
-        .byte   $f0
-        .byte   $03
-        .byte   $8e
-        .byte   $5c
-        .byte   $1b
-        .byte   $ad
-        .byte   $5d
-        .byte   $1b
-        .byte   $cd
-        .byte   $51
-        .byte   $1b
-        .byte   $d0
-        .byte   $33
-        .byte   $a0
-        .byte   $7f
-        .byte   $b9
-        .byte   $19
-        .byte   $8b
-        .byte   $99
-        .byte   $80
-        .byte   $34
-        .byte   $88
-        .byte   $10
-        .byte   $f7
-        .byte   $a2
-        .byte   $00
-        .byte   $a0
-        .byte   $7e
-        .byte   $b9
-        .byte   $99
-        .byte   $8a
-        .byte   $99
-        .byte   $80
-        .byte   $34
-        .byte   $88
-        .byte   $b9
-        .byte   $99
-        .byte   $8a
-        .byte   $99
-        .byte   $80
-        .byte   $34
-        .byte   $88
-        .byte   $b9
-        .byte   $99
-        .byte   $8a
-        .byte   $99
-        .byte   $80
-        .byte   $34
-        .byte   $ec
-        .byte   $5c
-        .byte   $1b
-        .byte   $f0
-        .byte   $0a
-        .byte   $88
-        .byte   $e8
-        .byte   $c0
-        .byte   $3f
-        .byte   $d0
-        .byte   $e1
-        .byte   $88
-        .byte   $4c
-        .byte   $6a
-        .byte   $89
-        .byte   $60
-        .byte   $a0
-        .byte   $7f
-        .byte   $a9
-        .byte   $00
-        .byte   $99
-        .byte   $80
-        .byte   $34
-        .byte   $88
-        .byte   $10
-        .byte   $fa
-        .byte   $ad
-        .byte   $57
-        .byte   $1b
-        .byte   $d0
-        .byte   $be
-        .byte   $60
+
+_L8948  ldx     _L1B5C
+        dex
+        cpx     #$ff
+        beq     _L8953
+        stx     _L1B5C
+_L8953  lda     _L1B5D
+        cmp     _L1B51
+        bne     _L898E
+_L895B  ldy     #$7f
+_L895D  lda     _L8B19,y
+        sta     _L3480,y
+        dey
+        bpl     _L895D
+        ldx     #$00
+        ldy     #$7e
+_L896A  lda     _L8A99,y
+        sta     _L3480,y
+        dey
+        lda     _L8A99,y
+        sta     _L3480,y
+        dey
+        lda     _L8A99,y
+        sta     _L3480,y
+        cpx     _L1B5C
+        beq     _L898D
+        dey
+        inx
+        cpy     #$3f
+        bne     _L896A
+        dey
+        jmp     _L896A
+
+_L898D  rts
+
+_L898E  ldy     #$7f
+        lda     #$00
+_L8992  sta     _L3480,y
+        dey
+        bpl     _L8992
+_L8998  lda     _L1B57
+        bne     _L895B
+        rts
+
         .byte   $00
         .byte   $00
         .byte   $22
@@ -19345,7 +31236,7 @@
         .byte   $00
         .byte   $1c
         .byte   $01
-        .byte   $00
+_L8A19  .byte   $00
         .byte   $1c
         .byte   $00
         .byte   $00
@@ -19473,7 +31364,13 @@
         .byte   $00
         .byte   $1c
         .byte   $af
-        .fill   7,$00
+_L8A99  .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $3e
         .byte   $00
         .byte   $00
@@ -19595,7 +31492,13 @@
         .byte   $36
         .byte   $00
         .byte   $01
-        .fill   7,$00
+_L8B19  .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $3e
         .byte   $00
         .byte   $00
@@ -19718,46 +31621,460 @@
         .byte   $00
         .byte   $af
         .byte   $00
-        .fill   5,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   7,$01
-        .fill   33,$00
-        .fill   15,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   15,$01
-        .fill   33,$00
-        .fill   7,$ff
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   7,$ff
-        .fill   33,$fe
-        .fill   15,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   33,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $7f
-        .fill   31,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $0a
-        .fill   21,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $0b
-        .fill   21,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $0c
-        .fill   14,$00
-        .fill   5,$01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $46
         .byte   $01
         .byte   $01
@@ -19770,11 +32087,29 @@
         .byte   $01
         .byte   $01
         .byte   $47
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $08
         .byte   $0c
         .byte   $20
-        .fill   13,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $01
         .byte   $08
@@ -19792,11 +32127,29 @@
         .byte   $c9
         .byte   $00
         .byte   $47
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $07
         .byte   $05
         .byte   $0c
-        .fill   14,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $07
         .byte   $05
@@ -19814,24 +32167,69 @@
         .byte   $cb
         .byte   $00
         .byte   $47
-        .fill   6,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $06
         .byte   $05
         .byte   $0c
-        .fill   14,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $06
         .byte   $05
         .byte   $01
         .byte   $01
         .byte   $01
-        .text   "hhhhhhhhhh"
-        .fill   6,$01
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $04
         .byte   $01
         .byte   $05
         .byte   $0c
-        .fill   14,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $04
         .byte   $01
         .byte   $05
@@ -19858,13 +32256,37 @@
         .byte   $01
         .byte   $05
         .byte   $0c
-        .fill   14,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $04
         .byte   $01
         .byte   $05
         .byte   $01
         .byte   $01
-        .text   "fdd+",$1e,"-.+'ddg"
+        .byte   $46
+        .byte   $44
+        .byte   $44
+        .byte   $2b
+        .byte   $1e
+        .byte   $2d
+        .byte   $2e
+        .byte   $2b
+        .byte   $27
+        .byte   $44
+        .byte   $44
+        .byte   $47
         .byte   $16
         .byte   $00
         .byte   $17
@@ -19874,14 +32296,36 @@
         .byte   $01
         .byte   $05
         .byte   $03
-        .fill   14,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $04
         .byte   $01
         .byte   $05
         .byte   $01
         .byte   $01
         .byte   $01
-        .text   "hhhhhhhhhh"
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
+        .byte   $48
         .byte   $01
         .byte   $16
         .byte   $00
@@ -19891,11 +32335,38 @@
         .byte   $04
         .byte   $01
         .byte   $09
-        .fill   15,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $04
         .byte   $01
         .byte   $09
-        .fill   14,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $16
         .byte   $00
         .byte   $17
@@ -19904,14 +32375,37 @@
         .byte   $04
         .byte   $01
         .byte   $03
-        .fill   15,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $04
         .byte   $01
         .byte   $03
         .byte   $01
         .byte   $01
         .byte   $01
-        .fill   10,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $16
         .byte   $00
@@ -19920,14 +32414,38 @@
         .byte   $01
         .byte   $04
         .byte   $02
-        .fill   16,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $04
         .byte   $02
         .byte   $00
         .byte   $01
         .byte   $01
         .byte   $01
-        .fill   10,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $16
         .byte   $00
@@ -19936,14 +32454,38 @@
         .byte   $01
         .byte   $04
         .byte   $03
-        .fill   16,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $04
         .byte   $03
         .byte   $00
         .byte   $01
         .byte   $01
         .byte   $01
-        .fill   10,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $16
         .byte   $00
@@ -19951,14 +32493,39 @@
         .byte   $01
         .byte   $01
         .byte   $02
-        .fill   17,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $02
         .byte   $00
         .byte   $00
         .byte   $01
         .byte   $01
         .byte   $01
-        .fill   10,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $16
         .byte   $00
@@ -19966,60 +32533,219 @@
         .byte   $01
         .byte   $01
         .byte   $03
-        .fill   17,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $00
         .byte   $00
         .byte   $01
         .byte   $01
         .byte   $01
-        .fill   10,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $16
         .byte   $00
         .byte   $17
         .byte   $01
         .byte   $0b
-        .fill   21,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $0a
         .byte   $01
         .byte   $01
-        .fill   10,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $16
         .byte   $00
         .byte   $17
         .byte   $01
-        .text   "LLLLLLLLLLLLLLLLLLLLLLL"
-        .fill   13,$01
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $16
         .byte   $00
         .byte   $17
         .byte   $01
-        .text   "LLLLLLLLLL"
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
         .byte   $e5
         .byte   $e6
         .byte   $e7
         .byte   $e8
-        .text   "LLLLLLLLL"
-        .fill   13,$01
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $16
         .byte   $00
         .byte   $17
         .byte   $01
-        .text   "LLLLLLLLL"
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
         .byte   $e0
         .byte   $e1
         .byte   $e2
         .byte   $e3
         .byte   $e4
-        .text   "LLLLLLLLL"
-        .fill   13,$01
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $cc
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $16
         .byte   $00
         .byte   $17
         .byte   $01
-        .text   "LMNOPQRSTUVWXYZ"
+        .byte   $cc
+        .byte   $cd
+        .byte   $ce
+        .byte   $cf
+        .byte   $d0
+        .byte   $d1
+        .byte   $d2
+        .byte   $d3
+        .byte   $d4
+        .byte   $d5
+        .byte   $d6
+        .byte   $d7
+        .byte   $d8
+        .byte   $d9
+        .byte   $da
         .byte   $db
         .byte   $dc
         .byte   $dd
@@ -20028,84 +32754,263 @@
         .byte   $e9
         .byte   $cc
         .byte   $cc
-        .fill   13,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $16
         .byte   $00
         .byte   $17
         .byte   $01
         .byte   $cc
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ee
         .byte   $ef
         .byte   $f0
         .byte   $f1
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ea
         .byte   $cc
         .byte   $cc
-        .fill   13,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $16
         .byte   $00
         .byte   $17
         .byte   $01
         .byte   $cc
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $f2
         .byte   $f3
         .byte   $f4
         .byte   $f5
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ea
         .byte   $cc
         .byte   $cc
-        .fill   13,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $16
         .byte   $00
         .byte   $17
         .byte   $01
         .byte   $cc
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $f2
         .byte   $f3
         .byte   $f4
         .byte   $f5
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ea
         .byte   $cc
         .byte   $cc
-        .fill   13,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $40
         .byte   $01
         .byte   $41
         .byte   $01
         .byte   $ec
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $f2
         .byte   $f3
         .byte   $f4
         .byte   $f5
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ea
         .byte   $ec
         .byte   $ec
-        .fill   13,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $42
         .byte   $01
         .byte   $43
         .byte   $01
         .byte   $ec
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $f6
         .byte   $f7
         .byte   $f8
         .byte   $f9
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $eb
         .byte   $ec
         .byte   $ec
-        .fill   17,$01
-        .fill   23,$ed
-        .fill   17,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $ed
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $06
         .byte   $06
         .byte   $c6
@@ -20124,7 +33029,11 @@
         .byte   $f6
         .byte   $86
         .byte   $c6
-        .fill   5,$06
+        .byte   $06
+        .byte   $06
+        .byte   $06
+        .byte   $06
+        .byte   $06
         .byte   $03
         .byte   $03
         .byte   $03
@@ -20146,7 +33055,12 @@
         .byte   $02
         .byte   $02
         .byte   $d2
-        .fill   6,$02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
         .byte   $c2
         .byte   $92
         .byte   $02
@@ -20202,7 +33116,16 @@
         .byte   $b6
         .byte   $03
         .byte   $0a
-        .fill   10,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $0a
         .byte   $03
         .byte   $03
@@ -20210,7 +33133,21 @@
         .byte   $f3
         .byte   $c6
         .byte   $92
-        .fill   15,$02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
         .byte   $d2
         .byte   $e2
         .byte   $c2
@@ -20219,7 +33156,16 @@
         .byte   $06
         .byte   $63
         .byte   $0a
-        .fill   10,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $9a
         .byte   $e3
         .byte   $03
@@ -20249,10 +33195,17 @@
         .byte   $02
         .byte   $06
         .byte   $03
-        .text   "C",$0a,$9a,$0a
+        .byte   $c3
+        .byte   $0a
+        .byte   $9a
+        .byte   $0a
         .byte   $ea
         .byte   $6a
-        .text   $0a,$0a,$0a,$0a,$0a
+        .byte   $0a
+        .byte   $0a
+        .byte   $0a
+        .byte   $0a
+        .byte   $0a
         .byte   $03
         .byte   $03
         .byte   $03
@@ -20292,7 +33245,10 @@
         .byte   $f2
         .byte   $02
         .byte   $02
-        .text   "BZC",$0a
+        .byte   $c2
+        .byte   $da
+        .byte   $c3
+        .byte   $0a
         .byte   $03
         .byte   $f3
         .byte   $06
@@ -20312,12 +33268,28 @@
         .byte   $d2
         .byte   $f2
         .byte   $32
-        .fill   5,$02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
+        .byte   $02
         .byte   $06
         .byte   $03
         .byte   $0a
-        .fill   10,$00
-        .text   "Z",$0a,$0a,$0a
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $da
+        .byte   $0a
+        .byte   $0a
+        .byte   $0a
         .byte   $f3
         .byte   $86
         .byte   $c2
@@ -20346,7 +33318,10 @@
         .byte   $03
         .byte   $0a
         .byte   $8a
-        .text   "Z",$0a,$0a,$0a
+        .byte   $da
+        .byte   $0a
+        .byte   $0a
+        .byte   $0a
         .byte   $fa
         .byte   $ca
         .byte   $ca
@@ -20385,11 +33360,18 @@
         .byte   $d3
         .byte   $f3
         .byte   $e3
-        .text   "CS##"
+        .byte   $c3
+        .byte   $d3
+        .byte   $23
+        .byte   $23
         .byte   $03
         .byte   $03
         .byte   $03
-        .text   $0a,$0a,$0a,"S&"
+        .byte   $0a
+        .byte   $0a
+        .byte   $0a
+        .byte   $d3
+        .byte   $26
         .byte   $02
         .byte   $42
         .byte   $d2
@@ -20415,7 +33397,11 @@
         .byte   $f3
         .byte   $23
         .byte   $d0
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $d0
         .byte   $20
         .byte   $00
@@ -20532,7 +33518,11 @@
         .byte   $03
         .byte   $40
         .byte   $e0
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $20
         .byte   $00
         .byte   $00
@@ -20549,7 +33539,12 @@
         .byte   $0e
         .byte   $0e
         .byte   $2e
-        .fill   6,$0e
+        .byte   $0e
+        .byte   $0e
+        .byte   $0e
+        .byte   $0e
+        .byte   $0e
+        .byte   $0e
         .byte   $9e
         .byte   $0e
         .byte   $0e
@@ -20579,7 +33574,13 @@
         .byte   $06
         .byte   $06
         .byte   $86
-        .fill   7,$06
+        .byte   $06
+        .byte   $06
+        .byte   $06
+        .byte   $06
+        .byte   $06
+        .byte   $06
+        .byte   $06
         .byte   $d6
         .byte   $06
         .byte   $b6
@@ -20650,7 +33651,29 @@
         .byte   $0e
         .byte   $ce
         .byte   $03
-        .fill   23,$08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
         .byte   $03
         .byte   $03
         .byte   $00
@@ -20668,7 +33691,29 @@
         .byte   $8e
         .byte   $de
         .byte   $f3
-        .fill   23,$08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
         .byte   $03
         .byte   $03
         .byte   $00
@@ -20686,23 +33731,77 @@
         .byte   $0e
         .byte   $0e
         .byte   $03
-        .fill   23,$08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
         .byte   $03
         .byte   $03
         .byte   $c0
         .byte   $00
         .byte   $d0
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $80
         .byte   $d3
         .byte   $0d
         .byte   $ad
         .byte   $0d
         .byte   $03
-        .fill   23,$08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
         .byte   $03
         .byte   $03
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $f0
         .byte   $00
         .byte   $c0
@@ -20712,7 +33811,29 @@
         .byte   $0d
         .byte   $fd
         .byte   $03
-        .fill   23,$08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
         .byte   $03
         .byte   $03
         .byte   $00
@@ -20726,11 +33847,41 @@
         .byte   $00
         .byte   $00
         .byte   $03
-        .text   $0d,$0d,$0d,"S"
-        .fill   23,$08
+        .byte   $0d
+        .byte   $0d
+        .byte   $0d
+        .byte   $d3
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
         .byte   $03
         .byte   $03
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $d0
         .byte   $00
         .byte   $00
@@ -20740,7 +33891,29 @@
         .byte   $0d
         .byte   $0d
         .byte   $f3
-        .fill   23,$08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
         .byte   $03
         .byte   $23
         .byte   $00
@@ -20758,7 +33931,29 @@
         .byte   $0d
         .byte   $0d
         .byte   $03
-        .fill   23,$08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
+        .byte   $08
         .byte   $03
         .byte   $03
         .byte   $40
@@ -20946,7 +34141,10 @@
         .byte   $f0
         .byte   $4d
         .byte   $a0
-        .text   $0d,"l<",$95
+        .byte   $0d
+        .byte   $4c
+        .byte   $3c
+        .byte   $95
         .byte   $88
         .byte   $a9
         .byte   $01
@@ -21015,7 +34213,10 @@
         .byte   $a0
         .byte   $37
         .byte   $91
-        .text   " lr",$95
+        .byte   $20
+        .byte   $4c
+        .byte   $52
+        .byte   $95
         .byte   $a6
         .byte   $15
         .byte   $a5
@@ -21054,7 +34255,98 @@
         .byte   $10
         .byte   $95
         .byte   $60
-        .fill   92,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $20
         .byte   $20
         .byte   $6a
@@ -21072,15 +34364,48 @@
         .byte   $4c
         .byte   $74
         .byte   $40
-        .fill   15,$01
-        .fill   10,$00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $a2
         .byte   $ff
         .byte   $9a
         .byte   $4c
         .byte   $00
         .byte   $86
-        .fill   11,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $a9
         .byte   $03
         .byte   $85
@@ -21178,13 +34503,26 @@
         .byte   $05
         .byte   $d0
         .byte   $f3
-        .text   "l",$22,$97,"l",$0a,$97
+        .byte   $4c
+        .byte   $22
+        .byte   $97
+        .byte   $4c
+        .byte   $0a
+        .byte   $97
         .byte   $11
         .byte   $12
         .byte   $13
         .byte   $32
         .byte   $31
-        .fill   9,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $10
         .byte   $0c
         .byte   $05
@@ -21243,107 +34581,2309 @@
         .byte   $4c
         .byte   $00
         .byte   $86
-        .fill   22,$00
-        .fill   32,$01
-        .fill   32,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fe
-        .fill   31,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $bc
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fe
-        .fill   31,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $bc
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fe
-        .fill   31,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $3d
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fe
-        .fill   31,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $3c
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fe
-        .fill   31,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $bd
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
-        .fill   32,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   22,$fe
-        .text   "monitor$c*"
-        .byte   $bc
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   31,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
-        .byte   $3c
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
-        .fill   32,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $4d
+        .byte   $4f
+        .byte   $4e
+        .byte   $49
+        .byte   $54
+        .byte   $4f
+        .byte   $52
+        .byte   $24
+        .byte   $43
+        .byte   $2a
         .byte   $bc
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
-        .fill   32,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   22,$fe
-        .text   "monitor$c*u",$07
-        .fill   10,$00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $3c
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $bc
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $4d
+        .byte   $4f
+        .byte   $4e
+        .byte   $49
+        .byte   $54
+        .byte   $4f
+        .byte   $52
+        .byte   $24
+        .byte   $43
+        .byte   $2a
+        .byte   $55
+        .byte   $07
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $01
         .byte   $0f
         .byte   $02
         .byte   $03
         .byte   $06
         .byte   $04
-        .fill   9,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $0e
         .byte   $03
         .byte   $05
         .byte   $07
         .byte   $04
-        .fill   9,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $0b
         .byte   $04
         .byte   $04
@@ -21367,7 +36907,11 @@
         .byte   $f0
         .byte   $3a
         .byte   $0e
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $05
         .byte   $06
         .byte   $06
@@ -21391,7 +36935,11 @@
         .byte   $10
         .byte   $3b
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $08
         .byte   $07
@@ -21400,7 +36948,12 @@
         .byte   $01
         .byte   $a8
         .byte   $3a
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $09
         .byte   $03
@@ -21424,7 +36977,10 @@
         .byte   $00
         .byte   $00
         .byte   $00
-        .text   $05,"h;",$05
+        .byte   $05
+        .byte   $48
+        .byte   $3b
+        .byte   $05
         .byte   $00
         .byte   $03
         .byte   $0b
@@ -21435,7 +36991,11 @@
         .byte   $90
         .byte   $3b
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $0c
         .byte   $01
@@ -21571,7 +37131,11 @@
         .byte   $88
         .byte   $3b
         .byte   $0e
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $16
         .byte   $03
@@ -21595,7 +37159,11 @@
         .byte   $a8
         .byte   $3a
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $18
         .byte   $04
@@ -21633,7 +37201,11 @@
         .byte   $70
         .byte   $3b
         .byte   $0c
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $1b
         .byte   $07
@@ -21657,7 +37229,11 @@
         .byte   $90
         .byte   $3b
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $1d
         .byte   $05
@@ -21723,7 +37299,11 @@
         .byte   $68
         .byte   $3b
         .byte   $0c
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $22
         .byte   $04
@@ -21789,7 +37369,11 @@
         .byte   $a8
         .byte   $3a
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $27
         .byte   $07
@@ -21799,7 +37383,10 @@
         .byte   $70
         .byte   $3b
         .byte   $0b
-        .text   $05,"@;",$05
+        .byte   $05
+        .byte   $40
+        .byte   $3b
+        .byte   $05
         .byte   $00
         .byte   $03
         .byte   $28
@@ -21810,7 +37397,11 @@
         .byte   $68
         .byte   $3b
         .byte   $0f
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $29
         .byte   $05
@@ -21820,7 +37411,11 @@
         .byte   $10
         .byte   $3c
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $2a
         .byte   $07
@@ -21942,7 +37537,11 @@
         .byte   $80
         .byte   $3b
         .byte   $0c
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $33
         .byte   $07
@@ -21966,7 +37565,11 @@
         .byte   $d0
         .byte   $3b
         .byte   $0c
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $35
         .byte   $05
@@ -21976,7 +37579,11 @@
         .byte   $a8
         .byte   $3a
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $36
         .byte   $04
@@ -22000,7 +37607,11 @@
         .byte   $00
         .byte   $3c
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $38
         .byte   $06
@@ -22038,7 +37649,11 @@
         .byte   $20
         .byte   $3c
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $3b
         .byte   $05
@@ -22076,7 +37691,11 @@
         .byte   $00
         .byte   $3c
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $3e
         .byte   $04
@@ -22086,13 +37705,19 @@
         .byte   $00
         .byte   $3c
         .byte   $00
-        .text   $05,"h;",$05
+        .byte   $05
+        .byte   $48
+        .byte   $3b
+        .byte   $05
         .byte   $00
         .byte   $03
         .byte   $3f
         .byte   $07
         .byte   $01
-        .text   $05,$0d,$90,"<"
+        .byte   $05
+        .byte   $0d
+        .byte   $90
+        .byte   $3c
         .byte   $00
         .byte   $13
         .byte   $50
@@ -22122,7 +37747,11 @@
         .byte   $90
         .byte   $3b
         .byte   $09
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $42
         .byte   $04
@@ -22174,7 +37803,11 @@
         .byte   $f0
         .byte   $3b
         .byte   $08
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
         .byte   $46
         .byte   $03
@@ -22198,7 +37831,10 @@
         .byte   $e8
         .byte   $3b
         .byte   $0b
-        .text   $05,"0;",$05
+        .byte   $05
+        .byte   $30
+        .byte   $3b
+        .byte   $05
         .byte   $00
         .byte   $03
         .byte   $48
@@ -22261,31 +37897,232 @@
         .byte   $07
         .byte   $00
         .byte   $07
-        .fill   9,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $03
-        .fill   8,$01
-        .fill   32,$00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fe
         .byte   $fe
         .byte   $fe
         .byte   $ff
         .byte   $fe
-        .fill   11,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   32,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $ff
         .byte   $fe
         .byte   $fe
         .byte   $ff
         .byte   $fe
-        .fill   11,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
-        .fill   15,$ff
-        .fill   32,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $ad
-        .fill   15,$ff
-        .fill   32,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $01
         .byte   $04
         .byte   $19
@@ -22447,7 +38284,10 @@
         .byte   $08
         .byte   $02
         .byte   $15
-        .text   $1e,"( h"
+        .byte   $1e
+        .byte   $28
+        .byte   $20
+        .byte   $48
         .byte   $01
         .byte   $00
         .byte   $03
@@ -22548,7 +38388,13 @@
         .byte   $05
         .byte   $07
         .byte   $22
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $23
         .byte   $3d
         .byte   $02
@@ -23004,23 +38850,314 @@
         .byte   $47
         .byte   $00
         .byte   $00
-        .text   $0a,"MXNXOXPXQXRXSXTXUXVXWXXXYXZX"
-        .fill   11,$ff
+        .byte   $0a
+        .byte   $cd
+        .byte   $d8
+        .byte   $ce
+        .byte   $d8
+        .byte   $cf
+        .byte   $d8
+        .byte   $d0
+        .byte   $d8
+        .byte   $d1
+        .byte   $d8
+        .byte   $d2
+        .byte   $d8
+        .byte   $d3
+        .byte   $d8
+        .byte   $d4
+        .byte   $d8
+        .byte   $d5
+        .byte   $d8
+        .byte   $d6
+        .byte   $d8
+        .byte   $d7
+        .byte   $d8
+        .byte   $d8
+        .byte   $d8
+        .byte   $d9
+        .byte   $d8
+        .byte   $da
+        .byte   $d8
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $fe
         .byte   $20
-        .fill   31,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fe
-        .fill   31,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $07
         .byte   $08
         .byte   $14
-        .fill   8,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $25
         .byte   $25
         .byte   $00
@@ -23042,25 +39179,230 @@
         .byte   $00
         .byte   $00
         .byte   $ff
-        .fill   6,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fb
-        .fill   7,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $ff
         .byte   $04
         .byte   $00
         .byte   $ff
         .byte   $ff
         .byte   $bf
-        .fill   7,$ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
         .byte   $c1
-        .fill   5,$ff
-        .fill   31,$01
-        .fill   32,$00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $fe
-        .fill   31,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $4c
         .byte   $65
         .byte   $2c
@@ -23069,19 +39411,262 @@
         .byte   $00
         .byte   $0e
         .byte   $00
-        .fill   7,$01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
         .byte   $00
-        .fill   16,$01
-        .fill   32,$00
-        .fill   32,$01
-        .fill   32,$00
-        .fill   32,$ff
-        .fill   32,$fe
-        .fill   32,$ff
-        .fill   32,$fe
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $01
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
         .byte   $9b
         .byte   $b7
-        .text   "I)Py(",$90
+        .byte   $c9
+        .byte   $29
+        .byte   $d0
+        .byte   $59
+        .byte   $28
+        .byte   $90
         .byte   $06
         .byte   $8a
         .byte   $e5
@@ -23122,7 +39707,10 @@
         .byte   $20
         .byte   $47
         .byte   $ab
-        .text   "HI",$0d,"P"
+        .byte   $c8
+        .byte   $c9
+        .byte   $0d
+        .byte   $d0
         .byte   $f3
         .byte   $20
         .byte   $e5
@@ -24183,7 +40771,11 @@
         .byte   $00
         .byte   $00
         .byte   $e0
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $e0
         .byte   $00
         .byte   $4a
@@ -24307,7 +40899,11 @@
         .byte   $00
         .byte   $00
         .byte   $e0
-        .fill   5,$00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $e0
         .byte   $00
         .byte   $00
@@ -24392,7 +40988,10 @@
         .byte   $a9
         .byte   $00
         .byte   $85
-        .text   "mFm "
+        .byte   $4d
+        .byte   $c6
+        .byte   $4d
+        .byte   $20
         .byte   $a6
         .byte   $b2
         .byte   $85
@@ -24431,7 +41030,10 @@
         .byte   $a0
         .byte   $ff
         .byte   $e8
-        .text   "HJP",$07
+        .byte   $c8
+        .byte   $ca
+        .byte   $d0
+        .byte   $07
         .byte   $a6
         .byte   $66
         .byte   $00
@@ -24452,7 +41054,11 @@
         .byte   $a2
         .byte   $01
         .byte   $e8
-        .text   " *%",$12,"P"
+        .byte   $20
+        .byte   $2a
+        .byte   $25
+        .byte   $12
+        .byte   $d0
         .byte   $02
         .byte   $a9
         .byte   $ff
@@ -24606,7 +41212,11 @@
         .byte   $90
         .byte   $00
         .byte   $e8
-        .text   "P",$9c,"Ii",$90
+        .byte   $d0
+        .byte   $9c
+        .byte   $c9
+        .byte   $49
+        .byte   $90
         .byte   $ff
         .byte   $e9
         .byte   $5b
@@ -25216,7 +41826,10 @@
         .byte   $29
         .byte   $a8
         .byte   $b0
-        .text   $93,"F]P"
+        .byte   $93
+        .byte   $c6
+        .byte   $5d
+        .byte   $d0
         .byte   $00
         .byte   $60
         .byte   $85
@@ -25721,7 +42334,12 @@
         .byte   $a2
         .byte   $59
         .byte   $e4
-        .text   " P",$07,"E1P"
+        .byte   $20
+        .byte   $d0
+        .byte   $07
+        .byte   $c5
+        .byte   $31
+        .byte   $d0
         .byte   $03
         .byte   $4c
         .byte   $00
@@ -25810,7 +42428,10 @@
         .byte   $8a
         .byte   $8b
         .byte   $b1
-        .text   $22,"E4",$90
+        .byte   $22
+        .byte   $c5
+        .byte   $34
+        .byte   $90
         .byte   $06
         .byte   $d0
         .byte   $1e
@@ -26049,7 +42670,10 @@
         .byte   $28
         .byte   $d0
         .byte   $13
-        .text   "D4P",$1f
+        .byte   $c4
+        .byte   $34
+        .byte   $d0
+        .byte   $1f
         .byte   $ff
         .byte   $33
         .byte   $d0
@@ -26142,7 +42766,10 @@
         .byte   $22
         .byte   $90
         .byte   $02
-        .text   "F#X "
+        .byte   $c6
+        .byte   $23
+        .byte   $d8
+        .byte   $20
         .byte   $8c
         .byte   $b6
         .byte   $4c
@@ -26218,7 +42845,12 @@
         .byte   $50
         .byte   $68
         .byte   $85
-        .text   "q uh",$98,"h"
+        .byte   $51
+        .byte   $20
+        .byte   $55
+        .byte   $48
+        .byte   $98
+        .byte   $48
         .byte   $a0
         .byte   $00
         .byte   $8a
@@ -26421,7 +43053,10 @@
         .byte   $00
         .byte   $b1
         .byte   $14
-        .text   $05,"j!i"
+        .byte   $05
+        .byte   $4a
+        .byte   $21
+        .byte   $49
         .byte   $e0
         .byte   $00
         .byte   $60
@@ -26848,7 +43483,10 @@
         .byte   $f0
         .byte   $02
         .byte   $10
-        .text   $07,"lh",$1f
+        .byte   $07
+        .byte   $4c
+        .byte   $48
+        .byte   $1f
         .byte   $a5
         .byte   $61
         .byte   $e9
@@ -27647,7 +44285,10 @@
         .byte   $00
         .byte   $2e
         .byte   $f0
-        .text   ".ImP"
+        .byte   $2e
+        .byte   $c9
+        .byte   $4d
+        .byte   $d0
         .byte   $ff
         .byte   $20
         .byte   $73
@@ -27692,7 +44333,11 @@
         .byte   $00
         .byte   $b9
         .byte   $66
-        .text   "[$[pC"
+        .byte   $5b
+        .byte   $24
+        .byte   $5b
+        .byte   $50
+        .byte   $c3
         .byte   $00
         .byte   $5e
         .byte   $38
@@ -27832,7 +44477,10 @@
         .byte   $87
         .byte   $63
         .byte   $a2
-        .text   $90,"8 i"
+        .byte   $90
+        .byte   $38
+        .byte   $20
+        .byte   $49
         .byte   $bc
         .byte   $20
         .byte   $df
@@ -28214,14 +44862,36 @@
         .byte   $00
         .byte   $1c
         .byte   $ec
-        .fill   14,$aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
         .byte   $00
-        .fill   6,$aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
         .byte   $ff
         .byte   $aa
         .byte   $aa
         .byte   $00
-        .fill   5,$aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
+        .byte   $aa
         .byte   $20
         .byte   $0c
         .byte   $60
@@ -28365,142 +45035,1651 @@
         .byte   $6c
         .byte   $00
         .byte   $ff
-        .fill   1536,$00
-        .byte   $2e
-        .byte   $18
-        .text   $1f,"aaa"
-        .byte   $0c
-        .byte   $0d
-        .byte   $0c
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+_LC600  .byte   $2e
+_LC601  .byte   $18
+_LC602  .byte   $1f
+_LC603  .byte   $41
+_LC604  .byte   $41
+_LC605  .byte   $41
+_LC606  .byte   $0c
+_LC607  .byte   $0d
+_LC608  .byte   $0c
         .byte   $00
         .byte   $02
-        .byte   $e9
-        .byte   $ee
-        .byte   $63
-        .byte   $e1
-        .byte   $e5
-        .byte   $e9
-        .byte   $4e
-        .byte   $4e
+_LC60B  .byte   $e9
+_LC60C  .byte   $ee
+_LC60D  .byte   $63
+_LC60E  .byte   $e1
+_LC60F  .byte   $e5
+_LC610  .byte   $e9
+_LC611  .byte   $4e
+_LC612  .byte   $4e
+_LC613  .byte   $4f
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $0c
+        .byte   $41
+        .byte   $1f
         .byte   $4f
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $0c
-        .text   "a",$1f,"o7"
+        .byte   $37
         .byte   $02
         .byte   $09
         .byte   $09
         .byte   $08
-        .fill   31,$00
-        .byte   $a9
-        .byte   $2e
-        .byte   $8d
         .byte   $00
-        .byte   $c6
-        .byte   $a9
-        .byte   $18
-        .byte   $8d
-        .byte   $01
-        .byte   $c6
-        .byte   $a9
-        .byte   $1f
-        .byte   $8d
-        .byte   $02
-        .byte   $c6
-        .byte   $a9
-        .byte   $41
-        .byte   $8d
-        .byte   $03
-        .byte   $c6
-        .byte   $a9
-        .byte   $41
-        .byte   $8d
-        .byte   $04
-        .byte   $c6
-        .byte   $a9
-        .byte   $41
-        .byte   $8d
-        .byte   $05
-        .byte   $c6
-        .byte   $a9
-        .byte   $0c
-        .byte   $8d
-        .byte   $06
-        .byte   $c6
-        .byte   $a9
-        .byte   $0d
-        .byte   $8d
-        .byte   $07
-        .byte   $c6
-        .byte   $a9
-        .byte   $0c
-        .byte   $8d
-        .byte   $08
-        .byte   $c6
-        .byte   $a9
-        .byte   $0f
-        .byte   $8d
-        .byte   $15
-        .byte   $d4
-        .byte   $a9
-        .byte   $5a
-        .byte   $8d
-        .byte   $16
-        .byte   $d4
-        .byte   $a9
-        .byte   $01
-        .byte   $8d
-        .byte   $17
-        .byte   $d4
-        .byte   $a9
-        .byte   $1f
-        .byte   $8d
-        .byte   $18
-        .byte   $d4
-        .byte   $a9
         .byte   $00
-        .byte   $8d
-        .byte   $0b
-        .byte   $c6
-        .byte   $a9
-        .byte   $e0
-        .byte   $8d
-        .byte   $0e
-        .byte   $c6
-        .byte   $a9
-        .byte   $ec
-        .byte   $8d
-        .byte   $0c
-        .byte   $c6
-        .byte   $a9
-        .byte   $e1
-        .byte   $8d
-        .byte   $0f
-        .byte   $c6
-        .byte   $a9
-        .byte   $f1
-        .byte   $8d
-        .byte   $0d
-        .byte   $c6
-        .byte   $a9
-        .byte   $e5
-        .byte   $8d
-        .byte   $10
-        .byte   $c6
-        .byte   $a9
-        .byte   $08
-        .byte   $8d
-        .byte   $11
-        .byte   $c6
-        .byte   $8d
-        .byte   $12
-        .byte   $c6
-        .byte   $8d
-        .byte   $13
-        .byte   $c6
-        .byte   $60
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+
+_LC640  lda     #$2e
+        sta     _LC600
+        lda     #$18
+        sta     _LC601
+        lda     #$1f
+        sta     _LC602
+        lda     #$41
+        sta     _LC603
+        lda     #$41
+        sta     _LC604
+        lda     #$41
+        sta     _LC605
+        lda     #$0c
+        sta     _LC606
+        lda     #$0d
+        sta     _LC607
+        lda     #$0c
+        sta     _LC608
+        lda     #$0f
+        sta     LD415
+        lda     #$5a
+        sta     LD416
+        lda     #$01
+        sta     LD417
+        lda     #$1f
+        sta     LD418
+        lda     #$00
+        sta     _LC60B
+        lda     #$e0
+        sta     _LC60E
+        lda     #$ec
+        sta     _LC60C
+        lda     #$e1
+        sta     _LC60F
+        lda     #$f1
+        sta     _LC60D
+        lda     #$e5
+        sta     _LC610
+        lda     #$08
+        sta     _LC611
+        sta     _LC612
+        sta     _LC613
+        rts
+
         .byte   $20
         .byte   $98
         .byte   $c7
@@ -28592,7 +46771,10 @@
         .byte   $c6
         .byte   $8e
         .byte   $1d
-        .text   "F #G"
+        .byte   $c6
+        .byte   $20
+        .byte   $23
+        .byte   $c7
         .byte   $ae
         .byte   $1d
         .byte   $c6
@@ -28775,9 +46957,6214 @@
         .byte   $d8
         .byte   $fa
         .byte   $d8
-        .fill   32,$ff
-        .fill   31,$fe
-        .fill   6145,$00
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $ff
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $fe
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+_LD000  .byte   $00
+_LD001  .byte   $00
+_LD002  .byte   $00
+_LD003  .byte   $00
+_LD004  .byte   $00
+_LD005  .byte   $00
+_LD006  .byte   $00
+_LD007  .byte   $00
+_LD008  .byte   $00
+_LD009  .byte   $00
+_LD00A  .byte   $00
+_LD00B  .byte   $00
+_LD00C  .byte   $00
+_LD00D  .byte   $00
+_LD00E  .byte   $00
+_LD00F  .byte   $00
+_LD010  .byte   $00
+_LD011  .byte   $00
+_LD012  .byte   $00
+        .byte   $00
+        .byte   $00
+_LD015  .byte   $00
+_LD016  .byte   $00
+_LD017  .byte   $00
+_LD018  .byte   $00
+        .byte   $00
+_LD01A  .byte   $00
+_LD01B  .byte   $00
+_LD01C  .byte   $00
+_LD01D  .byte   $00
+        .byte   $00
+        .byte   $00
+LD020   .byte   $00
+LD021   .byte   $00
+LD022   .byte   $00
+LD023   .byte   $00
+        .byte   $00
+LD025   .byte   $00
+LD026   .byte   $00
+LD027   .byte   $00
+LD028   .byte   $00
+LD029   .byte   $00
+LD02A   .byte   $00
+LD02B   .byte   $00
+LD02C   .byte   $00
+LD02D   .byte   $00
+LD02E   .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+LD407   .byte   $00
+LD408   .byte   $00
+        .byte   $00
+        .byte   $00
+LD40B   .byte   $00
+LD40C   .byte   $00
+LD40D   .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+LD415   .byte   $00
+LD416   .byte   $00
+LD417   .byte   $00
+LD418   .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+LD800   .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+LD840   .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+LD848   .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+LD8E0   .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+LDC00   .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+LDC0E   .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
+        .byte   $00
         .byte   $10
         .byte   $2f
         .byte   $10
