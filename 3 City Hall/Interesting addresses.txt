@@ -1,0 +1,16 @@
+Level 5 - Room 1
+	423c: 00 = not on fire / 01 = on fire
+Level 5 - Room 2
+	424a: 00 = not on fire / 01 = on fire
+Level 5 - Room 3
+	4258: 00 = not on fire / 01 = on fire
+Level 5 - Room 4
+	4266: 00 = not on fire / 01 = on fire
+Level 5 - Room 5
+	4274: 00 = not on fire / 01 = on fire
+Level 5 - Room 6
+	4282: 00 = not on fire / 01 = on fire
+Level 5 - Room 7
+	4290: 00 = not on fire / 01 = on fire
+Level 5 - Room 8
+	429e: 00 = not on fire / 01 = on fire
