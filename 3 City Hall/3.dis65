@@ -10,7 +10,7 @@
 "EntryFlags":32702671,
 "AutoLabelStyle":"Simple",
 "AnalysisParams":{
-"AnalyzeUncategorizedData":true,
+"AnalyzeUncategorizedData":false,
 "DefaultTextScanMode":"C64Petscii",
 "MinCharsForString":4,
 "SeekNearbyTargets":true,
@@ -21,7 +21,56 @@
 "PlatformSymbolFileIdentifiers":["RT:Commodore/C64-Kernal.sym65"],
 "ExtensionScriptFileIdentifiers":["RT:Commodore/VisC64.cs"],
 "ProjectSyms":{
-}},
+"V_FireEvent":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_FireEvent",
+"Value":827,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"V_LeftRightInput":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_LeftRightInput",
+"Value":825,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"V_UpDownInput":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"V_UpDownInput",
+"Value":826,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"}}},
 
 "AddressMap":[{
 "Offset":2,
@@ -32,12 +81,96 @@
 "TypeHints":[{
 "Low":2,
 "High":2,
+"Hint":"Code"},
+
+{
+"Low":1586,
+"High":1586,
+"Hint":"Code"},
+
+{
+"Low":13908,
+"High":13908,
+"Hint":"Code"},
+
+{
+"Low":24658,
+"High":24658,
+"Hint":"Code"},
+
+{
+"Low":35954,
+"High":35954,
 "Hint":"Code"}],
 "StatusFlagOverrides":{
 },
 
 "Comments":{
-"0":"load address"},
+"0":"load address",
+"1587":"Load black",
+"1589":"Set border",
+"1592":"Set background color",
+"1595":"Set extra background Color",
+"1598":"Extended color mode",
+"1601":"Load #$10",
+"1603":"Set high byte of load address",
+"1606":"Set loop value",
+"1608":"Load data from 1029,y",
+"1611":"Check if end of data (#ff is end character)",
+"1613":"Branch if end character reached",
+"1615":"Write character to screen",
+"1618":"Increase Y",
+"1619":"Continue reading using loop",
+"1724":"Get input and present to screen. On enter check code.",
+"1729":"Loop if nothing entered",
+"1741":"Loop if not #05",
+"3681":"Loop if no fire event",
+"13877":"Set raster interrupt low",
+"13882":"Set raster interrupt low",
+"13908":"Jumped here from raster interrupt",
+"13911":"Current raster line is equal to the raster line to generate interrupt at.",
+"13921":"Clear interrupt flag",
+"13922":"Current raster line",
+"13925":"Check if raster is ",
+"13929":"Check if raster is #6e",
+"15666":"Read joystick input",
+"15669":"Set Up/Down register",
+"15671":"Set Left/Right register",
+"15673":"LSR on joystick input",
+"15676":"Up detected. Y = #ff.",
+"15680":"Down detected. Y = #01.",
+"15684":"Left detected. X = #ff.",
+"15688":"Right detected. X = 01.",
+"15690":"Store Left/Right input.",
+"15693":"Store Up/Down input",
+"15701":"Store fire event",
+"23810":"Get joystick inputs",
+"23816":"Branch as no fire event detected.",
+"23818":"Jump as fire event detected.",
+"23821":"Load left/right inputs",
+"23824":"Branch as no left/right input detected.",
+"23826":"Branch as left detected.",
+"23828":"Jump as right detected.",
+"24030":"Load room (Indirect-Index)",
+"24032":"#01 = Locked. #04 = Unlocked. ",
+"24034":"Branch as door is locked",
+"24036":"Load room number (Stored in #003f as indirect-index)",
+"24039":"Add #15 to room. Incrementing the room number.",
+"24041":"Update the room number.",
+"24210":"01 = Left / 02 = Up / 03 = Right / 04 = Down",
+"24213":"Branch if no input",
+"24216":"Branch if left",
+"24219":"Branch if Up",
+"24222":"Branch if Right",
+"24224":"Jump as down",
+"24672":"Address to update window (Starts at $06f9)",
+"24677":"Address to update window (Starts at $06f9)",
+"24684":"Roughly around $430e",
+"24686":"Branch if window is not on fire",
+"24688":"Set window graphic to fire",
+"24690":"Update window. Address is self-modifying.",
+"24696":"Value for window not on fire",
+"24704":"Move to next window"},
 
 "LongComments":{
 "-2147483647":{
@@ -47,16 +180,144 @@
 "BackgroundColor":0}},
 
 "Notes":{
-},
+"3634":{
+"Text":"Press fire screen\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256},
+
+"24658":{
+"Text":"Update Windows",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256}},
 
 "UserLabels":{
-},
+"25908":{
+"Label":"V_HorizPos",
+"Value":28418,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"25910":{
+"Label":"V_InputDirection",
+"Value":28420,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"24248":{
+"Label":"Sub_RightInput",
+"Value":26758,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"24253":{
+"Label":"Sub_UpInput",
+"Value":26763,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"24232":{
+"Label":"Sub_LeftInput",
+"Value":26742,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"24227":{
+"Label":"Sub_NoInput",
+"Value":26737,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"24258":{
+"Label":"Sub_DownInput",
+"Value":26768,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"24028":{
+"Label":"Sub_CheckRightDoor",
+"Value":26538,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"24402":{
+"Label":"Sub_RightDoorAnimation",
+"Value":26912,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"14050":{
+"Label":"Sub_LoadFurniture",
+"Value":16560,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"24690":{
+"Label":"Sub_UpdateWindow",
+"Value":27200,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"24658":{
+"Label":"Sub_UpdateWindows",
+"Value":27168,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"}},
 
 "OperandFormats":{
 "0":{
 "Length":2,
 "Format":"NumericLE",
 "SubFormat":"None",
+"SymbolRef":null},
+
+"1639":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1640":{
+"Length":17,
+"Format":"StringGeneric",
+"SubFormat":"C64Screen",
+"SymbolRef":null},
+
+"1664":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1665":{
+"Length":31,
+"Format":"StringGeneric",
+"SubFormat":"C64Screen",
+"SymbolRef":null},
+
+"1698":{
+"Length":17,
+"Format":"StringGeneric",
+"SubFormat":"C64Screen",
+"SymbolRef":null},
+
+"1721":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
 "SymbolRef":null}},
 
 "LvTables":{
