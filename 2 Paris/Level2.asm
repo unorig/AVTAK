@@ -86,10 +86,11 @@ GETIN = $ffe4
 ; Game related variables
 MayDayLandLocation = $D3
 
+MaydayBeginLanding = $02E1
 CarCollision = $02fd
 MaydayLanded = $02fe                ;#00 continue circling / #01 Landed
 
-EndGameFlag =   $0313
+EndGameFlag =   $0313       ;#00 Continue / #80 Mayday found / Ends game #27
 CarSpeed =    $0340
 RegisterCollision = $0346
 
@@ -105,8 +106,10 @@ ScrCounterDigit100 = $04f3
 ScrCounterDigit10 = $04f4
 ScrCounterDigit1 = $04f5
 
-MaydayXMap =    $6900
-MaydayYMap =    $6980
+MaydayXMap              = $6900
+MaydayDirection         = $6930
+MaydayYMap              = $6980
+MaydayTurnsTaken        = $69F9
 
 
 * = $0000
@@ -1323,8 +1326,8 @@ l_4005
                     NOP                             ; (4069) No operation
                     NOP                             ; (406A) No operation
                     LDA #$00                        ; (406B) Set A to #$00 (0 / 00000000)
-                    STA $02E1                       ; (406D) Store A to $02E1
-                    STA EndGameFlag                       ; (4070) Store A to $0313
+                    STA MaydayBeginLanding                       ; (406D) Store A to $02E1
+                    STA EndGameFlag                 ; (4070) Store A to $0313. #00 Continue / #80 Mayday found / Ends game #27.
                     LDA #$30                        ; (4073) Set A to #$30 (48 / 00110000)
                     STA SpriteEnableRegister        ; (4075) Store A to $D015
                     LDA #$01                        ; (4078) Set A to #$01 (1 / 00000001)
@@ -1701,7 +1704,7 @@ l_4330
                     LDA $6820,X                     ; (4348) Load A with $6820,X
                     STA MaydaySpritePointer,X       ; (434B) Store A to $6920,X
                     LDA $6830,X                     ; (434E) Load A with $6830,X
-                    STA $6930,X                     ; (4351) Store A to $6930,X
+                    STA MaydayDirection,X           ; (4351) Store A to $6930,X
                     JMP l_4375                      ; (4354) Jump to $4375
 
 l_4357
@@ -2498,10 +2501,10 @@ l_4995
 * = $49A0
 
 l_49A0
-                    LDA DamageCount                       ; (49A0) Load A with $03A1
+                    LDA DamageCount                 ; (49A0) Load A with $03A1
                     CLC                             ; (49A3) Clear Carry Flag
                     ADC #$01                        ; (49A4) Add with Carry with #$01 (1 / 00000001)
-                    STA DamageCount                       ; (49A6) Store A to $03A1
+                    STA DamageCount                 ; (49A6) Store A to $03A1
                     BCS l_49B3                      ; (49A9) Branch if Carry Set $49B3
                     CMP #$28                        ; (49AB) Subtract #$28 from A (40 / 00101000)
                     BCS l_49B3                      ; (49AD) Branch if Carry Set $49B3
@@ -2509,7 +2512,7 @@ l_49A0
                     RTS                             ; (49B2) Return from Subroutine
 
 l_49B3
-                    STA EndGameFlag                       ; (49B3) Store A to $0313
+                    STA EndGameFlag                 ; (49B3) Store A to $0313. #00 Continue / #80 Mayday found / Ends game #27.
                     RTS                             ; (49B6) Return from Subroutine
 
 * = $49B7
@@ -2706,7 +2709,7 @@ l_4AD6
 * = $4BA0
 
 l_4BA0
-                    LDA EndGameFlag                       ; (4BA0) Load A with $0313
+                    LDA EndGameFlag                 ; (4BA0) Load A with $0313. #00 Continue / #80 Mayday found / Ends game #27.
                     CMP #$80                        ; (4BA3) Subtract #$80 from A (128 / 10000000)
                     BNE l_4BB7                      ; (4BA5) Branch to $4BB7 if Not Equal
                     LDA #$12                        ; (4BA7) Set A to #$12 (18 / 00010010)
@@ -2738,7 +2741,7 @@ l_4BCB
 
 l_4BDB
                     LDA #$00                        ; (4BDB) Set A to #$00 (0 / 00000000)
-                    STA EndGameFlag                       ; (4BDD) Store A to $0313
+                    STA EndGameFlag                 ; (4BDD) Store A to $0313. #00 Continue / #80 Mayday found / Ends game #27.
                     JMP l_4F7F                      ; (4BE0) Jump to $4F7F
 
 * = $4BE3
@@ -2836,30 +2839,30 @@ l_4C5A
                     BCS l_4CB0                      ; (4CA7) Branch if Carry Set $4CB0
                     AND #$07                        ; (4CA9) Logical AND with Accumulator and #$07 (7 / 00000111)
                     LDX $AC                         ; (4CAB) Load X with $AC
-                    STA $6930,X                     ; (4CAD) Store A to $6930,X
+                    STA MaydayDirection,X           ; (4CAD) Store A to $6930,X
 
 l_4CB0
                     LDX $AC                         ; (4CB0) Load X with $AC
 
 l_4CB2
-                    LDA $6930,X                     ; (4CB2) Load A with $6930,X
+                    LDA MaydayDirection,X           ; (4CB2) Load A with $6930,X
                     TAY                             ; (4CB5) Transfer A to Y
                     LDA $69B0,Y                     ; (4CB6) Load A with $69B0,Y
                     BMI l_4CCE                      ; (4CB9) Branch to $4CCE if minus 
                     BEQ l_4CDC                      ; (4CBB) Branch to $4CDC if Equal
                     CLC                             ; (4CBD) Clear Carry Flag
-                    LDA MaydayXMap,X                     ; (4CBE) Load A with $6900,X
+                    LDA MaydayXMap,X                ; (4CBE) Load A with $6900,X
                     ADC #$01                        ; (4CC1) Add with Carry with #$01 (1 / 00000001)
-                    STA MaydayXMap,X                     ; (4CC3) Store A to $6900,X
+                    STA MaydayXMap,X                ; (4CC3) Store A to $6900,X
                     BCC l_4CDC                      ; (4CC6) Branch to $4CDC if Carry Clear
                     INC $6940,X                     ; (4CC8) Increment Memory $6940,X
                     JMP l_4CDC                      ; (4CCB) Jump to $4CDC
 
 l_4CCE
                     SEC                             ; (4CCE) Set Carry Flag
-                    LDA MaydayXMap,X                     ; (4CCF) Load A with $6900,X
+                    LDA MaydayXMap,X                ; (4CCF) Load A with $6900,X
                     SBC #$01                        ; (4CD2) Subtract with Carry #$01 (1 / 00000001)
-                    STA MaydayXMap,X                     ; (4CD4) Store A to $6900,X
+                    STA MaydayXMap,X                ; (4CD4) Store A to $6900,X
                     BCS l_4CDC                      ; (4CD7) Branch if Carry Set $4CDC
                     DEC $6940,X                     ; (4CD9) Decrement $6940,X
 
@@ -3199,7 +3202,7 @@ l_4FA8
                     BNE l_4FA6                      ; (4FAC) Branch to $4FA6 if Not Equal
                     INC $D9                         ; (4FAE) Increment Memory $D9
                     JSR l_542D                      ; (4FB0) Jump to Subroutine at $542D
-                    LDA EndGameFlag                       ; (4FB3) Load A with $0313
+                    LDA EndGameFlag                 ; (4FB3) Load A with $0313. #00 Continue / #80 Mayday found / Ends game #27.
                     BEQ l_4F7F                      ; (4FB6) Branch to $4F7F if Equal
                     JMP l_4BA0                      ; (4FB8) Jump to $4BA0
 
@@ -3381,10 +3384,10 @@ l_5137
                     BEQ l_5157                      ; (5145) Branch to $5157 if Equal
                     TXA                             ; (5147) Transfer X to A
                     BPL l_518A                      ; (5148) Branch to $518A if positive
-                    LDA $02E1                       ; (514A) Load A with $02E1
+                    LDA MaydayBeginLanding                       ; (514A) Load A with $02E1
                     BEQ l_518A                      ; (514D) Branch to $518A if Equal
                     LDA #$80                        ; (514F) Set A to #$80 (128 / 10000000)
-                    STA EndGameFlag                       ; (5151) Store A to $0313
+                    STA EndGameFlag                 ; (5151) Store A to $0313. #00 Continue / #80 Mayday found / Ends game #27.
                     JMP l_518A                      ; (5154) Jump to $518A
 
 l_5157
@@ -3455,18 +3458,18 @@ l_51A2
 
 l_51BB
                     STA $0340                       ; (51BB) Store A to $0340
-                    LDY DamageCount                       ; (51BE) Load Y with Data from $03A1
+                    LDY DamageCount                 ; (51BE) Load Y with Data from $03A1
                     INY                             ; (51C1) Increment Y Register
                     CPY #$28                        ; (51C2) Subtract #$28 from Y (40 / 00101000)
                     BCC l_51CB                      ; (51C4) Branch to $51CB if Carry Clear
                     LDY #$27                        ; (51C6) Load Y with #$27 (39 / 00100111)
-                    STY EndGameFlag                       ; (51C8) Store Y Register $0313
+                    STY EndGameFlag                 ; (51C8) Store Y Register $0313. #00 Continue / #80 Mayday found / Ends game #27.
 
 l_51CB
-                    STY DamageCount                       ; (51CB) Store Y Register $03A1
+                    STY DamageCount                 ; (51CB) Store Y Register $03A1
                     INC $0346                       ; (51CE) Increment Memory $0346
                     LDA $0347                       ; (51D1) Load A with $0347
-                    STA CarFacingDirection                       ; (51D4) Store A to $03A0
+                    STA CarFacingDirection          ; (51D4) Store A to $03A0
                     JMP l_518A                      ; (51D7) Jump to $518A
 
 * = $51DA
@@ -3516,7 +3519,7 @@ l_5216
 l_5218
                     LDY #$07                        ; (5218) Load Y with #$07 (7 / 00000111).
                     STY MaydayLoopCounter           ; (521A) Reset loop counter ($034F).
-                    LDA $6930                       ; (521D) Load A with $6930. An index between #07-00
+                    LDA MaydayDirection             ; (521D) Load A with $6930. 7:NW, 6:W, 5:SW, 4:W, 3:SE, 2:E, 1:NE, 0:N. 
                     TAY                             ; (5220) Transfer A to Y
                     LDA $69B0,Y                     ; (5221) Load A with $69B0,Y. 7:Neg (NW), 6:Neg (W), 5:neg (SW), 4:zero (W), 3:one (SE), 2:one (E), 1:one (NE), 0:zero (N).
                     BMI ReduceMaydayXMap            ; (5224) Branch to $5239 if minus. $69B0,7 to $69B0,5 are minus.
@@ -3565,34 +3568,34 @@ l_526D
                     STY $69F8                       ; (5277) Store Y Register $69F8
                     BNE l_52A1                      ; (527A) Branch to $52A1 if Not Equal
                     CLC                             ; (527C) Clear Carry Flag
-                    LDA $69F9                       ; (527D) Load A with $69F9
+                    LDA MaydayTurnsTaken            ; (527D) Load A with $69F9
                     ADC #$02                        ; (5280) Add with Carry with #$02 (2 / 00000010)
-                    STA $69F9                       ; (5282) Store A to $69F9
+                    STA MaydayTurnsTaken            ; (5282) Store A to $69F9
                     NOP                             ; (5285) No operation
-                    CMP MayDayLandLocation                         ; (5286) Subtract $D3 from A
+                    CMP MayDayLandLocation          ; (5286) Subtract $D3 from A. Compare number of Mayday turns taken against $D3.
                     BNE l_5290                      ; (5288) Branch to $5290 if Not Equal
                     INC MaydayLanded                ; (528A) Increment Memory $02FE. #00 continue circling / #01 Landed.
-                    JMP l_5296                      ; (528D) Jump to $5296
+                    JMP UpdateMaydayDirection       ; (528D) Jump to $5296
 
 l_5290
-                    LDY $69F9                       ; (5290) Load Y with Data from $69F9
+                    LDY MaydayTurnsTaken            ; (5290) Load Y with Data from $69F9
                     STY $69F8                       ; (5293) Store Y Register $69F8
 
-l_5296
-                    LDY $6930                       ; (5296) Load Y with Data from $6930
+UpdateMaydayDirection
+                    LDY MaydayDirection             ; (5296) Load Y with Data from $6930
                     DEY                             ; (5299) Decrement Y Register
-                    BPL l_529E                      ; (529A) Branch to $529E if positive
+                    BPL StoreMaydayDirection        ; (529A) Branch to $529E if positive
                     LDY #$07                        ; (529C) Load Y with #$07 (7 / 00000111)
 
-l_529E
-                    STY $6930                       ; (529E) Store Y Register $6930
+StoreMaydayDirection
+                    STY MaydayDirection             ; (529E) Store Y Register $6930
 
 l_52A1
                     JMP l_5315                      ; (52A1) Jump to $5315
 
 l_52A4
                     LDY #$08                        ; (52A4) Load Y with #$08 (8 / 00001000)
-                    STY MaydayLoopCounter                       ; (52A6) Store Y Register $034F
+                    STY MaydayLoopCounter           ; (52A6) Store Y Register $034F
                     LDA $6940                       ; (52A9) Load A with $6940
                     CMP $69FD                       ; (52AC) Subtract $69FD from A
                     BCC l_52D1                      ; (52AF) Branch to $52D1 if Carry Clear
@@ -3600,25 +3603,25 @@ l_52A4
                     JMP l_52C0                      ; (52B3) Jump to $52C0
 
 l_52B6
-                    LDA MaydayXMap                       ; (52B6) Load A with $6900
+                    LDA MaydayXMap                  ; (52B6) Load A with $6900
                     CMP $69FC                       ; (52B9) Subtract $69FC from A
                     BCC l_52D1                      ; (52BC) Branch to $52D1 if Carry Clear
                     BEQ l_52DF                      ; (52BE) Branch to $52DF if Equal
 
 l_52C0
                     SEC                             ; (52C0) Set Carry Flag
-                    LDA MaydayXMap                       ; (52C1) Load A with $6900
+                    LDA MaydayXMap                  ; (52C1) Load A with $6900
                     SBC #$01                        ; (52C4) Subtract with Carry #$01 (1 / 00000001)
-                    STA MaydayXMap                       ; (52C6) Store A to $6900
+                    STA MaydayXMap                  ; (52C6) Store A to $6900
                     BCS l_52DF                      ; (52C9) Branch if Carry Set $52DF
                     DEC $6940                       ; (52CB) Decrement $6940
                     JMP l_52DF                      ; (52CE) Jump to $52DF
 
 l_52D1
                     CLC                             ; (52D1) Clear Carry Flag
-                    LDA MaydayXMap                       ; (52D2) Load A with $6900
+                    LDA MaydayXMap                  ; (52D2) Load A with $6900
                     ADC #$01                        ; (52D5) Add with Carry with #$01 (1 / 00000001)
-                    STA MaydayXMap                       ; (52D7) Store A to $6900
+                    STA MaydayXMap                  ; (52D7) Store A to $6900
                     BCC l_52DF                      ; (52DA) Branch to $52DF if Carry Clear
                     INC $6940                       ; (52DC) Increment Memory $6940
 
@@ -3637,18 +3640,18 @@ l_52EC
 
 l_52F6
                     SEC                             ; (52F6) Set Carry Flag
-                    LDA MaydayYMap                       ; (52F7) Load A with $6980
+                    LDA MaydayYMap                  ; (52F7) Load A with $6980
                     SBC #$01                        ; (52FA) Subtract with Carry #$01 (1 / 00000001)
-                    STA MaydayYMap                       ; (52FC) Store A to $6980
+                    STA MaydayYMap                  ; (52FC) Store A to $6980
                     BCS l_5315                      ; (52FF) Branch if Carry Set $5315
                     DEC $69C0                       ; (5301) Decrement $69C0
                     JMP l_5315                      ; (5304) Jump to $5315
 
 l_5307
                     CLC                             ; (5307) Clear Carry Flag
-                    LDA MaydayYMap                       ; (5308) Load A with $6980
+                    LDA MaydayYMap                  ; (5308) Load A with $6980
                     ADC #$01                        ; (530B) Add with Carry with #$01 (1 / 00000001)
-                    STA MaydayYMap                       ; (530D) Store A to $6980
+                    STA MaydayYMap                  ; (530D) Store A to $6980
                     BCC l_5315                      ; (5310) Branch to $5315 if Carry Clear
                     INC $69C0                       ; (5312) Increment Memory $69C0
 
@@ -3656,47 +3659,47 @@ l_5315
                     LDX $535C                       ; (5315) Load X with $535C
                     DEX                             ; (5318) Decrement X
                     STX $535C                       ; (5319) Store X Register $535C
-                    BNE l_534D                      ; (531C) Branch to $534D if Not Equal
+                    BNE l_534D_RTS                  ; (531C) Branch to $534D if Not Equal
                     LDX #$14                        ; (531E) Set X to #$14 (20 / 00010100)
                     STX $535C                       ; (5320) Store X Register $535C
-                    NOP                             ; (5323) No operation
-                    LDX #$02                        ; (5324) Set X to #$02 (2 / 00000010)
+                    NOP                             ; (5323) No operation.
+                    LDX #$02                        ; (5324) Set X to #$02 (2 / 00000010). Used to select three timer values.
 
-l_5326
-                    DEC $04F3,X                     ; (5326) Decrement $04F3,X
-                    LDA $04F3,X                     ; (5329) Load A with $04F3,X
+ReduceTimer
+                    DEC ScrCounterDigit100,X        ; (5326) Decrement $04F3,X. #6d:9,#6c:8,#6b:7,#6a:6,#69:5,#68:4,#67:3,#66:2,#65:1,#64:0.
+                    LDA ScrCounterDigit100,X        ; (5329) Load A with $04F3,X
                     CMP #$63                        ; (532C) Subtract #$63 from A (99 / 01100011)
-                    BNE l_5338                      ; (532E) Branch to $5338 if Not Equal
+                    BNE CheckRemainingTime          ; (532E) Branch to $5338 if Not Equal
                     LDA #$6D                        ; (5330) Set A to #$6D (109 / 01101101)
-                    STA $04F3,X                     ; (5332) Store A to $04F3,X
+                    STA ScrCounterDigit100,X        ; (5332) Store A to $04F3,X
                     DEX                             ; (5335) Decrement X
-                    BPL l_5326                      ; (5336) Branch to $5326 if positive
+                    BPL ReduceTimer                 ; (5336) Branch to $5326 if positive
 
-l_5338
-                    LDA $04F3                       ; (5338) Load A with $04F3
-                    CMP #$64                        ; (533B) Subtract #$64 from A (100 / 01100100)
-                    BNE l_534D                      ; (533D) Branch to $534D if Not Equal
-                    LDA $04F4                       ; (533F) Load A with $04F4
-                    CMP #$64                        ; (5342) Subtract #$64 from A (100 / 01100100)
-                    BNE l_534E                      ; (5344) Branch to $534E if Not Equal
-                    LDA $04F5                       ; (5346) Load A with $04F5
-                    CMP #$64                        ; (5349) Subtract #$64 from A (100 / 01100100)
-                    BEQ l_5356                      ; (534B) Branch to $5356 if Equal
+CheckRemainingTime
+                    LDA ScrCounterDigit100          ; (5338) Load A with $04F3
+                    CMP #$64                        ; (533B) Subtract #$64 from A (100 / 01100100). #64 represents zero on clock.
+                    BNE l_534D_RTS                  ; (533D) Branch to $534D if Not Equal.
+                    LDA ScrCounterDigit10           ; (533F) Load A with $04F4
+                    CMP #$64                        ; (5342) Subtract #$64 from A (100 / 01100100). #64 represents zero on clock.
+                    BNE Check60SecLeft              ; (5344) Branch to $534E if Not Equal
+                    LDA ScrCounterDigit1            ; (5346) Load A with $04F5
+                    CMP #$64                        ; (5349) Subtract #$64 from A (100 / 01100100). #64 represents zero on clock.
+                    BEQ ClockRanOut                 ; (534B) Branch to $5356 if Equal. Branch if clock reaches 000.
 
-l_534D
+l_534D_RTS
                     RTS                             ; (534D) Return from Subroutine
 
-l_534E
+Check60SecLeft
                     CMP #$6A                        ; (534E) Subtract #$6A from A (106 / 01101010)
-                    BCS l_5355                      ; (5350) Branch if Carry Set $5355
-                    INC $02E1                       ; (5352) Increment Memory $02E1
+                    BCS l_5355_RTS                  ; (5350) Branch if Carry Set $5355
+                    INC MaydayBeginLanding          ; (5352) Increment Memory $02E1
 
-l_5355
+l_5355_RTS
                     RTS                             ; (5355) Return from Subroutine
 
-l_5356
+ClockRanOut
                     LDA #$40                        ; (5356) Set A to #$40 (64 / 01000000)
-                    STA EndGameFlag                       ; (5358) Store A to $0313
+                    STA EndGameFlag                 ; (5358) Store A to $0313. #00 Continue / #80 Mayday found / Ends game #27.
                     RTS                             ; (535B) Return from Subroutine
 
 * = $535C
@@ -4130,7 +4133,7 @@ l_5A66
                     JSR l_4D92                      ; (5A75) Jump to Subroutine at $4D92
                     JSR l_4E00                      ; (5A78) Jump to Subroutine at $4E00
                     JSR l_4940                      ; (5A7B) Jump to Subroutine at $4940
-                    LDA EndGameFlag                       ; (5A7E) Load A with $0313
+                    LDA EndGameFlag                 ; (5A7E) Load A with $0313. #00 Continue / #80 Mayday found / Ends game #27.
                     BEQ l_5A8D                      ; (5A81) Branch to $5A8D if Equal
                     CMP #$80                        ; (5A83) Subtract #$80 from A (128 / 10000000)
                     BEQ l_5A8A                      ; (5A85) Branch to $5A8A if Equal
