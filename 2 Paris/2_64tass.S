@@ -20,9 +20,9 @@ V_CarPosHorizontalLow = $0338
 V_CarPosHorizontalHigh = $0339
 V_CarPositionVertLow = $033a
 V_CarPositionVertHigh = $033b
-V_MapRow =      $033c
-V_MapLoadAddressLow = $033d
-V_HorzRasterScrollLoop = $033e
+V_MapXposition          =      $033c
+V_MapYposition          = $033d
+V_HorzRasterScrollLoop  = $033e
 WhatIsThis =    $033f
 V_CarSpeed =    $0340
 V_MapDrawSpeed = $0342
@@ -6217,18 +6217,18 @@ _L4606  ldy     V_CarFacingDirection ;00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW
         bmi     _L4627
         clc
         lda     #$7e
-        adc     V_MapRow
+        adc     V_MapXposition
         sta     V_SpritePointerIndex
-        lda     V_MapLoadAddressLow
+        lda     V_MapYposition
         adc     #$00
         sta     V_SprCarDistHorizDiffHigh
         jmp     _L466E
 
 _L4627  sec
-        lda     V_MapRow
+        lda     V_MapXposition
         sbc     #$7e
         sta     V_SpritePointerIndex
-        lda     V_MapLoadAddressLow
+        lda     V_MapYposition
         sbc     #$00
         sta     V_SprCarDistHorizDiffHigh
         jmp     _L466E
@@ -6238,25 +6238,25 @@ _L4639  lda     $0334
         bmi     _L4652
         clc
         lda     #$01
-        adc     V_MapRow
+        adc     V_MapXposition
         sta     V_SpritePointerIndex
-        lda     V_MapLoadAddressLow
+        lda     V_MapYposition
         adc     #$00
         sta     V_SprCarDistHorizDiffHigh
         jmp     _L466E
 
 _L4652  sec
-        lda     V_MapRow
+        lda     V_MapXposition
         sbc     #$01
         sta     V_SpritePointerIndex
-        lda     V_MapLoadAddressLow
+        lda     V_MapYposition
         sbc     #$00
         sta     V_SprCarDistHorizDiffHigh
         jmp     _L466E
 
-_L4664  lda     V_MapRow
+_L4664  lda     V_MapXposition
         sta     V_SpritePointerIndex
-        lda     V_MapLoadAddressLow
+        lda     V_MapYposition
         sta     V_SprCarDistHorizDiffHigh
 _L466E  lda     V_SpritePointerIndex
         sta     $02fb
@@ -7383,9 +7383,9 @@ L4D92   jsr     L4C00
         .byte   $ff
 
 MapLoadTempLow
-        lda     V_MapRow
+        lda     V_MapXposition
         sta     V_SpritePointerIndex
-        lda     V_MapLoadAddressLow
+        lda     V_MapYposition
         sta     V_SprCarDistHorizDiffHigh
         lda     $0335
         beq     _L4E2E
@@ -9625,10 +9625,10 @@ Sub_LoadNewMapRow
         lda     $0350,x
         bmi     _L5CED
         clc
-        adc     V_MapRow
-        sta     V_MapRow
+        adc     V_MapXposition
+        sta     V_MapXposition
         bcc     _L5CDD
-        inc     V_MapLoadAddressLow
+        inc     V_MapYposition
 _L5CDD  ldy     $0334
         dey
         cpy     #$fe
@@ -9638,11 +9638,11 @@ _L5CE7  sty     $0334
         jmp     _L5D08
 
 _L5CED  sec
-        lda     V_MapRow
+        lda     V_MapXposition
         sbc     #$01
-        sta     V_MapRow
+        sta     V_MapXposition
         bcs     _L5CFB
-        dec     V_MapLoadAddressLow
+        dec     V_MapYposition
 _L5CFB  ldy     $0334
         iny
         cpy     #$02
@@ -9658,10 +9658,10 @@ _L5D08  lda     V_ScrollCounter ;North/South = #02. East/West = #01.
         lda     $0360,x    ;North = #fe
         bmi     _L5D37
         clc
-        adc     V_MapRow
-        sta     V_MapRow
+        adc     V_MapXposition
+        sta     V_MapXposition
         bcc     _L5D27
-        inc     V_MapLoadAddressLow
+        inc     V_MapYposition
 _L5D27  ldy     $0335
         dey
         cpy     #$fe
@@ -9671,11 +9671,11 @@ _L5D31  sty     $0335
         jmp     _L5D52
 
 _L5D37  sec
-        lda     V_MapRow   ;Load map address
+        lda     V_MapXposition   ;Load map address
         sbc     #$7e       ;#7e = 126 which is the width of the map
-        sta     V_MapRow   ;Update map row
+        sta     V_MapXposition   ;Update map row
         bcs     _L5D45
-        dec     V_MapLoadAddressLow
+        dec     V_MapYposition
 _L5D45  ldy     $0335
         iny
         cpy     #$02
@@ -9687,9 +9687,9 @@ _L5D52  ldx     #$0d
         sta     V_ScreenAddress+1 ;Self-modifying code
         lda     #$05
         sta     V_ScreenAddress+2 ;Self-modifying code
-        lda     V_MapRow
+        lda     V_MapXposition
         sta     Loop_MapScreenUpdate+1 ;V_MapLoadAddressHigh
-        lda     V_MapLoadAddressLow
+        lda     V_MapYposition
         sta     Loop_MapScreenUpdate+2 ;Self-modifying code
 L5D6A   ldy     #$28       ;#28 = 40. This would be a row of the map.
 Loop_MapScreenUpdate

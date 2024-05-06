@@ -446,7 +446,7 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"V_MapLoadAddressLow":{
+"V_MapYposition":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -457,13 +457,13 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"V_MapLoadAddressLow",
+"Label":"V_MapYposition",
 "Value":829,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"V_MapRow":{
+"V_MapXposition":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -474,7 +474,7 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"V_MapRow",
+"Label":"V_MapXposition",
 "Value":828,
 "Source":"Project",
 "Type":"ExternalAddr",
