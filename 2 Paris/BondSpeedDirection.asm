@@ -1,4 +1,4 @@
-l_5AB0
+BondSpeedDirection
                     LDX $5AA2                       ; (5AB0) Load X with $5AA2
                     BEQ l_5AE0                      ; (5AB3) Branch to $5AE0 if Equal
                     LDY $5AA3                       ; (5AB5) Load Y with Data from $5AA3

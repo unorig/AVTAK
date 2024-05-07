@@ -3118,7 +3118,7 @@ l_5A52
 
 l_5A60
                     JSR CheckJoyInputs              ; (5A60) Jump to Subroutine at $4260
-                    JMP l_5AB0                      ; (5A63) Jump to $5AB0
+                    JMP BondSpeedDirection                      ; (5A63) Jump to $5AB0
 
 l_5A66
                     JSR l_4290                      ; (5A66) 
@@ -3147,7 +3147,7 @@ l_5A8D
 
 * = $5AB0
 
-            .include "5ab0.asm"
+            .include "BondSpeedDirection.asm"
 
 * = $5BBB
             .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
