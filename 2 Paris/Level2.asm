@@ -104,8 +104,9 @@ RegisterCollision       = $0346
 
 MaydayLoopCounter       = $034f
 
-CarFacingDirection      = $03a0 ;00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
+CarFacingDirection      = $03a0     ;00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
 DamageCount             = $03a1
+BondSPArray             = $03A8
 
 ForwardReverse          = $03a4   ;#00 Forward / #08 Reverse
 MaydaySPArray           = $03E0
@@ -1470,7 +1471,7 @@ l_4570
                     AND #$40                        ; (4573) Logical AND with Accumulator and #$40 (64 / 01000000)
                     BNE l_45AC                      ; (4575) Branch to $45AC if Not Equal
                     CLC                             ; (4577) Clear Carry Flag
-                    LDA var_BondCarXPosLow                       ; (4578) Load A with $0338
+                    LDA var_BondCarXPosLow          ; (4578) Load A with $0338
                     ADC #$AA                        ; (457B) Add with Carry with #$AA (170 / 10101010)
                     STA $690F                       ; (457D) Store A to $690F
                     LDA $0339                       ; (4580) Load A with $0339
@@ -1832,14 +1833,14 @@ l_4804
 
 l_4850
                     SEC                             ; (4850) Set Carry Flag
-                    LDA MaydayXMap                       ; (4851) Load A with $6900
+                    LDA MaydayXMap                  ; (4851) Load A with $6900
                     SBC #$88                        ; (4854) Subtract with Carry #$88 (136 / 10001000)
                     STA $EA                         ; (4856) Store A to $EA
                     LDA $6940                       ; (4858) Load A with $6940
                     SBC #$00                        ; (485B) Subtract with Carry #$00 (0 / 00000000)
                     STA $EB                         ; (485D) Store A to $EB
                     SEC                             ; (485F) Set Carry Flag
-                    LDA MaydayYMap                       ; (4860) Load A with $6980
+                    LDA MaydayYMap                  ; (4860) Load A with $6980
                     SBC #$32                        ; (4863) Subtract with Carry #$32 (50 / 00110010)
                     STA $EC                         ; (4865) Store A to $EC
                     LDA $69C0                       ; (4867) Load A with $69C0
@@ -1854,13 +1855,13 @@ l_4850
                     JMP l_4883                      ; (4879) Jump to $4883
 
 l_487C
-                    LDA var_BondCarXPosLow                       ; (487C) Load A with $0338
+                    LDA var_BondCarXPosLow          ; (487C) Load A with $0338
                     CMP $EA                         ; (487F) Subtract $EA from A
                     BCC l_4895                      ; (4881) Branch to $4895 if Carry Clear
 
 l_4883
                     SEC                             ; (4883) Set Carry Flag
-                    LDA var_BondCarXPosLow                       ; (4884) Load A with $0338
+                    LDA var_BondCarXPosLow          ; (4884) Load A with $0338
                     SBC $EA                         ; (4887) Subtract with Carry $EA
                     STA $AE                         ; (4889) Store A to $AE
                     LDA $0339                       ; (488B) Load A with $0339
@@ -2296,7 +2297,7 @@ l_4BDB
 
 * = $4E00
 
-            .include "4e00.asm"
+            .include "CalculateMapPosition.asm"
 
 * = $4EBA
             .byte $EA,$EA,$EA,$EA,$EA,$EA,$86,$03,$7A,$FD,$FE,$00,$01,$FF,$18,$12
@@ -2644,11 +2645,11 @@ l_5190
 l_51A2
                     LDA $0346                       ; (51A2) Load A with $0346
                     BNE l_518A                      ; (51A5) Branch to $518A if Not Equal
-                    LDA ForwardReverse                       ; (51A7) Load A with $03A4
+                    LDA ForwardReverse              ; (51A7) Load A with $03A4. #00 Forward / #08 Reverse.
                     EOR #$08                        ; (51AA) Exclusive OR (XOR) with Accumulator and #$08 (8 / 00001000)
-                    STA ForwardReverse                       ; (51AC) Store A to $03A4
+                    STA ForwardReverse              ; (51AC) Store A to $03A4. #00 Forward / #08 Reverse.
                     CLC                             ; (51AF) Clear Carry Flag
-                    LDA CarSpeed                       ; (51B0) Load A with $0340
+                    LDA CarSpeed                    ; (51B0) Load A with $0340
                     ADC #$03                        ; (51B3) Add with Carry with #$03 (3 / 00000011)
                     CMP #$40                        ; (51B5) Subtract #$40 from A (64 / 01000000)
                     BCC l_51BB                      ; (51B7) Branch to $51BB if Carry Clear
@@ -3116,7 +3117,7 @@ l_5A52
 * = $5A60
 
 l_5A60
-                    JSR CheckJoyInputs                      ; (5A60) Jump to Subroutine at $4260
+                    JSR CheckJoyInputs              ; (5A60) Jump to Subroutine at $4260
                     JMP l_5AB0                      ; (5A63) Jump to $5AB0
 
 l_5A66
@@ -3125,8 +3126,8 @@ l_5A66
                     JSR l_4600                      ; (5A6C) This renders the 3D car windshield view.
                     JSR l_4850                      ; (5A6F) 
                     JSR Sub_MaydayAndClock          ; (5A72) Clock and Mayday update routine.
-                    JSR l_4D92                      ; (5A75) Other cars dont move.
-                    JSR l_4E00                      ; (5A78) Steering wheel keeps spinning.
+                    JSR l_4D92                      ; (5A75) ?? Other cars dont move ??
+                    JSR CalculateMapPosition        ; (5A78) Calculates map position based on direction.
                     JSR l_4940                      ; (5A7B) 
                     LDA EndGameFlag                 ; (5A7E) Load A with $0313. #00 Continue / #80 Mayday found / Ends game #27.
                     BEQ l_5A8D                      ; (5A81) Branch to $5A8D if Equal
@@ -3146,166 +3147,7 @@ l_5A8D
 
 * = $5AB0
 
-l_5AB0
-                    LDX $5AA2                       ; (5AB0) Load X with $5AA2
-                    BEQ l_5AE0                      ; (5AB3) Branch to $5AE0 if Equal
-                    LDY $5AA3                       ; (5AB5) Load Y with Data from $5AA3
-                    DEY                             ; (5AB8) Decrement Y Register
-                    BPL l_5ABD                      ; (5AB9) Branch to $5ABD if positive
-                    LDY #$07                        ; (5ABB) Load Y with #$07 (7 / 00000111)
-
-l_5ABD
-                    DEX                             ; (5ABD) Decrement X
-                    BNE l_5AC6                      ; (5ABE) Branch to $5AC6 if Not Equal
-                    STX ForwardReverse                       ; (5AC0) Store X Register $03A4
-                    STY CarFacingDirection                       ; (5AC3) Store Y Register $03A0
-
-l_5AC6
-                    STX $5AA2                       ; (5AC6) Store X Register $5AA2
-                    STY $5AA3                       ; (5AC9) Store Y Register $5AA3
-                    LDA $03A8,Y                     ; (5ACC) Load A with $03A8,Y
-                    STA $AE                         ; (5ACF) Store A to $AE
-                    CLC                             ; (5AD1) Clear Carry Flag
-                    LDY #$BD                        ; (5AD2) Load Y with #$BD (189 / 10111101)
-                    LDX #$AB                        ; (5AD4) Set X to #$AB (171 / 10101011)
-                    LDA #$08                        ; (5AD6) Set A to #$08 (8 / 00001000)
-                    JSR l_4200                      ; (5AD8) Jump to Subroutine at $4200
-                    JMP l_4450                      ; (5ADB) Jump to $4450
-
-* = $5ADE
-            .byte $EA,$EA
-
-* = $5AE0
-
-l_5AE0
-                    LDA $FE                         ; (5AE0) Load A with $FE
-                    BNE l_5AF4                      ; (5AE2) Branch to $5AF4 if Not Equal
-                    STA $5AA0                       ; (5AE4) Store A to $5AA0
-                    LDA CarFacingDirection                       ; (5AE7) Load A with $03A0
-                    AND #$01                        ; (5AEA) Logical AND with Accumulator and #$01 (1 / 00000001)
-                    EOR #$01                        ; (5AEC) Exclusive OR (XOR) with Accumulator and #$01 (1 / 00000001)
-                    STA $5AA1                       ; (5AEE) Store A to $5AA1
-                    JMP l_5B2A                      ; (5AF1) Jump to $5B2A
-
-l_5AF4
-                    CMP $5AA0                       ; (5AF4) Subtract $5AA0 from A
-                    BNE l_5B04                      ; (5AF7) Branch to $5B04 if Not Equal
-                    DEC $5AA1                       ; (5AF9) Decrement $5AA1
-                    LDA $5AA1                       ; (5AFC) Load A with $5AA1
-                    BMI l_5B40                      ; (5AFF) Branch to $5B40 if minus 
-                    NOP                             ; (5B01) No operation
-                    LDA $FE                         ; (5B02) Load A with $FE
-
-l_5B04
-                    BPL l_5B16                      ; (5B04) Branch to $5B16 if positive
-                    LDX CarFacingDirection                       ; (5B06) Load X with $03A0
-                    DEX                             ; (5B09) Decrement X
-                    CPX #$FF                        ; (5B0A) Subtract #$FF from X (255 / 11111111)
-                    BNE l_5B10                      ; (5B0C) Branch to $5B10 if Not Equal
-                    LDX #$07                        ; (5B0E) Set X to #$07 (7 / 00000111)
-
-l_5B10
-                    STX CarFacingDirection                       ; (5B10) Store X Register $03A0
-                    JMP l_5B25                      ; (5B13) Jump to $5B25
-
-l_5B16
-                    LDX CarFacingDirection                       ; (5B16) Load X with $03A0
-                    INX                             ; (5B19) Increment X
-                    CPX #$08                        ; (5B1A) Subtract #$08 from X (8 / 00001000)
-                    BNE l_5B10                      ; (5B1C) Branch to $5B10 if Not Equal
-                    LDX #$00                        ; (5B1E) Set X to #$00 (0 / 00000000)
-                    JMP l_5B10                      ; (5B20) Jump to $5B10
-
-* = $5B23
-            .byte $EA,$EA
-
-* = $5B25
-
-l_5B25
-                    LDA $FE                         ; (5B25) Load A with $FE
-                    STA $5AA0                       ; (5B27) Store A to $5AA0
-
-l_5B2A
-                    LDX CarFacingDirection                       ; (5B2A) Load X with $03A0
-                    LDA $03A8,X                     ; (5B2D) Load A with $03A8,X
-                    STA $AE                         ; (5B30) Store A to $AE
-                    CLC                             ; (5B32) Clear Carry Flag
-                    LDY #$BD                        ; (5B33) Load Y with #$BD (189 / 10111101)
-                    LDX #$AB                        ; (5B35) Set X to #$AB (171 / 10101011)
-                    LDA #$08                        ; (5B37) Set A to #$08 (8 / 00001000)
-                    JSR l_4200                      ; (5B39) Jump to Subroutine at $4200
-                    NOP                             ; (5B3C) No operation
-                    NOP                             ; (5B3D) No operation
-                    NOP                             ; (5B3E) No operation
-                    NOP                             ; (5B3F) No operation
-
-l_5B40
-                    LDA $FE                         ; (5B40) Load A with $FE
-                    BEQ l_5B51                      ; (5B42) Branch to $5B51 if Equal
-                    LDA $07FD                       ; (5B44) Load A with $07FD
-                    EOR #$02                        ; (5B47) Exclusive OR (XOR) with Accumulator and #$02 (2 / 00000010)
-                    STA $07FD                       ; (5B49) Store A to $07FD
-                    TAY                             ; (5B4C) Transfer A to Y
-                    DEY                             ; (5B4D) Decrement Y Register
-                    STY $07FC                       ; (5B4E) Store Y Register $07FC
-
-l_5B51
-                    JSR CheckJoyInputs                      ; (5B51) Jump to Subroutine at $4260
-                    LDA ForwardReverse              ; (5B54) Load A with $03A4
-                    BNE l_5B89                      ; (5B57) Branch to $5B89 if Not Equal
-                    LDA $FD                         ; (5B59) Load A with $FD
-                    BEQ l_5B86                      ; (5B5B) Branch to $5B86 if Equal
-                    BPL l_5B6F                      ; (5B5D) Branch to $5B6F if positive
-
-l_5B5F
-                    DEC CarSpeed                    ; (5B5F) Decrement $0340
-                    LDA CarSpeed                    ; (5B62) Load A with $0340
-                    BNE l_5B86                      ; (5B65) Branch to $5B86 if Not Equal
-                    LDA #$01                        ; (5B67) Set A to #$01 (1 / 00000001)
-                    STA CarSpeed                    ; (5B69) Store A to $0340
-                    JMP l_5B86                      ; (5B6C) Jump to $5B86
-
-l_5B6F
-                    INC CarSpeed                       ; (5B6F) Increment Memory $0340
-                    LDA CarSpeed                       ; (5B72) Load A with $0340
-                    CMP #$40                        ; (5B75) Subtract #$40 from A (64 / 01000000)
-                    BNE l_5B86                      ; (5B77) Branch to $5B86 if Not Equal
-                    LDA ForwardReverse                       ; (5B79) Load A with $03A4
-                    EOR #$08                        ; (5B7C) Exclusive OR (XOR) with Accumulator and #$08 (8 / 00001000)
-                    STA ForwardReverse                       ; (5B7E) Store A to $03A4
-                    LDA #$3F                        ; (5B81) Set A to #$3F (63 / 00111111)
-                    STA CarSpeed                       ; (5B83) Store A to $0340
-
-l_5B86
-                    JMP l_5B92                      ; (5B86) Jump to $5B92
-
-l_5B89
-                    LDA $FD                         ; (5B89) Load A with $FD
-                    BEQ l_5B86                      ; (5B8B) Branch to $5B86 if Equal
-                    BMI l_5B6F                      ; (5B8D) Branch to $5B6F if minus 
-                    JMP l_5B5F                      ; (5B8F) Jump to $5B5F
-
-l_5B92
-                    LDA $02                         ; (5B92) Load A with $02
-                    BEQ l_5BB8                      ; (5B94) Branch to $5BB8 if Equal
-                    LDA $5AA2                       ; (5B96) Load A with $5AA2
-                    BNE l_5BB8                      ; (5B99) Branch to $5BB8 if Not Equal
-                    LDA ForwardReverse                       ; (5B9B) Load A with $03A4
-                    BEQ l_5BB5                      ; (5B9E) Branch to $5BB5 if Equal
-                    LDA CarSpeed                       ; (5BA0) Load A with $0340
-                    CMP #$15                        ; (5BA3) Subtract #$15 from A (21 / 00010101)
-                    BCS l_5BB5                      ; (5BA5) Branch if Carry Set $5BB5
-                    LDA #$04                        ; (5BA7) Set A to #$04 (4 / 00000100)
-                    STA $5AA2                       ; (5BA9) Store A to $5AA2
-                    LDA CarFacingDirection                       ; (5BAC) Load A with $03A0
-                    STA $5AA3                       ; (5BAF) Store A to $5AA3
-                    JMP l_5A66                      ; (5BB2) Jump to $5A66
-
-l_5BB5
-                    JSR l_4570                      ; (5BB5) Jump to Subroutine at $4570
-
-l_5BB8
-                    JMP l_5A66                      ; (5BB8) Jump to $5A66
+            .include "5ab0.asm"
 
 * = $5BBB
             .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
@@ -3317,8 +3159,8 @@ l_5BB8
 * = $5C00
 
 l_5C00
-                    LDA CarFacingDirection                       ; (5C00) Load A with $03A0
-                    ORA ForwardReverse                       ; (5C03) Logical OR with Accumulator and $03A4
+                    LDA CarFacingDirection          ; (5C00) Load A with $03A0
+                    ORA ForwardReverse              ; (5C03) Logical OR with Accumulator and $03A4. #00 Forward / #08 Reverse.
                     TAX                             ; (5C06) Transfer A to X
                     LDA $0370,X                     ; (5C07) Load A with $0370,X
                     BEQ l_5C53                      ; (5C0A) Branch to $5C53 if Equal
@@ -3357,9 +3199,9 @@ l_5C32
 l_5C42
                     STY $033E                       ; (5C42) Store Y Register $033E
                     CLC                             ; (5C45) Clear Carry Flag
-                    LDA var_BondCarXPosLow                       ; (5C46) Load A with $0338
+                    LDA var_BondCarXPosLow          ; (5C46) Load A with $0338
                     ADC #$02                        ; (5C49) Add with Carry with #$02 (2 / 00000010)
-                    STA var_BondCarXPosLow                       ; (5C4B) Store A to $0338
+                    STA var_BondCarXPosLow          ; (5C4B) Store A to $0338
                     BCC l_5C53                      ; (5C4E) Branch to $5C53 if Carry Clear
                     INC $0339                       ; (5C50) Increment Memory $0339
 
@@ -3434,8 +3276,8 @@ l_5CBE
                     LDA $03A7                       ; (5CBE) Load A with $03A7
                     AND #$01                        ; (5CC1) Logical AND with Accumulator and #$01 (1 / 00000001)
                     BEQ l_5D08                      ; (5CC3) Branch to $5D08 if Equal
-                    LDA CarFacingDirection                       ; (5CC5) Load A with $03A0
-                    ORA ForwardReverse                       ; (5CC8) Logical OR with Accumulator and $03A4
+                    LDA CarFacingDirection          ; (5CC5) Load A with $03A0
+                    ORA ForwardReverse                       ; (5CC8) Logical OR with Accumulator and $03A4. #00 Forward / #08 Reverse.
                     TAX                             ; (5CCB) Transfer A to X
                     LDA $0350,X                     ; (5CCC) Load A with $0350,X
                     BMI l_5CED                      ; (5CCF) Branch to $5CED if minus 
@@ -3479,7 +3321,7 @@ l_5D08
                     AND #$02                        ; (5D0B) Logical AND with Accumulator and #$02 (2 / 00000010)
                     BEQ l_5D52                      ; (5D0D) Branch to $5D52 if Equal
                     LDA CarFacingDirection                       ; (5D0F) Load A with $03A0
-                    ORA ForwardReverse                       ; (5D12) Logical OR with Accumulator and $03A4
+                    ORA ForwardReverse                       ; (5D12) Logical OR with Accumulator and $03A4. #00 Forward / #08 Reverse.
                     TAX                             ; (5D15) Transfer A to X
                     LDA $0360,X                     ; (5D16) Load A with $0360,X
                     BMI l_5D37                      ; (5D19) Branch to $5D37 if minus 

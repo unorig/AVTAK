@@ -1,33 +1,44 @@
-l_4E00
+CalculateMapPosition
                     LDA V_MapXposition              ; (4E00) Load A with $033C
                     STA $AE                         ; (4E03) Store A to $AE
                     LDA V_MapYposition              ; (4E05) Load A with $033D
                     STA $AF                         ; (4E08) Store A to $AF
-                    LDA $0335                       ; (4E0A) Load A with $0335
-                    BEQ l_4E2E                      ; (4E0D) Branch to $4E2E if Equal
-                    BMI l_4E21                      ; (4E0F) Branch to $4E21 if minus 
+                    LDA $0335                       ; (4E0A) Load A with $0335. Goes between #ff to #01 when going North/South
+                    BEQ CheckMapEastWest            ; (4E0D) Branch to $4E2E if Equal
+                    BMI MapNorth                    ; (4E0F) Branch to $4E21 if minus          
+                                                            
+                                                    ; **********************************    
+                                                    ; * Update for going south.
+                                                    ; **********************************    
                     CLC                             ; (4E11) Clear Carry Flag
-                    LDA #$7E                        ; (4E12) Set A to #$7E (126 / 01111110)
-                    ADC $AE                         ; (4E14) Add with Carry $AE
+                    LDA #$7E                        ; (4E12) Set A to #$7E (126 / 01111110). The value of map width.
+                    ADC $AE                         ; (4E14) Add with Carry $AE (V_MapXposition)
                     STA $AE                         ; (4E16) Store A to $AE
-                    LDA $AF                         ; (4E18) Load A with $AF
+                    LDA $AF                         ; (4E18) Load A with $AF (V_MapYposition)
                     ADC #$00                        ; (4E1A) Add with Carry with #$00 (0 / 00000000)
                     STA $AF                         ; (4E1C) Store A to $AF
-                    JMP l_4E2E                      ; (4E1E) Jump to $4E2E
+                    JMP CheckMapEastWest            ; (4E1E) Jump to $4E2E
 
-l_4E21
+MapNorth
+                                                    ; **********************************    
+                                                    ; * Update for going north.
+                                                    ; **********************************    
                     SEC                             ; (4E21) Set Carry Flag
-                    LDA $AE                         ; (4E22) Load A with $AE
-                    SBC #$7E                        ; (4E24) Subtract with Carry #$7E (126 / 01111110)
+                    LDA $AE                         ; (4E22) Load A with $AE (V_MapXposition)
+                    SBC #$7E                        ; (4E24) Subtract with Carry #$7E (126 / 01111110). The value of map width.
                     STA $AE                         ; (4E26) Store A to $AE
                     LDA $AF                         ; (4E28) Load A with $AF
                     SBC #$00                        ; (4E2A) Subtract with Carry #$00 (0 / 00000000)
                     STA $AF                         ; (4E2C) Store A to $AF
 
-l_4E2E
-                    LDA $0334                       ; (4E2E) Load A with $0334
+CheckMapEastWest
+                    LDA $0334                       ; (4E2E) Load A with $0334. Goes between #ff to #01 when going East/West.
                     BEQ l_4E52                      ; (4E31) Branch to $4E52 if Equal
-                    BMI l_4E45                      ; (4E33) Branch to $4E45 if minus 
+                    BMI MapWest                     ; (4E33) Branch to $4E45 if minus
+                                                    
+                                                    ; **********************************    
+                                                    ; * Update for going east.
+                                                    ; **********************************     
                     CLC                             ; (4E35) Clear Carry Flag
                     LDA #$01                        ; (4E36) Set A to #$01 (1 / 00000001)
                     ADC $AE                         ; (4E38) Add with Carry $AE
@@ -37,7 +48,10 @@ l_4E2E
                     STA $AF                         ; (4E40) Store A to $AF
                     JMP l_4E52                      ; (4E42) Jump to $4E52
 
-l_4E45
+MapWest
+                                                    ; **********************************    
+                                                    ; * Update for going west.
+                                                    ; **********************************    
                     SEC                             ; (4E45) Set Carry Flag
                     LDA $AE                         ; (4E46) Load A with $AE
                     SBC #$01                        ; (4E48) Subtract with Carry #$01 (1 / 00000001)
@@ -48,10 +62,10 @@ l_4E45
 
 l_4E52
                     CLC                             ; (4E52) Clear Carry Flag
-                    LDA $AE                         ; (4E53) Load A with $AE
-                    ADC #$08                        ; (4E55) Add with Carry with #$08 (8 / 00001000)
+                    LDA $AE                         ; (4E53) Load A with $AE. Temp calculated V_MapXposition
+                    ADC #$08                        ; (4E55) Add with Carry with #$08 (8 / 00001000).
                     STA $AE                         ; (4E57) Store A to $AE
-                    LDA $AF                         ; (4E59) Load A with $AF
+                    LDA $AF                         ; (4E59) Load A with $AF. Temp calculated V_MapYposition
                     ADC #$03                        ; (4E5B) Add with Carry with #$03 (3 / 00000011)
                     STA $AF                         ; (4E5D) Store A to $AF
                     SEC                             ; (4E5F) Set Carry Flag

@@ -50,7 +50,7 @@ l_42E7
                     AND #$07                        ; (42EF) Logical AND with Accumulator and #$07 (7 / 00000111)
                     STA $02                         ; (42F1) Store A to $02
                     INC $02                         ; (42F3) Increment Memory $02
-                    LDA SpritePointerArray,X                     ; (42F5) Load A with $6920,X
+                    LDA SpritePointerArray,X        ; (42F5) Load A with $6920,X
                     STA $AE                         ; (42F8) Store A to $AE
                     TXA                             ; (42FA) Transfer X to A
                     PHA                             ; (42FB) Push Accumulator to Stack
@@ -99,15 +99,15 @@ l_4324
 
 l_4330
                     LDA $6800,X                     ; (4330) Load A with $6800,X
-                    STA $6900,X               ; (4333) Store A to $6900,X
+                    STA $6900,X                     ; (4333) Store A to $6900,X
                     LDA $6840,X                     ; (4336) Load A with $6840,X
                     STA $6940,X                     ; (4339) Store A to $6940,X
                     LDA $6880,X                     ; (433C) Load A with $6880,X
-                    STA $6980,X                ; (433F) Store A to $6980,X
+                    STA $6980,X                     ; (433F) Store A to $6980,X
                     LDA $68C0,X                     ; (4342) Load A with $68C0,X
                     STA $69C0,X                     ; (4345) Store A to $69C0,X
                     LDA $6820,X                     ; (4348) Load A with $6820,X
-                    STA SpritePointerArray,X                     ; (434B) Store A to $6920,X
+                    STA SpritePointerArray,X        ; (434B) Store A to $6920,X
                     LDA $6830,X                     ; (434E) Load A with $6830,X
                     STA MaydayDirection,X           ; (4351) Store A to $6930,X
                     JMP l_4375                      ; (4354) Jump to $4375
