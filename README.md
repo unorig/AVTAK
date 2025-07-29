@@ -24,6 +24,20 @@ The code for the detonator at the mine level is 67134
 ### Paris chase
 ![/Images/paris chase map.png](https://raw.githubusercontent.com/unorig/AVTAK/main/Images/paris%20chase.png)
 
+#### Mayday Landing Sites
+
+| Site | X Coord | Y Coord | Timing ID | Map Location |
+|------|---------|---------|-----------|--------------|
+| 0    | 64      | 40      | 244       | Top-left area |
+| 1    | 536     | 40      | 244       | Top-center area |
+| 2    | 1000    | 40      | 240       | Top-right area |
+| 3    | 64      | 472     | 248       | Middle-left area |
+| 4    | 1000    | 472     | 240       | Middle-right area |
+| 5    | 64      | 935     | 248       | Bottom-left area |
+| 6    | 536     | 935     | 252       | Bottom-center area |
+| 7    | 1000    | 935     | 252       | Bottom-right area |
+
+
 ### Mine
 ![/Images/mine_map.png](https://raw.githubusercontent.com/unorig/AVTAK/main/Images/mine_map.png)
 
