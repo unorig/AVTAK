@@ -1586,47 +1586,9 @@ clear_entity_flags
         sta     entity_status_array,x ;Clear all other flags
         jmp     process_entity ;Continue to next entity
 
-        .byte   $01
-        .byte   $ff
-        .byte   $15
-        .byte   $ff
-        .byte   $00
-        .byte   $00
-        .byte   $19
-        .byte   $20
-        .byte   $21
-        .byte   $5d
-        .byte   $00
-        .byte   $05
-        .byte   $59
-        .byte   $79
-        .byte   $00
-        .byte   $00
-        .byte   $00
-        .byte   $5c
-        .byte   $00
-        .byte   $5d
-        .byte   $00
-        .byte   $0d
-        .byte   $00
-        .byte   $0d
-        .byte   $00
-        .byte   $5d
-        .byte   $00
-        .byte   $4d
-        .byte   $00
-        .byte   $ed
-        .byte   $0d
-        .byte   $fd
-        .byte   $a0
-        .byte   $00
-        .byte   $b9
-        .byte   $00
-        .byte   $5a
-        .byte   $40
-        .byte   $00
-        .byte   $40
-        .fill   8,$00
+        .byte   $01,$ff,$15,$ff,$00,$00,$19,$20,$21,$5d,$00,$05,$59,$79,$00,$00
+        .byte   $00,$5c,$00,$5d,$00,$0d,$00,$0d,$00,$5d,$00,$4d,$00,$ed,$0d,$fd
+        .byte   $a0,$00,$b9,$00,$5a,$40,$00,$40,$00,$00,$00,$00,$00,$00,$00,$00
 
 ;*******************************************************************************
 ;* SYSTEM INTERRUPT HANDLERS ($43B0-$43EF)                                     *
