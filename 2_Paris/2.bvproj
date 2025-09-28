@@ -2487,6 +2487,222 @@
                 "name": "Junk",
                 "startAddress": 19109,
                 "type": "Junk"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 19162,
+                "isVisible": true,
+                "name": "FIXED-POINT DIVISION ALGORITHM",
+                "startAddress": 19120,
+                "type": "Code"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 19359,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 19163,
+                "type": "Junk"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 19424,
+                "isVisible": true,
+                "name": "GAME ENDING MANAGEMENT SYSTEM",
+                "startAddress": 19360,
+                "type": "Code"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 19455,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 19427,
+                "type": "Junk"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 19869,
+                "isVisible": true,
+                "name": "AI VEHICLE BEHAVIOR & MOVEMENT SYSTEM",
+                "startAddress": 19456,
+                "type": "Code"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 19967,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 19870,
+                "type": "Junk"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20151,
+                "isVisible": true,
+                "name": "DYNAMIC TERRAIN MODIFICATION SYSTEM",
+                "startAddress": 19968,
+                "type": "Code"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20223,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 20154,
+                "type": "Junk"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20261,
+                "isVisible": true,
+                "name": "MAYDAY LANDING SITE SELECTION SYSTEM",
+                "startAddress": 20224,
+                "type": "Code"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20271,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 20262,
+                "type": "Junk"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20411,
+                "isVisible": true,
+                "name": "MAIN GAME INITIALIZATION & CONTROL LOOP",
+                "startAddress": 20272,
+                "type": "Code"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20415,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 20414,
+                "type": "Junk"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20455,
+                "isVisible": true,
+                "name": "Landing site coords",
+                "startAddress": 20416,
+                "type": "Code"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20462,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 20456,
+                "type": "Junk"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20479,
+                "isVisible": true,
+                "name": "SID-BASED RANDOM NUMBER GENERATOR",
+                "startAddress": 20463,
+                "type": "Code"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20513,
+                "isVisible": true,
+                "name": "LEVEL-SPECIFIC INTERRUPT HANDLER SETUP",
+                "startAddress": 20480,
+                "type": "Code"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20517,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 20514,
+                "type": "Junk"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20978,
+                "isVisible": true,
+                "name": "MAIN INTERRUPT HANDLER & EVENT DISPATCHER",
+                "startAddress": 20518,
+                "type": "Code"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 20991,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 20981,
+                "type": "Junk"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 21339,
+                "isVisible": true,
+                "name": "MAYDAY AI MOVEMENT & MISSION TIMER SYSTEM",
+                "startAddress": 20992,
+                "type": "Code"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 22360,
+                "isVisible": true,
+                "name": "Screen layout templates",
+                "startAddress": 21760,
+                "type": "Code"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 53246,
+                "isVisible": true,
+                "name": "Paris map data",
+                "startAddress": 37696,
+                "type": "Data"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 60112,
+                "isVisible": true,
+                "name": "Music Voice 0",
+                "startAddress": 57344,
+                "type": "Data"
+            },
+            {
+                "color": "#add8e6",
+                "comment": "",
+                "endAddress": 63316,
+                "isVisible": true,
+                "name": "Music Voice 1",
+                "startAddress": 60113,
+                "type": "Data"
             }
         ],
         "version": "1.0"
@@ -2693,7 +2909,7 @@
             "value": "L4FBB"
         }
     ],
-    "timestamp": 1759035836,
+    "timestamp": 1759036299,
     "userSymbols": [
     ],
     "version": "1.0"
