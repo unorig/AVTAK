@@ -4,7 +4,7 @@
 ; Source file: 2.prg.0813.43b0.clean
 ; File size: 60418 bytes
 ; Base address: $0FFE
-; Export date: Sun Sep 28 19:53:22 2025
+; Export date: Sun Sep 28 20:19:30 2025
 ; Assembler: 64tass
 ;
 
@@ -15,19 +15,19 @@
 
 ; External Symbol Definitions
 ; ============================
-MovementVectorY = $0334
-BondSpriteArray = $03A8
-EndGameFlag = $0313
-MaydayBeginLanding = $02E1
+BondCarXPosHigh = $0339
+CarSpeed = $0340
 ForwardReverse = $03A4
 V_MapXposition = $033C
 V_MapYposition = $033D
 map_scroll_x = $033E
 Movement_Flags = $03A7
+BondSpriteArray = $03A8
+EndGameFlag = $0313
+MovementVectorY = $0334
+MaydayBeginLanding = $02E1
 CarFacingDirection = $03A0
 BondCarXPosLow = $0338
-CarSpeed = $0340
-BondCarXPosHigh = $0339
 
 ; ==================================================
 ; Section: Junk (Junk)
@@ -41,7 +41,7 @@ BondCarXPosHigh = $0339
 ; Range: $1000 - $108E (143 bytes)
 ; ==================================================
 
-L1000
+L1000                   ; $1000
                 SEI
                 LDA #$0A
                 STA $FB
@@ -64,21 +64,21 @@ L1000
                 LDA $FC
                 ADC $FE
                 STA $03
-L1028
+L1028                   ; $1028
                 LDX #$08
                 LDA ($FB),Y
-L102C
+L102C                   ; $102C
                 ROL A
                 PHA
                 BCS L1036
                 JSR L1080
                 JMP L103C
-L1036
+L1036                   ; $1036
                 JSR L106B
                 NOP
                 NOP
                 NOP
-L103C
+L103C                   ; $103C
                 CLD
                 SEC
                 LDA $FB
@@ -95,20 +95,20 @@ L103C
                 CMP $FB
                 BNE L1059
                 INC $FC
-L1059
+L1059                   ; $1059
                 INC $FB
                 JMP L1028
-L105E
+L105E                   ; $105E
                 NOP
                 NOP
                 JMP L102C
-L1063
+L1063                   ; $1063
                 LDA #$00
                 STA SID_VOLUME
                 PLA
                 CLI
                 RTS
-L106B
+L106B                   ; $106B
                 LDA #$0F
                 STA SID_VOLUME
                 NOP
@@ -127,13 +127,13 @@ L106B
                 NOP
                 NOP
                 RTS
-L1080
+L1080                   ; $1080
                 LDA #$00
                 STA SID_VOLUME
                 JSR L108B
                 RTS
                 .byte $EA,$60
-L108B
+L108B                   ; $108B
                 NOP
                 NOP
                 NOP
@@ -999,12 +999,12 @@ L108B
 ; Range: $4200 - $4252 (83 bytes)
 ; ==================================================
 
-handle_collision
+handle_collision        ; $4200
                 PHA
                 LDA #$00
                 BCC L4207
                 ADC #$00
-L4207
+L4207                   ; $4207
                 STA $02
                 STX $AF
                 STY $AC
@@ -1014,7 +1014,7 @@ L4207
                 LDA #$00
                 TAY
                 SEC
-L4214
+L4214                   ; $4214
                 ROL A
                 INY
                 INY
@@ -1038,11 +1038,11 @@ L4214
                 LDA $D010
                 ORA $FB
                 JMP L4246
-L423F
+L423F                   ; $423F
                 LDA #$FF
                 EOR $FB
                 AND $D010
-L4246
+L4246                   ; $4246
                 STA $D010
                 LDA $FB
                 ORA $D015
@@ -1062,7 +1062,7 @@ L4246
 ; Range: $4260 - $428A (43 bytes)
 ; ==================================================
 
-read_joystick_input
+read_joystick_input     ; $4260
                 LDY #$00
                 LDX #$00
                 SEC
@@ -1073,27 +1073,27 @@ read_joystick_input
                 LSR A
                 BCS L4272
                 DEY
-L4272
+L4272                   ; $4272
                 LSR A
                 BCS L4276
                 INY
-L4276
+L4276                   ; $4276
                 LSR A
                 BCS L427A
                 DEX
-L427A
+L427A                   ; $427A
                 LSR A
                 BCS L427E
                 INX
-L427E
+L427E                   ; $427E
                 LSR A
-L427F
+L427F                   ; $427F
                 STX $FE
                 STY $FD
                 LDX #$00
                 BCS L4288
                 INX
-L4288
+L4288                   ; $4288
                 STX $02
                 RTS
 
@@ -1109,9 +1109,9 @@ L4288
 ; Range: $4290 - $437D (238 bytes)
 ; ==================================================
 
-detect_entity_proximity
+detect_entity_proximity ; $4290
                 LDX #$0F
-L4292
+L4292                   ; $4292
                 LDA $6900,X
                 SEC
                 SBC BondCarXPosLow
@@ -1125,7 +1125,7 @@ L4292
                 LDA $AD
                 CMP #$40
                 BCS L431E
-L42AF
+L42AF                   ; $42AF
                 LDA $6980,X
                 SEC
                 SBC $033A
@@ -1151,7 +1151,7 @@ L42AF
                 ORA #$40
                 STA $6910,X
                 JMP L4317
-L42E7
+L42E7                   ; $42E7
                 LDA $6910,X
                 ORA #$80
                 STA $6910,X
@@ -1175,27 +1175,27 @@ L42E7
                 CLC
                 BEQ L4310
                 SEC
-L4310
+L4310                   ; $4310
                 LDA $02
                 JSR handle_collision
                 PLA
                 TAX
-L4317
+L4317                   ; $4317
                 DEX
                 BMI L431D
                 JMP L4292
-L431D
+L431D                   ; $431D
                 RTS
-L431E
+L431E                   ; $431E
                 LDA $6910,X
                 TAY
                 BMI L4357
-L4324
+L4324                   ; $4324
                 AND #$10
                 BNE L4330
                 JMP L4375
                 .byte $EA,$EA,$EA,$EA,$EA
-L4330
+L4330                   ; $4330
                 LDA $6800,X
                 STA $6900,X
                 LDA $6840,X
@@ -1209,7 +1209,7 @@ L4330
                 LDA $6830,X
                 STA $6930,X
                 JMP L4375
-L4357
+L4357                   ; $4357
                 LDA $6910,X
                 AND #$07
                 TAY
@@ -1221,7 +1221,7 @@ L4357
                 STA $D01C
                 LDA $6910,Y
                 JMP L4324
-L4375
+L4375                   ; $4375
                 LDA $6910,X
                 AND #$07
                 STA $6910,X
@@ -1241,7 +1241,7 @@ L4375
 ; Range: $43B0 - $43D5 (38 bytes)
 ; ==================================================
 
-L43B0
+L43B0                   ; $43B0
                 LDA #$03
                 STA $02E0
                 LDA #$B0
@@ -1254,12 +1254,12 @@ L43B0
                 LDA #$00
                 STA SID_VOLUME
                 JMP handle_game_over
-handle_game_over
+handle_game_over        ; $43D0
                 LDX #$FF
                 SEI
                 TXS
                 CLD
-                JMP L4F30
+                JMP $4F30
 
 ; ==================================================
 ; Section: Junk (Junk)
@@ -1267,12 +1267,12 @@ handle_game_over
 ; ==================================================
 
                 .byte $18,$D4,$4C,$30,$4F,$FF,$FF,$FF
-handle_game_success
+handle_game_success     ; $43E0
                 LDX #$FF
                 SEI
                 TXS
                 CLD
-                JMP L5800
+                JMP $5800
                 .byte $18,$D4,$4C,$00,$58,$FF,$AE,$FF,$A2,$FF,$78,$9A,$D8,$4C,$30,$4F
                 .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 
@@ -1281,7 +1281,7 @@ handle_game_success
 ; Range: $4400 - $4425 (38 bytes)
 ; ==================================================
 
-L4400
+L4400                   ; $4400
                 LDA $02E0
                 AND #$02
                 BEQ L4425
@@ -1297,7 +1297,7 @@ L4400
                 STA $D414
                 LDA #$81
                 STA $D412
-L4425
+L4425                   ; $4425
                 RTS
 
 ; ==================================================
@@ -1326,7 +1326,7 @@ L4425
 ; Range: $4450 - $4475 (38 bytes)
 ; ==================================================
 
-return_to_main_loop
+return_to_main_loop     ; $4450
                 LDA $02E0
                 AND #$02
                 BEQ L4475
@@ -1342,7 +1342,7 @@ return_to_main_loop
                 STA $D414
                 LDA #$61
                 STA $D412
-L4475
+L4475                   ; $4475
                 JMP main_game_loop2
 
 ; ==================================================
@@ -1357,7 +1357,7 @@ L4475
 ; Range: $4480 - $44A6 (39 bytes)
 ; ==================================================
 
-L4480
+L4480                   ; $4480
                 LDA #$0F
                 STA SID_VOLUME
                 STA SID_FILTER_RES
@@ -1392,7 +1392,7 @@ L4480
 ; Range: $4500 - $454F (80 bytes)
 ; ==================================================
 
-update_speedometer
+update_speedometer      ; $4500
                 LDA CarSpeed
                 LSR A
                 AND #$03
@@ -1401,7 +1401,7 @@ update_speedometer
                 PHA
                 LDY #$07
                 LDA #$04
-L450E
+L450E                   ; $450E
                 STA $0576,Y
                 DEY
                 BPL L450E
@@ -1419,7 +1419,7 @@ L450E
                 STA $0576,Y
                 JMP L4530
                 .byte $EA,$EA,$EA,$EA,$EA,$EA
-L4530
+L4530                   ; $4530
                 LDA $03A1
                 LSR A
                 LSR A
@@ -1459,7 +1459,7 @@ L4530
 ; Range: $4570 - $45AC (61 bytes)
 ; ==================================================
 
-execute_handbrake
+execute_handbrake       ; $4570
                 LDA $D015
                 AND #$40
                 BNE L45AC
@@ -1484,7 +1484,7 @@ execute_handbrake
                 LDA CarFacingDirection
                 STA $693F
                 JSR L4400
-L45AC
+L45AC                   ; $45AC
                 RTS
 
 ; ==================================================
@@ -1504,11 +1504,11 @@ L45AC
 ; Range: $4600 - $483C (573 bytes)
 ; ==================================================
 
-render_dashboard_3d
+render_dashboard_3d     ; $4600
                 LDA $0336
                 BNE L4606
                 RTS
-L4606
+L4606                   ; $4606
                 LDY CarFacingDirection
                 LDA $6BD0,Y
                 BEQ L4639
@@ -1523,16 +1523,16 @@ L4606
                 ADC #$00
                 STA $AF
                 JMP L466E
-L4627
+L4627                   ; $4627
                 .byte $38,$AD,$3C,$03,$E9,$7E,$85,$AE,$AD,$3D,$03,$E9,$00,$85,$AF,$4C
                 .byte $6E,$46
-L4639
+L4639                   ; $4639
                 .byte $AD,$34,$03,$F0,$26,$30,$12,$18,$A9,$01,$6D,$3C,$03,$85,$AE,$AD
                 .byte $3D,$03,$69,$00,$85,$AF,$4C,$6E,$46,$38,$AD,$3C,$03,$E9,$01,$85
                 .byte $AE,$AD,$3D,$03,$E9,$00,$85,$AF,$4C,$6E,$46
-L4664
+L4664                   ; $4664
                 .byte $AD,$3C,$03,$85,$AE,$AD,$3D,$03,$85,$AF
-L466E
+L466E                   ; $466E
                 LDA $AE
                 STA $02FB
                 LDA $AF
@@ -1551,7 +1551,7 @@ L466E
                 STA $FE
                 LDX #$00
                 LDY #$00
-L4695
+L4695                   ; $4695
                 CLC
                 LDA ($FD),Y
                 ADC $FB
@@ -1570,7 +1570,7 @@ L4695
                 BEQ L46B7
                 LDY $02
                 JMP L4695
-L46B7
+L46B7                   ; $46B7
                 .byte $A0,$0B,$BE,$0A,$6B,$BD,$00,$6F,$D0,$05,$88,$D0,$F5,$A9,$00,$48
                 .byte $98,$48,$A2,$09,$A0,$00,$84,$FB,$84,$FC,$A4,$FB,$B9,$01,$6B,$A8
                 .byte $B9,$00,$6F,$0A,$90,$07,$A9,$00,$85,$FC,$4C,$EF,$46,$A5,$FC,$D0
@@ -1610,7 +1610,7 @@ L46B7
 ; Range: $4850 - $48F5 (166 bytes)
 ; ==================================================
 
-calculate_distance
+calculate_distance      ; $4850
                 SEC
                 LDA $6900
                 SBC #$88
@@ -1632,11 +1632,11 @@ calculate_distance
                 BEQ L487C
                 BCC L4895
                 JMP L4883
-L487C
+L487C                   ; $487C
                 LDA BondCarXPosLow
                 CMP $EA
                 BCC L4895
-L4883
+L4883                   ; $4883
                 SEC
                 LDA BondCarXPosLow
                 SBC $EA
@@ -1645,7 +1645,7 @@ L4883
                 SBC $EB
                 STA $AF
                 JMP L48A4
-L4895
+L4895                   ; $4895
                 SEC
                 LDA $EA
                 SBC BondCarXPosLow
@@ -1653,17 +1653,17 @@ L4895
                 LDA $EB
                 SBC BondCarXPosHigh
                 STA $AF
-L48A4
+L48A4                   ; $48A4
                 LDA $033B
                 CMP $ED
                 BEQ L48B0
                 BCC L48C9
                 JMP L48B7
-L48B0
+L48B0                   ; $48B0
                 LDA $033A
                 CMP $EC
                 BCC L48C9
-L48B7
+L48B7                   ; $48B7
                 SEC
                 LDA $033A
                 SBC $EC
@@ -1672,7 +1672,7 @@ L48B7
                 SBC $ED
                 STA $AD
                 JMP L48D8
-L48C9
+L48C9                   ; $48C9
                 SEC
                 LDA $EC
                 SBC $033A
@@ -1680,7 +1680,7 @@ L48C9
                 LDA $ED
                 SBC $033B
                 STA $AD
-L48D8
+L48D8                   ; $48D8
                 CLC
                 LDA $AE
                 ADC $AC
@@ -1726,7 +1726,7 @@ L48D8
 ; Range: $4940 - $49B6 (119 bytes)
 ; ==================================================
 
-manage_graphics
+manage_graphics         ; $4940
                 LDY #$00
                 LDA ($C9),Y
                 CMP #$48
@@ -1736,7 +1736,7 @@ manage_graphics
                 RTS
                 .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
                 .byte $EA,$EA,$EA
-L4960
+L4960                   ; $4960
                 LDY #$00
                 LDA #$00
                 STA ($AE),Y
@@ -1746,7 +1746,7 @@ L4960
                 LDA $AE
                 .byte $E9,$01,$85,$AE,$B0,$02,$C6,$AF,$A0,$00,$A9,$00,$91,$AE,$4C,$A0
                 .byte $49,$EA,$EA,$EA
-L4980
+L4980                   ; $4980
                 .byte $A0,$00,$A9,$00,$91,$AE,$A0,$7E,$91,$AE,$38,$A5,$AE,$E9,$FC,$85
                 .byte $AE,$B0,$02,$C6,$AF,$A9,$00,$91,$AE,$4C,$A0,$49,$A0,$49,$EA,$EA
                 .byte $AD,$A1,$03,$18,$69,$01,$8D,$A1,$03,$B0,$08,$C9,$28,$B0,$04,$20
@@ -1818,7 +1818,7 @@ L4980
 ; Range: $4AB0 - $4ADA (43 bytes)
 ; ==================================================
 
-L4AB0
+L4AB0                   ; $4AB0
                 STA $AE
                 STX $02
                 LDA #$00
@@ -1827,7 +1827,7 @@ L4AB0
                 LDX #$08
                 SEC
                 SBC $02
-L4ABE
+L4ABE                   ; $4ABE
                 PHP
                 ROL $FD
                 ASL $AE
@@ -1836,15 +1836,15 @@ L4ABE
                 BCC L4ACC
                 SBC $02
                 JMP L4ACE
-L4ACC
+L4ACC                   ; $4ACC
                 .byte $65,$02
-L4ACE
+L4ACE                   ; $4ACE
                 DEX
                 BNE L4ABE
                 BCS L4AD6
                 ADC $02
                 CLC
-L4AD6
+L4AD6                   ; $4AD6
                 ROL $FD
                 STA $FE
                 RTS
@@ -1873,7 +1873,7 @@ L4AD6
 ; Range: $4BA0 - $4BE0 (65 bytes)
 ; ==================================================
 
-L4BA0
+L4BA0                   ; $4BA0
                 LDA EndGameFlag
                 CMP #$80
                 BNE L4BB7
@@ -1883,7 +1883,7 @@ L4BA0
                 STA $1002
                 JSR L1000
                 JMP L4BDB
-L4BB7
+L4BB7                   ; $4BB7
                 CMP #$40
                 BNE L4BCB
                 LDA #$19
@@ -1892,12 +1892,12 @@ L4BB7
                 STA $1002
                 JSR L1000
                 JMP L4BDB
-L4BCB
+L4BCB                   ; $4BCB
                 .byte $A9,$10,$8D,$06,$10,$A9,$90,$8D,$02,$10,$20,$00,$10,$4C,$BB,$4B
-L4BDB
+L4BDB                   ; $4BDB
                 LDA #$00
                 STA EndGameFlag
-                JMP L4F7F
+                JMP $4F7F
 
 ; ==================================================
 ; Section: Junk (Junk)
@@ -1912,17 +1912,17 @@ L4BDB
 ; Range: $4C00 - $4D9D (414 bytes)
 ; ==================================================
 
-L4C00
+L4C00                   ; $4C00
                 LDX #$0F
                 STX $AC
                 JMP L4CB2
-L4C07
+L4C07                   ; $4C07
                 LDX $AC
                 LDA $6910,X
                 AND #$80
                 BNE L4C13
                 JMP L4D0C
-L4C13
+L4C13                   ; $4C13
                 .byte $BD,$10,$69,$29,$03,$A8,$B9,$C8,$03,$2D,$FC,$02,$F0,$03,$4C,$74
                 .byte $4D,$BD,$10,$69,$29,$20,$F0,$03,$4C,$33,$4D,$BD,$10,$69,$29,$03
                 .byte $A8,$AD,$A2,$03,$DD,$E0,$69,$B0,$03,$4C,$0C,$4D,$AD,$FD,$02,$39
@@ -1933,7 +1933,7 @@ L4C13
                 .byte $18,$A5,$FB,$65,$FD,$85,$FB,$A5,$FC,$69,$00,$85,$FC,$18,$A5,$FB
                 .byte $69,$72,$85,$FB,$A5,$FC,$69,$93,$85,$FC,$A0,$00,$B1,$FB,$C9,$12
                 .byte $90,$0B,$C9,$1A,$B0,$07,$29,$07,$A6,$AC,$9D,$30,$69,$A6,$AC
-L4CB2
+L4CB2                   ; $4CB2
                 LDA $6930,X
                 TAY
                 LDA $69B0,Y
@@ -1946,9 +1946,9 @@ L4CB2
                 BCC L4CDC
                 INC $6940,X
                 JMP L4CDC
-L4CCE
+L4CCE                   ; $4CCE
                 .byte $38,$BD,$00,$69,$E9,$01,$9D,$00,$69,$B0,$03,$DE,$40,$69
-L4CDC
+L4CDC                   ; $4CDC
                 LDA $69B8,Y
                 BMI L4CF4
                 BEQ L4D02
@@ -1959,20 +1959,20 @@ L4CDC
                 BCC L4D02
                 INC $69C0,X
                 JMP L4D02
-L4CF4
+L4CF4                   ; $4CF4
                 .byte $38,$BD,$80,$69,$E9,$01,$9D,$80,$69,$B0,$03,$DE,$C0,$69
-L4D02
+L4D02                   ; $4D02
                 CPX #$0F
                 BEQ L4D0C
                 LDA $69A0,Y
                 STA $6920,X
-L4D0C
+L4D0C                   ; $4D0C
                 LDX $AC
                 DEX
                 BEQ L4D16
                 STX $AC
                 JMP L4C07
-L4D16
+L4D16                   ; $4D16
                 .byte $60,$85,$FE,$A9,$00,$85,$FD,$86,$02,$A2,$08,$46,$02,$90,$03,$18
                 .byte $65,$FE,$6A,$66,$FD,$CA,$D0,$F3,$85,$FE,$A6,$FD,$60,$DE,$90,$69
                 .byte $F0,$03,$4C,$0C,$4D,$A9,$18,$9D,$90,$69,$DE,$70,$69,$F0,$0E,$BD
@@ -1981,7 +1981,7 @@ L4D16
                 .byte $1C,$D0,$8D,$1C,$D0,$98,$09,$50,$9D,$10,$69,$4C,$0C,$4D,$0D,$1C
                 .byte $D0,$8D,$1C,$D0,$A9,$00,$8D,$FC,$02,$BD,$10,$69,$09,$70,$9D,$10
                 .byte $69,$A9,$10,$9D,$70,$69,$20,$28,$44,$4C,$0C,$4D
-traffic_ai_update
+traffic_ai_update       ; $4D92
                 JSR L4C00
                 LDA #$00
                 STA $02FD
@@ -2006,7 +2006,7 @@ traffic_ai_update
 ; Range: $4E00 - $4EB7 (184 bytes)
 ; ==================================================
 
-map_scroll_update
+map_scroll_update       ; $4E00
                 LDA V_MapXposition
                 STA $AE
                 LDA V_MapYposition
@@ -2022,7 +2022,7 @@ map_scroll_update
                 ADC #$00
                 STA $AF
                 JMP L4E2E
-L4E21
+L4E21                   ; $4E21
                 SEC
                 LDA $AE
                 SBC #$7E
@@ -2030,7 +2030,7 @@ L4E21
                 LDA $AF
                 SBC #$00
                 STA $AF
-L4E2E
+L4E2E                   ; $4E2E
                 LDA MovementVectorY
                 BEQ L4E52
                 BMI L4E45
@@ -2042,7 +2042,7 @@ L4E2E
                 ADC #$00
                 STA $AF
                 JMP L4E52
-L4E45
+L4E45                   ; $4E45
                 SEC
                 LDA $AE
                 SBC #$01
@@ -2050,7 +2050,7 @@ L4E45
                 LDA $AF
                 SBC #$00
                 STA $AF
-L4E52
+L4E52                   ; $4E52
                 CLC
                 LDA $AE
                 ADC #$08
@@ -2066,18 +2066,18 @@ L4E52
                 SBC $CA
                 STA $FE
                 LDY #$03
-L4E6D
+L4E6D                   ; $4E6D
                 LDA $FE
                 CMP $4EC4,Y
                 BNE L4E7A
                 TXA
                 CMP $4EC0,Y
                 BEQ L4E80
-L4E7A
+L4E7A                   ; $4E7A
                 DEY
                 BPL L4E6D
                 JMP L4E97
-L4E80
+L4E80                   ; $4E80
                 STY $02
                 LDY #$00
                 LDA ($C9),Y
@@ -2089,13 +2089,13 @@ L4E80
                 LDA $4EC8,Y
                 LDY #$00
                 STA ($C9),Y
-L4E97
+L4E97                   ; $4E97
                 LDA $AE
                 STA $C9
                 LDA $AF
                 STA $CA
                 RTS
-L4EA0
+L4EA0                   ; $4EA0
                 .byte $A4,$02,$D9,$CC,$4E,$F0,$F0,$AE,$A2,$03,$E8,$E0,$14,$D0,$05,$20
                 .byte $00,$49,$A2,$12,$8E,$A2,$03,$4C
 
@@ -2121,9 +2121,23 @@ L4EA0
 ; Range: $4F00 - $4F25 (38 bytes)
 ; ==================================================
 
-                .byte $20,$EF,$4F,$29,$07,$A8,$B9,$C0,$4F,$8D,$FC,$69,$B9,$C8,$4F,$8D
-                .byte $FD,$69,$EA,$EA,$B9,$D0,$4F,$8D,$FE,$69,$B9,$D8,$4F,$8D,$FF,$69
-                .byte $B9,$E0,$4F,$85,$D3,$60
+L4F00                   ; $4F00
+                JSR L4FEF
+                AND #$07
+                TAY
+                LDA $4FC0,Y
+                STA target_landing_x_low
+                LDA $4FC8,Y
+                STA target_landing_x_high
+                NOP
+                NOP
+                LDA $4FD0,Y
+                STA target_landing_y_low
+                LDA $4FD8,Y
+                STA target_landing_y_high
+                LDA $4FE0,Y
+                STA $D3
+                RTS
 
 ; ==================================================
 ; Section: Junk (Junk)
@@ -2137,75 +2151,21 @@ L4EA0
 ; Range: $4F30 - $4FBB (140 bytes)
 ; ==================================================
 
-L4F30
-                SEI
-                LDA #$8A
-                STA $0314
-                LDA #$51
-                STA $0315
-                CLI
-                LDA #$98
-                STA $D011
-                LDA #$08
-                STA $D016
-                LDA #$00
-                STA $D021
-                STA $D022
-                LDA $D018
-                AND #$F0
-                ORA #$0C
-                STA $D018
-                LDA #$00
-                STA $D015
-                LDA $DC0E
-                AND #$FE
-                STA $DC0E
-                LDA $DC0E
-                AND #$FE
-                STA $DC0E
-                LDA #$8B
-                STA $D012
-                LDA #$00
-                STA SID_VOLUME
-                LDA #$00
-                STA $0346
-                JSR init_graphics_screen
-L4F7F
-                JSR read_joystick_input
-                LDA $02
-                BNE L4FBB
-                LDA $FD
-                BEQ L4FA4
-                BMI L4F99
-                LDY $02E0
-                INY
-                CPY #$04
-                BNE L4FA1
-                LDY #$03
-                JMP L4FA1
-L4F99
-                LDY $02E0
-                DEY
-                BNE L4FA1
-                LDY #$01
-L4FA1
-                STY $02E0
-L4FA4
-                LDY #$50
-L4FA6
-                LDX #$FF
-L4FA8
-                DEX
-                BNE L4FA8
-                DEY
-                BNE L4FA6
-                INC $D9
-                JSR update_game_state
-                LDA EndGameFlag
-                BEQ L4F7F
-                JMP L4BA0
-L4FBB
-                JMP $FCE2
+                .byte $78,$A9,$8A,$8D,$14,$03,$A9,$51,$8D,$15,$03,$58,$A9,$98,$8D,$11
+                .byte $D0,$A9,$08,$8D,$16,$D0,$A9,$00,$8D,$21,$D0,$8D,$22,$D0,$AD,$18
+                .byte $D0,$29,$F0,$09,$0C,$8D,$18,$D0,$A9,$00,$8D,$15,$D0,$AD,$0E,$DC
+                .byte $29,$FE,$8D,$0E,$DC,$AD,$0E,$DC,$29,$FE,$8D,$0E,$DC,$A9,$8B,$8D
+                .byte $12,$D0,$A9,$00,$8D,$18,$D4,$A9,$00,$8D,$46,$03,$20,$F0,$54,$20
+                .byte $60,$42,$A5,$02,$D0,$35,$A5,$FD,$F0,$1A,$30,$0D,$AC,$E0,$02,$C8
+                .byte $C0,$04,$D0,$0D,$A0,$03,$4C,$A1,$4F,$AC,$E0,$02,$88,$D0,$02,$A0
+                .byte $01,$8C,$E0,$02,$A0,$50,$A2,$FF,$CA,$D0,$FD,$88,$D0,$F8,$E6,$D9
+                .byte $20,$2D,$54,$AD,$13,$03,$F0,$C7,$4C,$A0,$4B,$4C
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
+                .byte $E2,$FC
 
 ; ==================================================
 ; Section: Junk (Junk)
@@ -2235,8 +2195,14 @@ L4FBB
 ; Range: $4FEF - $4FFF (17 bytes)
 ; ==================================================
 
-                .byte $A9,$FF,$8D,$0E,$D4,$8D,$0F,$D4,$A9,$80,$8D,$12,$D4,$AD,$1B,$D4
-                .byte $60
+L4FEF                   ; $4FEF
+                LDA #$FF
+                STA $D40E
+                STA $D40F
+                LDA #$80
+                STA $D412
+                LDA $D41B
+                RTS
 
 ; ==================================================
 ; Section: LEVEL-SPECIFIC INTERRUPT HANDLER SETUP (Code)
@@ -2307,170 +2273,31 @@ L4FBB
 ; Range: $5200 - $535B (348 bytes)
 ; ==================================================
 
-update_mayday_and_clock
-                LDA EndGameFlag
-                BNE L5216
-                LDY $034F
-                DEY
-                STY $034F
-                BNE L5216
-                LDA $02FE
-                BEQ L5218
-                JMP L52A4
-L5216
-                RTS
-                .byte $60
-L5218
-                LDY #$07
-                STY $034F
-                LDA $6930
-                TAY
-                LDA $69B0,Y
-                BMI L5239
-                BEQ L5247
-                CLC
-                LDA $6900
-                ADC #$01
-                STA $6900
-                BCC L5247
-                INC $6940
-                JMP L5247
-L5239
-                .byte $38,$AD,$00,$69,$E9,$01,$8D,$00,$69,$B0,$03,$CE,$40,$69
-L5247
-                LDA $69B8,Y
-                BMI L525F
-                BEQ L526D
-                CLC
-                LDA $6980
-                ADC #$01
-                STA $6980
-                BCC L526D
-                INC $69C0
-                JMP L526D
-L525F
-                .byte $38,$AD,$80,$69,$E9,$01,$8D,$80,$69,$B0,$03,$CE,$C0,$69
-L526D
-                LDA $03E0,Y
-                STA $6920
-                LDY mayday_path_counter
-                DEY
-                STY mayday_path_counter
-                BNE L52A1
-                CLC
-                LDA mayday_turns_taken
-                ADC #$02
-                STA mayday_turns_taken
-                NOP
-                CMP $D3
-                BNE L5290
-                INC $02FE
-                JMP L5296
-L5290
-                .byte $AC,$F9,$69,$8C,$F8,$69
-L5296
-                LDY $6930
-                DEY
-                BPL L529E
-                LDY #$07
-L529E
-                STY $6930
-L52A1
-                JMP L5315
-L52A4
-                LDY #$08
-                STY $034F
-                LDA $6940
-                CMP target_landing_x_high
-                BCC L52D1
-                BEQ L52B6
-                JMP L52C0
-L52B6
-                LDA $6900
-                CMP target_landing_x_low
-                BCC L52D1
-                BEQ L52DF
-L52C0
-                SEC
-                LDA $6900
-                SBC #$01
-                STA $6900
-                BCS L52DF
-                DEC $6940
-                JMP L52DF
-L52D1
-                CLC
-                LDA $6900
-                ADC #$01
-                STA $6900
-                BCC L52DF
-                INC $6940
-L52DF
-                LDA $69C0
-                CMP target_landing_y_high
-                BCC L5307
-                BEQ L52EC
-                JMP L52F6
-L52EC
-                LDA $6980
-                CMP target_landing_y_low
-                BCC L5307
-                BEQ L5315
-L52F6
-                SEC
-                LDA $6980
-                SBC #$01
-                STA $6980
-                BCS L5315
-                DEC $69C0
-                JMP L5315
-L5307
-                CLC
-                LDA $6980
-                ADC #$01
-                STA $6980
-                BCC L5315
-                INC $69C0
-L5315
-                LDX $535C
-                DEX
-                STX $535C
-                BNE L534D
-                LDX #$14
-                STX $535C
-                NOP
-                LDX #$02
-L5326
-                DEC $04F3,X
-                LDA $04F3,X
-                CMP #$63
-                BNE L5338
-                LDA #$6D
-                STA $04F3,X
-                DEX
-                BPL L5326
-L5338
-                LDA $04F3
-                CMP #$64
-                BNE L534D
-                LDA $04F4
-                CMP #$64
-                BNE L534E
-                LDA $04F5
-                CMP #$64
-                BEQ time_expired
-L534D
-                RTS
-L534E
-                CMP #$6A
-                BCS L5355
-                INC MaydayBeginLanding
-L5355
-                RTS
-time_expired
-                LDA #$40
-                STA EndGameFlag
-                RTS
+update_mayday_and_clock ; $5200
+                .byte $AD,$13,$03,$D0,$11,$AC,$4F,$03,$88,$8C,$4F,$03,$D0,$08,$AD,$FE
+                .byte $02,$F0,$05,$4C,$A4,$52,$60,$60,$A0,$07,$8C,$4F,$03,$AD,$30,$69
+                .byte $A8,$B9,$B0,$69,$30,$13,$F0,$1F,$18,$AD,$00,$69,$69,$01,$8D,$00
+                .byte $69,$90,$14,$EE,$40,$69,$4C,$47,$52,$38,$AD,$00,$69,$E9,$01,$8D
+                .byte $00,$69,$B0,$03,$CE,$40,$69,$B9,$B8,$69,$30,$13,$F0,$1F,$18,$AD
+                .byte $80,$69,$69,$01,$8D,$80,$69,$90,$14,$EE,$C0,$69,$4C,$6D,$52,$38
+                .byte $AD,$80,$69,$E9,$01,$8D,$80,$69,$B0,$03,$CE,$C0,$69,$B9,$E0,$03
+                .byte $8D,$20,$69,$AC,$F8,$69,$88,$8C,$F8,$69,$D0,$25,$18,$AD,$F9,$69
+                .byte $69,$02,$8D,$F9,$69,$EA,$C5,$D3,$D0,$06,$EE,$FE,$02,$4C,$96,$52
+                .byte $AC,$F9,$69,$8C,$F8,$69,$AC,$30,$69,$88,$10,$02,$A0,$07,$8C,$30
+                .byte $69,$4C,$15,$53,$A0,$08,$8C,$4F,$03,$AD,$40,$69,$CD,$FD,$69,$90
+                .byte $20,$F0,$03,$4C,$C0,$52,$AD,$00,$69,$CD,$FC,$69,$90,$13,$F0,$1F
+                .byte $38,$AD,$00,$69,$E9,$01,$8D,$00,$69,$B0,$14,$CE,$40,$69,$4C,$DF
+                .byte $52,$18,$AD,$00,$69,$69,$01,$8D,$00,$69,$90,$03,$EE,$40,$69,$AD
+                .byte $C0,$69,$CD,$FF,$69,$90,$20,$F0,$03,$4C,$F6,$52,$AD,$80,$69,$CD
+                .byte $FE,$69,$90,$13,$F0,$1F,$38,$AD,$80,$69,$E9,$01,$8D,$80,$69,$B0
+                .byte $14,$CE,$C0,$69,$4C,$15,$53,$18,$AD,$80,$69,$69,$01,$8D,$80,$69
+                .byte $90,$03,$EE,$C0,$69,$AE,$5C,$53,$CA,$8E,$5C,$53,$D0,$2F,$A2,$14
+                .byte $8E,$5C,$53,$EA,$A2,$02,$DE,$F3,$04,$BD,$F3,$04,$C9,$63,$D0,$08
+                .byte $A9,$6D,$9D,$F3,$04,$CA,$10,$EE,$AD,$F3,$04,$C9,$64,$D0,$0E,$AD
+                .byte $F4,$04,$C9,$64,$D0,$08,$AD,$F5,$04,$C9,$64,$F0,$09,$60,$C9,$6A
+                .byte $B0,$03,$EE,$E1,$02,$60
+time_expired            ; $5356
+                .byte $A9,$40,$8D,$13,$03,$60
 
 ; ==================================================
 ; Unsectioned Data
@@ -2485,17 +2312,11 @@ time_expired
                 .byte $00,$FF,$24,$FF,$00,$FF,$00,$FF,$1F,$0F,$09,$00,$20,$FF,$00,$FF
                 .byte $00,$FF,$0C,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$0F,$FF,$00,$FF
                 .byte $00,$FF,$A0,$FF
-init_game_state
-                LDA #$05
-                LDY #$02
-init_state_loop
-                STA $53FD,Y
-                DEY
-                BPL init_state_loop
-                LDX $02E0
-                LDA #$0D
-                STA $53FC,X
-                JMP display_update_screen
+init_game_state         ; $53E0
+                .byte $A9,$05,$A0,$02
+init_state_loop         ; $53E4
+                .byte $99,$FD,$53,$88,$10,$FA,$AE,$E0,$02,$A9,$0D,$9D,$FC,$53,$4C,$30
+                .byte $54
 
 ; ==================================================
 ; Section: Junk (Junk)
@@ -2509,112 +2330,31 @@ init_state_loop
 ; ==================================================
 
                 .byte $0D,$05,$05,$0D
-clear_screen_memory
-                LDA #$03
-                STA $AF
-                LDA #$E8
-                STA $AE
-                LDA #$D7
-                STA $AD
-                LDA #$E8
-                STA $AC
-                LDX #$04
-                LDY #$18
-                JMP L5419
-L5417
-                LDY #$00
-L5419
-                LDA #$15
-                STA ($AE),Y
-                LDA #$0E
-                STA ($AC),Y
-                INY
-                BNE L5419
-                INC $AF
-                INC $AD
-                DEX
-                BNE L5417
-                RTS
-                .byte $EA
-update_game_state
-                JMP init_game_state
-display_update_screen
-                LDY #$00
-screen_update_loop
-                LDA $5500,Y
-                STA $0428,Y
-                LDA $D9
-                STA $D828,Y
-                LDA $5528,Y
-                STA $04A0,Y
-                LDA #$02
-                STA $D8A0,Y
-                LDA $5550,Y
-                STA $04C8,Y
-                LDA #$02
-                STA $D8C8,Y
-                LDA $5578,Y
-                STA $04F0,Y
-                LDA #$02
-                STA $D8F0,Y
-                LDA $55A0,Y
-                STA $0518,Y
-                LDA #$02
-                STA $D918,Y
-                LDA $55C8,Y
-                STA $0540,Y
-                LDA #$02
-                STA $D940,Y
-                LDA $55F0,Y
-                STA $05E0,Y
-                LDA #$07
-                STA $D9E0,Y
-                LDA $5618,Y
-                STA $0630,Y
-                LDA #$0E
-                STA $DA30,Y
-                LDA $5640,Y
-                STA $0658,Y
-                LDA #$0E
-                STA $DA58,Y
-                LDA $5668,Y
-                STA $0680,Y
-                LDA #$0E
-                STA $DA80,Y
-                LDA $5690,Y
-                STA $06A8,Y
-                LDA #$0E
-                STA $DAA8,Y
-                LDA $56B8,Y
-                STA $06D0,Y
-                LDA #$0E
-                STA $DAD0,Y
-                LDA $56E0,Y
-                STA $06F8,Y
-                LDA #$0E
-                STA $DAF8,Y
-                LDA $5708,Y
-                STA $0748,Y
-                LDA $53FD
-                STA $DB48,Y
-                LDA $5730,Y
-                STA $0770,Y
-                LDA $53FE
-                STA $DB70,Y
-                LDA $5758,Y
-                STA $0798,Y
-                LDA $53FF
-                STA $DB98,Y
-                INY
-                CPY #$28
-                BEQ screen_update_complete
-                JMP screen_update_loop
-screen_update_complete
-                RTS
-                .byte $A9,$0D
-init_graphics_screen
-                JSR clear_screen_memory
-                JMP init_game_state
+clear_screen_memory     ; $5400
+                .byte $A9,$03,$85,$AF,$A9,$E8,$85,$AE,$A9,$D7,$85,$AD,$A9,$E8,$85,$AC
+                .byte $A2,$04,$A0,$18,$4C,$19,$54,$A0,$00,$A9,$15,$91,$AE,$A9,$0E,$91
+                .byte $AC,$C8,$D0,$F5,$E6,$AF,$E6,$AD,$CA,$D0,$EC,$60,$EA
+update_game_state       ; $542D
+                .byte $4C,$E0,$53
+display_update_screen   ; $5430
+                .byte $A0,$00
+screen_update_loop      ; $5432
+                .byte $B9,$00,$55,$99,$28,$04,$A5,$D9,$99,$28,$D8,$B9,$28,$55,$99,$A0
+                .byte $04,$A9,$02,$99,$A0,$D8,$B9,$50,$55,$99,$C8,$04,$A9,$02,$99,$C8
+                .byte $D8,$B9,$78,$55,$99,$F0,$04,$A9,$02,$99,$F0,$D8,$B9,$A0,$55,$99
+                .byte $18,$05,$A9,$02,$99,$18,$D9,$B9,$C8,$55,$99,$40,$05,$A9,$02,$99
+                .byte $40,$D9,$B9,$F0,$55,$99,$E0,$05,$A9,$07,$99,$E0,$D9,$B9,$18,$56
+                .byte $99,$30,$06,$A9,$0E,$99,$30,$DA,$B9,$40,$56,$99,$58,$06,$A9,$0E
+                .byte $99,$58,$DA,$B9,$68,$56,$99,$80,$06,$A9,$0E,$99,$80,$DA,$B9,$90
+                .byte $56,$99,$A8,$06,$A9,$0E,$99,$A8,$DA,$B9,$B8,$56,$99,$D0,$06,$A9
+                .byte $0E,$99,$D0,$DA,$B9,$E0,$56,$99,$F8,$06,$A9,$0E,$99,$F8,$DA,$B9
+                .byte $08,$57,$99,$48,$07,$AD,$FD,$53,$99,$48,$DB,$B9,$30,$57,$99,$70
+                .byte $07,$AD,$FE,$53,$99,$70,$DB,$B9,$58,$57,$99,$98,$07,$AD,$FF,$53
+                .byte $99,$98,$DB,$C8,$C0,$28,$F0,$03,$4C,$32,$54
+screen_update_complete  ; $54ED
+                .byte $60,$A9,$0D
+init_graphics_screen    ; $54F0
+                .byte $20,$00,$54,$4C,$E0,$53
 
 ; ==================================================
 ; Section: Junk (Junk)
@@ -2681,179 +2421,60 @@ init_graphics_screen
                 .byte $FF,$00,$FF,$00,$FF,$0C,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$0F
                 .byte $FF,$00,$FF,$00,$FF,$A0,$FF,$00,$FF,$00,$FF,$00,$2F,$00,$FF,$08
                 .byte $6F,$00,$0F,$0F,$FF,$2E,$FF,$08,$FF,$00,$FF,$00,$FF,$00,$FF,$00
-                .byte $FF,$00,$FF,$00,$FF,$00,$FF
-L5800
-                SEI
-                LDA #$8A
-                STA $0314
-                LDA #$51
-                STA $0315
-                LDA #$98
-                STA $D011
-                LDA #$08
-                STA $D016
-                LDA #$00
-                STA $D021
-                STA $D022
-                LDA $D018
-                AND #$F0
-                ORA #$0C
-                STA $D018
-                LDA #$00
-                STA $D015
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                NOP
-                JSR clear_screen_memory
-                LDA #$12
-                STA $1006
-                LDA #$25
-                STA $1002
-                JSR L1000
-                NOP
-                NOP
-                NOP
-                LDA #$80
-                STA $FC
-                LDA #$00
-                STA $FB
-                LDX #$00
-L585A
-                LDA $5880,X
-                STA $FE
-                LDA $5890,X
-                STA $FD
-                CLC
-                LDA $FB
-                ADC #$28
-                STA $FB
-                LDA $FC
-                ADC #$00
-                STA $FC
-                JSR L58C0
-                INX
-                CPX #$0A
-                BNE L585A
-L5879
-                JMP L5879
-                .byte $FF,$00,$FF,$00,$04,$04,$05,$05,$05,$06,$06,$06,$06,$06,$04,$04
-                .byte $04,$04,$04,$04,$78,$F0,$40,$90,$B8,$08,$30,$58,$A8,$F8,$04,$04
-                .byte $04,$04,$04,$04,$A2,$04,$A0,$18,$4C,$B9,$54,$A0,$00,$A9,$15,$91
-                .byte $AE,$A9,$00,$91,$AC,$C8,$D0,$F5,$E6,$AF,$E6,$AD,$CA,$D0,$EC,$EA
-                .byte $A0,$00,$B9,$00
-L58C0
-                LDY #$00
-L58C2
-                LDA ($FB),Y
-                STA ($FD),Y
-                CMP #$15
-                BEQ L58D0
-                JSR L4480
-                JMP L58E8
-L58D0
-                LDA #$00
-                STA $D404
-                JMP L58E8
-                .byte $4C,$E8,$58,$4C,$E8,$58,$4C,$E8,$58,$4C,$E8,$58,$4C,$E8,$58,$EA
-L58E8
-                TYA
-                PHA
-                TXA
-                PHA
-                LDY #$3F
-L58EE
-                LDX #$FF
-L58F0
-                DEX
-                BNE L58F0
-                DEY
-                BNE L58EE
-                PLA
-                TAX
-                PLA
-                TAY
-                INY
-                CPY #$28
-                BNE L58C2
-                RTS
-                .byte $DF,$02,$FF,$00,$FF,$FF,$FF,$00,$FF,$08,$FF,$FF,$FF,$FF,$FF,$00
-                .byte $FF,$00,$FF,$00,$FF,$FF,$FF,$FF,$FF,$02,$FF,$00,$FF,$00,$FF,$00
-                .byte $FF,$08,$FF,$00,$FF,$20,$FF,$00,$FF,$F3,$FF,$00,$FF,$00,$FF,$00
-                .byte $FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00
-                .byte $FF,$00,$FF,$00,$FF,$FF,$FF,$FF,$FF,$00,$FF,$00,$FF,$00,$FF,$00
-                .byte $FF,$00,$FF,$00,$FF,$20,$FF,$00,$FF,$17,$FF,$00,$FF,$00,$5F,$00
-                .byte $FF,$08,$FF,$00,$FF,$DF,$FF,$00,$FF,$B1,$FF,$FF,$FF,$00,$FF,$00
-                .byte $FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00
-                .byte $00,$FD,$00,$FF,$00,$0F,$00,$FF,$23,$FF,$00,$1F,$00,$0E,$0F,$FF
-                .byte $00,$FF,$00,$FF,$00,$0F,$00,$0F,$00,$FF,$00,$FF,$00,$FF,$0F,$FF
-                .byte $1F,$FF,$00,$FF,$00,$FF,$00,$FF,$0F,$2F,$00,$FF,$0C,$FF,$2F,$FF
-                .byte $00,$FF,$00,$FF,$00,$FF,$00,$FD,$00,$FF,$00,$FF,$00,$FF,$24,$FF
-                .byte $00,$FF,$00,$FF,$1F,$0F,$09,$00,$20,$FF,$00,$FF,$00,$FF,$0C,$FF
-                .byte $00,$FF,$00,$FF,$00,$FF,$00,$FF,$0F,$FF,$00,$FF,$00,$FF,$A0,$FF
-                .byte $00,$FF,$00,$FF,$00,$2F,$00,$FF,$00,$6F,$00,$0F,$0F,$FF,$2E,$FF
-                .byte $00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF
-                .byte $20,$00,$40,$20,$40,$7A,$20,$00,$4A,$20,$00,$50,$20,$00,$4F,$20
-                .byte $25,$5B,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
+                .byte $FF,$00,$FF,$00,$FF,$00,$FF,$78,$A9,$8A,$8D,$14,$03,$A9,$51,$8D
+                .byte $15,$03,$A9,$98,$8D,$11,$D0,$A9,$08,$8D,$16,$D0,$A9,$00,$8D,$21
+                .byte $D0,$8D,$22,$D0,$AD,$18,$D0,$29,$F0,$09,$0C,$8D,$18,$D0,$A9,$00
+                .byte $8D,$15,$D0,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
+                .byte $EA,$EA,$EA,$EA,$20,$00,$54,$A9,$12,$8D,$06,$10,$A9,$25,$8D,$02
+                .byte $10,$20,$00,$10,$EA,$EA,$EA,$A9,$80,$85,$FC,$A9,$00,$85,$FB,$A2
+                .byte $00,$BD,$80,$58,$85,$FE,$BD,$90,$58,$85,$FD,$18,$A5,$FB,$69,$28
+                .byte $85,$FB,$A5,$FC,$69,$00,$85,$FC,$20,$C0,$58,$E8,$E0,$0A,$D0,$E1
+                .byte $4C,$79,$58,$FF,$00,$FF,$00,$04,$04,$05,$05,$05,$06,$06,$06,$06
+                .byte $06,$04,$04,$04,$04,$04,$04,$78,$F0,$40,$90,$B8,$08,$30,$58,$A8
+                .byte $F8,$04,$04,$04,$04,$04,$04,$A2,$04,$A0,$18,$4C,$B9,$54,$A0,$00
+                .byte $A9,$15,$91,$AE,$A9,$00,$91,$AC,$C8,$D0,$F5,$E6,$AF,$E6,$AD,$CA
+                .byte $D0,$EC,$EA,$A0,$00,$B9,$00,$A0,$00,$B1,$FB,$91,$FD,$C9,$15,$F0
+                .byte $06,$20,$80,$44,$4C,$E8,$58,$A9,$00,$8D,$04,$D4,$4C,$E8,$58,$4C
+                .byte $E8,$58,$4C,$E8,$58,$4C,$E8,$58,$4C,$E8,$58,$4C,$E8,$58,$EA,$98
+                .byte $48,$8A,$48,$A0,$3F,$A2,$FF,$CA,$D0,$FD,$88,$D0,$F8,$68,$AA,$68
+                .byte $A8,$C8,$C0,$28,$D0,$C3,$60,$DF,$02,$FF,$00,$FF,$FF,$FF,$00,$FF
+                .byte $08,$FF,$FF,$FF,$FF,$FF,$00,$FF,$00,$FF,$00,$FF,$FF,$FF,$FF,$FF
+                .byte $02,$FF,$00,$FF,$00,$FF,$00,$FF,$08,$FF,$00,$FF,$20,$FF,$00,$FF
+                .byte $F3,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF
+                .byte $00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$FF,$FF,$FF,$FF
+                .byte $00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$20,$FF,$00,$FF
+                .byte $17,$FF,$00,$FF,$00,$5F,$00,$FF,$08,$FF,$00,$FF,$DF,$FF,$00,$FF
+                .byte $B1,$FF,$FF,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF
+                .byte $00,$FF,$00,$FF,$00,$FF,$00,$00,$FD,$00,$FF,$00,$0F,$00,$FF,$23
+                .byte $FF,$00,$1F,$00,$0E,$0F,$FF,$00,$FF,$00,$FF,$00,$0F,$00,$0F,$00
+                .byte $FF,$00,$FF,$00,$FF,$0F,$FF,$1F,$FF,$00,$FF,$00,$FF,$00,$FF,$0F
+                .byte $2F,$00,$FF,$0C,$FF,$2F,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FD,$00
+                .byte $FF,$00,$FF,$00,$FF,$24,$FF,$00,$FF,$00,$FF,$1F,$0F,$09,$00,$20
+                .byte $FF,$00,$FF,$00,$FF,$0C,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$0F
+                .byte $FF,$00,$FF,$00,$FF,$A0,$FF,$00,$FF,$00,$FF,$00,$2F,$00,$FF,$00
+                .byte $6F,$00,$0F,$0F,$FF,$2E,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00
+                .byte $FF,$00,$FF,$00,$FF,$00,$FF,$20,$00,$40,$20,$40,$7A,$20,$00,$4A
+                .byte $20,$00,$50,$20,$00,$4F,$20,$25,$5B,$EA,$EA,$EA,$EA,$EA,$EA,$EA
                 .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
-game_loop_restart
-                LDX $0344
-                DEX
-                BNE L5A4C
-                LDX #$10
-                LDY $0345
-                DEY
-                BNE L5A52
-                LDY #$02
-                STY $0345
-                STX $0344
-                JMP L5A60
-                .byte $8C,$45,$03
-L5A4C
-                .byte $8E,$44,$03,$4C,$66,$5A
-L5A52
-                STY $0345
-                JMP execute_car_turn
-                .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
-L5A60
-                JSR read_joystick_input
-                JMP car_movement_control
-main_game_loop2
-                JSR detect_entity_proximity
-                JSR update_speedometer
-                JSR render_dashboard_3d
-                JSR calculate_distance
-                JSR update_mayday_and_clock
-                JSR traffic_ai_update
-                JSR map_scroll_update
-                JSR manage_graphics
-                LDA EndGameFlag
-                BEQ continue_game_loop
-                CMP #$80
-                BEQ handle_game_success2
-                JMP handle_game_over
-handle_game_success2
-                JMP handle_game_success
-continue_game_loop
-                JMP game_loop_restart
-                .byte $30,$5A,$EA,$EA,$EA,$30,$5A,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
-                .byte $00,$01
-car_turning_counter
+                .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA
+game_loop_restart       ; $5A30
+                .byte $AE,$44,$03,$CA,$D0,$16,$A2,$10,$AC,$45,$03,$88,$D0,$14,$A0,$02
+                .byte $8C,$45,$03,$8E,$44,$03,$4C,$60,$5A,$8C,$45,$03,$8E,$44,$03,$4C
+                .byte $66,$5A,$8C,$45,$03,$4C,$40,$5B,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA
+L5A60                   ; $5A60
+                .byte $20,$60,$42,$4C,$B0,$5A
+main_game_loop2         ; $5A66
+                .byte $20,$90,$42,$20,$00,$45,$20,$00,$46,$20,$50,$48,$20,$00,$52,$20
+                .byte $92,$4D,$20,$00,$4E,$20,$40,$49,$AD,$13,$03,$F0,$0A,$C9,$80,$F0
+                .byte $03,$4C,$D0,$43
+handle_game_success2    ; $5A8A
+                .byte $4C,$E0,$43
+continue_game_loop      ; $5A8D
+                .byte $4C,$30,$5A,$30,$5A,$EA,$EA,$EA,$30,$5A,$EA,$EA,$EA,$EA,$EA,$EA
+                .byte $EA,$EA,$EA,$00,$01
+car_turning_counter     ; $5AA2
                 .byte $00
-car_turn_direction
+car_turn_direction      ; $5AA3
                 .byte $02
 
 ; ==================================================
@@ -2867,19 +2488,17 @@ car_turn_direction
 ; Unsectioned Data
 ; ==================================================
 
-car_movement_control
-                LDX car_turning_counter
-                BEQ handle_car_steering
-                LDY car_turn_direction
+car_movement_control    ; $5AB0
+                .byte $AE,$A2,$5A,$F0,$2B,$AC,$A3,$5A
                 DEY
                 BPL continue_car_turn
                 LDY #$07
-continue_car_turn
+continue_car_turn       ; $5ABD
                 DEX
                 BNE store_turn_data
                 STX ForwardReverse
                 STY CarFacingDirection
-store_turn_data
+store_turn_data         ; $5AC6
                 STX car_turning_counter
                 STY car_turn_direction
                 LDA BondSpriteArray,Y
@@ -2891,7 +2510,7 @@ store_turn_data
                 JSR handle_collision
                 JMP return_to_main_loop
                 .byte $EA,$EA
-handle_car_steering
+handle_car_steering     ; $5AE0
                 LDA $FE
                 BNE process_car_steering
                 STA $5AA0
@@ -2900,7 +2519,7 @@ handle_car_steering
                 EOR #$01
                 STA $5AA1
                 JMP handle_car_speed
-process_car_steering
+process_car_steering    ; $5AF4
                 CMP $5AA0
                 BNE start_new_turn
                 DEC $5AA1
@@ -2908,17 +2527,17 @@ process_car_steering
                 BMI execute_car_turn
                 NOP
                 LDA $FE
-start_new_turn
+start_new_turn          ; $5B04
                 BPL turn_car_right
                 LDX CarFacingDirection
                 DEX
                 CPX #$FF
                 BNE set_new_direction
                 LDX #$07
-set_new_direction
+set_new_direction       ; $5B10
                 STX CarFacingDirection
                 JMP store_joystick_state
-turn_car_right
+turn_car_right          ; $5B16
                 LDX CarFacingDirection
                 INX
                 CPX #$08
@@ -2926,10 +2545,10 @@ turn_car_right
                 LDX #$00
                 JMP set_new_direction
                 .byte $EA,$EA
-store_joystick_state
+store_joystick_state    ; $5B25
                 LDA $FE
                 STA $5AA0
-handle_car_speed
+handle_car_speed        ; $5B2A
                 LDX CarFacingDirection
                 LDA BondSpriteArray,X
                 STA $AE
@@ -2942,7 +2561,7 @@ handle_car_speed
                 NOP
                 NOP
                 NOP
-execute_car_turn
+execute_car_turn        ; $5B40
                 LDA $FE
                 BEQ read_joystick
                 LDA $07FD
@@ -2951,21 +2570,21 @@ execute_car_turn
                 TAY
                 DEY
                 STY $07FC
-read_joystick
+read_joystick           ; $5B51
                 JSR read_joystick_input
                 LDA ForwardReverse
                 BNE reverse_speed_control
                 LDA $FD
                 BEQ continue_to_fire_check
                 BPL car_speed_up
-car_slow_down
+car_slow_down           ; $5B5F
                 DEC CarSpeed
                 LDA CarSpeed
                 BNE continue_to_fire_check
                 LDA #$01
                 STA CarSpeed
                 JMP continue_to_fire_check
-car_speed_up
+car_speed_up            ; $5B6F
                 INC CarSpeed
                 LDA CarSpeed
                 CMP #$40
@@ -2975,14 +2594,14 @@ car_speed_up
                 STA ForwardReverse
                 LDA #$3F
                 STA CarSpeed
-continue_to_fire_check
+continue_to_fire_check  ; $5B86
                 JMP fire_button_check
-reverse_speed_control
+reverse_speed_control   ; $5B89
                 LDA $FD
                 BEQ continue_to_fire_check
                 BMI car_speed_up
                 JMP car_slow_down
-fire_button_check
+fire_button_check       ; $5B92
                 LDA $02
                 BEQ jump_to_game_loop
                 LDA car_turning_counter
@@ -2997,9 +2616,9 @@ fire_button_check
                 LDA CarFacingDirection
                 STA car_turn_direction
                 JMP main_game_loop2
-try_handbrake
+try_handbrake           ; $5BB5
                 JSR execute_handbrake
-jump_to_game_loop
+jump_to_game_loop       ; $5BB8
                 JMP main_game_loop2
 
 ; ==================================================
@@ -3017,7 +2636,7 @@ jump_to_game_loop
 ; Unsectioned Data
 ; ==================================================
 
-calculate_car_movement
+calculate_car_movement  ; $5C00
                 LDA CarFacingDirection
                 ORA ForwardReverse
                 TAX
@@ -3032,7 +2651,7 @@ calculate_car_movement
                 LDA #$01
                 STA Movement_Flags
                 LDY #$00
-L5C1E
+L5C1E                   ; $5C1E
                 STY map_scroll_x
                 SEC
                 LDA BondCarXPosLow
@@ -3040,9 +2659,9 @@ L5C1E
                 STA BondCarXPosLow
                 BCS L5C2F
                 DEC BondCarXPosHigh
-L5C2F
+L5C2F                   ; $5C2F
                 JMP L5C53
-L5C32
+L5C32                   ; $5C32
                 LDY map_scroll_x
                 DEY
                 DEY
@@ -3051,7 +2670,7 @@ L5C32
                 LDA #$01
                 STA Movement_Flags
                 LDY #$06
-L5C42
+L5C42                   ; $5C42
                 STY map_scroll_x
                 CLC
                 LDA BondCarXPosLow
@@ -3059,7 +2678,7 @@ L5C42
                 STA BondCarXPosLow
                 BCC L5C53
                 INC BondCarXPosHigh
-L5C53
+L5C53                   ; $5C53
                 LDA $0380,X
                 BEQ L5CAD
                 BMI L5C85
@@ -3071,11 +2690,11 @@ L5C53
                 LDA Movement_Flags
                 ORA #$02
                 STA Movement_Flags
-L5C6B
+L5C6B                   ; $5C6B
                 CPY #$09
                 BNE L5C71
                 LDY #$01
-L5C71
+L5C71                   ; $5C71
                 STY $033F
                 SEC
                 LDA $033A
@@ -3083,9 +2702,9 @@ L5C71
                 STA $033A
                 BCS L5C82
                 DEC $033B
-L5C82
+L5C82                   ; $5C82
                 JMP L5CAD
-L5C85
+L5C85                   ; $5C85
                 LDY $033F
                 DEY
                 DEY
@@ -3094,11 +2713,11 @@ L5C85
                 LDA Movement_Flags
                 ORA #$02
                 STA Movement_Flags
-L5C96
+L5C96                   ; $5C96
                 CPY #$FF
                 BNE L5C9C
                 LDY #$07
-L5C9C
+L5C9C                   ; $5C9C
                 STY $033F
                 CLC
                 LDA $033A
@@ -3106,7 +2725,7 @@ L5C9C
                 STA $033A
                 BCC L5CAD
                 INC $033B
-L5CAD
+L5CAD                   ; $5CAD
                 LDA #$00
                 STA $0341
                 STA $0346
@@ -3114,7 +2733,7 @@ L5CAD
                 BNE Handle_Player_Movement
                 RTS
                 .byte $60,$60,$EA
-Handle_Player_Movement
+Handle_Player_Movement  ; $5CBE
                 LDA Movement_Flags
                 AND #$01
                 BEQ Check_X_Movement
@@ -3128,31 +2747,31 @@ Handle_Player_Movement
                 STA V_MapXposition
                 BCC Update_Y_Vector
                 INC V_MapYposition
-Update_Y_Vector
+Update_Y_Vector         ; $5CDD
                 LDY MovementVectorY
                 DEY
                 CPY #$FE
                 BNE Store_Y_Vector
                 LDY #$01
-Store_Y_Vector
+Store_Y_Vector          ; $5CE7
                 STY MovementVectorY
                 JMP Check_X_Movement
-Move_Backward
+Move_Backward           ; $5CED
                 SEC
                 LDA V_MapXposition
                 SBC #$01
                 STA V_MapXposition
                 BCS L5CFB
                 DEC V_MapYposition
-L5CFB
+L5CFB                   ; $5CFB
                 LDY MovementVectorY
                 INY
                 CPY #$02
                 BNE L5D05
                 LDY #$FF
-L5D05
+L5D05                   ; $5D05
                 STY MovementVectorY
-Check_X_Movement
+Check_X_Movement        ; $5D08
                 LDA Movement_Flags
                 AND #$02
                 BEQ L5D52
@@ -3166,31 +2785,31 @@ Check_X_Movement
                 STA V_MapXposition
                 BCC L5D27
                 INC V_MapYposition
-L5D27
+L5D27                   ; $5D27
                 LDY $0335
                 DEY
                 CPY #$FE
                 BNE L5D31
                 LDY #$01
-L5D31
+L5D31                   ; $5D31
                 STY $0335
                 JMP L5D52
-L5D37
+L5D37                   ; $5D37
                 SEC
                 LDA V_MapXposition
                 SBC #$7E
                 STA V_MapXposition
                 BCS L5D45
                 DEC V_MapYposition
-L5D45
+L5D45                   ; $5D45
                 LDY $0335
                 INY
                 CPY #$02
                 BNE L5D4F
                 LDY #$FF
-L5D4F
+L5D4F                   ; $5D4F
                 STY $0335
-L5D52
+L5D52                   ; $5D52
                 LDX #$0D
                 LDA #$DF
                 STA $5D70
@@ -3200,9 +2819,9 @@ L5D52
                 STA $5D6D
                 LDA V_MapYposition
                 STA $5D6E
-L5D6A
+L5D6A                   ; $5D6A
                 LDY #$28
-L5D6C
+L5D6C                   ; $5D6C
                 LDA $A3D1,Y
                 STA $07E7,Y
                 DEY
@@ -3213,14 +2832,14 @@ L5D6C
                 STA $5D6D
                 BCC L5D83
                 INC $5D6E
-L5D83
+L5D83                   ; $5D83
                 CLC
                 LDA $5D70
                 ADC #$28
                 STA $5D70
                 BCC L5D91
                 INC $5D71
-L5D91
+L5D91                   ; $5D91
                 DEX
                 BNE L5D6A
                 LDA #$00
@@ -3228,7 +2847,7 @@ L5D91
                 INC $0336
                 RTS
                 .byte $60,$60,$60
-L5DA0
+L5DA0                   ; $5DA0
                 LDA $02FF
                 BNE L5DB9
                 LDX $0342
@@ -3239,11 +2858,11 @@ L5DA0
                 LSR A
                 STA $0342
                 JMP L5DBA
-L5DB6
+L5DB6                   ; $5DB6
                 STX $0342
-L5DB9
+L5DB9                   ; $5DB9
                 RTS
-L5DBA
+L5DBA                   ; $5DBA
                 LDA CarFacingDirection
                 STA $0347
                 JSR calculate_car_movement
@@ -3444,17 +3063,17 @@ L5DBA
                 .byte $00,$00,$00,$00,$00,$40,$02,$A2,$A0,$B5,$40,$90,$00,$01,$01,$01
                 .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$F6,$FD,$40,$41
                 .byte $E5,$FF,$40,$ED
-mayday_path_counter
+mayday_path_counter     ; $69F8
                 .byte $21
-mayday_turns_taken
+mayday_turns_taken      ; $69F9
                 .byte $4C,$FD,$FF
-target_landing_x_low
+target_landing_x_low    ; $69FC
                 .byte $18
-target_landing_x_high
+target_landing_x_high   ; $69FD
                 .byte $02
-target_landing_y_low
+target_landing_y_low    ; $69FE
                 .byte $20
-target_landing_y_high
+target_landing_y_high   ; $69FF
                 .byte $00,$00,$10,$20,$40,$70,$B0,$00,$60,$D0,$50,$E0,$80,$00,$00,$00
                 .byte $00,$00,$00,$10,$30,$60,$A0,$F0,$50,$C0,$40,$D0,$70,$00,$00,$00
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
@@ -3719,67 +3338,67 @@ target_landing_y_high
 ; Range: $7A18 - $7A3F (40 bytes)
 ; ==================================================
 
-VOICE0_CONFIG
+VOICE0_CONFIG           ; $7A18
                 .byte $09
-VOICE1_CONFIG
+VOICE1_CONFIG           ; $7A19
                 .byte $19
-VOICE2_CONFIG
+VOICE2_CONFIG           ; $7A1A
                 .byte $1A
-VOICE0_CTRL
+VOICE0_CTRL             ; $7A1B
                 .byte $81
-VOICE1_CTRL
+VOICE1_CTRL             ; $7A1C
                 .byte $21
-VOICE2_CTRL
+VOICE2_CTRL             ; $7A1D
                 .byte $41
-VOICE0_EXTRA
+VOICE0_EXTRA            ; $7A1E
                 .byte $00
-VOICE1_EXTRA
+VOICE1_EXTRA            ; $7A1F
                 .byte $0E
-VOICE2_EXTRA
+VOICE2_EXTRA            ; $7A20
                 .byte $06
-MUSIC_TIMING
+MUSIC_TIMING            ; $7A21
                 .byte $00
-MUSIC_COUNTER
+MUSIC_COUNTER           ; $7A22
                 .byte $00
-VOICE0_PTR_LO
+VOICE0_PTR_LO           ; $7A23
                 .byte $70
-VOICE1_PTR_LO
+VOICE1_PTR_LO           ; $7A24
                 .byte $B6
-VOICE2_PTR_LO
+VOICE2_PTR_LO           ; $7A25
                 .byte $4E
-VOICE0_PTR_HI
+VOICE0_PTR_HI           ; $7A26
                 .byte $E2
-VOICE1_PTR_HI
+VOICE1_PTR_HI           ; $7A27
                 .byte $ED
-VOICE2_PTR_HI
+VOICE2_PTR_HI           ; $7A28
                 .byte $F8
-VOICE0_TIMER
+VOICE0_TIMER            ; $7A29
                 .byte $03
-VOICE1_TIMER
+VOICE1_TIMER            ; $7A2A
                 .byte $04
-VOICE2_TIMER
+VOICE2_TIMER            ; $7A2B
                 .byte $03
-music_frequency_buffer
+music_frequency_buffer  ; $7A2C
                 .byte $E4,$6C,$00
-music_current_freq_low
+music_current_freq_low  ; $7A2F
                 .byte $6C
-music_adsr_sr_temp
+music_adsr_sr_temp      ; $7A30
                 .byte $06
-music_adsr_ad_temp
+music_adsr_ad_temp      ; $7A31
                 .byte $41
-music_waveform_data
+music_waveform_data     ; $7A32
                 .byte $1A
-music_note_duration
+music_note_duration     ; $7A33
                 .byte $03
-memory_bank_save
+memory_bank_save        ; $7A34
                 .byte $36
-music_voice_index
+music_voice_index       ; $7A35
                 .byte $02
-vibrato_phase_voice0
+vibrato_phase_voice0    ; $7A36
                 .byte $A1
-vibrato_phase_voice1
+vibrato_phase_voice1    ; $7A37
                 .byte $0D
-vibrato_phase_voice2
+vibrato_phase_voice2    ; $7A38
                 .byte $0F,$EA,$FE,$5F,$FF,$FD,$FF,$FF
 
 ; ==================================================
@@ -3787,7 +3406,7 @@ vibrato_phase_voice2
 ; Range: $7A40 - $7BC7 (392 bytes)
 ; ==================================================
 
-init_music_system
+init_music_system       ; $7A40
                 LDA #$09
                 STA VOICE0_CONFIG
                 LDA #$19
@@ -3814,7 +3433,7 @@ init_music_system
                 STA SID_FILTER_RES
                 LDA #$3F
                 STA SID_VOLUME
-music_reset_pointers
+music_reset_pointers    ; $7A81
                 LDA #$00
                 STA VOICE0_PTR_LO
                 LDA #$E0
@@ -3832,7 +3451,7 @@ music_reset_pointers
                 STA VOICE1_TIMER
                 STA VOICE2_TIMER
                 RTS
-music_manager
+music_manager           ; $7AAB
                 JSR vibrato_system
                 LDA MUSIC_TIMING
                 BEQ slower_music_timing
@@ -3840,7 +3459,7 @@ music_manager
                 LDA MUSIC_COUNTER
                 CMP #$02
                 BCC L7AD0
-reset_music_counter
+reset_music_counter     ; $7ABD
                 LDA #$00
                 STA MUSIC_COUNTER
                 LDA MUSIC_TIMING
@@ -3849,17 +3468,17 @@ reset_music_counter
                 AND #$01
                 STA MUSIC_TIMING
                 JSR music_play_all_voices
-L7AD0
+L7AD0                   ; $7AD0
                 JMP check_music_loop
-slower_music_timing
+slower_music_timing     ; $7AD3
                 INC MUSIC_COUNTER
                 LDA MUSIC_COUNTER
                 CMP #$03
                 BCC L7AD0
                 JMP reset_music_counter
-music_play_all_voices
+music_play_all_voices   ; $7AE0
                 LDX #$00
-voice_processing_loop
+voice_processing_loop   ; $7AE2
                 LDA VOICE0_PTR_LO,X
                 STA $D9
                 LDA VOICE0_PTR_HI,X
@@ -3884,9 +3503,9 @@ voice_processing_loop
                 INX
                 CPX #$03
                 BNE voice_processing_loop
-music_exit
+music_exit              ; $7B22
                 RTS
-music_play_voice
+music_play_voice        ; $7B23
                 DEC music_note_duration
                 LDA music_note_duration
                 BNE music_exit
@@ -3916,12 +3535,12 @@ music_play_voice
                 STA $D9
                 BCC store_frequency
                 INC $DA
-store_frequency
+store_frequency         ; $7B69
                 LDX music_voice_index
                 LDA music_current_freq_low
                 STA music_frequency_buffer,X
                 RTS
-music_read_data
+music_read_data         ; $7B73
                 LDA $01
                 STA memory_bank_save
                 LDA #$00
@@ -3932,7 +3551,7 @@ music_read_data
                 STA $01
                 PLA
                 RTS
-check_music_loop
+check_music_loop        ; $7B86
                 LDA VOICE0_PTR_LO
                 CMP #$D1
                 BNE music_loop_exit
@@ -3940,12 +3559,12 @@ check_music_loop
                 CMP #$EA
                 BNE music_loop_exit
                 JMP music_reset_pointers
-music_loop_exit
+music_loop_exit         ; $7B97
                 RTS
-vibrato_system
+vibrato_system          ; $7B98
                 LDX #$00
                 JMP vibrato_loop
-vibrato_processing
+vibrato_processing      ; $7B9D
                 LDA sid_voice_offsets,X
                 TAY
                 LDA vibrato_phase_voice0,X
@@ -3957,13 +3576,13 @@ vibrato_processing
                 ADC music_frequency_buffer,X
                 STA $D400,Y
                 JMP vibrato_continue
-vibrato_loop
+vibrato_loop            ; $7BB6
                 LDA music_frequency_buffer,X
                 CLC
                 ADC #$0A
                 STA music_frequency_buffer,X
                 STA $D400
-vibrato_continue
+vibrato_continue        ; $7BC2
                 INX
                 CPX #$03
                 BCC vibrato_processing
@@ -3973,7 +3592,7 @@ vibrato_continue
 ; Unsectioned Data
 ; ==================================================
 
-sid_voice_offsets
+sid_voice_offsets       ; $7BC8
                 .byte $00,$07,$0E,$A1,$FF,$FD,$20,$AB,$00,$E8,$80,$FF,$15,$FF,$00,$FF
                 .byte $02,$FF,$00,$FF,$00,$FF,$A0,$B6,$82,$E8,$87,$A0,$02,$FF,$A5,$BF
                 .byte $02,$FF,$00,$A0,$1D,$BF,$02,$FF,$A0,$FF,$A0,$FF,$24,$A4,$FF,$FB
@@ -5399,13 +5018,13 @@ sid_voice_offsets
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
                 .byte $00,$00,$00,$00,$00,$00
-SID_FILTER_LO
+SID_FILTER_LO           ; $D415
                 .byte $00
-SID_FILTER_HI
+SID_FILTER_HI           ; $D416
                 .byte $00
-SID_FILTER_RES
+SID_FILTER_RES          ; $D417
                 .byte $00
-SID_VOLUME
+SID_VOLUME              ; $D418
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
