@@ -8602,7 +8602,7 @@
             },
             {
                 "color": "#add8e6",
-                "comment": "",
+                "comment": "This routine implements a 1-bit PWM audio decoder that reads compressed audio data and converts it to SID volume control signals. It reads a data stream starting at $190A, extracts header offset values, then processes each data byte bit-by-bit where 0-bits = silence ($00 volume) and 1-bits = full volume ($0F). Uses precise timing loops to maintain consistent sample rates.",
                 "endAddress": 4238,
                 "isVisible": true,
                 "name": "GRAPHICS DECOMPRESSION ROUTINE WITH SOUND FEEDBACK",
@@ -10204,7 +10204,7 @@
             "value": "L5D91"
         }
     ],
-    "timestamp": 1759099228,
+    "timestamp": 1759100174,
     "userSymbols": [
         {
             "key": 17240,
@@ -10227,6 +10227,10 @@
             "value": "entity_base_speeds"
         },
         {
+            "key": 42,
+            "value": "process_next_byte"
+        },
+        {
             "key": 13570,
             "value": "update_speedometer"
         },
@@ -10235,12 +10239,28 @@
             "value": "car_speed_up"
         },
         {
+            "key": 46,
+            "value": "process_next_bit"
+        },
+        {
             "key": 13826,
             "value": "render_dashboard_3d"
         },
         {
+            "key": 50,
+            "value": "bit_is_zero"
+        },
+        {
             "key": 12802,
             "value": "handle_collision"
+        },
+        {
+            "key": 56,
+            "value": "bit_is_one"
+        },
+        {
+            "key": 62,
+            "value": "continue_bit"
         },
         {
             "key": 27499,
@@ -10295,6 +10315,10 @@
             "value": "SID_FILTER_RES"
         },
         {
+            "key": 91,
+            "value": "advance_pointer"
+        },
+        {
             "key": 22929,
             "value": "handbrake_entity_y_low"
         },
@@ -10311,12 +10335,20 @@
             "value": "car_turn_direction"
         },
         {
+            "key": 96,
+            "value": "continue_current_byte"
+        },
+        {
             "key": 27528,
             "value": "check_music_loop"
         },
         {
             "key": 14658,
             "value": "manage_graphics"
+        },
+        {
+            "key": 101,
+            "value": "end_processing"
         },
         {
             "key": 22946,
@@ -10329,6 +10361,10 @@
         {
             "key": 19383,
             "value": "try_handbrake"
+        },
+        {
+            "key": 109,
+            "value": "set_volume_max"
         },
         {
             "key": 19386,
@@ -10371,6 +10407,10 @@
             "value": "direction_movement_y_table"
         },
         {
+            "key": 130,
+            "value": "set_volume_zero"
+        },
+        {
             "key": 19144,
             "value": "store_turn_data"
         },
@@ -10385,6 +10425,10 @@
         {
             "key": 27309,
             "value": "music_manager"
+        },
+        {
+            "key": 141,
+            "value": "delay_routine"
         },
         {
             "key": 12898,
@@ -10657,6 +10701,10 @@
         {
             "key": 27172,
             "value": "MUSIC_COUNTER"
+        },
+        {
+            "key": 2,
+            "value": "main_entry"
         },
         {
             "key": 13266,
