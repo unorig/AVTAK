@@ -4,7 +4,7 @@
 ; Source file: 2.prg.0813.43b0.clean
 ; File size: 60418 bytes
 ; Base address: $0FFE
-; Export date: Mon Sep 29 11:35:39 2025
+; Export date: Mon Sep 29 16:58:51 2025
 ; Assembler: 64tass
 ;
 
@@ -15,18 +15,18 @@
 
 ; External Symbol Definitions
 ; ============================
-BondSpriteArray = $03A8
-map_scroll_x = $033E
-Movement_Flags = $03A7
-V_MapYposition = $033D
-CarSpeed = $0340
-V_MapXposition = $033C
-ForwardReverse = $03A4
-BondCarXPosHigh = $0339
-BondCarXPosLow = $0338
-CarFacingDirection = $03A0
-EndGameFlag = $0313
 MovementVectorY = $0334
+BondSpriteArray = $03A8
+EndGameFlag = $0313
+Movement_Flags = $03A7
+map_scroll_x = $033E
+V_MapYposition = $033D
+ForwardReverse = $03A4
+V_MapXposition = $033C
+CarSpeed = $0340
+BondCarXPosHigh = $0339
+CarFacingDirection = $03A0
+BondCarXPosLow = $0338
 MaydayBeginLanding = $02E1
 
 ; ==================================================
