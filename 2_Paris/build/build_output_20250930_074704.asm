@@ -4,7 +4,7 @@
 ; Source file: 2.prg.0813.43b0.clean
 ; File size: 60418 bytes
 ; Base address: $0FFE
-; Export date: Tue Sep 30 08:15:38 2025
+; Export date: Tue Sep 30 07:47:04 2025
 ; Assembler: 64tass
 ;
 
@@ -1516,7 +1516,7 @@ render_dashboard_3d
                 BNE L4606               ; ($4603)
                 RTS                     ; ($4605)
 L4606
-                LDY CarFacingDirection  ; ($4606) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
+                LDY CarFacingDirection  ; ($4606)
                 LDA $6BD0,Y             ; ($4609)
                 BEQ L4639               ; ($460C)
                 LDA $0335               ; ($460E)
@@ -2915,7 +2915,7 @@ continue_car_turn
                 DEX                     ; ($5ABD)
                 BNE store_turn_data     ; ($5ABE)
                 STX ForwardReverse      ; ($5AC0)
-                STY CarFacingDirection  ; ($5AC3) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
+                STY CarFacingDirection  ; ($5AC3)
 store_turn_data
                 STX car_turning_counter ; ($5AC6)
                 STY car_turn_direction  ; ($5AC9)
@@ -2932,7 +2932,7 @@ handle_car_steering
                 LDA $FE                 ; ($5AE0)
                 BNE process_car_steering ; ($5AE2)
                 STA $5AA0               ; ($5AE4)
-                LDA CarFacingDirection  ; ($5AE7) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
+                LDA CarFacingDirection  ; ($5AE7)
                 AND #$01                ; ($5AEA)
                 EOR #$01                ; ($5AEC)
                 STA $5AA1               ; ($5AEE)
@@ -2947,13 +2947,13 @@ process_car_steering
                 LDA $FE                 ; ($5B02)
 start_new_turn
                 BPL turn_car_right      ; ($5B04)
-                LDX CarFacingDirection  ; ($5B06) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
+                LDX CarFacingDirection  ; ($5B06)
                 DEX                     ; ($5B09)
                 CPX #$FF                ; ($5B0A)
                 BNE set_new_direction   ; ($5B0C)
                 LDX #$07                ; ($5B0E)
 set_new_direction
-                STX CarFacingDirection  ; ($5B10) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
+                STX CarFacingDirection  ; ($5B10)
                 JMP store_joystick_state ; ($5B13)
 turn_car_right
                 .byte $AE,$A0,$03,$E8,$E0,$08,$D0,$F2,$A2,$00,$4C,$10,$5B,$EA,$EA ; ($5B16)
@@ -2974,7 +2974,7 @@ handle_car_speed
                 NOP                     ; ($5B3E)
                 NOP                     ; ($5B3F)
 execute_car_turn
-                LDA $FE                 ; ($5B40) Load Left (#ff) / Right (01) input value
+                LDA $FE                 ; ($5B40)
                 BEQ read_joystick       ; ($5B42)
                 LDA $07FD               ; ($5B44)
                 EOR #$02                ; ($5B47)
@@ -2984,7 +2984,7 @@ execute_car_turn
                 STY $07FC               ; ($5B4E)
 read_joystick
                 JSR read_joystick_input ; ($5B51)
-                LDA ForwardReverse      ; ($5B54) #00 Forward / #08 Reverse
+                LDA ForwardReverse      ; ($5B54)
                 BNE reverse_speed_control ; ($5B57)
                 LDA $FD                 ; ($5B59)
                 BEQ continue_to_fire_check ; ($5B5B)
@@ -3001,7 +3001,7 @@ car_speed_up
                 LDA CarSpeed            ; ($5B72)
                 CMP #$40                ; ($5B75)
                 BNE continue_to_fire_check ; ($5B77)
-                LDA ForwardReverse      ; ($5B79) #00 Forward / #08 Reverse
+                LDA ForwardReverse      ; ($5B79)
                 EOR #$08                ; ($5B7C)
                 STA ForwardReverse      ; ($5B7E)
                 LDA #$3F                ; ($5B81)
@@ -3146,7 +3146,7 @@ L5CAD
                 RTS                     ; ($5CBA)
                 .byte $60,$60,$EA       ; ($5CBB)
 Handle_Player_Movement
-                LDA Movement_Flags      ; ($5CBE) North/South = #02. East/West = #01
+                LDA Movement_Flags      ; ($5CBE)
                 AND #$01                ; ($5CC1)
                 BEQ Check_X_Movement    ; ($5CC3)
                 LDA CarFacingDirection  ; ($5CC5)
