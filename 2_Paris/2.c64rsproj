@@ -136,6 +136,14 @@
             "value": "V_MapXposition"
         },
         {
+            "key": 763,
+            "value": "adjusted_map_x"
+        },
+        {
+            "key": 762,
+            "value": "adjusted_map_y"
+        },
+        {
             "key": 765,
             "value": "V_CarCollision"
         },
@@ -156,16 +164,36 @@
             "value": "V_MaydayLanded"
         },
         {
+            "key": 821,
+            "value": "horizontal_scroll_delta"
+        },
+        {
+            "key": 820,
+            "value": "vertical_scroll_delta"
+        },
+        {
             "key": 2045,
             "value": "VIC_SpritePointer5"
+        },
+        {
+            "key": 823,
+            "value": "view_ready_flag"
         },
         {
             "key": 2044,
             "value": "VIC_SpritePointer4"
         },
         {
+            "key": 822,
+            "value": "view_update_flag"
+        },
+        {
             "key": 960,
             "value": "sprite_disable_bitmask_table"
+        },
+        {
+            "key": 845,
+            "value": "proximity_beep_frequency"
         },
         {
             "key": 847,
@@ -14302,6 +14330,142 @@
                 "name": "Sub_CarDamage",
                 "startAddress": 17664,
                 "type": "Code"
+            },
+            {
+                "comment": "Low bytes of screen memory pointers for damage indicator display positions. Five valid entries ($0515, $04ED, $04C5, $049D, $0475), three null entries.",
+                "endAddress": 17748,
+                "isVisible": true,
+                "name": "damage_screen_ptr_lo_table",
+                "startAddress": 17744,
+                "type": "Data"
+            },
+            {
+                "comment": "",
+                "endAddress": 17751,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 17749,
+                "type": "Junk"
+            },
+            {
+                "comment": "High bytes of screen memory pointers for damage indicator display positions. Paired with low byte table to form complete 16-bit screen addresses.",
+                "endAddress": 17756,
+                "isVisible": true,
+                "name": "damage_screen_ptr_hi_table",
+                "startAddress": 17752,
+                "type": "Data"
+            },
+            {
+                "comment": "",
+                "endAddress": 17775,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 17757,
+                "type": "Junk"
+            },
+            {
+                "comment": "Player bullet spawn routine. Checks if sprite 6 (bullet) is inactive, and if so, spawns bullet entity at player position with offsets ($AA horizontal, $31 vertical). Sets bullet sprite pointers ($C6/$AC), copies player facing direction for bullet trajectory, and triggers firing sound effect. Only fires when previous bullet has cleared.",
+                "endAddress": 17836,
+                "isVisible": true,
+                "name": "fire_player_bullet",
+                "startAddress": 17776,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 17919,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 17837,
+                "type": "Junk"
+            },
+            {
+                "comment": "3D dashboard view renderer. Reads map data around car position based on facing direction, samples terrain tiles via lookup tables, and renders 8-row perspective view to screen buffer ($0D09-$0E21). Handles horizontal/vertical scrolling offsets, performs distance-based tile sampling, and copies final view to screen memory when complete.",
+                "endAddress": 18492,
+                "isVisible": true,
+                "name": "Sub_3DCarView",
+                "startAddress": 17920,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 18511,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 18493,
+                "type": "Junk"
+            },
+            {
+                "comment": "Calculates Manhattan distance between player car and Mayday (sprite 3). Subtracts offset ($88 horizontal, $32 vertical) from Mayday position, computes absolute distance in both axes, sums them, divides result by $28, and stores frequency value at $034D with bit 0 set. Used to vary beep rate based on proximity.",
+                "endAddress": 18677,
+                "isVisible": true,
+                "name": "calculate_proximity_beep",
+                "startAddress": 18512,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 18687,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 18678,
+                "type": "Junk"
+            },
+            {
+                "comment": "Screen pattern writer based on countdown timer. Uses lower 5 bits of countdown digit 0 as index into tables at $4B00/$4B20/$4B40. Writes pattern character to screen memory - either fills 3 bytes when char=$48, or writes to 3 specific offset positions (0, $7E, $FC) otherwise. Likely updates visual effect tied to countdown.",
+                "endAddress": 18745,
+                "isVisible": true,
+                "name": "update_countdown_visual",
+                "startAddress": 18688,
+                "type": "Data"
+            },
+            {
+                "comment": "",
+                "endAddress": 18751,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 18746,
+                "type": "Junk"
+            },
+            {
+                "comment": "Character-based collision/damage handler dispatcher. Reads tile type from ($C9), branches to screen clearing routines based on value ($48 or $49), then increments damage counter. Triggers game over when damage reaches $28 (40 decimal) or overflows. Plays collision sound effect on non-fatal damage.",
+                "endAddress": 18870,
+                "isVisible": true,
+                "name": "handle_collision_damage",
+                "startAddress": 18752,
+                "type": "Data"
+            },
+            {
+                "comment": "",
+                "endAddress": 18879,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 18871,
+                "type": "Junk"
+            },
+            {
+                "comment": "Screen pattern clearer based on entity index. Uses X as index into countdown pattern tables, checks if character is $48 (clears 3 consecutive bytes) or other (clears 3 offset bytes at 0, $7E, $FC). Inverse of L4900 - clears patterns instead of writing them. Used during entity initialization.",
+                "endAddress": 18931,
+                "isVisible": true,
+                "name": "init_entity",
+                "startAddress": 18880,
+                "type": "Data"
+            },
+            {
+                "comment": "",
+                "endAddress": 18943,
+                "isVisible": true,
+                "name": "Junk",
+                "startAddress": 18932,
+                "type": "Junk"
+            },
+            {
+                "comment": "Memory block copier. Copies data from two source regions ($288B and $108F) to destination regions starting at $04D8 and $0000. Copies $E8 (232) bytes per page across 3 pages (696 bytes total per source). Likely copying game data or graphics from one memory area to another during initialization or level loading.",
+                "endAddress": 19011,
+                "isVisible": true,
+                "name": "copy_memory_blocks",
+                "startAddress": 18944,
+                "type": "Code"
             }
         ],
         "version": "1.0"
@@ -15580,315 +15744,19 @@
             "value": "L5046"
         }
     ],
-    "timestamp": 1759356287,
+    "timestamp": 1759363203,
     "userSymbols": [
         {
-            "key": 50179,
-            "value": "SID_Voice1_Freq_Hi"
-        },
-        {
-            "key": 13087,
-            "value": "sprite_loop_exit"
-        },
-        {
-            "key": 50178,
-            "value": "SID_Voice1_Freq_Lo"
-        },
-        {
-            "key": 50183,
-            "value": "SID_Voice1_Attack_Decay"
-        },
-        {
-            "key": 17460,
-            "value": "DrawMenuScreen"
-        },
-        {
-            "key": 19048,
-            "value": "Sub_MainGameLoop"
-        },
-        {
-            "key": 50182,
-            "value": "SID_Voice1_Control"
-        },
-        {
-            "key": 13074,
-            "value": "set_xmsb_flag"
-        },
-        {
-            "key": 50201,
-            "value": "SID_FilterResonance"
-        },
-        {
-            "key": 49200,
-            "value": "V_Sprite7Color"
-        },
-        {
-            "key": 22834,
-            "value": "sprite_data_extra"
-        },
-        {
-            "key": 12290,
-            "value": "init_game_systems"
-        },
-        {
-            "key": 12946,
-            "value": "Sub_ShowHideSprites"
-        },
-        {
-            "key": 50202,
-            "value": "SID_VolumeFilter"
-        },
-        {
-            "key": 12292,
-            "value": "init_entity_loop"
-        },
-        {
-            "key": 12948,
-            "value": "sprite_visibility_loop"
-        },
-        {
-            "key": 12295,
-            "value": "init_secondary_loop"
-        },
-        {
-            "key": 16291,
-            "value": "L4FA1"
-        },
-        {
-            "key": 22578,
-            "value": "sprite_init_data_extra"
-        },
-        {
-            "key": 13033,
-            "value": "show_sprite"
-        },
-        {
-            "key": 50193,
-            "value": "SID_Voice3_Freq_Hi"
-        },
-        {
-            "key": 14786,
-            "value": "init_entity"
-        },
-        {
-            "key": 50192,
-            "value": "SID_Voice3_Freq_Lo"
-        },
-        {
-            "key": 49163,
-            "value": "VIC_Sprite4Ycoord"
-        },
-        {
-            "key": 12822,
-            "value": "calculate_sprite_bitmask"
-        },
-        {
-            "key": 49162,
-            "value": "VIC_Sprite4Xcoord"
-        },
-        {
-            "key": 49165,
-            "value": "VIC_Sprite5Ycoord"
-        },
-        {
-            "key": 50197,
-            "value": "SID_Voice3_Attack_Decay"
-        },
-        {
-            "key": 49164,
-            "value": "VIC_Sprite5Xcoord"
-        },
-        {
-            "key": 13282,
-            "value": "reset_to_alternate_init"
-        },
-        {
-            "key": 50196,
-            "value": "SID_Voice3_Control"
-        },
-        {
-            "key": 22914,
-            "value": "V_SprPosVertLow"
-        },
-        {
-            "key": 50198,
-            "value": "SID_Voice3_Sustain_Release"
-        },
-        {
-            "key": 49152,
-            "value": "sprite_coords_table"
-        },
-        {
-            "key": 22786,
-            "value": "V_SprPosHorizLow"
-        },
-        {
-            "key": 22658,
-            "value": "sprite_init_ypos_low"
-        },
-        {
-            "key": 12898,
-            "value": "sub_Joystick"
-        },
-        {
-            "key": 19648,
-            "value": "Sub_LoadNewMapRow"
-        },
-        {
-            "key": 22530,
-            "value": "sprite_init_xpos_low"
-        },
-        {
-            "key": 49176,
-            "value": "VIC_ScreenControlRegister2"
-        },
-        {
-            "key": 12770,
-            "value": "update_counter_display"
-        },
-        {
-            "key": 16898,
-            "value": "Sub_Mayday"
-        },
-        {
-            "key": 19190,
-            "value": "Sub_LeftRightInput"
-        },
-        {
-            "key": 49178,
-            "value": "VIC_MemorySetupRegister"
-        },
-        {
-            "key": 12772,
-            "value": "display_counter_loop"
-        },
-        {
-            "key": 12920,
-            "value": "check_left_input"
-        },
-        {
-            "key": 13298,
-            "value": "secondary_reset_entry"
-        },
-        {
-            "key": 13431,
-            "value": "start_main_loop"
-        },
-        {
-            "key": 49182,
-            "value": "VIC_SpriteMulticolorRegister"
-        },
-        {
-            "key": 12924,
-            "value": "check_right_input"
-        },
-        {
-            "key": 15266,
-            "value": "L4BA0"
-        },
-        {
-            "key": 14418,
-            "value": "Sub_MaydayDistanceBeep"
-        },
-        {
-            "key": 22802,
-            "value": "V_HideShowSprite"
-        },
-        {
-            "key": 19266,
-            "value": "Sub_SteeringWheel"
-        },
-        {
-            "key": 13175,
-            "value": "hide_sprite"
-        },
-        {
-            "key": 49170,
-            "value": "VIC_SpriteXMSB"
-        },
-        {
-            "key": 13391,
-            "value": "skip_effects_init"
-        },
-        {
-            "key": 49175,
-            "value": "VIC_SpriteEnableRegister"
-        },
-        {
-            "key": 12916,
-            "value": "check_down_input"
-        },
-        {
-            "key": 12872,
-            "value": "write_x_msb_register"
-        },
-        {
-            "key": 12658,
-            "value": "Sub_DashClock"
-        },
-        {
-            "key": 13658,
-            "value": "damage_screen_ptr_hi_table"
-        },
-        {
-            "key": 16283,
-            "value": "L4F99"
-        },
-        {
-            "key": 15874,
-            "value": "MapLoadTempLow"
-        },
-        {
-            "key": 12532,
-            "value": "copy_init_data_loop"
-        },
-        {
-            "key": 16875,
-            "value": "L51E9"
-        },
-        {
-            "key": 12865,
-            "value": "clear_x_msb_bit"
-        },
-        {
-            "key": 13650,
-            "value": "damage_screen_ptr_lo_table"
+            "key": 14170,
+            "value": "calculate_tile_address_right"
         },
         {
             "key": 13145,
             "value": "disable_sprite_hardware"
         },
         {
-            "key": 13394,
-            "value": "configure_effects_and_start"
-        },
-        {
-            "key": 12741,
-            "value": "check_zero_limit"
-        },
-        {
-            "key": 16866,
-            "value": "L51E0"
-        },
-        {
-            "key": 14773,
-            "value": "L49B3"
-        },
-        {
-            "key": 13266,
-            "value": "reset_stack_and_init"
-        },
-        {
-            "key": 19244,
-            "value": "L5B2A"
-        },
-        {
-            "key": 19900,
-            "value": "L5DBA"
-        },
-        {
-            "key": 13354,
-            "value": "configure_sound_effects_alt"
+            "key": 13658,
+            "value": "damage_screen_ptr_hi_table"
         },
         {
             "key": 19107,
@@ -15899,168 +15767,708 @@
             "value": "V_LeftRightInput"
         },
         {
+            "key": 49192,
+            "value": "VIC_SpriteExtraColor2"
+        },
+        {
             "key": 19109,
             "value": "V_PostHandbrakeDirection"
+        },
+        {
+            "key": 14418,
+            "value": "calculate_proximity_beep"
         },
         {
             "key": 19108,
             "value": "V_HandbrakeTurnFlag"
         },
         {
-            "key": 22978,
-            "value": "V_SprPosVertHigh"
-        },
-        {
-            "key": 13088,
-            "value": "mayday_landing_check"
-        },
-        {
-            "key": 22850,
-            "value": "V_SprPosHorizHigh"
-        },
-        {
-            "key": 22722,
-            "value": "sprite_init_ypos_high"
-        },
-        {
-            "key": 13832,
-            "value": "L4606"
-        },
-        {
-            "key": 13094,
-            "value": "check_hide_flag"
-        },
-        {
-            "key": 13618,
-            "value": "update_damage_display"
-        },
-        {
-            "key": 22594,
-            "value": "sprite_init_xpos_high"
-        },
-        {
-            "key": 19122,
-            "value": "Sub_CarControlRoutine"
-        },
-        {
-            "key": 19458,
-            "value": "L5C00"
-        },
-        {
-            "key": 13234,
-            "value": "system_reset"
-        },
-        {
-            "key": 13826,
-            "value": "Sub_3DCarView"
-        },
-        {
-            "key": 12977,
-            "value": "check_vertical_distance"
-        },
-        {
-            "key": 12453,
-            "value": "copy_sprite_data_loop"
-        },
-        {
-            "key": 13106,
-            "value": "reset_sprite_position"
-        },
-        {
-            "key": 13570,
-            "value": "Sub_CarDamage"
-        },
-        {
-            "key": 13442,
-            "value": "init_sid_voice1_sustained"
-        },
-        {
-            "key": 19224,
-            "value": "L5B16"
-        },
-        {
-            "key": 49192,
-            "value": "VIC_SpriteExtraColor2"
-        },
-        {
-            "key": 13314,
-            "value": "configure_sound_effects"
-        },
-        {
-            "key": 12938,
-            "value": "store_fire_input"
-        },
-        {
-            "key": 12809,
-            "value": "store_x_msb"
-        },
-        {
             "key": 49197,
             "value": "VIC_Sprite4Color"
+        },
+        {
+            "key": 13650,
+            "value": "damage_screen_ptr_lo_table"
+        },
+        {
+            "key": 13394,
+            "value": "configure_effects_and_start"
         },
         {
             "key": 49198,
             "value": "VIC_Sprite5Color"
         },
         {
-            "key": 12929,
-            "value": "store_inputs"
+            "key": 13908,
+            "value": "scroll_up"
+        },
+        {
+            "key": 19900,
+            "value": "L5DBA"
         },
         {
             "key": 49185,
             "value": "VIC_SpriteBackgroundCollisionReg"
         },
         {
-            "key": 12928,
-            "value": "finalize_inputs"
-        },
-        {
             "key": 49184,
             "value": "VIC_SpriteSpriteCollisionRegister"
-        },
-        {
-            "key": 50184,
-            "value": "SID_Voice1_Sustain_Release"
         },
         {
             "key": 49187,
             "value": "VIC_BackgroundColor"
         },
         {
-            "key": 22818,
-            "value": "sprite_pointer_table"
-        },
-        {
-            "key": 13584,
-            "value": "draw_speed_bar_loop"
-        },
-        {
-            "key": 19822,
-            "value": "Loop_MapScreenUpdate"
-        },
-        {
-            "key": 19218,
-            "value": "Sub_Update_V_CarFacingDirection"
+            "key": 16291,
+            "value": "L4FA1"
         },
         {
             "key": 49186,
             "value": "V_BorderColor"
         },
         {
-            "key": 13081,
-            "value": "next_sprite"
-        },
-        {
             "key": 49191,
             "value": "VIC_SpriteExtraColor1"
+        },
+        {
+            "key": 23682,
+            "value": "tile_graphics_ptr_hi"
+        },
+        {
+            "key": 15266,
+            "value": "L4BA0"
+        },
+        {
+            "key": 19122,
+            "value": "Sub_CarControlRoutine"
+        },
+        {
+            "key": 22914,
+            "value": "V_SprPosVertLow"
+        },
+        {
+            "key": 13742,
+            "value": "bullet_spawn_exit"
+        },
+        {
+            "key": 14754,
+            "value": "increment_damage"
+        },
+        {
+            "key": 22658,
+            "value": "sprite_init_ypos_low"
+        },
+        {
+            "key": 14502,
+            "value": "calc_vertical_delta"
+        },
+        {
+            "key": 14521,
+            "value": "car_ahead_vertically"
+        },
+        {
+            "key": 49200,
+            "value": "V_Sprite7Color"
+        },
+        {
+            "key": 14009,
+            "value": "find_horizon_line"
+        },
+        {
+            "key": 12453,
+            "value": "copy_sprite_data_loop"
+        },
+        {
+            "key": 14011,
+            "value": "horizon_search_loop"
+        },
+        {
+            "key": 50184,
+            "value": "SID_Voice1_Sustain_Release"
+        },
+        {
+            "key": 22929,
+            "value": "bullet_ypos_low"
+        },
+        {
+            "key": 49163,
+            "value": "VIC_Sprite4Ycoord"
+        },
+        {
+            "key": 49162,
+            "value": "VIC_Sprite4Xcoord"
+        },
+        {
+            "key": 14773,
+            "value": "damage_fatal"
+        },
+        {
+            "key": 14514,
+            "value": "compare_y_low_byte"
+        },
+        {
+            "key": 49165,
+            "value": "VIC_Sprite5Ycoord"
+        },
+        {
+            "key": 49164,
+            "value": "VIC_Sprite5Xcoord"
+        },
+        {
+            "key": 50179,
+            "value": "SID_Voice1_Freq_Hi"
+        },
+        {
+            "key": 12977,
+            "value": "check_vertical_distance"
+        },
+        {
+            "key": 50178,
+            "value": "SID_Voice1_Freq_Lo"
+        },
+        {
+            "key": 13234,
+            "value": "system_reset"
+        },
+        {
+            "key": 49152,
+            "value": "sprite_coords_table"
+        },
+        {
+            "key": 50183,
+            "value": "SID_Voice1_Attack_Decay"
+        },
+        {
+            "key": 50182,
+            "value": "SID_Voice1_Control"
+        },
+        {
+            "key": 50201,
+            "value": "SID_FilterResonance"
+        },
+        {
+            "key": 50202,
+            "value": "SID_VolumeFilter"
+        },
+        {
+            "key": 49176,
+            "value": "VIC_ScreenControlRegister2"
+        },
+        {
+            "key": 12938,
+            "value": "store_fire_input"
+        },
+        {
+            "key": 14722,
+            "value": "handle_collision_type_49"
+        },
+        {
+            "key": 49178,
+            "value": "VIC_MemorySetupRegister"
+        },
+        {
+            "key": 16283,
+            "value": "L4F99"
+        },
+        {
+            "key": 50193,
+            "value": "SID_Voice3_Freq_Hi"
+        },
+        {
+            "key": 14469,
+            "value": "car_ahead_horizontally"
+        },
+        {
+            "key": 50192,
+            "value": "SID_Voice3_Freq_Lo"
+        },
+        {
+            "key": 12929,
+            "value": "store_inputs"
+        },
+        {
+            "key": 49182,
+            "value": "VIC_SpriteMulticolorRegister"
+        },
+        {
+            "key": 13442,
+            "value": "init_sid_voice1_sustained"
+        },
+        {
+            "key": 12928,
+            "value": "finalize_inputs"
+        },
+        {
+            "key": 50197,
+            "value": "SID_Voice3_Attack_Decay"
+        },
+        {
+            "key": 50196,
+            "value": "SID_Voice3_Control"
+        },
+        {
+            "key": 50198,
+            "value": "SID_Voice3_Sustain_Release"
+        },
+        {
+            "key": 49170,
+            "value": "VIC_SpriteXMSB"
+        },
+        {
+            "key": 49175,
+            "value": "VIC_SpriteEnableRegister"
+        },
+        {
+            "key": 16875,
+            "value": "L51E9"
+        },
+        {
+            "key": 14743,
+            "value": "clear_offset_byte"
+        },
+        {
+            "key": 14487,
+            "value": "mayday_ahead_horizontally"
+        },
+        {
+            "key": 13975,
+            "value": "sample_terrain_loop"
+        },
+        {
+            "key": 12946,
+            "value": "Sub_ShowHideSprites"
+        },
+        {
+            "key": 16866,
+            "value": "L51E0"
+        },
+        {
+            "key": 12948,
+            "value": "sprite_visibility_loop"
+        },
+        {
+            "key": 13033,
+            "value": "show_sprite"
+        },
+        {
+            "key": 22978,
+            "value": "V_SprPosVertHigh"
+        },
+        {
+            "key": 22722,
+            "value": "sprite_init_ypos_high"
+        },
+        {
+            "key": 19190,
+            "value": "Sub_LeftRightInput"
+        },
+        {
+            "key": 13282,
+            "value": "reset_to_alternate_init"
+        },
+        {
+            "key": 14054,
+            "value": "check_distance_fade"
+        },
+        {
+            "key": 12770,
+            "value": "update_counter_display"
+        },
+        {
+            "key": 12772,
+            "value": "display_counter_loop"
+        },
+        {
+            "key": 19648,
+            "value": "Sub_LoadNewMapRow"
+        },
+        {
+            "key": 22993,
+            "value": "bullet_ypos_high"
+        },
+        {
+            "key": 14334,
+            "value": "copy_view_to_screen"
+        },
+        {
+            "key": 23506,
+            "value": "direction_horizontal_flag"
+        },
+        {
+            "key": 14065,
+            "value": "calculate_tile_address"
+        },
+        {
+            "key": 13298,
+            "value": "secondary_reset_entry"
+        },
+        {
+            "key": 14539,
+            "value": "mayday_ahead_vertically"
+        },
+        {
+            "key": 14024,
+            "value": "render_left_side"
+        },
+        {
+            "key": 12532,
+            "value": "copy_init_data_loop"
+        },
+        {
+            "key": 22817,
+            "value": "bullet_sprite_ptr_1"
+        },
+        {
+            "key": 14786,
+            "value": "init_entity"
+        },
+        {
+            "key": 14272,
+            "value": "center_column_loop"
+        },
+        {
+            "key": 22818,
+            "value": "sprite_pointer_table"
+        },
+        {
+            "key": 22562,
+            "value": "sprite_init_pointers"
+        },
+        {
+            "key": 12741,
+            "value": "check_zero_limit"
+        },
+        {
+            "key": 19244,
+            "value": "L5B2A"
+        },
+        {
+            "key": 14554,
+            "value": "sum_distances"
+        },
+        {
+            "key": 14813,
+            "value": "clear_offset_pattern"
+        },
+        {
+            "key": 22833,
+            "value": "bullet_sprite_ptr_2"
+        },
+        {
+            "key": 23346,
+            "value": "direction_offset_table_ptr"
+        },
+        {
+            "key": 22834,
+            "value": "sprite_data_extra"
+        },
+        {
+            "key": 22578,
+            "value": "sprite_init_data_extra"
+        },
+        {
+            "key": 14035,
+            "value": "left_column_loop"
+        },
+        {
+            "key": 14807,
+            "value": "clear_three_bytes_loop"
+        },
+        {
+            "key": 13266,
+            "value": "reset_stack_and_init"
+        },
+        {
+            "key": 13865,
+            "value": "scroll_left"
+        },
+        {
+            "key": 24322,
+            "value": "tile_type_properties"
+        },
+        {
+            "key": 13354,
+            "value": "configure_sound_effects_alt"
+        },
+        {
+            "key": 23554,
+            "value": "tile_graphics_ptr_lo"
+        },
+        {
+            "key": 14880,
+            "value": "start_page_copy"
+        },
+        {
+            "key": 23298,
+            "value": "sampled_terrain_buffer"
+        },
+        {
+            "key": 15138,
+            "value": "countdown_screen_ptr_lo"
+        },
+        {
+            "key": 14627,
+            "value": "write_offset_pattern"
+        },
+        {
+            "key": 14882,
+            "value": "byte_copy_loop"
+        },
+        {
+            "key": 22786,
+            "value": "V_SprPosHorizLow"
+        },
+        {
+            "key": 22530,
+            "value": "sprite_init_xpos_low"
+        },
+        {
+            "key": 13088,
+            "value": "mayday_landing_check"
+        },
+        {
+            "key": 17460,
+            "value": "DrawMenuScreen"
+        },
+        {
+            "key": 13883,
+            "value": "check_vertical_scroll"
+        },
+        {
+            "key": 13094,
+            "value": "check_hide_flag"
+        },
+        {
+            "key": 14911,
+            "value": "check_complete"
+        },
+        {
+            "key": 22801,
+            "value": "bullet_xpos_low"
+        },
+        {
+            "key": 19458,
+            "value": "L5C00"
+        },
+        {
+            "key": 14142,
+            "value": "right_column_loop"
+        },
+        {
+            "key": 22802,
+            "value": "V_HideShowSprite"
+        },
+        {
+            "key": 14900,
+            "value": "next_page"
+        },
+        {
+            "key": 13618,
+            "value": "update_damage_display"
+        },
+        {
+            "key": 19224,
+            "value": "L5B16"
+        },
+        {
+            "key": 13106,
+            "value": "reset_sprite_position"
+        },
+        {
+            "key": 16898,
+            "value": "Sub_Mayday"
+        },
+        {
+            "key": 13832,
+            "value": "check_facing_direction"
+        },
+        {
+            "key": 15874,
+            "value": "MapLoadTempLow"
+        },
+        {
+            "key": 12809,
+            "value": "store_x_msb"
+        },
+        {
+            "key": 19218,
+            "value": "Sub_Update_V_CarFacingDirection"
+        },
+        {
+            "key": 15106,
+            "value": "countdown_pattern_chars"
+        },
+        {
+            "key": 14850,
+            "value": "copy_memory_blocks"
+        },
+        {
+            "key": 14594,
+            "value": "update_countdown_visual"
+        },
+        {
+            "key": 13826,
+            "value": "render_3d_view"
+        },
+        {
+            "key": 14340,
+            "value": "screen_copy_start"
+        },
+        {
+            "key": 13570,
+            "value": "Sub_CarDamage"
+        },
+        {
+            "key": 19048,
+            "value": "Sub_MainGameLoop"
+        },
+        {
+            "key": 13314,
+            "value": "configure_sound_effects"
+        },
+        {
+            "key": 14342,
+            "value": "screen_copy_loop"
         },
         {
             "key": 12802,
             "value": "Sub_UpdateSpritePosition"
         },
         {
-            "key": 22562,
-            "value": "sprite_init_pointers"
+            "key": 19822,
+            "value": "Loop_MapScreenUpdate"
+        },
+        {
+            "key": 12290,
+            "value": "init_game_systems"
+        },
+        {
+            "key": 14621,
+            "value": "fill_three_bytes_loop"
+        },
+        {
+            "key": 12292,
+            "value": "init_entity_loop"
+        },
+        {
+            "key": 13081,
+            "value": "next_sprite"
+        },
+        {
+            "key": 12295,
+            "value": "init_secondary_loop"
+        },
+        {
+            "key": 13087,
+            "value": "sprite_loop_exit"
+        },
+        {
+            "key": 13584,
+            "value": "draw_speed_bar_loop"
+        },
+        {
+            "key": 13074,
+            "value": "set_xmsb_flag"
+        },
+        {
+            "key": 12822,
+            "value": "calculate_sprite_bitmask"
+        },
+        {
+            "key": 22849,
+            "value": "bullet_direction"
+        },
+        {
+            "key": 22850,
+            "value": "V_SprPosHorizHigh"
+        },
+        {
+            "key": 14690,
+            "value": "handle_collision_type_48"
+        },
+        {
+            "key": 22594,
+            "value": "sprite_init_xpos_high"
+        },
+        {
+            "key": 12898,
+            "value": "sub_Joystick"
+        },
+        {
+            "key": 13926,
+            "value": "no_scroll"
+        },
+        {
+            "key": 12920,
+            "value": "check_left_input"
+        },
+        {
+            "key": 22865,
+            "value": "bullet_xpos_high"
+        },
+        {
+            "key": 14462,
+            "value": "compare_x_low_byte"
+        },
+        {
+            "key": 19266,
+            "value": "Sub_SteeringWheel"
+        },
+        {
+            "key": 12924,
+            "value": "check_right_input"
+        },
+        {
+            "key": 13936,
+            "value": "calculate_map_position"
+        },
+        {
+            "key": 13682,
+            "value": "fire_player_bullet"
+        },
+        {
+            "key": 14710,
+            "value": "clear_third_byte"
+        },
+        {
+            "key": 13431,
+            "value": "start_main_loop"
+        },
+        {
+            "key": 12658,
+            "value": "Sub_DashClock"
+        },
+        {
+            "key": 13175,
+            "value": "hide_sprite"
+        },
+        {
+            "key": 12916,
+            "value": "check_down_input"
+        },
+        {
+            "key": 12872,
+            "value": "write_x_msb_register"
+        },
+        {
+            "key": 14159,
+            "value": "check_distance_fade_right"
+        },
+        {
+            "key": 15170,
+            "value": "countdown_screen_ptr_hi"
+        },
+        {
+            "key": 13391,
+            "value": "skip_effects_init"
+        },
+        {
+            "key": 14658,
+            "value": "handle_collision_damage"
+        },
+        {
+            "key": 12865,
+            "value": "clear_x_msb_bit"
         }
     ],
     "version": "1.0"
