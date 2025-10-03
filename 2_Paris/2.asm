@@ -4,7 +4,7 @@
 ; Source file: 2.prg.0813.43b0.clean
 ; File size: 60418 bytes
 ; Base address: $0FFE
-; Export date: Thu Oct 2 21:30:03 2025
+; Export date: Fri Oct 3 12:05:57 2025
 ; Assembler: 64tass
 ;
 
@@ -15,65 +15,74 @@
 
 ; External Symbol Definitions
 ; ============================
-IRQ_vector_low = $0314
-IRQ_vector_high = $0315
-BRK_serv_address_low = $0316
-VIC_SpritePointer4 = $07FC
-BRK_serv_address_high = $0317
-VIC_SpritePointer5 = $07FD
-V_CarFacingDirection = $03A0
-adjusted_map_y = $02FA
-V_DamageCount = $03A1
-adjusted_map_x = $02FB
-game_priority_flag = $03A2
-bullet_collision_flag = $02FC
-mayday_sprite_pointer_table = $03E0
-V_CarCollision = $02FD
-V_ForwardReverse = $03A4
-V_MaydayLanded = $02FE
 V_ScrollCounter = $03A7
-sprite_pointers_base = $07F7
-Screen_DashClock = $05A6
 V_CarPosHorizontalLow = $0338
 V_CarPosHorizontalHigh = $0339
-ScreenCounterDigit100 = $04F3
 V_CarPositionVertLow = $033A
-ScreenCounterDigit10 = $04F4
-ScreenCounterDigit1 = $04F5
 V_CarPositionVertHigh = $033B
 V_MapXposition = $033C
 V_MapYposition = $033D
 V_HorzRasterScrollLoop = $033E
-game_start_entry = $FCE2
+V_VertRasterScrollLoop = $033F
 vertical_scroll_delta = $0334
 horizontal_scroll_delta = $0335
 view_update_flag = $0336
 view_ready_flag = $0337
 sprite_enable_bitmask_table = $03C8
-screen_speedo_bar = $0576
-sprite_disable_bitmask_table = $03C0
 beep_interval_counter = $034C
+sprite_disable_bitmask_table = $03C0
 proximity_beep_frequency = $034D
 beep_duration_counter = $034E
 V_MaydayLoopCounter = $034F
 V_CarSpeed = $0340
-countdown_digit_0 = $0399
-Line_token_Low = $0304
+V_TempScrollFlag = $0341
 V_MapDrawSpeed = $0342
+Screen_DashClock = $05A6
+main_loop_timer = $0344
+steering_timer = $0345
+V_RegisterCollision = $0346
+V_CarFacingDirectionTemp = $0347
+map_scroll_delta_x = $0350
+V_MenuSelection = $02E0
+mayday_ready_flag = $02E1
+mayday_sprite_pointer_table = $03E0
+map_scroll_delta_y = $0360
+adjusted_map_y = $02FA
+adjusted_map_x = $02FB
+bullet_collision_flag = $02FC
+V_CarCollision = $02FD
+V_MaydayLanded = $02FE
+movement_delta_table_horizontal = $0370
+V_MapScreen = $07E7
+movement_delta_table_vertical = $0380
+VIC_SpritePointer4 = $07FC
+VIC_SpritePointer5 = $07FD
+Line_token_Low = $0304
+countdown_digit_0 = $0399
 NMI_IRQ_addr_low = $0318
 NMI_IRQ_addr_high = $0319
-V_RegisterCollision = $0346
+sprite_pointers_base = $07F7
 countdown_digit_6 = $0390
-V_CarFacingDirectionTemp = $0347
+ScreenCounterDigit100 = $04F3
 countdown_digit_5 = $0391
+ScreenCounterDigit10 = $04F4
+ScreenCounterDigit1 = $04F5
 countdown_digit_4 = $0393
 countdown_digit_3 = $0394
 countdown_digit_2 = $0396
-countdown_digit_1 = $0397
-V_MapScreen = $07E7
-V_MenuSelection = $02E0
-mayday_ready_flag = $02E1
 EndGameFlag = $0313
+IRQ_vector_low = $0314
+countdown_digit_1 = $0397
+IRQ_vector_high = $0315
+direction_sprite_table = $03A8
+BRK_serv_address_low = $0316
+BRK_serv_address_high = $0317
+screen_speedo_bar = $0576
+game_start_entry = $FCE2
+V_CarFacingDirection = $03A0
+V_DamageCount = $03A1
+game_priority_flag = $03A2
+V_ForwardReverse = $03A4
 
 ; ==================================================
 ; Section: Junk (Junk)
@@ -1036,7 +1045,7 @@ init_secondary_loop
                 LDA #$04                                  ; ($4035)
                 STA V_HorzRasterScrollLoop                ; ($4037)
                 LDA #$01                                  ; ($403A)
-                STA $033F                                 ; ($403C)
+                STA V_VertRasterScrollLoop                ; ($403C)
                 STA sprite_init_xpos_high                 ; ($403F)
                 STA sprite_init_ypos_high                 ; ($4042)
                 LDA #$FA                                  ; ($4045)
@@ -1257,7 +1266,7 @@ display_counter_loop
 ; enables sprite in VIC register.
 ; ==================================================
 
-Sub_UpdateSpritePosition
+update_sprite_position
                 PHA                                       ; ($4200)
                 LDA #$00                                  ; ($4201)
                 BCC store_x_msb                           ; ($4203)
@@ -1446,7 +1455,7 @@ show_sprite
                 SEC                                       ; ($430F)
 set_xmsb_flag
                 LDA $02                                   ; ($4310)
-                JSR Sub_UpdateSpritePosition              ; ($4312)
+                JSR update_sprite_position                ; ($4312)
                 PLA                                       ; ($4315)
                 TAX                                       ; ($4316)
 next_sprite
@@ -1554,7 +1563,7 @@ reset_to_alternate_init
                 SEI                                       ; ($43E2)
                 TXS                                       ; ($43E3)
                 CLD                                       ; ($43E4)
-                JMP L5800                                 ; ($43E5)
+                JMP show_victory_screen                   ; ($43E5)
 
 ; ==================================================
 ; Section: Junk (Junk)
@@ -1681,7 +1690,7 @@ configure_effects_and_start
                 LDA #$61                                  ; ($4470)
                 STA SID_Voice3_Control                    ; ($4472)
 start_main_loop
-                JMP Sub_MainGameLoop                      ; ($4475)
+                JMP main_start                            ; ($4475)
 
 ; ==================================================
 ; Section: Junk (Junk)
@@ -3120,7 +3129,7 @@ menu_system_init
                 STA SID_VolumeFilter                      ; ($4F74)
                 LDA #$00                                  ; ($4F77)
                 STA V_RegisterCollision                   ; ($4F79)
-                JSR L54F0                                 ; ($4F7C)
+                JSR init_menu_screen                      ; ($4F7C)
 menu_input_loop
                 JSR sub_Joystick                          ; ($4F7F)
                 LDA $02                                   ; ($4F82)
@@ -3151,7 +3160,7 @@ delay_loop_inner
                 DEY                                       ; ($4FAB)
                 BNE delay_loop_middle                     ; ($4FAC)
                 INC $D9                                   ; ($4FAE)
-                JSR L542D                                 ; ($4FB0)
+                JSR update_menu_display                   ; ($4FB0)
                 LDA EndGameFlag                           ; ($4FB3) #00 Continue / #80 Mayday found / Ends game #27
                 BEQ menu_input_loop                       ; ($4FB6)
                 JMP show_end_game_screen                  ; ($4FB8)
@@ -3300,7 +3309,7 @@ setup_dashboard_display
                 ORA #$0C                                  ; ($5091)
                 STA VIC_MemorySetupRegister               ; ($5093)
                 JSR copy_view_to_screen                   ; ($5096)
-                JSR L5DA0                                 ; ($5099)
+                JSR update_map_draw_speed                 ; ($5099)
                 JSR Sub_DashClock                         ; ($509C)
                 JMP update_audio_systems                  ; ($509F)
                 .byte $4C,$E0,$51,$4C,$E0,$51,$4C,$E0,$51,$4C,$E0,$51,$EA  ; ($50A2)
@@ -3319,7 +3328,7 @@ setup_game_area_display
                 STA VIC_MemorySetupRegister               ; ($50CC)
                 LDA VIC_ScreenControlRegister1            ; ($50CF)
                 AND #$F0                                  ; ($50D2)
-                ORA $033F                                 ; ($50D4)
+                ORA V_VertRasterScrollLoop                ; ($50D4)
                 STA VIC_ScreenControlRegister1            ; ($50D7)
                 LDA VIC_ScreenControlRegister2            ; ($50DA)
                 AND #$F0                                  ; ($50DD)
@@ -3506,20 +3515,27 @@ L51F2
                 .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($51F5)
 
 ; ==================================================
-; Unsectioned Data
+; Section: update_mayday_ai (Code)
+; Range: $5200 - $535B (348 bytes)
+; Mayday parachutist AI controller. When airborne (V_MaydayLanded=$00),
+; drifts in circular pattern using direction lookup tables. When descending
+; (V_MaydayLanded=$01), moves toward random landing coordinates
+; (random_value_1-4). Decrements countdown timer, triggers time-up game over
+; (EndGameFlag=$40) at 000, and sets mayday_ready_flag when timer drops below
+; threshold to enable player victory condition.
 ; ==================================================
 
 update_mayday_ai
                 LDA EndGameFlag                           ; ($5200) #00 Continue / #80 Mayday found / Ends game #27
-                BNE L5216                                 ; ($5203)
+                BNE mayday_ai_exit                        ; ($5203)
                 LDY V_MaydayLoopCounter                   ; ($5205)
                 DEY                                       ; ($5208)
                 STY V_MaydayLoopCounter                   ; ($5209)
-                BNE L5216                                 ; ($520C)
+                BNE mayday_ai_exit                        ; ($520C)
                 LDA V_MaydayLanded                        ; ($520E) #00 continue circling / #01 Landed
                 BEQ mayday_circling_behavior              ; ($5211)
                 JMP mayday_landing_behavior               ; ($5213)
-L5216
+mayday_ai_exit
                 RTS                                       ; ($5216)
                 .byte $60                                 ; ($5217)
 mayday_circling_behavior
@@ -3529,24 +3545,24 @@ mayday_circling_behavior
                 TAY                                       ; ($5220)
                 LDA direction_x_delta_table,Y             ; ($5221)
                 BMI move_mayday_left                      ; ($5224)
-                BEQ L5247                                 ; ($5226)
+                BEQ check_mayday_vertical_delta           ; ($5226)
                 CLC                                       ; ($5228)
                 LDA V_SprPosHorizLow                      ; ($5229)
                 ADC #$01                                  ; ($522C)
                 STA V_SprPosHorizLow                      ; ($522E)
-                BCC L5247                                 ; ($5231)
+                BCC check_mayday_vertical_delta           ; ($5231)
                 INC V_SprPosHorizHigh                     ; ($5233)
-                JMP L5247                                 ; ($5236)
+                JMP check_mayday_vertical_delta           ; ($5236)
 move_mayday_left
                 SEC                                       ; ($5239)
                 LDA V_SprPosHorizLow                      ; ($523A)
                 SBC #$01                                  ; ($523D)
                 STA V_SprPosHorizLow                      ; ($523F)
-                BCS L5247                                 ; ($5242)
+                BCS check_mayday_vertical_delta           ; ($5242)
                 DEC V_SprPosHorizHigh                     ; ($5244)
-L5247
+check_mayday_vertical_delta
                 LDA direction_y_delta_table,Y             ; ($5247)
-                BMI L525F                                 ; ($524A)
+                BMI move_mayday_up                        ; ($524A)
                 BEQ update_mayday_sprite_and_direction    ; ($524C)
                 CLC                                       ; ($524E)
                 LDA V_SprPosVertLow                       ; ($524F)
@@ -3555,7 +3571,7 @@ L5247
                 BCC update_mayday_sprite_and_direction    ; ($5257)
                 INC V_SprPosVertHigh                      ; ($5259)
                 JMP update_mayday_sprite_and_direction    ; ($525C)
-L525F
+move_mayday_up
                 SEC                                       ; ($525F)
                 LDA V_SprPosVertLow                       ; ($5260)
                 SBC #$01                                  ; ($5263)
@@ -3568,7 +3584,7 @@ update_mayday_sprite_and_direction
                 LDY mayday_turn_timer                     ; ($5273)
                 DEY                                       ; ($5276)
                 STY mayday_turn_timer                     ; ($5277)
-                BNE L52A1                                 ; ($527A)
+                BNE jump_to_countdown                     ; ($527A)
                 CLC                                       ; ($527C)
                 LDA mayday_direction_index                ; ($527D)
                 ADC #$02                                  ; ($5280)
@@ -3577,57 +3593,57 @@ update_mayday_sprite_and_direction
                 CMP $D3                                   ; ($5286)
                 BNE L5290                                 ; ($5288)
                 INC V_MaydayLanded                        ; ($528A) #00 continue circling / #01 Landed
-                JMP L5296                                 ; ($528D)
+                JMP rotate_direction                      ; ($528D)
 L5290
                 LDY mayday_direction_index                ; ($5290)
                 STY mayday_turn_timer                     ; ($5293)
-L5296
+rotate_direction
                 LDY sprite_data_extra                     ; ($5296)
                 DEY                                       ; ($5299)
-                BPL L529E                                 ; ($529A)
+                BPL store_new_direction                   ; ($529A)
                 LDY #$07                                  ; ($529C)
-L529E
+store_new_direction
                 STY sprite_data_extra                     ; ($529E)
-L52A1
+jump_to_countdown
                 JMP update_countdown_display              ; ($52A1)
 mayday_landing_behavior
                 LDY #$08                                  ; ($52A4)
                 STY V_MaydayLoopCounter                   ; ($52A6)
                 LDA V_SprPosHorizHigh                     ; ($52A9)
                 CMP random_value_2                        ; ($52AC)
-                BCC L52D1                                 ; ($52AF)
-                BEQ L52B6                                 ; ($52B1)
+                BCC move_right                            ; ($52AF)
+                BEQ distance_compare_x_low                ; ($52B1)
                 JMP move_toward_target_horizontal         ; ($52B3)
-L52B6
+distance_compare_x_low
                 LDA V_SprPosHorizLow                      ; ($52B6)
                 CMP random_value_1                        ; ($52B9)
-                BCC L52D1                                 ; ($52BC)
-                BEQ L52DF                                 ; ($52BE)
+                BCC move_right                            ; ($52BC)
+                BEQ check_vertical_target                 ; ($52BE)
 move_toward_target_horizontal
                 SEC                                       ; ($52C0)
                 LDA V_SprPosHorizLow                      ; ($52C1)
                 SBC #$01                                  ; ($52C4)
                 STA V_SprPosHorizLow                      ; ($52C6)
-                BCS L52DF                                 ; ($52C9)
+                BCS check_vertical_target                 ; ($52C9)
                 DEC V_SprPosHorizHigh                     ; ($52CB)
-                JMP L52DF                                 ; ($52CE)
-L52D1
+                JMP check_vertical_target                 ; ($52CE)
+move_right
                 CLC                                       ; ($52D1)
                 LDA V_SprPosHorizLow                      ; ($52D2)
                 ADC #$01                                  ; ($52D5)
                 STA V_SprPosHorizLow                      ; ($52D7)
-                BCC L52DF                                 ; ($52DA)
+                BCC check_vertical_target                 ; ($52DA)
                 INC V_SprPosHorizHigh                     ; ($52DC)
-L52DF
+check_vertical_target
                 LDA V_SprPosVertHigh                      ; ($52DF)
                 CMP random_value_4                        ; ($52E2)
-                BCC L5307                                 ; ($52E5)
-                BEQ L52EC                                 ; ($52E7)
+                BCC move_down                             ; ($52E5)
+                BEQ landing_compare_y_low                 ; ($52E7)
                 JMP move_toward_target_vertical           ; ($52E9)
-L52EC
+landing_compare_y_low
                 LDA V_SprPosVertLow                       ; ($52EC)
                 CMP random_value_3                        ; ($52EF)
-                BCC L5307                                 ; ($52F2)
+                BCC move_down                             ; ($52F2)
                 BEQ update_countdown_display              ; ($52F4)
 move_toward_target_vertical
                 SEC                                       ; ($52F6)
@@ -3637,7 +3653,7 @@ move_toward_target_vertical
                 BCS update_countdown_display              ; ($52FF)
                 DEC V_SprPosVertHigh                      ; ($5301)
                 JMP update_countdown_display              ; ($5304)
-L5307
+move_down
                 CLC                                       ; ($5307)
                 LDA V_SprPosVertLow                       ; ($5308)
                 ADC #$01                                  ; ($530B)
@@ -3648,7 +3664,7 @@ update_countdown_display
                 LDX countdown_update_timer                ; ($5315)
                 DEX                                       ; ($5318)
                 STX countdown_update_timer                ; ($5319)
-                BNE L534D                                 ; ($531C)
+                BNE countdown_exit                        ; ($531C)
                 LDX #$14                                  ; ($531E)
                 STX countdown_update_timer                ; ($5320)
                 NOP                                       ; ($5323)
@@ -3665,48 +3681,92 @@ decrement_counter_digits
 check_countdown_zero
                 LDA ScreenCounterDigit100                 ; ($5338)
                 CMP #$64                                  ; ($533B)
-                BNE L534D                                 ; ($533D)
+                BNE countdown_exit                        ; ($533D)
                 LDA ScreenCounterDigit10                  ; ($533F)
                 CMP #$64                                  ; ($5342)
                 BNE set_mayday_ready_flag                 ; ($5344)
                 LDA ScreenCounterDigit1                   ; ($5346)
                 CMP #$64                                  ; ($5349)
                 BEQ trigger_timeout_gameover              ; ($534B)
-L534D
+countdown_exit
                 RTS                                       ; ($534D)
 set_mayday_ready_flag
                 CMP #$6A                                  ; ($534E)
-                BCS L5355                                 ; ($5350)
+                BCS ready_flag_exit                       ; ($5350)
                 INC mayday_ready_flag                     ; ($5352)
-L5355
+ready_flag_exit
                 RTS                                       ; ($5355)
 trigger_timeout_gameover
                 LDA #$40                                  ; ($5356)
                 STA EndGameFlag                           ; ($5358) #00 Continue / #80 Mayday found / Ends game #27
                 RTS                                       ; ($535B)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
 countdown_update_timer
-                .byte $03,$17,$FF,$00,$FF,$00,$5F,$00,$FF,$08,$FF,$00,$FF,$DF,$FF,$00  ; ($535C)
-                .byte $FF,$B1,$FF,$FF,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00  ; ($536C)
-                .byte $FF,$00,$FF,$00,$FF,$00,$FF,$00,$00,$0F,$00,$FF,$23,$FF,$00,$1F  ; ($537C)
-                .byte $00,$0E,$0F,$FF,$02,$FF,$00,$FF,$00,$0F,$00,$0F,$00,$FF,$00,$FF  ; ($538C)
-                .byte $00,$FF,$0F,$FF,$1F,$FF,$00,$FF,$00,$FF,$00,$FF,$0F,$2F,$00,$FF  ; ($539C)
-                .byte $0C,$FF,$2F,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FD,$00,$FF,$00,$FF  ; ($53AC)
-                .byte $00,$FF,$24,$FF,$00,$FF,$00,$FF,$1F,$0F,$09,$00,$20,$FF,$00,$FF  ; ($53BC)
-                .byte $00,$FF,$0C,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$0F,$FF,$00,$FF  ; ($53CC)
-                .byte $00,$FF,$A0,$FF                     ; ($53DC)
-L53E0
+                .byte $03                                 ; ($535C)
+
+; ==================================================
+; Section: Junk (Junk)
+; Range: $535D - $53DF (131 bytes)
+; ==================================================
+
+                .byte $17,$FF,$00,$FF,$00,$5F,$00,$FF,$08,$FF,$00,$FF,$DF,$FF,$00,$FF  ; ($535D)
+                .byte $B1,$FF,$FF,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF  ; ($536D)
+                .byte $00,$FF,$00,$FF,$00,$FF,$00,$00,$0F,$00,$FF,$23,$FF,$00,$1F,$00  ; ($537D)
+                .byte $0E,$0F,$FF,$02,$FF,$00,$FF,$00,$0F,$00,$0F,$00,$FF,$00,$FF,$00  ; ($538D)
+                .byte $FF,$0F,$FF,$1F,$FF,$00,$FF,$00,$FF,$00,$FF,$0F,$2F,$00,$FF,$0C  ; ($539D)
+                .byte $FF,$2F,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FD,$00,$FF,$00,$FF,$00  ; ($53AD)
+                .byte $FF,$24,$FF,$00,$FF,$00,$FF,$1F,$0F,$09,$00,$20,$FF,$00,$FF,$00  ; ($53BD)
+                .byte $FF,$0C,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$0F,$FF,$00,$FF,$00  ; ($53CD)
+                .byte $FF,$A0,$FF                         ; ($53DD)
+
+; ==================================================
+; Section: setup_menu_colors (Code)
+; Range: $53E0 - $53F2 (19 bytes)
+; ==================================================
+
+setup_menu_colors
                 LDA #$05                                  ; ($53E0)
                 LDY #$02                                  ; ($53E2)
-L53E4
-                STA $53FD,Y                               ; ($53E4)
+fill_color_loop
+                STA menu_color_table_1,Y                  ; ($53E4)
                 DEY                                       ; ($53E7)
-                BPL L53E4                                 ; ($53E8)
+                BPL fill_color_loop                       ; ($53E8)
                 LDX V_MenuSelection                       ; ($53EA) 1=Theme, 2=Effects, 3=Both
                 LDA #$0D                                  ; ($53ED)
-                STA $53FC,X                               ; ($53EF)
-                JMP L5430                                 ; ($53F2)
-                .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$0D,$05,$05,$0D  ; ($53F5)
-L5400
+                STA menu_color_table,X                    ; ($53EF)
+                JMP init_menu_row_counter                 ; ($53F2)
+
+; ==================================================
+; Section: Junk (Junk)
+; Range: $53F5 - $53FB (7 bytes)
+; ==================================================
+
+                .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA         ; ($53F5)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
+menu_color_table
+                .byte $0D                                 ; ($53FC)
+menu_color_table_1
+                .byte $05,$05,$0D                         ; ($53FD)
+
+; ==================================================
+; Section: fill_screen_memory (Code)
+; Range: $5400 - $542B (44 bytes)
+; Screen memory fill routine. Fills 5 pages of screen memory starting at
+; $03E8 with character $15, and corresponding color memory starting at $D7E8
+; with color $0E (light blue). Processes 256 bytes per page, starting at
+; offset $18 for first page, then $00 for remaining pages. Clears/initializes
+; display area.
+; ==================================================
+
+fill_screen_memory
                 LDA #$03                                  ; ($5400)
                 STA $AF                                   ; ($5402)
                 LDA #$E8                                  ; ($5404)
@@ -3717,27 +3777,43 @@ L5400
                 STA $AC                                   ; ($540E)
                 LDX #$04                                  ; ($5410)
                 LDY #$18                                  ; ($5412)
-                JMP L5419                                 ; ($5414)
-L5417
+                JMP fill_byte_loop                        ; ($5414)
+next_page_fill
                 LDY #$00                                  ; ($5417)
-L5419
+fill_byte_loop
                 LDA #$15                                  ; ($5419)
                 STA ($AE),Y                               ; ($541B)
                 LDA #$0E                                  ; ($541D)
                 STA ($AC),Y                               ; ($541F)
                 INY                                       ; ($5421)
-                BNE L5419                                 ; ($5422)
+                BNE fill_byte_loop                        ; ($5422)
                 INC $AF                                   ; ($5424)
                 INC $AD                                   ; ($5426)
                 DEX                                       ; ($5428)
-                BNE L5417                                 ; ($5429)
+                BNE next_page_fill                        ; ($5429)
                 RTS                                       ; ($542B)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
                 .byte $EA                                 ; ($542C)
-L542D
-                JMP L53E0                                 ; ($542D)
-L5430
+
+; ==================================================
+; Section: update_menu_display (Code)
+; Range: $542D - $54F3 (199 bytes)
+; Menu update system. Refreshes menu highlight colors, then renders complete
+; menu by copying 40 bytes from 16 data tables to screen memory rows with
+; color attributes. Uses animated color cycling on first row and
+; menu_color_table for highlighting selected option. Includes screen clear
+; initialization.
+; ==================================================
+
+update_menu_display
+                JMP setup_menu_colors                     ; ($542D)
+init_menu_row_counter
                 LDY #$00                                  ; ($5430)
-DrawMenuScreen
+draw_menu_row_loop
                 LDA $5500,Y                               ; ($5432)
                 STA $0428,Y                               ; ($5435)
                 LDA $D9                                   ; ($5438)
@@ -3792,7 +3868,7 @@ DrawMenuScreen
                 STA $DAF8,Y                               ; ($54BE)
                 LDA $5708,Y                               ; ($54C1)
                 STA $0748,Y                               ; ($54C4)
-                LDA $53FD                                 ; ($54C7)
+                LDA menu_color_table_1                    ; ($54C7)
                 STA $DB48,Y                               ; ($54CA)
                 LDA $5730,Y                               ; ($54CD)
                 STA $0770,Y                               ; ($54D0)
@@ -3804,14 +3880,20 @@ DrawMenuScreen
                 STA $DB98,Y                               ; ($54E2)
                 INY                                       ; ($54E5)
                 CPY #$28                                  ; ($54E6)
-                BEQ L54ED                                 ; ($54E8)
-                JMP DrawMenuScreen                        ; ($54EA)
-L54ED
+                BEQ menu_draw_complete                    ; ($54E8)
+                JMP draw_menu_row_loop                    ; ($54EA)
+menu_draw_complete
                 RTS                                       ; ($54ED)
                 .byte $A9,$0D                             ; ($54EE)
-L54F0
-                JSR L5400                                 ; ($54F0)
-                JMP L53E0                                 ; ($54F3)
+init_menu_screen
+                JSR fill_screen_memory                    ; ($54F0)
+                JMP setup_menu_colors                     ; ($54F3)
+
+; ==================================================
+; Section: Junk (Junk)
+; Range: $54F6 - $57FF (778 bytes)
+; ==================================================
+
                 .byte $54,$4C,$E0,$53,$0D,$0D,$0D,$05,$05,$05,$15,$15,$15,$15,$15,$15  ; ($54F6)
                 .byte $15,$15,$15,$15,$8F,$91,$84,$92,$92,$15,$85,$88,$91,$84,$15,$93  ; ($5506)
                 .byte $8E,$15,$92,$93,$80,$91,$93,$15,$15,$15,$15,$15,$15,$15,$15,$15  ; ($5516)
@@ -3861,7 +3943,18 @@ L54F0
                 .byte $00,$FF,$0F,$FF,$00,$FF,$00,$FF,$A0,$FF,$00,$FF,$00,$FF,$00,$2F  ; ($57D6)
                 .byte $00,$FF,$08,$6F,$00,$0F,$0F,$FF,$2E,$FF,$08,$FF,$00,$FF,$00,$FF  ; ($57E6)
                 .byte $00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF  ; ($57F6)
-L5800
+
+; ==================================================
+; Section: show_victory_screen (Code)
+; Range: $5800 - $5879 (122 bytes)
+; Victory screen initialization and display. Sets up IRQ handler at $518A,
+; configures VIC for display (screen at $3000), clears screen memory,
+; decompresses victory data from $2512, then displays 10 text strings from
+; tables at $5880/$5890 at 40-byte intervals starting from $0080. Enters
+; infinite loop after display complete.
+; ==================================================
+
+show_victory_screen
                 SEI                                       ; ($5800)
                 LDA #$8A                                  ; ($5801)
                 STA IRQ_vector_low                        ; ($5803)
@@ -3897,7 +3990,7 @@ L5800
                 NOP                                       ; ($583A)
                 NOP                                       ; ($583B)
                 NOP                                       ; ($583C)
-                JSR L5400                                 ; ($583D)
+                JSR fill_screen_memory                    ; ($583D)
                 LDA #$12                                  ; ($5840)
                 STA $1006                                 ; ($5842)
                 LDA #$25                                  ; ($5845)
@@ -3911,10 +4004,10 @@ L5800
                 LDA #$00                                  ; ($5854)
                 STA $FB                                   ; ($5856)
                 LDX #$00                                  ; ($5858)
-L585A
-                LDA $5880,X                               ; ($585A)
+display_text_loop
+                LDA victory_text_pointers_lo,X            ; ($585A)
                 STA $FE                                   ; ($585D)
-                LDA $5890,X                               ; ($585F)
+                LDA victory_text_pointers_hi,X            ; ($585F)
                 STA $FD                                   ; ($5862)
                 CLC                                       ; ($5864)
                 LDA $FB                                   ; ($5865)
@@ -3923,52 +4016,75 @@ L585A
                 LDA $FC                                   ; ($586B)
                 ADC #$00                                  ; ($586D)
                 STA $FC                                   ; ($586F)
-                JSR L58C0                                 ; ($5871)
+                JSR display_text_with_sound               ; ($5871)
                 INX                                       ; ($5874)
                 CPX #$0A                                  ; ($5875)
-                BNE L585A                                 ; ($5877)
-L5879
-                JMP L5879                                 ; ($5879)
-                .byte $FF,$00,$FF,$00,$04,$04,$05,$05,$05,$06,$06,$06,$06,$06,$04,$04  ; ($587C)
-                .byte $04,$04,$04,$04,$78,$F0,$40,$90,$B8,$08,$30,$58,$A8,$F8,$04,$04  ; ($588C)
-                .byte $04,$04,$04,$04,$A2,$04,$A0,$18,$4C,$B9,$54,$A0,$00,$A9,$15,$91  ; ($589C)
-                .byte $AE,$A9,$00,$91,$AC,$C8,$D0,$F5,$E6,$AF,$E6,$AD,$CA,$D0,$EC,$EA  ; ($58AC)
-                .byte $A0,$00,$B9,$00                     ; ($58BC)
-L58C0
+                BNE display_text_loop                     ; ($5877)
+victory_infinite_loop
+                JMP victory_infinite_loop                 ; ($5879)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
+                .byte $FF,$00,$FF,$00                     ; ($587C)
+victory_text_pointers_lo
+                .byte $04,$04,$05,$05,$05,$06,$06,$06,$06,$06,$04,$04,$04,$04,$04,$04  ; ($5880)
+victory_text_pointers_hi
+                .byte $78,$F0,$40,$90,$B8,$08,$30,$58,$A8,$F8,$04,$04,$04,$04,$04,$04  ; ($5890)
+                .byte $A2,$04,$A0,$18,$4C,$B9,$54,$A0,$00,$A9,$15,$91,$AE,$A9,$00,$91  ; ($58A0)
+                .byte $AC,$C8,$D0,$F5,$E6,$AF,$E6,$AD,$CA,$D0,$EC,$EA,$A0,$00,$B9,$00  ; ($58B0)
+
+; ==================================================
+; Section: display_text_with_sound (Code)
+; Range: $58C0 - $58FF (64 bytes)
+; Text display routine with typing effect. Copies characters from source
+; ($FB/$FC) to destination ($FD/$FE) one at a time, playing typing sound for
+; each character via init_sid_voice1_sustained. Delays between characters
+; using nested loop at L58E8. Stops at terminator $15 or after 40 characters
+; ($28), returns after silencing voice.
+; ==================================================
+
+display_text_with_sound
                 LDY #$00                                  ; ($58C0)
-L58C2
+copy_char_loop
                 LDA ($FB),Y                               ; ($58C2)
                 STA ($FD),Y                               ; ($58C4)
                 CMP #$15                                  ; ($58C6)
-                BEQ L58D0                                 ; ($58C8)
+                BEQ silence_and_exit                      ; ($58C8)
                 JSR init_sid_voice1_sustained             ; ($58CA)
-                JMP L58E8                                 ; ($58CD)
-L58D0
+                JMP typing_delay_loop                     ; ($58CD)
+silence_and_exit
                 LDA #$00                                  ; ($58D0)
                 STA SID_Voice1_Control                    ; ($58D2)
-                JMP L58E8                                 ; ($58D5)
+                JMP typing_delay_loop                     ; ($58D5)
                 .byte $4C,$E8,$58,$4C,$E8,$58,$4C,$E8,$58,$4C,$E8,$58,$4C,$E8,$58,$EA  ; ($58D8)
-L58E8
+typing_delay_loop
                 TYA                                       ; ($58E8)
                 PHA                                       ; ($58E9)
                 TXA                                       ; ($58EA)
                 PHA                                       ; ($58EB)
                 LDY #$3F                                  ; ($58EC)
-L58EE
+delay_outer_loop
                 LDX #$FF                                  ; ($58EE)
-L58F0
+delay_inner_loop
                 DEX                                       ; ($58F0)
-                BNE L58F0                                 ; ($58F1)
+                BNE delay_inner_loop                      ; ($58F1)
                 DEY                                       ; ($58F3)
-                BNE L58EE                                 ; ($58F4)
+                BNE delay_outer_loop                      ; ($58F4)
                 PLA                                       ; ($58F6)
                 TAX                                       ; ($58F7)
                 PLA                                       ; ($58F8)
                 TAY                                       ; ($58F9)
                 INY                                       ; ($58FA)
                 CPY #$28                                  ; ($58FB)
-                BNE L58C2                                 ; ($58FD)
+                BNE copy_char_loop                        ; ($58FD)
                 RTS                                       ; ($58FF)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
                 .byte $DF,$02,$FF,$00,$FF,$FF,$FF,$00,$FF,$08,$FF,$FF,$FF,$FF,$FF,$00  ; ($5900)
                 .byte $FF,$00,$FF,$00,$FF,$FF,$FF,$FF,$FF,$02,$FF,$00,$FF,$00,$FF,$00  ; ($5910)
                 .byte $FF,$08,$FF,$00,$FF,$20,$FF,$00,$FF,$F3,$FF,$00,$FF,$00,$FF,$00  ; ($5920)
@@ -3985,13 +4101,24 @@ L58F0
                 .byte $00,$FF,$00,$FF,$00,$FF,$00,$FF,$0F,$FF,$00,$FF,$00,$FF,$A0,$FF  ; ($59D0)
                 .byte $00,$FF,$00,$FF,$00,$2F,$00,$FF,$00,$6F,$00,$0F,$0F,$FF,$2E,$FF  ; ($59E0)
                 .byte $00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF,$00,$FF  ; ($59F0)
-L5A00
+
+; ==================================================
+; Section: initialize_and_run_game (Code)
+; Range: $5A00 - $5A8D (142 bytes)
+; Main game initialization and loop entry. Calls initialization routines
+; (entities, systems, memory, IRQ, randomization), then enters timing loop
+; that alternates between main game logic (Sub_MainGameLoop) and steering
+; wheel updates (Sub_SteeringWheel). Checks EndGameFlag and branches to
+; appropriate ending (victory at $43E0 or other at $43D0).
+; ==================================================
+
+initialize_and_run_game
                 JSR init_game_systems                     ; ($5A00)
                 JSR L7A40                                 ; ($5A03)
                 JSR copy_memory_blocks                    ; ($5A06)
                 JSR setup_game_irq                        ; ($5A09)
                 JSR randomize_game_state                  ; ($5A0C)
-                JSR L5B25                                 ; ($5A0F)
+                JSR store_steering_input                  ; ($5A0F)
                 NOP                                       ; ($5A12)
                 NOP                                       ; ($5A13)
                 NOP                                       ; ($5A14)
@@ -4022,30 +4149,30 @@ L5A00
                 NOP                                       ; ($5A2D)
                 NOP                                       ; ($5A2E)
                 NOP                                       ; ($5A2F)
-L5A30
-                LDX $0344                                 ; ($5A30)
+game_timing_loop
+                LDX main_loop_timer                       ; ($5A30)
                 DEX                                       ; ($5A33)
-                BNE L5A4C                                 ; ($5A34)
+                BNE store_timer_and_run_main              ; ($5A34)
                 LDX #$10                                  ; ($5A36)
-                LDY $0345                                 ; ($5A38)
+                LDY steering_timer                        ; ($5A38)
                 DEY                                       ; ($5A3B)
-                BNE L5A52                                 ; ($5A3C)
+                BNE store_timer_and_update_steering       ; ($5A3C)
                 LDY #$02                                  ; ($5A3E)
-                STY $0345                                 ; ($5A40)
-                STX $0344                                 ; ($5A43)
-                JMP L5A60                                 ; ($5A46)
+                STY steering_timer                        ; ($5A40)
+                STX main_loop_timer                       ; ($5A43)
+                JMP read_input_and_control_car            ; ($5A46)
                 .byte $8C,$45,$03                         ; ($5A49)
-L5A4C
-                STX $0344                                 ; ($5A4C)
-                JMP Sub_MainGameLoop                      ; ($5A4F)
-L5A52
-                STY $0345                                 ; ($5A52)
-                JMP Sub_SteeringWheel                     ; ($5A55)
+store_timer_and_run_main
+                STX main_loop_timer                       ; ($5A4C)
+                JMP main_start                            ; ($5A4F)
+store_timer_and_update_steering
+                STY steering_timer                        ; ($5A52)
+                JMP animate_steering_wheel                ; ($5A55)
                 .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA     ; ($5A58)
-L5A60
+read_input_and_control_car
                 JSR sub_Joystick                          ; ($5A60)
-                JMP Sub_CarControlRoutine                 ; ($5A63)
-Sub_MainGameLoop
+                JMP handle_car_controls                   ; ($5A63)
+main_start
                 JSR Sub_ShowHideSprites                   ; ($5A66)
                 JSR Sub_CarDamage                         ; ($5A69)
                 JSR render_3d_view                        ; ($5A6C)
@@ -4055,15 +4182,31 @@ Sub_MainGameLoop
                 JSR MapLoadTempLow                        ; ($5A78)
                 JSR handle_collision_damage               ; ($5A7B)
                 LDA EndGameFlag                           ; ($5A7E) #00 Continue / #80 Mayday found / Ends game #27
-                BEQ L5A8D                                 ; ($5A81)
+                BEQ continue_game_loop                    ; ($5A81)
                 CMP #$80                                  ; ($5A83)
-                BEQ L5A8A                                 ; ($5A85)
+                BEQ jump_to_victory_sequence              ; ($5A85)
                 JMP reset_stack_and_init                  ; ($5A87)
-L5A8A
+jump_to_victory_sequence
                 JMP reset_to_alternate_init               ; ($5A8A)
-L5A8D
-                JMP L5A30                                 ; ($5A8D)
-                .byte $30,$5A,$EA,$EA,$EA,$30,$5A,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA  ; ($5A90)
+continue_game_loop
+                JMP game_timing_loop                      ; ($5A8D)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
+                .byte $30,$5A,$EA,$EA,$EA,$30,$5A,$EA     ; ($5A90)
+
+; ==================================================
+; Section: Car Control and Joystick Input System (Code)
+; Range: $5A98 - $7BC7 (8496 bytes)
+; Handles player car steering, acceleration/deceleration, speed management,
+; handbrake turns, and fire button input. Includes direction wraparound
+; (0-7), forward/reverse gear switching at speed thresholds, and multi-frame
+; handbrake turn animations.
+; ==================================================
+
+                .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA     ; ($5A98)
 V_LeftRightInput
                 .byte $00                                 ; ($5AA0)
 V_Direction90Deg
@@ -4072,150 +4215,150 @@ V_HandbrakeTurnFlag
                 .byte $00                                 ; ($5AA2)
 V_PostHandbrakeDirection
                 .byte $02,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA  ; ($5AA3)
-Sub_CarControlRoutine
+handle_car_controls
                 LDX V_HandbrakeTurnFlag                   ; ($5AB0)
-                BEQ L5AE0                                 ; ($5AB3)
+                BEQ check_neutral_steering                ; ($5AB3)
                 LDY V_PostHandbrakeDirection              ; ($5AB5)
                 DEY                                       ; ($5AB8)
-                BPL L5ABD                                 ; ($5AB9)
+                BPL handbrake_animation_loop              ; ($5AB9)
                 LDY #$07                                  ; ($5ABB)
-L5ABD
+handbrake_animation_loop
                 DEX                                       ; ($5ABD)
-                BNE L5AC6                                 ; ($5ABE)
+                BNE update_handbrake_state                ; ($5ABE)
                 STX V_ForwardReverse                      ; ($5AC0) #00 Forward / #08 Reverse
                 STY V_CarFacingDirection                  ; ($5AC3) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
-L5AC6
+update_handbrake_state
                 STX V_HandbrakeTurnFlag                   ; ($5AC6)
                 STY V_PostHandbrakeDirection              ; ($5AC9)
-                LDA $03A8,Y                               ; ($5ACC)
+                LDA direction_sprite_table,Y              ; ($5ACC)
                 STA $AE                                   ; ($5ACF)
                 CLC                                       ; ($5AD1)
                 LDY #$BD                                  ; ($5AD2)
                 LDX #$AB                                  ; ($5AD4)
                 LDA #$08                                  ; ($5AD6)
-                JSR Sub_UpdateSpritePosition              ; ($5AD8)
+                JSR update_sprite_position                ; ($5AD8)
                 JMP configure_effects_and_start           ; ($5ADB)
                 .byte $EA,$EA                             ; ($5ADE)
-L5AE0
+check_neutral_steering
                 LDA $FE                                   ; ($5AE0)
-                BNE Sub_LeftRightInput                    ; ($5AE2)
+                BNE process_steering_input                ; ($5AE2)
                 STA V_LeftRightInput                      ; ($5AE4)
                 LDA V_CarFacingDirection                  ; ($5AE7) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
                 AND #$01                                  ; ($5AEA)
                 EOR #$01                                  ; ($5AEC)
                 STA V_Direction90Deg                      ; ($5AEE)
-                JMP L5B2A                                 ; ($5AF1)
-Sub_LeftRightInput
+                JMP update_car_sprite                     ; ($5AF1)
+process_steering_input
                 CMP V_LeftRightInput                      ; ($5AF4)
-                BNE L5B04                                 ; ($5AF7)
+                BNE check_steer_right                     ; ($5AF7)
                 DEC V_Direction90Deg                      ; ($5AF9)
                 LDA V_Direction90Deg                      ; ($5AFC)
-                BMI Sub_SteeringWheel                     ; ($5AFF)
+                BMI animate_steering_wheel                ; ($5AFF)
                 NOP                                       ; ($5B01)
                 LDA $FE                                   ; ($5B02)
-L5B04
-                BPL L5B16                                 ; ($5B04)
+check_steer_right
+                BPL steer_right                           ; ($5B04)
                 LDX V_CarFacingDirection                  ; ($5B06) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
                 DEX                                       ; ($5B09)
                 CPX #$FF                                  ; ($5B0A)
-                BNE Sub_Update_V_CarFacingDirection       ; ($5B0C)
+                BNE update_car_direction                  ; ($5B0C)
                 LDX #$07                                  ; ($5B0E)
-Sub_Update_V_CarFacingDirection
+update_car_direction
                 STX V_CarFacingDirection                  ; ($5B10) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
-                JMP L5B25                                 ; ($5B13)
-L5B16
+                JMP store_steering_input                  ; ($5B13)
+steer_right
                 LDX V_CarFacingDirection                  ; ($5B16) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
                 INX                                       ; ($5B19)
                 CPX #$08                                  ; ($5B1A)
-                BNE Sub_Update_V_CarFacingDirection       ; ($5B1C)
+                BNE update_car_direction                  ; ($5B1C)
                 LDX #$00                                  ; ($5B1E)
-                JMP Sub_Update_V_CarFacingDirection       ; ($5B20)
+                JMP update_car_direction                  ; ($5B20)
                 .byte $EA,$EA                             ; ($5B23)
-L5B25
+store_steering_input
                 LDA $FE                                   ; ($5B25)
                 STA V_LeftRightInput                      ; ($5B27)
-L5B2A
+update_car_sprite
                 LDX V_CarFacingDirection                  ; ($5B2A) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
-                LDA $03A8,X                               ; ($5B2D)
+                LDA direction_sprite_table,X              ; ($5B2D)
                 STA $AE                                   ; ($5B30)
                 CLC                                       ; ($5B32)
                 LDY #$BD                                  ; ($5B33)
                 LDX #$AB                                  ; ($5B35)
                 LDA #$08                                  ; ($5B37)
-                JSR Sub_UpdateSpritePosition              ; ($5B39)
+                JSR update_sprite_position                ; ($5B39)
                 NOP                                       ; ($5B3C)
                 NOP                                       ; ($5B3D)
                 NOP                                       ; ($5B3E)
                 NOP                                       ; ($5B3F)
-Sub_SteeringWheel
+animate_steering_wheel
                 LDA $FE                                   ; ($5B40)
-                BEQ L5B51                                 ; ($5B42)
+                BEQ read_joystick_continue                ; ($5B42)
                 LDA VIC_SpritePointer5                    ; ($5B44)
                 EOR #$02                                  ; ($5B47)
                 STA VIC_SpritePointer5                    ; ($5B49)
                 TAY                                       ; ($5B4C)
                 DEY                                       ; ($5B4D)
                 STY VIC_SpritePointer4                    ; ($5B4E)
-L5B51
+read_joystick_continue
                 JSR sub_Joystick                          ; ($5B51)
                 LDA V_ForwardReverse                      ; ($5B54) #00 Forward / #08 Reverse
-                BNE L5B89                                 ; ($5B57)
+                BNE reverse_mode_controls                 ; ($5B57)
                 LDA $FD                                   ; ($5B59)
-                BEQ L5B86                                 ; ($5B5B)
-                BPL L5B6F                                 ; ($5B5D)
-L5B5F
+                BEQ speed_update_done                     ; ($5B5B)
+                BPL accelerate                            ; ($5B5D)
+decelerate
                 DEC V_CarSpeed                            ; ($5B5F)
                 LDA V_CarSpeed                            ; ($5B62)
-                BNE L5B86                                 ; ($5B65)
+                BNE speed_update_done                     ; ($5B65)
                 LDA #$01                                  ; ($5B67)
                 STA V_CarSpeed                            ; ($5B69)
-                JMP L5B86                                 ; ($5B6C)
-L5B6F
+                JMP speed_update_done                     ; ($5B6C)
+accelerate
                 INC V_CarSpeed                            ; ($5B6F)
                 LDA V_CarSpeed                            ; ($5B72)
                 CMP #$40                                  ; ($5B75)
-                BNE L5B86                                 ; ($5B77)
+                BNE speed_update_done                     ; ($5B77)
                 LDA V_ForwardReverse                      ; ($5B79) #00 Forward / #08 Reverse
                 EOR #$08                                  ; ($5B7C)
                 STA V_ForwardReverse                      ; ($5B7E) #00 Forward / #08 Reverse
                 LDA #$3F                                  ; ($5B81)
                 STA V_CarSpeed                            ; ($5B83)
-L5B86
-                JMP L5B92                                 ; ($5B86)
-L5B89
+speed_update_done
+                JMP check_fire_button                     ; ($5B86)
+reverse_mode_controls
                 LDA $FD                                   ; ($5B89)
-                BEQ L5B86                                 ; ($5B8B)
-                BMI L5B6F                                 ; ($5B8D)
-                JMP L5B5F                                 ; ($5B8F)
-L5B92
+                BEQ speed_update_done                     ; ($5B8B)
+                BMI accelerate                            ; ($5B8D)
+                JMP decelerate                            ; ($5B8F)
+check_fire_button
                 LDA $02                                   ; ($5B92)
-                BEQ L5BB8                                 ; ($5B94)
+                BEQ return_to_main                        ; ($5B94)
                 LDA V_HandbrakeTurnFlag                   ; ($5B96)
-                BNE L5BB8                                 ; ($5B99)
+                BNE return_to_main                        ; ($5B99)
                 LDA V_ForwardReverse                      ; ($5B9B) #00 Forward / #08 Reverse
-                BEQ L5BB5                                 ; ($5B9E)
+                BEQ fire_bullet                           ; ($5B9E)
                 LDA V_CarSpeed                            ; ($5BA0)
                 CMP #$15                                  ; ($5BA3)
-                BCS L5BB5                                 ; ($5BA5)
+                BCS fire_bullet                           ; ($5BA5)
                 LDA #$04                                  ; ($5BA7)
                 STA V_HandbrakeTurnFlag                   ; ($5BA9)
                 LDA V_CarFacingDirection                  ; ($5BAC) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
                 STA V_PostHandbrakeDirection              ; ($5BAF)
-                JMP Sub_MainGameLoop                      ; ($5BB2)
-L5BB5
+                JMP main_start                            ; ($5BB2)
+fire_bullet
                 JSR fire_player_bullet                    ; ($5BB5)
-L5BB8
-                JMP Sub_MainGameLoop                      ; ($5BB8)
+return_to_main
+                JMP main_start                            ; ($5BB8)
                 .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA  ; ($5BBB)
                 .byte $EA,$EA,$EA,$84,$AE,$18,$A0,$BD,$A2,$AB,$A9,$08,$20,$00,$42,$4C  ; ($5BCB)
                 .byte $66,$5A,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA  ; ($5BDB)
                 .byte $EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA,$EA  ; ($5BEB)
                 .byte $EA,$EA,$EA,$EA,$EA                 ; ($5BFB)
-L5C00
+handle_car_movement
                 LDA V_CarFacingDirection                  ; ($5C00) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
                 ORA V_ForwardReverse                      ; ($5C03) #00 Forward / #08 Reverse
                 TAX                                       ; ($5C06)
-                LDA $0370,X                               ; ($5C07)
+                LDA movement_delta_table_horizontal,X     ; ($5C07)
                 BEQ L5C53                                 ; ($5C0A)
                 BMI L5C32                                 ; ($5C0C)
                 LDY V_HorzRasterScrollLoop                ; ($5C0E)
@@ -4254,10 +4397,10 @@ L5C42
                 BCC L5C53                                 ; ($5C4E)
                 INC V_CarPosHorizontalHigh                ; ($5C50)
 L5C53
-                LDA $0380,X                               ; ($5C53)
+                LDA movement_delta_table_vertical,X       ; ($5C53)
                 BEQ L5CAD                                 ; ($5C56)
                 BMI L5C85                                 ; ($5C58)
-                LDY $033F                                 ; ($5C5A)
+                LDY V_VertRasterScrollLoop                ; ($5C5A)
                 INY                                       ; ($5C5D)
                 INY                                       ; ($5C5E)
                 CPY #$03                                  ; ($5C5F)
@@ -4270,7 +4413,7 @@ L5C6B
                 BNE L5C71                                 ; ($5C6D)
                 LDY #$01                                  ; ($5C6F)
 L5C71
-                STY $033F                                 ; ($5C71)
+                STY V_VertRasterScrollLoop                ; ($5C71)
                 SEC                                       ; ($5C74)
                 LDA V_CarPositionVertLow                  ; ($5C75)
                 SBC #$02                                  ; ($5C78)
@@ -4280,7 +4423,7 @@ L5C71
 L5C82
                 JMP L5CAD                                 ; ($5C82)
 L5C85
-                LDY $033F                                 ; ($5C85)
+                LDY V_VertRasterScrollLoop                ; ($5C85)
                 DEY                                       ; ($5C88)
                 DEY                                       ; ($5C89)
                 CPY #$01                                  ; ($5C8A)
@@ -4293,7 +4436,7 @@ L5C96
                 BNE L5C9C                                 ; ($5C98)
                 LDY #$07                                  ; ($5C9A)
 L5C9C
-                STY $033F                                 ; ($5C9C)
+                STY V_VertRasterScrollLoop                ; ($5C9C)
                 CLC                                       ; ($5C9F)
                 LDA V_CarPositionVertLow                  ; ($5CA0)
                 ADC #$02                                  ; ($5CA3)
@@ -4302,7 +4445,7 @@ L5C9C
                 INC V_CarPositionVertHigh                 ; ($5CAA)
 L5CAD
                 LDA #$00                                  ; ($5CAD)
-                STA $0341                                 ; ($5CAF)
+                STA V_TempScrollFlag                      ; ($5CAF)
                 STA V_RegisterCollision                   ; ($5CB2)
                 LDA V_ScrollCounter                       ; ($5CB5)
                 BNE Sub_LoadNewMapRow                     ; ($5CB8)
@@ -4315,7 +4458,7 @@ Sub_LoadNewMapRow
                 LDA V_CarFacingDirection                  ; ($5CC5) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
                 ORA V_ForwardReverse                      ; ($5CC8) #00 Forward / #08 Reverse
                 TAX                                       ; ($5CCB)
-                LDA $0350,X                               ; ($5CCC)
+                LDA map_scroll_delta_x,X                  ; ($5CCC)
                 BMI L5CED                                 ; ($5CCF)
                 CLC                                       ; ($5CD1)
                 ADC V_MapXposition                        ; ($5CD2)
@@ -4353,7 +4496,7 @@ L5D08
                 LDA V_CarFacingDirection                  ; ($5D0F) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
                 ORA V_ForwardReverse                      ; ($5D12) #00 Forward / #08 Reverse
                 TAX                                       ; ($5D15)
-                LDA $0360,X                               ; ($5D16)
+                LDA map_scroll_delta_y,X                  ; ($5D16)
                 BMI L5D37                                 ; ($5D19)
                 CLC                                       ; ($5D1B)
                 ADC V_MapXposition                        ; ($5D1C)
@@ -4396,11 +4539,11 @@ L5D52
                 STA $5D6E                                 ; ($5D67)
 L5D6A
                 LDY #$28                                  ; ($5D6A)
-Loop_MapScreenUpdate
+loop_copy_map_row
                 LDA $A3D1,Y                               ; ($5D6C)
                 STA V_MapScreen,Y                         ; ($5D6F)
                 DEY                                       ; ($5D72)
-                BNE Loop_MapScreenUpdate                  ; ($5D73)
+                BNE loop_copy_map_row                     ; ($5D73)
                 CLC                                       ; ($5D75)
                 LDA $5D6D                                 ; ($5D76)
                 ADC #$7E                                  ; ($5D79)
@@ -4422,7 +4565,7 @@ L5D91
                 INC view_update_flag                      ; ($5D99)
                 RTS                                       ; ($5D9C)
                 .byte $60,$60,$60                         ; ($5D9D)
-L5DA0
+update_map_draw_speed
                 LDA $02FF                                 ; ($5DA0)
                 BNE L5DB9                                 ; ($5DA3)
                 LDX V_MapDrawSpeed                        ; ($5DA5)
@@ -4432,15 +4575,15 @@ L5DA0
                 LSR A                                     ; ($5DAE)
                 LSR A                                     ; ($5DAF)
                 STA V_MapDrawSpeed                        ; ($5DB0)
-                JMP L5DBA                                 ; ($5DB3)
+                JMP process_movement_scroll               ; ($5DB3)
 L5DB6
                 STX V_MapDrawSpeed                        ; ($5DB6)
 L5DB9
                 RTS                                       ; ($5DB9)
-L5DBA
+process_movement_scroll
                 LDA V_CarFacingDirection                  ; ($5DBA) 00 N / 01 NE / 02 E / 03 SE / 04 S / 05 SW / 06 W / 07 NW
                 STA V_CarFacingDirectionTemp              ; ($5DBD)
-                JSR L5C00                                 ; ($5DC0)
+                JSR handle_car_movement                   ; ($5DC0)
                 RTS                                       ; ($5DC3)
                 .byte $60,$D2,$5D,$D0,$08,$A0,$08,$8C,$D2,$5D,$20,$00,$4C,$60,$02,$FF  ; ($5DC4)
                 .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($5DD4)
@@ -5133,6 +5276,11 @@ L7BC2
                 CPX #$03                                  ; ($7BC3)
                 BCC L7B9D                                 ; ($7BC5)
                 RTS                                       ; ($7BC7)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
                 .byte $00,$07,$0E,$A1,$FF,$FD,$20,$AB,$00,$E8,$80,$FF,$15,$FF,$00,$FF  ; ($7BC8)
                 .byte $02,$FF,$00,$FF,$00,$FF,$A0,$B6,$82,$E8,$87,$A0,$02,$FF,$A5,$BF  ; ($7BD8)
                 .byte $02,$FF,$00,$A0,$1D,$BF,$02,$FF,$A0,$FF,$A0,$FF,$24,$A4,$FF,$FB  ; ($7BE8)
