@@ -28,12 +28,20 @@
             "value": "TimerHoursTens"
         },
         {
+            "key": 2041,
+            "value": "Sprite1Pointer"
+        },
+        {
             "key": 825,
             "value": "JoyHorizontal"
         },
         {
             "key": 915,
             "value": "TimerMinutesTens"
+        },
+        {
+            "key": 2040,
+            "value": "Sprite0Pointer"
         },
         {
             "key": 827,
@@ -10602,6 +10610,38 @@
                 "type": "Code"
             },
             {
+                "comment": "This routine updates the player's sprite graphics and screen position based on movement direction and animation state. The player character uses a two-sprite system (sprites 0 and 1) positioned vertically to create a taller character.\nDirection-Based Sprite Selection:\nDirection 0 (Idle): Sets sprite frame to $C0 (static standing pose)\nDirection 1 (Left): Base frame $80 + animation offset\nDirection 2 (Up): Base frame $A0 + animation offset\nDirection 3 (Right): Base frame $90 + animation offset\nDirection 4 (Down): Base frame $B0 + animation offset\nAnimation System:\nReads animation frame counter from $6F05\nAdds 2× frame count to base sprite (each animation frame uses 2 sprite blocks)\nThis creates walking animation cycles for each direction\nSprite Configuration:\nWrites consecutive sprite frames to pointers at $07F8 (top sprite) and $07F9 (bottom sprite)\nBoth sprites share the same X position (PlayerScreenX)\nBottom sprite Y position is offset by +$15 (21 pixels) below top sprite\nThis creates a vertically-stacked double-height player character\nThe routine provides smooth directional animation with the player appearing as a single tall character composed of two hardware sprites.",
+                "endAddress": 26811,
+                "isVisible": true,
+                "name": "Update Player Sprite Animation and Position",
+                "startAddress": 26720,
+                "type": "Data"
+            },
+            {
+                "comment": "This routine creates an animated visual transition effect, likely used when the player moves between buildings or screens (as suggested by it being called during screen edge transitions in the earlier code at $6781/$67AA).\nAnimation Structure:\n4 animation passes (outer loop)\nEach pass draws 10 rows (inner loop)\nEach row draws 2 characters from pattern data at $6965\nCreates a vertical striped or wipe pattern\nDrawing Pattern:\nReads pairs of bytes from $6965 indexed by X\nWrites them to consecutive screen positions (Y=0 and Y=1, 2 characters wide)\nX index advances by 3 per iteration (suggests 3-byte pattern entries or skipping)\nScreen pointer advances by $28 (40 bytes) per row\nTiming:\nIncludes delay loop ($68F8) between passes using nested DEY/DEX\nDelay of approximately 80×256 = 20,480 cycles per pass\nCreates smooth, visible animation rather than instant screen change\nScreen Position:\nStarts at $0452 (column 18, near center-right of screen)\nDraws vertically downward for 10 rows\nLikely creates a vertical wipe or curtain effect\nThis appears to be the visual transition effect that plays when moving between rooms/buildings, creating a smoother gameplay experience than an instant screen cut. The pattern data at $6965 would contain the specific character codes for the animation frames.",
+                "endAddress": 26884,
+                "isVisible": true,
+                "name": "Animated Screen Wipe/Transition Effect",
+                "startAddress": 26816,
+                "type": "Code"
+            },
+            {
+                "comment": "This routine is nearly identical to AnimateScreenTransition (L68C0), but draws the transition effect 18 columns to the right. It's the complementary transition animation used when moving right between buildings/screens.\nKey Differences from L68C0:\nStarting screen position: $0464 (column 36) vs $0452 (column 18)\nEverything else is identical: same pattern data, same timing, same structure\nAnimation Structure:\n4 animation passes\n10 rows per pass\n2 characters wide per row\nUses same pattern data from $6965\nUsage Context: Based on the earlier movement code documentation:\nL68C0 is called when moving left (wrapping to new screen at $6781)\nL6920 is called when moving right (wrapping to new screen at $67AA)\nThis creates symmetrical transition effects on opposite sides of the screen, making the left/right screen transitions visually consistent. The two routines work together to provide smooth animated screen changes as the player navigates horizontally through the building/city environment.\nVisual Effect: Draws a vertical animated wipe pattern at column 36 (right side of building facade area), creating the illusion of entering a new section of the building from the right edge.",
+                "endAddress": 26980,
+                "isVisible": true,
+                "name": "Right-Side Animated Screen Transition",
+                "startAddress": 26912,
+                "type": "Data"
+            },
+            {
+                "comment": "This routine draws the building facade in the lower-left portion of the screen, showing which rooms/locations the player has visited. Based on the screenshot, this represents a multi-story building view where each window indicates room visit status.\nOperation:\nProcesses 5 floors (vertical) × 19 rooms (horizontal) of the building\nFor each room, checks byte offset +$0C in the room's data structure\nIf byte is non-zero: draws character $3E (lit window - visited room)\nIf byte is zero: draws character $19 (dark window - unvisited room)\nBuilding Layout:\nProcesses rooms 0-7, then skips to 12-18 (19 total, with 4-room gap for building entrance/structure)\nThe gap at positions 8-11 represents the central entrance or architectural feature visible in the building\nEach floor advances screen pointer by $28 (40 bytes = 1 screen row)\nData Structure:\nRoom entries are $0E bytes apart in memory (14 bytes per room)\nByte offset +$0C is the \"visited\" flag for each room\nStarting room data pointer: $3042\nSelf-Modifying Code:\nDynamically updates screen destination in instruction at $6A40\nInitial screen position $06F9, increments by $28 per floor\nAllows flexible positioning of the building display\nThis creates a visual map of the building showing player progress through different rooms across multiple floors, with lit windows indicating explored areas.",
+                "endAddress": 27256,
+                "isVisible": true,
+                "name": "Draw Building/City Map with Room Status",
+                "startAddress": 27168,
+                "type": "Data"
+            },
+            {
                 "comment": "This routine maintains a game timer/clock that counts elapsed time and converts it to displayable screen codes. The timer operates as a cascading counter system:\nTimer Update Chain (bottom-up):\nFrames ($0399): Increments each call, rolls over at 60 ($3C) - suggests PAL timing (50Hz) or NTSC (60Hz)\nSeconds (ones) ($0397): Increments when frames roll over, max 9 (decimal)\nSeconds (tens) ($0396): Increments when seconds ones reaches 10, max 5 (60 seconds)\nMinutes (ones) ($0394): Increments when seconds roll over, max 9\nMinutes (tens) ($0393): Increments when minutes ones reaches 10, max 5 (60 minutes)\nHours (ones) ($0391): Increments when minutes roll over, max 9\nHours (tens) ($0390): Increments when hours ones reaches 10\nTime Limit Check:\nAt $6E93-$6E9F: Checks if time has reached 24 hours (tens=2, ones≥4)\nIf limit reached, timer resets to 00:00 (NOPs suggest removed game-over code)\nDisplay Conversion:\nConverts 8 BCD timer digits to screen codes by adding $34 (PETSCII '0' = $30, but offset suggests custom charset at +$04)\nStores converted values in display buffer ($05D2-$05D9)\nFormat appears to be: HH:MM:SS (with possible frame display)\nThe routine should be called once per frame to maintain accurate timing. The 24-hour limit suggests this may be tracking in-game time or a time-based challenge.",
                 "endAddress": 28352,
                 "isVisible": true,
@@ -11766,7 +11806,7 @@
             "value": "L6E1D"
         }
     ],
-    "timestamp": 1759917373,
+    "timestamp": 1759959709,
     "userSymbols": [
         {
             "key": 22750,
@@ -11774,7 +11814,7 @@
         },
         {
             "key": 24232,
-            "value": "L6876"
+            "value": "SetLeftWalkSprite"
         },
         {
             "key": 30292,
@@ -11782,7 +11822,7 @@
         },
         {
             "key": 24234,
-            "value": "L6878"
+            "value": "ApplyAnimationFrame"
         },
         {
             "key": 26254,
@@ -11798,7 +11838,7 @@
         },
         {
             "key": 24239,
-            "value": "L687D"
+            "value": "AnimationFrameLoop"
         },
         {
             "key": 26259,
@@ -11822,7 +11862,7 @@
         },
         {
             "key": 24721,
-            "value": "L6A5F"
+            "value": "CheckRoomEnd"
         },
         {
             "key": 26267,
@@ -11838,7 +11878,7 @@
         },
         {
             "key": 24248,
-            "value": "L6886"
+            "value": "SetRightWalkSprite"
         },
         {
             "key": 26271,
@@ -11854,7 +11894,7 @@
         },
         {
             "key": 24253,
-            "value": "L688B"
+            "value": "SetUpWalkSprite"
         },
         {
             "key": 21666,
@@ -11890,7 +11930,7 @@
         },
         {
             "key": 24680,
-            "value": "L6A36"
+            "value": "FloorLoop"
         },
         {
             "key": 4483,
@@ -11906,7 +11946,7 @@
         },
         {
             "key": 24682,
-            "value": "L6A38"
+            "value": "RoomLoop"
         },
         {
             "key": 28725,
@@ -11918,7 +11958,7 @@
         },
         {
             "key": 24210,
-            "value": "L6860"
+            "value": "SetPlayerSpriteFrame"
         },
         {
             "key": 25666,
@@ -11930,7 +11970,7 @@
         },
         {
             "key": 24690,
-            "value": "L6A40"
+            "value": "WriteRoomIconToScreen"
         },
         {
             "key": 21695,
@@ -11958,7 +11998,7 @@
         },
         {
             "key": 24696,
-            "value": "L6A46"
+            "value": "DrawUnvisitedRoom"
         },
         {
             "key": 14050,
@@ -11966,7 +12006,7 @@
         },
         {
             "key": 24701,
-            "value": "L6A4B"
+            "value": "NextRoomTile"
         },
         {
             "key": 25679,
@@ -12014,7 +12054,7 @@
         },
         {
             "key": 24658,
-            "value": "L6A20"
+            "value": "DrawBuildingStatusIcons"
         },
         {
             "key": 32210,
@@ -12261,12 +12301,28 @@
             "value": "L6DC6"
         },
         {
+            "key": 50739,
+            "value": "VIC_SPRITE0_Y"
+        },
+        {
             "key": 32633,
             "value": "L8947"
         },
         {
+            "key": 50738,
+            "value": "VIC_SPRITE0_X"
+        },
+        {
             "key": 30612,
             "value": "L8162"
+        },
+        {
+            "key": 50741,
+            "value": "VIC_SPRITE1_Y"
+        },
+        {
+            "key": 50740,
+            "value": "VIC_SPRITE1_X"
         },
         {
             "key": 32634,
@@ -12434,7 +12490,7 @@
         },
         {
             "key": 24458,
-            "value": "L6958"
+            "value": "DelayLoop_Right"
         },
         {
             "key": 25503,
@@ -12482,7 +12538,7 @@
         },
         {
             "key": 24420,
-            "value": "L6932"
+            "value": "DrawStripColumn_Right"
         },
         {
             "key": 28942,
@@ -12549,6 +12605,10 @@
             "value": "NextInventoryRow"
         },
         {
+            "key": 25911,
+            "value": "AnimationFrame"
+        },
+        {
             "key": 25910,
             "value": "PlayerDirection"
         },
@@ -12570,7 +12630,7 @@
         },
         {
             "key": 24402,
-            "value": "L6920"
+            "value": "AnimateRightTransition"
         },
         {
             "key": 23841,
@@ -12578,7 +12638,7 @@
         },
         {
             "key": 24408,
-            "value": "L6926"
+            "value": "StripPassLoop_Right"
         },
         {
             "key": 23847,
@@ -12610,7 +12670,7 @@
         },
         {
             "key": 24362,
-            "value": "L68F8"
+            "value": "DelayLoop_Left"
         },
         {
             "key": 48469,
@@ -12669,12 +12729,12 @@
             "value": "CheckHorizontalInput"
         },
         {
-            "key": 24324,
-            "value": "L68D2"
-        },
-        {
             "key": 35861,
             "value": "L95E3"
+        },
+        {
+            "key": 24324,
+            "value": "DrawStripColumn_Left"
         },
         {
             "key": 22785,
@@ -12826,7 +12886,7 @@
         },
         {
             "key": 24306,
-            "value": "L68C0"
+            "value": "AnimateScreenTransition"
         },
         {
             "key": 32322,
@@ -12842,7 +12902,7 @@
         },
         {
             "key": 24312,
-            "value": "L68C6"
+            "value": "StripPassLoop_Left"
         },
         {
             "key": 22768,
@@ -12874,7 +12934,7 @@
         },
         {
             "key": 24258,
-            "value": "L6890"
+            "value": "SetDownWalkSprite"
         },
         {
             "key": 28775,
@@ -12886,7 +12946,7 @@
         },
         {
             "key": 24263,
-            "value": "L6895"
+            "value": "UpdateSpritePointers"
         },
         {
             "key": 48367,
@@ -12962,7 +13022,7 @@
         },
         {
             "key": 24227,
-            "value": "L6871"
+            "value": "SetIdleSprite"
         },
         {
             "key": 22270,

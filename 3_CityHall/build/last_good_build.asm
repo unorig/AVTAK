@@ -4,7 +4,7 @@
 ; Source file: 3.prg.0813.1000.clean
 ; File size: 57258 bytes
 ; Base address: $09CE
-; Export date: Wed Oct 8 20:56:13 2025
+; Export date: Thu Oct 9 08:41:49 2025
 ; Assembler: 64tass
 ;
 
@@ -17,8 +17,10 @@
 ; ============================
 TimerHoursOnes = $0391
 TimerHoursTens = $0390
+Sprite1Pointer = $07F9
 JoyHorizontal = $0339
 TimerMinutesTens = $0393
+Sprite0Pointer = $07F8
 JoyFire = $033B
 JoyVertical = $033A
 TimerMinutesOnes = $0394
@@ -2307,7 +2309,7 @@ HandleLeftEdgeTransition
                 LDA $40                                   ; ($6790)
                 SBC #$00                                  ; ($6792)
                 STA $40                                   ; ($6794)
-                JSR L68C0                                 ; ($6796)
+                JSR AnimateScreenTransition               ; ($6796)
                 LDA #$80                                  ; ($6799)
                 STA PlayerFineX                           ; ($679B)
                 LDA #$A0                                  ; ($679E)
@@ -2328,7 +2330,7 @@ HandleRightEdgeTransition
                 LDA $40                                   ; ($67B9)
                 ADC #$00                                  ; ($67BB)
                 STA $40                                   ; ($67BD)
-                JSR L6920                                 ; ($67BF)
+                JSR AnimateRightTransition                ; ($67BF)
                 LDA #$18                                  ; ($67C2)
                 STA PlayerFineX                           ; ($67C4)
                 LDA #$38                                  ; ($67C7)
@@ -2372,74 +2374,141 @@ RightBoundaryTable
                 .byte $8A,$8A,$89,$89,$88,$88,$87,$87,$86,$86,$85,$85,$84,$84,$83,$83  ; ($6833)
                 .byte $82,$82,$81,$81,$80,$80,$7F,$7F,$7E,$7E,$7D,$7D,$7C,$7C,$7B,$7B  ; ($6843)
                 .byte $7A,$7A,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00  ; ($6853)
-L6860
+
+; ==================================================
+; Section: Update Player Sprite Animation and Position (Data)
+; Range: $6860 - $68BB (92 bytes)
+; This routine updates the player's sprite graphics and screen position based
+; on movement direction and animation state. The player character uses a
+; two-sprite system (sprites 0 and 1) positioned vertically to create a
+; taller character.
+; Direction-Based Sprite Selection:
+; Direction 0 (Idle): Sets sprite frame to $C0 (static standing pose)
+; Direction 1 (Left): Base frame $80 + animation offset
+; Direction 2 (Up): Base frame $A0 + animation offset
+; Direction 3 (Right): Base frame $90 + animation offset
+; Direction 4 (Down): Base frame $B0 + animation offset
+; Animation System:
+; Reads animation frame counter from $6F05
+; Adds 2× frame count to base sprite (each animation frame uses 2 sprite
+; blocks)
+; This creates walking animation cycles for each direction
+; Sprite Configuration:
+; Writes consecutive sprite frames to pointers at $07F8 (top sprite) and
+; $07F9 (bottom sprite)
+; Both sprites share the same X position (PlayerScreenX)
+; Bottom sprite Y position is offset by +$15 (21 pixels) below top sprite
+; This creates a vertically-stacked double-height player character
+; The routine provides smooth directional animation with the player appearing
+; as a single tall character composed of two hardware sprites.
+; ==================================================
+
+SetPlayerSpriteFrame
                 LDX PlayerDirection                       ; ($6860)
-                BEQ L6871                                 ; ($6863)
+                BEQ SetIdleSprite                         ; ($6863)
                 DEX                                       ; ($6865)
-                BEQ L6876                                 ; ($6866)
+                BEQ SetLeftWalkSprite                     ; ($6866)
                 DEX                                       ; ($6868)
-                BEQ L688B                                 ; ($6869)
+                BEQ SetUpWalkSprite                       ; ($6869)
                 DEX                                       ; ($686B)
-                BEQ L6886                                 ; ($686C)
-                JMP L6890                                 ; ($686E)
-L6871
+                BEQ SetRightWalkSprite                    ; ($686C)
+                JMP SetDownWalkSprite                     ; ($686E)
+SetIdleSprite
                 LDX #$C0                                  ; ($6871)
-                JMP L6895                                 ; ($6873)
-L6876
+                JMP UpdateSpritePointers                  ; ($6873)
+SetLeftWalkSprite
                 LDX #$80                                  ; ($6876)
-L6878
-                LDY $6F05                                 ; ($6878)
-                BEQ L6895                                 ; ($687B)
-L687D
+ApplyAnimationFrame
+                LDY AnimationFrame                        ; ($6878)
+                BEQ UpdateSpritePointers                  ; ($687B)
+AnimationFrameLoop
                 INX                                       ; ($687D)
                 INX                                       ; ($687E)
                 NOP                                       ; ($687F)
                 DEY                                       ; ($6880)
-                BNE L687D                                 ; ($6881)
-                JMP L6895                                 ; ($6883)
-L6886
+                BNE AnimationFrameLoop                    ; ($6881)
+                JMP UpdateSpritePointers                  ; ($6883)
+SetRightWalkSprite
                 LDX #$90                                  ; ($6886)
-                JMP L6878                                 ; ($6888)
-L688B
+                JMP ApplyAnimationFrame                   ; ($6888)
+SetUpWalkSprite
                 LDX #$A0                                  ; ($688B)
-                JMP L6878                                 ; ($688D)
-L6890
+                JMP ApplyAnimationFrame                   ; ($688D)
+SetDownWalkSprite
                 LDX #$B0                                  ; ($6890)
-                JMP L6878                                 ; ($6892)
-L6895
-                STX $07F8                                 ; ($6895)
+                JMP ApplyAnimationFrame                   ; ($6892)
+UpdateSpritePointers
+                STX Sprite0Pointer                        ; ($6895)
                 INX                                       ; ($6898)
-                STX $07F9                                 ; ($6899)
+                STX Sprite1Pointer                        ; ($6899)
                 NOP                                       ; ($689C)
                 NOP                                       ; ($689D)
                 NOP                                       ; ($689E)
                 NOP                                       ; ($689F)
                 LDA PlayerScreenX                         ; ($68A0)
-                STA $D000                                 ; ($68A3)
-                STA $D002                                 ; ($68A6)
+                STA VIC_SPRITE0_X                         ; ($68A3)
+                STA VIC_SPRITE1_X                         ; ($68A6)
                 NOP                                       ; ($68A9)
                 NOP                                       ; ($68AA)
                 NOP                                       ; ($68AB)
                 LDA PlayerScreenY                         ; ($68AC)
-                STA $D001                                 ; ($68AF)
-                STA $D003                                 ; ($68B2)
+                STA VIC_SPRITE0_Y                         ; ($68AF)
+                STA VIC_SPRITE1_Y                         ; ($68B2)
                 CLC                                       ; ($68B5)
                 ADC #$15                                  ; ($68B6)
-                STA $D003                                 ; ($68B8)
+                STA VIC_SPRITE1_Y                         ; ($68B8)
                 RTS                                       ; ($68BB)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
                 .byte $69,$15,$8D,$05                     ; ($68BC)
-L68C0
+
+; ==================================================
+; Section: Animated Screen Wipe/Transition Effect (Code)
+; Range: $68C0 - $6904 (69 bytes)
+; This routine creates an animated visual transition effect, likely used when
+; the player moves between buildings or screens (as suggested by it being
+; called during screen edge transitions in the earlier code at $6781/$67AA).
+; Animation Structure:
+; 4 animation passes (outer loop)
+; Each pass draws 10 rows (inner loop)
+; Each row draws 2 characters from pattern data at $6965
+; Creates a vertical striped or wipe pattern
+; Drawing Pattern:
+; Reads pairs of bytes from $6965 indexed by X
+; Writes them to consecutive screen positions (Y=0 and Y=1, 2 characters
+; wide)
+; X index advances by 3 per iteration (suggests 3-byte pattern entries or
+; skipping)
+; Screen pointer advances by $28 (40 bytes) per row
+; Timing:
+; Includes delay loop ($68F8) between passes using nested DEY/DEX
+; Delay of approximately 80×256 = 20,480 cycles per pass
+; Creates smooth, visible animation rather than instant screen change
+; Screen Position:
+; Starts at $0452 (column 18, near center-right of screen)
+; Draws vertically downward for 10 rows
+; Likely creates a vertical wipe or curtain effect
+; This appears to be the visual transition effect that plays when moving
+; between rooms/buildings, creating a smoother gameplay experience than an
+; instant screen cut. The pattern data at $6965 would contain the specific
+; character codes for the animation frames.
+; ==================================================
+
+AnimateScreenTransition
                 LDX #$01                                  ; ($68C0)
                 LDA #$04                                  ; ($68C2)
                 STA $AE                                   ; ($68C4)
-L68C6
+StripPassLoop_Left
                 LDA #$0A                                  ; ($68C6)
                 STA $AF                                   ; ($68C8)
                 LDA #$52                                  ; ($68CA)
                 STA $FB                                   ; ($68CC)
                 LDA #$04                                  ; ($68CE)
                 STA $FC                                   ; ($68D0)
-L68D2
+DrawStripColumn_Left
                 LDY #$01                                  ; ($68D2)
                 LDA $6965,X                               ; ($68D4)
                 STA ($FB),Y                               ; ($68D7)
@@ -2458,32 +2527,65 @@ L68D2
                 INX                                       ; ($68EE)
                 INX                                       ; ($68EF)
                 DEC $AF                                   ; ($68F0)
-                BNE L68D2                                 ; ($68F2)
+                BNE DrawStripColumn_Left                  ; ($68F2)
                 STX $02                                   ; ($68F4)
                 LDX #$50                                  ; ($68F6)
-L68F8
+DelayLoop_Left
                 DEY                                       ; ($68F8)
-                BNE L68F8                                 ; ($68F9)
+                BNE DelayLoop_Left                        ; ($68F9)
                 DEX                                       ; ($68FB)
-                BNE L68F8                                 ; ($68FC)
+                BNE DelayLoop_Left                        ; ($68FC)
                 LDX $02                                   ; ($68FE)
                 DEC $AE                                   ; ($6900)
-                BNE L68C6                                 ; ($6902)
+                BNE StripPassLoop_Left                    ; ($6902)
                 RTS                                       ; ($6904)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
                 .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($6905)
                 .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($6915)
-L6920
+
+; ==================================================
+; Section: Right-Side Animated Screen Transition (Data)
+; Range: $6920 - $6964 (69 bytes)
+; This routine is nearly identical to AnimateScreenTransition (L68C0), but
+; draws the transition effect 18 columns to the right. It's the complementary
+; transition animation used when moving right between buildings/screens.
+; Key Differences from L68C0:
+; Starting screen position: $0464 (column 36) vs $0452 (column 18)
+; Everything else is identical: same pattern data, same timing, same
+; structure
+; Animation Structure:
+; 4 animation passes
+; 10 rows per pass
+; 2 characters wide per row
+; Uses same pattern data from $6965
+; Usage Context: Based on the earlier movement code documentation:
+; L68C0 is called when moving left (wrapping to new screen at $6781)
+; L6920 is called when moving right (wrapping to new screen at $67AA)
+; This creates symmetrical transition effects on opposite sides of the
+; screen, making the left/right screen transitions visually consistent. The
+; two routines work together to provide smooth animated screen changes as the
+; player navigates horizontally through the building/city environment.
+; Visual Effect: Draws a vertical animated wipe pattern at column 36 (right
+; side of building facade area), creating the illusion of entering a new
+; section of the building from the right edge.
+; ==================================================
+
+AnimateRightTransition
                 LDX #$01                                  ; ($6920)
                 LDA #$04                                  ; ($6922)
                 STA $AE                                   ; ($6924)
-L6926
+StripPassLoop_Right
                 LDA #$0A                                  ; ($6926)
                 STA $AF                                   ; ($6928)
                 LDA #$64                                  ; ($692A)
                 STA $FB                                   ; ($692C)
                 LDA #$04                                  ; ($692E)
                 STA $FC                                   ; ($6930)
-L6932
+DrawStripColumn_Right
                 LDY #$01                                  ; ($6932)
                 LDA $6965,X                               ; ($6934)
                 STA ($FB),Y                               ; ($6937)
@@ -2502,18 +2604,23 @@ L6932
                 INX                                       ; ($694E)
                 INX                                       ; ($694F)
                 DEC $AF                                   ; ($6950)
-                BNE L6932                                 ; ($6952)
+                BNE DrawStripColumn_Right                 ; ($6952)
                 STX $02                                   ; ($6954)
                 LDX #$50                                  ; ($6956)
-L6958
+DelayLoop_Right
                 DEY                                       ; ($6958)
-                BNE L6958                                 ; ($6959)
+                BNE DelayLoop_Right                       ; ($6959)
                 DEX                                       ; ($695B)
-                BNE L6958                                 ; ($695C)
+                BNE DelayLoop_Right                       ; ($695C)
                 LDX $02                                   ; ($695E)
                 DEC $AE                                   ; ($6960)
-                BNE L6926                                 ; ($6962)
+                BNE StripPassLoop_Right                   ; ($6962)
                 RTS                                       ; ($6964)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
                 .byte $01,$08,$07,$05,$06,$05,$01,$05,$01,$05,$01,$05,$01,$09,$01,$03  ; ($6965)
                 .byte $02,$00,$03,$00,$01,$0F,$07,$10,$06,$10,$01,$10,$01,$10,$01,$10  ; ($6975)
                 .byte $01,$15,$01,$00,$02,$00,$03,$00,$01,$0F,$11,$10,$12,$10,$13,$10  ; ($6985)
@@ -2568,7 +2675,39 @@ L6A0C
                 BNE L69EE                                 ; ($6A12)
                 RTS                                       ; ($6A14)
                 .byte $01,$01,$00,$01,$01,$01,$01,$01,$01,$01,$00  ; ($6A15)
-L6A20
+
+; ==================================================
+; Section: Draw Building/City Map with Room Status (Data)
+; Range: $6A20 - $6A78 (89 bytes)
+; This routine draws the building facade in the lower-left portion of the
+; screen, showing which rooms/locations the player has visited. Based on the
+; screenshot, this represents a multi-story building view where each window
+; indicates room visit status.
+; Operation:
+; Processes 5 floors (vertical) × 19 rooms (horizontal) of the building
+; For each room, checks byte offset +$0C in the room's data structure
+; If byte is non-zero: draws character $3E (lit window - visited room)
+; If byte is zero: draws character $19 (dark window - unvisited room)
+; Building Layout:
+; Processes rooms 0-7, then skips to 12-18 (19 total, with 4-room gap for
+; building entrance/structure)
+; The gap at positions 8-11 represents the central entrance or architectural
+; feature visible in the building
+; Each floor advances screen pointer by $28 (40 bytes = 1 screen row)
+; Data Structure:
+; Room entries are $0E bytes apart in memory (14 bytes per room)
+; Byte offset +$0C is the "visited" flag for each room
+; Starting room data pointer: $3042
+; Self-Modifying Code:
+; Dynamically updates screen destination in instruction at $6A40
+; Initial screen position $06F9, increments by $28 per floor
+; Allows flexible positioning of the building display
+; This creates a visual map of the building showing player progress through
+; different rooms across multiple floors, with lit windows indicating
+; explored areas.
+; ==================================================
+
+DrawBuildingStatusIcons
                 LDA #$05                                  ; ($6A20)
                 STA $25                                   ; ($6A22)
                 LDA #$30                                  ; ($6A24)
@@ -2579,20 +2718,20 @@ L6A20
                 STA $6A41                                 ; ($6A2E)
                 LDA #$06                                  ; ($6A31)
                 STA $6A42                                 ; ($6A33)
-L6A36
+FloorLoop
                 LDX #$00                                  ; ($6A36)
-L6A38
+RoomLoop
                 LDY #$0C                                  ; ($6A38)
                 LDA ($26),Y                               ; ($6A3A)
-                BEQ L6A46                                 ; ($6A3C)
+                BEQ DrawUnvisitedRoom                     ; ($6A3C)
                 LDA #$3E                                  ; ($6A3E)
-L6A40
+WriteRoomIconToScreen
                 STA $07C1,X                               ; ($6A40)
-                JMP L6A4B                                 ; ($6A43)
-L6A46
+                JMP NextRoomTile                          ; ($6A43)
+DrawUnvisitedRoom
                 LDA #$19                                  ; ($6A46)
-                JMP L6A40                                 ; ($6A48)
-L6A4B
+                JMP WriteRoomIconToScreen                 ; ($6A48)
+NextRoomTile
                 LDA $26                                   ; ($6A4B)
                 CLC                                       ; ($6A4D)
                 ADC #$0E                                  ; ($6A4E)
@@ -2602,11 +2741,11 @@ L6A4B
                 STA $27                                   ; ($6A56)
                 INX                                       ; ($6A58)
                 CPX #$08                                  ; ($6A59)
-                BNE L6A5F                                 ; ($6A5B)
+                BNE CheckRoomEnd                          ; ($6A5B)
                 LDX #$0C                                  ; ($6A5D)
-L6A5F
+CheckRoomEnd
                 CPX #$13                                  ; ($6A5F)
-                BNE L6A38                                 ; ($6A61)
+                BNE RoomLoop                              ; ($6A61)
                 LDA $6A41                                 ; ($6A63)
                 CLC                                       ; ($6A66)
                 ADC #$28                                  ; ($6A67)
@@ -2615,8 +2754,13 @@ L6A5F
                 ADC #$00                                  ; ($6A6F)
                 STA $6A42                                 ; ($6A71)
                 DEC $25                                   ; ($6A74)
-                BNE L6A36                                 ; ($6A76)
+                BNE FloorLoop                             ; ($6A76)
                 RTS                                       ; ($6A78)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
                 .byte $C9,$3E,$D0,$CE,$00,$00,$00,$A9,$F8,$85,$FB,$A9,$DA,$85,$FC,$A0  ; ($6A79)
                 .byte $01,$A2,$05,$A9,$01,$85,$02,$A5,$02,$CD,$51,$1B,$D0,$05,$A9,$07  ; ($6A89)
                 .byte $4C,$9E,$6A,$A9,$00,$91,$FB,$C8,$E6,$02,$C0,$15,$D0,$E9,$A0,$01  ; ($6A99)
@@ -2959,18 +3103,20 @@ PlayerFineX
 PlayerFineY
                 .byte $1C                                 ; ($6F03)
 PlayerDirection
-                .byte $00,$00,$0E,$00,$01,$01,$01,$01,$01,$01,$01,$00,$01,$01,$01,$01  ; ($6F04)
-                .byte $01,$01,$01,$00,$01,$01,$01,$01,$01,$01,$01,$00,$00,$00,$00,$00  ; ($6F14)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$04,$00,$00,$00  ; ($6F24)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$01,$01,$01  ; ($6F34)
-                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$01,$01,$01,$01  ; ($6F44)
-                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$00,$00,$00,$00  ; ($6F54)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($6F64)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$FF,$FF  ; ($6F74)
-                .byte $FF,$FF,$FF,$FE,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FF,$FF,$FF,$FF  ; ($6F84)
-                .byte $FF,$FF,$FF,$FE,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE,$FE  ; ($6F94)
-                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($6FA4)
-                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($6FB4)
+                .byte $00                                 ; ($6F04)
+AnimationFrame
+                .byte $00,$0E,$00,$01,$01,$01,$01,$01,$01,$01,$00,$01,$01,$01,$01,$01  ; ($6F05)
+                .byte $01,$01,$00,$01,$01,$01,$01,$01,$01,$01,$00,$00,$00,$00,$00,$00  ; ($6F15)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$04,$00,$00,$00,$00  ; ($6F25)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$01,$01,$01,$01  ; ($6F35)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$01,$01,$01,$01,$01  ; ($6F45)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$00,$00,$00,$00,$00  ; ($6F55)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($6F65)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$FF,$FF,$FF  ; ($6F75)
+                .byte $FF,$FF,$FE,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FF,$FF,$FF,$FF,$FF  ; ($6F85)
+                .byte $FF,$FF,$FE,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE,$FE,$FE  ; ($6F95)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($6FA5)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($6FB5)
 L6FC0
                 CMP #$15                                  ; ($6FC0)
                 BEQ L6FD0                                 ; ($6FC2)
@@ -3024,7 +3170,7 @@ L7000
                 JSR L4100                                 ; ($7021)
                 JSR L62A0                                 ; ($7024)
                 JSR HandlePlayerInput                     ; ($7027)
-                JSR L6860                                 ; ($702A)
+                JSR SetPlayerSpriteFrame                  ; ($702A)
                 LDX #$08                                  ; ($702D)
                 LDY #$00                                  ; ($702F)
 L7031
@@ -3043,7 +3189,7 @@ L7031
                 STA $D023                                 ; ($7047)
                 JMP L7080                                 ; ($704A)
 L704D
-                LDX $6F05                                 ; ($704D)
+                LDX AnimationFrame                        ; ($704D)
 L7050
                 INX                                       ; ($7050)
 L7051
@@ -3051,7 +3197,7 @@ L7051
 L7052
                 AND #$07                                  ; ($7052)
 L7054
-                STA $6F05                                 ; ($7054)
+                STA AnimationFrame                        ; ($7054)
 L7057
                 LDA #$3F                                  ; ($7057)
 L7059
@@ -4384,7 +4530,7 @@ L95E3
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($9624)
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($9634)
 L9640
-                JSR L6A20                                 ; ($9640)
+                JSR DrawBuildingStatusIcons               ; ($9640)
                 DEC $1B64                                 ; ($9643)
                 BNE L964B                                 ; ($9646)
                 JSR L8900                                 ; ($9648)
@@ -5462,10 +5608,17 @@ LC79A
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($CFC6)
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($CFD6)
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($CFE6)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($CFF6)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($D006)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($D016)
-                .byte $00                                 ; ($D026)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($CFF6)
+VIC_SPRITE0_X
+                .byte $00                                 ; ($D000)
+VIC_SPRITE0_Y
+                .byte $00                                 ; ($D001)
+VIC_SPRITE1_X
+                .byte $00                                 ; ($D002)
+VIC_SPRITE1_Y
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($D003)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($D013)
+                .byte $00,$00,$00,$00                     ; ($D023)
 SPRITE0_COLOR
                 .byte $00                                 ; ($D027)
 SPRITE1_COLOR
