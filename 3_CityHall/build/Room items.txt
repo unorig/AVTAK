@@ -1,0 +1,197 @@
+=========ITEM_ID: 01 (Bucket)
+ROOM_INDEX: $04 (Floor 5, Left Wing Room 5)
+SPRITE_LO: $19
+SPRITE_HI: $48
+SPRITE_BANK: $4F
+FLAGS: $01
+COLOR: $08
+ITEM_TYPE: Bucket
+
+=========ITEM_ID: 02 (Bucket)
+ROOM_INDEX: $80 (Hidden, Special)
+SPRITE_LO: $19
+SPRITE_HI: $48
+SPRITE_BANK: $4F
+FLAGS: $01
+COLOR: $08
+ITEM_TYPE: Bucket
+
+=========ITEM_ID: 03 (Bucket)
+ROOM_INDEX: $22 (Floor 3, Left Wing Room 5)
+SPRITE_LO: $19
+SPRITE_HI: $48
+SPRITE_BANK: $4F
+FLAGS: $01
+COLOR: $08
+ITEM_TYPE: Bucket
+
+=========ITEM_ID: 04 (Bucket)
+ROOM_INDEX: $31 (Floor 2, Left Wing Room 5)
+SPRITE_LO: $19
+SPRITE_HI: $48
+SPRITE_BANK: $4F
+FLAGS: $01
+COLOR: $08
+ITEM_TYPE: Bucket
+
+=========ITEM_ID: 05 (Bucket)
+ROOM_INDEX: $40 (Floor 1, Left Wing Room 5)
+SPRITE_LO: $19
+SPRITE_HI: $48
+SPRITE_BANK: $4F
+FLAGS: $01
+COLOR: $08
+ITEM_TYPE: Bucket
+
+=========ITEM_ID: 06 (Bucket)
+ROOM_INDEX: $0C (Floor 5, Right Wing Room 5)
+SPRITE_LO: $19
+SPRITE_HI: $48
+SPRITE_BANK: $4F
+FLAGS: $01
+COLOR: $08
+ITEM_TYPE: Bucket
+
+=========ITEM_ID: 15 (Hose)
+ROOM_INDEX: $1E (Floor 3, Left Wing Room 1)
+SPRITE_LO: $28
+SPRITE_HI: $20
+SPRITE_BANK: $48
+FLAGS: $01
+COLOR: $00
+ITEM_TYPE: Hose
+
+=========ITEM_ID: 16 (Typewriter)
+ROOM_INDEX: $39 (Floor 2, Right Wing Room 5)
+SPRITE_LO: $0A
+SPRITE_HI: $80
+SPRITE_BANK: $48
+FLAGS: $01
+COLOR: $06
+ITEM_TYPE: Typewriter
+
+=========ITEM_ID: 18 (Keycard — Black)
+ROOM_INDEX: $06 (Floor 5, Left Wing Room 7)
+SPRITE_LO: $02
+SPRITE_HI: $40
+SPRITE_BANK: $49
+FLAGS: $00
+COLOR: $00
+ITEM_TYPE: Keycard (Black)
+
+=========ITEM_ID: 1E (Door Key — Black)
+ROOM_INDEX: $09 (Floor 5, Right Wing Room 2)
+SPRITE_LO: $02
+SPRITE_HI: $C0
+SPRITE_BANK: $47
+FLAGS: $00
+COLOR: $00
+ITEM_TYPE: Door Key (Black)
+
+=========ITEM_ID: 22 (Nothing)
+ROOM_INDEX: $00 (Floor 5, Left Wing Room 1)
+SPRITE_LO: $00
+SPRITE_HI: $00
+SPRITE_BANK: $00
+FLAGS: $00
+COLOR: $00
+ITEM_TYPE: Nothing
+
+=========ITEM_ID: 25 (Cabinet Key)
+ROOM_INDEX: $0A (Floor 5, Right Wing Room 3)
+SPRITE_LO: $05
+SPRITE_HI: $E0
+SPRITE_BANK: $47
+FLAGS: $00
+COLOR: $06
+ITEM_TYPE: Cabinet Key
+
+=========ITEM_ID: 2B (Gun)
+ROOM_INDEX: $07 (Floor 5, Central Entrance ★★★)
+SPRITE_LO: $05
+SPRITE_HI: $00
+SPRITE_BANK: $48
+FLAGS: $01
+COLOR: $00
+ITEM_TYPE: Gun
+
+=========ITEM_ID: 2C (Bullet)
+ROOM_INDEX: $0B (Floor 5, Right Wing Room 4)
+SPRITE_LO: $02
+SPRITE_HI: $A0
+SPRITE_BANK: $47
+FLAGS: $00
+COLOR: $00
+ITEM_TYPE: Bullet
+
+=========ITEM_ID: 3C (Bullet)
+ROOM_INDEX: $0D (Floor 5, Right Wing Room 6)
+SPRITE_LO: $02
+SPRITE_HI: $A0
+SPRITE_BANK: $47
+FLAGS: $00
+COLOR: $00
+ITEM_TYPE: Bullet
+
+=========ITEM_ID: 36 (Keycard Holder)
+ROOM_INDEX: $00 (Floor 5, Left Wing Room 1)
+SPRITE_LO: $00
+SPRITE_HI: $60
+SPRITE_BANK: $48
+FLAGS: $00
+COLOR: $00
+ITEM_TYPE: Keycard Holder
+
+=========ITEM_ID: 37 (Crowbar)
+ROOM_INDEX: $0F (Floor 4, Left Wing Room 1)
+SPRITE_LO: $0A
+SPRITE_HI: $20
+SPRITE_BANK: $49
+FLAGS: $00
+COLOR: $04
+ITEM_TYPE: Crowbar
+
+=========ITEM_ID: 46 (Mine Pass ★★★)
+ROOM_INDEX: $3D (Floor 1, Left Wing Room 2)
+SPRITE_LO: $02
+SPRITE_HI: $D0
+SPRITE_BANK: $58
+FLAGS: $00
+COLOR: $00
+ITEM_TYPE: Mine Pass ★★★
+
+=========ITEM_ID: 4D (Bullet)
+ROOM_INDEX: $36 (Floor 2, Right Wing Room 2)
+SPRITE_LO: $02
+SPRITE_HI: $A0
+SPRITE_BANK: $47
+FLAGS: $00
+COLOR: $00
+ITEM_TYPE: Bullet
+
+=========ITEM_ID: 56 (Key-6)
+ROOM_INDEX: $37 (Floor 2, Right Wing Room 3)
+SPRITE_LO: $00
+SPRITE_HI: $50
+SPRITE_BANK: $58
+FLAGS: $00
+COLOR: $00
+ITEM_TYPE: Key-6
+
+=========ITEM_ID: 58 (Key-7)
+ROOM_INDEX: $3D (Floor 1, Left Wing Room 2)
+SPRITE_LO: $00
+SPRITE_HI: $90
+SPRITE_BANK: $58
+FLAGS: $00
+COLOR: $00
+ITEM_TYPE: Key-7
+
+=========ITEM_ID: 5A (Nothing)
+ROOM_INDEX: $80 (Hidden, Special)
+SPRITE_LO: $6E
+SPRITE_HI: $F0
+SPRITE_BANK: $58
+FLAGS: $00
+COLOR: $00
+ITEM_TYPE: Nothing

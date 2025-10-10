@@ -4,7 +4,7 @@
 ; Source file: 3.prg.0813.1000.clean
 ; File size: 57258 bytes
 ; Base address: $09CE
-; Export date: Thu Oct 9 08:41:49 2025
+; Export date: Fri Oct 10 18:41:42 2025
 ; Assembler: 64tass
 ;
 
@@ -15,14 +15,14 @@
 
 ; External Symbol Definitions
 ; ============================
-TimerHoursOnes = $0391
-TimerHoursTens = $0390
-Sprite1Pointer = $07F9
 JoyHorizontal = $0339
-TimerMinutesTens = $0393
-Sprite0Pointer = $07F8
+Sprite1Pointer = $07F9
+TimerHoursOnes = $0391
 JoyFire = $033B
+Sprite0Pointer = $07F8
+TimerHoursTens = $0390
 JoyVertical = $033A
+TimerMinutesTens = $0393
 TimerMinutesOnes = $0394
 TimerSecondsOnes = $0397
 TimerSecondsTens = $0396
@@ -235,87 +235,111 @@ L1202
                 .byte $FF,$FF,$FF,$FF,$AB,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($12CC)
                 .byte $FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($12DC)
                 .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($12EC)
-                .byte $FE,$FE,$FE,$FE,$78,$A9,$00,$8D,$15,$D0,$8D,$21,$D0,$A9,$17,$8D  ; ($12FC)
-                .byte $18,$D0,$EA,$A0,$00,$A9,$20,$99,$00,$04,$99,$00,$05,$A9,$01,$99  ; ($130C)
-                .byte $00,$D8,$99,$48,$D8,$88,$D0,$EF,$B9,$34,$13,$C9,$FF,$F0,$06,$99  ; ($131C)
-                .byte $28,$04,$C8,$D0,$F3,$4C,$31,$13,$20,$20,$20,$20,$20,$20,$20,$20  ; ($132C)
-                .byte $20,$43,$4F,$4E,$47,$52,$41,$54,$55,$4C,$41,$54,$49,$4F,$4E,$53  ; ($133C)
-                .byte $20,$30,$30,$37,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20  ; ($134C)
-                .byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20  ; ($135C)
-                .byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20  ; ($136C)
-                .byte $20,$20,$20,$20,$20,$20,$20,$20,$4D,$49,$53,$53,$49,$4F,$4E,$20  ; ($137C)
-                .byte $43,$4F,$4D,$50,$4C,$45,$54,$45,$20,$20,$20,$20,$20,$20,$20,$20  ; ($138C)
-                .byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20  ; ($139C)
-                .byte $59,$4F,$55,$52,$20,$43,$4F,$44,$45,$20,$46,$4F,$52,$20,$54,$48  ; ($13AC)
-                .byte $45,$20,$4E,$45,$58,$54,$20,$50,$52,$4F,$47,$52,$41,$4D,$20,$49  ; ($13BC)
-                .byte $53,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20  ; ($13CC)
-                .byte $20,$20,$20,$20,$20,$20,$44,$42,$34,$43,$54,$20,$FF,$00,$00,$00  ; ($13DC)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($13EC)
-                .byte $00,$00,$00,$00,$77,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($13FC)
-                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($140C)
-                .byte $01,$01,$01,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($141C)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($142C)
-                .byte $00,$00,$00,$00,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($143C)
-                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($144C)
-                .byte $01,$01,$01,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($145C)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($146C)
-                .byte $00,$00,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($147C)
-                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($148C)
-                .byte $FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($149C)
-                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($14AC)
-                .byte $FE,$FE,$FE,$FE,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($14BC)
-                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($14CC)
-                .byte $FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($14DC)
-                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($14EC)
-                .byte $FE,$FE,$FE,$FE,$77,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($14FC)
-                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($150C)
-                .byte $01,$01,$01,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($151C)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($152C)
-                .byte $00,$00,$00,$00,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($153C)
-                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($154C)
-                .byte $01,$01,$01,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($155C)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($156C)
-                .byte $00,$00,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($157C)
-                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($158C)
-                .byte $FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($159C)
-                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($15AC)
-                .byte $FE,$FE,$FE,$FE,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($15BC)
-                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($15CC)
-                .byte $FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($15DC)
-                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($15EC)
-                .byte $FE,$FE,$FE,$FE,$7F,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($15FC)
-                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($160C)
-                .byte $01,$01,$01,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($161C)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($162C)
-                .byte $00,$00,$00,$00,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($163C)
-                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($164C)
-                .byte $01,$01,$01,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($165C)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($166C)
-                .byte $00,$00,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($167C)
-                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($168C)
-                .byte $FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($169C)
-                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($16AC)
-                .byte $FE,$FE,$FE,$FE,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($16BC)
-                .byte $FF,$FF,$FF,$FE,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($16CC)
-                .byte $FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($16DC)
-                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($16EC)
-                .byte $FE,$FE,$FE,$FE,$7F,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($16FC)
-                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($170C)
-                .byte $01,$01,$01,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($171C)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($172C)
-                .byte $00,$00,$00,$00,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($173C)
-                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($174C)
-                .byte $01,$01,$01,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($175C)
-                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($176C)
-                .byte $00,$00,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($177C)
-                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($178C)
-                .byte $FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($179C)
-                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($17AC)
-                .byte $FE,$FE,$FE,$FE,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($17BC)
-                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($17CC)
-                .byte $FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($17DC)
-                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($17EC)
-                .byte $FE,$FE,$FE,$FE                     ; ($17FC)
+                .byte $FE,$FE,$FE,$FE                     ; ($12FC)
+VictoryScreen
+                SEI                                       ; ($1300)
+                LDA #$00                                  ; ($1301)
+                STA $D015                                 ; ($1303)
+                STA $D021                                 ; ($1306)
+                LDA #$17                                  ; ($1309)
+                STA $D018                                 ; ($130B)
+                NOP                                       ; ($130E)
+                LDY #$00                                  ; ($130F)
+                LDA #$20                                  ; ($1311)
+ClearScreenLoop
+                STA $0400,Y                               ; ($1313)
+                STA $0500,Y                               ; ($1316)
+                LDA #$01                                  ; ($1319)
+                STA $D800,Y                               ; ($131B)
+                STA $D848,Y                               ; ($131E)
+                DEY                                       ; ($1321)
+                BNE ClearScreenLoop                       ; ($1322)
+DisplayMessageLoop
+                LDA $1334,Y                               ; ($1324)
+                CMP #$FF                                  ; ($1327)
+                BEQ EndSequence                           ; ($1329)
+                STA $0428,Y                               ; ($132B)
+                INY                                       ; ($132E)
+                BNE DisplayMessageLoop                    ; ($132F)
+EndSequence
+                JMP EndSequence                           ; ($1331)
+                .byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$43,$4F,$4E,$47,$52,$41,$54  ; ($1334)
+                .byte $55,$4C,$41,$54,$49,$4F,$4E,$53,$20,$30,$30,$37,$20,$20,$20,$20  ; ($1344)
+                .byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20  ; ($1354)
+                .byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20  ; ($1364)
+                .byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20  ; ($1374)
+                .byte $4D,$49,$53,$53,$49,$4F,$4E,$20,$43,$4F,$4D,$50,$4C,$45,$54,$45  ; ($1384)
+                .byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20  ; ($1394)
+                .byte $20,$20,$20,$20,$20,$20,$20,$20,$59,$4F,$55,$52,$20,$43,$4F,$44  ; ($13A4)
+                .byte $45,$20,$46,$4F,$52,$20,$54,$48,$45,$20,$4E,$45,$58,$54,$20,$50  ; ($13B4)
+                .byte $52,$4F,$47,$52,$41,$4D,$20,$49,$53,$20,$20,$20,$20,$20,$20,$20  ; ($13C4)
+                .byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$44,$42  ; ($13D4)
+                .byte $34,$43,$54,$20,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($13E4)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$77,$01,$01,$01  ; ($13F4)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($1404)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$00,$00,$00  ; ($1414)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($1424)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$01,$01,$01  ; ($1434)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($1444)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$00,$00,$00  ; ($1454)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($1464)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$FF,$FF  ; ($1474)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($1484)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE  ; ($1494)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($14A4)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FF,$FF,$FF,$FF  ; ($14B4)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($14C4)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE  ; ($14D4)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($14E4)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$77,$01,$01,$01  ; ($14F4)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($1504)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$00,$00,$00  ; ($1514)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($1524)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$01,$01,$01  ; ($1534)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($1544)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$00,$00,$00  ; ($1554)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($1564)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$FF,$FF  ; ($1574)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($1584)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE  ; ($1594)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($15A4)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FF,$FF,$FF,$FF  ; ($15B4)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($15C4)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE  ; ($15D4)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($15E4)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$7F,$01,$01,$01  ; ($15F4)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($1604)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$00,$00,$00  ; ($1614)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($1624)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$01,$01,$01  ; ($1634)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($1644)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$00,$00,$00  ; ($1654)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($1664)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$FF,$FF  ; ($1674)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($1684)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE  ; ($1694)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($16A4)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FF,$FF,$FF,$FF  ; ($16B4)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FF,$FF,$FF,$FF  ; ($16C4)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE  ; ($16D4)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($16E4)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$7F,$01,$01,$01  ; ($16F4)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($1704)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$00,$00,$00  ; ($1714)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($1724)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$01,$01,$01  ; ($1734)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($1744)
+                .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00,$00,$00,$00  ; ($1754)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($1764)
+                .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$FF,$FF  ; ($1774)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($1784)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE  ; ($1794)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($17A4)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FF,$FF,$FF,$FF  ; ($17B4)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($17C4)
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE  ; ($17D4)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($17E4)
+                .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($17F4)
 L1800
                 SEI                                       ; ($1800)
                 LDA #$00                                  ; ($1801)
@@ -982,7 +1006,14 @@ InventoryActiveFlag
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($3FD5)
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$F0,$F0,$F0,$00  ; ($3FE5)
                 .byte $00,$00,$01,$F0,$F0,$F0,$F0,$0F,$0F,$0B,$FE  ; ($3FF5)
-L4000
+
+; ==================================================
+; Section: RASTER INTERRUPT INITIALIZATION (Code)
+; Range: $4000 - $4021 (34 bytes)
+; Sets up custom IRQ handler for raster-based graphics effects
+; ==================================================
+
+InitRasterIRQ
                 SEI                                       ; ($4000)
                 LDA #$22                                  ; ($4001)
                 STA $0314                                 ; ($4003)
@@ -998,23 +1029,29 @@ L4000
                 STA $D012                                 ; ($401D)
                 CLI                                       ; ($4020)
                 RTS                                       ; ($4021)
-L4022
+
+; ==================================================
+; Section: RASTER INTERRUPT HANDLER (Data)
+; Range: $4022 - $40AD (140 bytes)
+; ==================================================
+
+RasterIRQHandler
                 LDA $D019                                 ; ($4022)
                 AND #$01                                  ; ($4025)
-                BNE L402C                                 ; ($4027)
+                BNE HandleRasterIRQ                       ; ($4027)
                 JMP $EA31                                 ; ($4029)
-L402C
+HandleRasterIRQ
                 STA $D019                                 ; ($402C)
                 CLI                                       ; ($402F)
                 LDA $D012                                 ; ($4030)
                 CMP #$32                                  ; ($4033)
-                BCC L405A                                 ; ($4035)
+                BCC RasterZone1                           ; ($4035)
                 CMP #$6E                                  ; ($4037)
-                BCC L406A                                 ; ($4039)
+                BCC RasterZone2                           ; ($4039)
                 CMP #$B4                                  ; ($403B)
-                BCC L407A                                 ; ($403D)
+                BCC RasterZone3                           ; ($403D)
                 CMP #$E6                                  ; ($403F)
-                BCC L4091                                 ; ($4041)
+                BCC RasterZone4                           ; ($4041)
                 LDA #$28                                  ; ($4043)
                 STA $D012                                 ; ($4045)
                 LDA $D018                                 ; ($4048)
@@ -1023,27 +1060,27 @@ L402C
                 STA $D018                                 ; ($404F)
                 LDA #$0F                                  ; ($4052)
                 STA $D021                                 ; ($4054)
-                JMP L4074                                 ; ($4057)
-L405A
+                JMP ExitIRQ                               ; ($4057)
+RasterZone1
                 LDA $1B50                                 ; ($405A)
                 STA $D021                                 ; ($405D)
                 LDA #$6A                                  ; ($4060)
                 STA $D012                                 ; ($4062)
                 JMP L9640                                 ; ($4065)
                 .byte $EA,$EA                             ; ($4068)
-L406A
+RasterZone2
                 LDA #$A9                                  ; ($406A)
                 STA $D012                                 ; ($406C)
                 LDA #$08                                  ; ($406F)
                 STA $D021                                 ; ($4071)
-L4074
+ExitIRQ
                 PLA                                       ; ($4074)
                 TAY                                       ; ($4075)
                 PLA                                       ; ($4076)
                 TAX                                       ; ($4077)
                 PLA                                       ; ($4078)
                 RTI                                       ; ($4079)
-L407A
+RasterZone3
                 LDA #$E3                                  ; ($407A)
                 STA $D012                                 ; ($407C)
                 LDA #$0C                                  ; ($407F)
@@ -1052,8 +1089,8 @@ L407A
                 AND #$F0                                  ; ($4087)
                 ORA #$0E                                  ; ($4089)
                 STA $D018                                 ; ($408B)
-                JMP L4074                                 ; ($408E)
-L4091
+                JMP ExitIRQ                               ; ($408E)
+RasterZone4
                 LDA #$F3                                  ; ($4091)
                 STA $D012                                 ; ($4093)
                 LDA #$0C                                  ; ($4096)
@@ -1061,30 +1098,36 @@ L4091
                 JSR L6DA0                                 ; ($409B)
                 JSR L6DC0                                 ; ($409E)
                 JSR L6E10                                 ; ($40A1)
-                JSR L6BC0                                 ; ($40A4)
+                JSR UpdateBuildingColors                  ; ($40A4)
                 JSR UpdateGameTimer                       ; ($40A7)
                 JSR L94F0                                 ; ($40AA)
-                JMP L4074                                 ; ($40AD)
-L40B0
+                JMP ExitIRQ                               ; ($40AD)
+
+; ==================================================
+; Section: SCREEN MEMORY INITIALIZATION (Data)
+; Range: $40B0 - $40FF (80 bytes)
+; ==================================================
+
+InitScreen
                 LDA #$80                                  ; ($40B0)
                 STA $FB                                   ; ($40B2)
                 LDA #$3A                                  ; ($40B4)
                 STA $FC                                   ; ($40B6)
                 LDX #$03                                  ; ($40B8)
                 LDY #$00                                  ; ($40BA)
-L40BC
+ClearLoop
                 LDA #$00                                  ; ($40BC)
-L40BE
+ClearPage
                 STA ($FB),Y                               ; ($40BE)
                 DEY                                       ; ($40C0)
-                BNE L40BE                                 ; ($40C1)
+                BNE ClearPage                             ; ($40C1)
                 INC $FC                                   ; ($40C3)
                 DEX                                       ; ($40C5)
-                BMI L40CE                                 ; ($40C6)
-                BNE L40BC                                 ; ($40C8)
+                BMI DrawDiamond                           ; ($40C6)
+                BNE ClearLoop                             ; ($40C8)
                 LDY #$7F                                  ; ($40CA)
-                BNE L40BC                                 ; ($40CC)
-L40CE
+                BNE ClearLoop                             ; ($40CC)
+DrawDiamond
                 LDA #$44                                  ; ($40CE)
                 STA $FB                                   ; ($40D0)
                 LDA #$05                                  ; ($40D2)
@@ -1092,12 +1135,12 @@ L40CE
                 LDY #$0E                                  ; ($40D6)
                 LDA #$BF                                  ; ($40D8)
                 LDX #$08                                  ; ($40DA)
-L40DC
+DrawDiamondLoop
                 STA ($FB),Y                               ; ($40DC)
                 SEC                                       ; ($40DE)
                 SBC #$01                                  ; ($40DF)
                 DEY                                       ; ($40E1)
-                BNE L40DC                                 ; ($40E2)
+                BNE DrawDiamondLoop                       ; ($40E2)
                 LDY #$0E                                  ; ($40E4)
                 PHA                                       ; ($40E6)
                 LDA $FB                                   ; ($40E7)
@@ -1109,32 +1152,38 @@ L40DC
                 STA $FC                                   ; ($40F2)
                 PLA                                       ; ($40F4)
                 DEX                                       ; ($40F5)
-                BNE L40DC                                 ; ($40F6)
+                BNE DrawDiamondLoop                       ; ($40F6)
                 STX $3D80                                 ; ($40F8)
                 RTS                                       ; ($40FB)
                 .byte $FE,$FE,$FE,$FE                     ; ($40FC)
-L4100
+
+; ==================================================
+; Section: STRUCTURE RENDERING (Data)
+; Range: $4100 - $420D (270 bytes)
+; ==================================================
+
+DrawStructure
                 LDY #$01                                  ; ($4100)
                 LDA ($3F),Y                               ; ($4102)
                 STA $1B50                                 ; ($4104)
                 INY                                       ; ($4107)
                 LDA ($3F),Y                               ; ($4108)
                 TAY                                       ; ($410A)
-                JSR L4127                                 ; ($410B)
+                JSR DrawTopSection                        ; ($410B)
                 LDY #$03                                  ; ($410E)
                 LDA ($3F),Y                               ; ($4110)
                 TAY                                       ; ($4112)
-                JSR L418A                                 ; ($4113)
+                JSR DrawMiddleFlags                       ; ($4113)
                 LDY #$10                                  ; ($4116)
                 LDA ($3F),Y                               ; ($4118)
                 TAY                                       ; ($411A)
-                JSR L4162                                 ; ($411B)
+                JSR DrawLeftSection                       ; ($411B)
                 LDY #$11                                  ; ($411E)
                 LDA ($3F),Y                               ; ($4120)
                 TAY                                       ; ($4122)
-                JSR L41CC                                 ; ($4123)
+                JSR DrawRightSection                      ; ($4123)
                 RTS                                       ; ($4126)
-L4127
+DrawTopSection
                 LDA #$29                                  ; ($4127)
                 STA $FB                                   ; ($4129)
                 LDA #$D8                                  ; ($412B)
@@ -1145,10 +1194,10 @@ L4127
                 LDX #$0C                                  ; ($4133)
                 LDY #$03                                  ; ($4135)
                 STY $FD                                   ; ($4137)
-L4139
+DrawTopRow
                 STA ($FB),Y                               ; ($4139)
                 DEY                                       ; ($413B)
-                BPL L4139                                 ; ($413C)
+                BPL DrawTopRow                            ; ($413C)
                 PHA                                       ; ($413E)
                 LDA $FB                                   ; ($413F)
                 CLC                                       ; ($4141)
@@ -1158,21 +1207,21 @@ L4139
                 ADC #$00                                  ; ($4148)
                 STA $FC                                   ; ($414A)
                 DEX                                       ; ($414C)
-                BMI L4160                                 ; ($414D)
+                BMI ExitTopSection                        ; ($414D)
                 CPX #$06                                  ; ($414F)
-                BCS L415A                                 ; ($4151)
+                BCS RestoreTopWidth                       ; ($4151)
                 TXA                                       ; ($4153)
                 AND #$01                                  ; ($4154)
-                BEQ L415A                                 ; ($4156)
+                BEQ RestoreTopWidth                       ; ($4156)
                 DEC $FD                                   ; ($4158)
-L415A
+RestoreTopWidth
                 LDY $FD                                   ; ($415A)
                 PLA                                       ; ($415C)
-                JMP L4139                                 ; ($415D)
-L4160
+                JMP DrawTopRow                            ; ($415D)
+ExitTopSection
                 PLA                                       ; ($4160)
                 RTS                                       ; ($4161)
-L4162
+DrawLeftSection
                 LDA #$3B                                  ; ($4162)
                 STA $FB                                   ; ($4164)
                 LDA #$D8                                  ; ($4166)
@@ -1181,12 +1230,12 @@ L4162
                 CLC                                       ; ($416B)
                 ADC #$08                                  ; ($416C)
                 LDX #$0D                                  ; ($416E)
-L4170
+DrawLeftRow
                 LDY #$02                                  ; ($4170)
-L4172
+DrawLeftCol
                 STA ($FB),Y                               ; ($4172)
                 DEY                                       ; ($4174)
-                BPL L4172                                 ; ($4175)
+                BPL DrawLeftCol                           ; ($4175)
                 PHA                                       ; ($4177)
                 LDA $FB                                   ; ($4178)
                 CLC                                       ; ($417A)
@@ -1197,27 +1246,27 @@ L4172
                 STA $FC                                   ; ($4183)
                 PLA                                       ; ($4185)
                 DEX                                       ; ($4186)
-                BNE L4170                                 ; ($4187)
+                BNE DrawLeftRow                           ; ($4187)
                 RTS                                       ; ($4189)
-L418A
+DrawMiddleFlags
                 CPY #$00                                  ; ($418A)
-                BEQ L4193                                 ; ($418C)
+                BEQ DrawMiddleSection                     ; ($418C)
                 CPY #$06                                  ; ($418E)
-                BEQ L4193                                 ; ($4190)
+                BEQ DrawMiddleSection                     ; ($4190)
                 RTS                                       ; ($4192)
-L4193
+DrawMiddleSection
                 LDA #$51                                  ; ($4193)
                 STA $FB                                   ; ($4195)
                 LDA #$04                                  ; ($4197)
                 STA $FC                                   ; ($4199)
                 LDY #$02                                  ; ($419B)
                 LDX #$06                                  ; ($419D)
-L419F
+DrawMiddleRow
                 LDA #$01                                  ; ($419F)
-L41A1
+DrawMiddleCol
                 STA ($FB),Y                               ; ($41A1)
                 DEY                                       ; ($41A3)
-                BPL L41A1                                 ; ($41A4)
+                BPL DrawMiddleCol                         ; ($41A4)
                 LDY #$02                                  ; ($41A6)
                 LDA $FB                                   ; ($41A8)
                 CLC                                       ; ($41AA)
@@ -1227,7 +1276,7 @@ L41A1
                 ADC #$00                                  ; ($41B1)
                 STA $FC                                   ; ($41B3)
                 DEX                                       ; ($41B5)
-                BNE L419F                                 ; ($41B6)
+                BNE DrawMiddleRow                         ; ($41B6)
                 LDA #$01                                  ; ($41B8)
                 STA $0541                                 ; ($41BA)
                 STA $0569                                 ; ($41BD)
@@ -1236,25 +1285,25 @@ L41A1
                 LDA #$02                                  ; ($41C6)
                 STA $0543                                 ; ($41C8)
                 RTS                                       ; ($41CB)
-L41CC
+DrawRightSection
                 CPY #$00                                  ; ($41CC)
-                BEQ L41D5                                 ; ($41CE)
+                BEQ DrawRightSide                         ; ($41CE)
                 CPY #$06                                  ; ($41D0)
-                BEQ L41D5                                 ; ($41D2)
+                BEQ DrawRightSide                         ; ($41D2)
                 RTS                                       ; ($41D4)
-L41D5
+DrawRightSide
                 LDA #$63                                  ; ($41D5)
                 STA $FB                                   ; ($41D7)
                 LDA #$04                                  ; ($41D9)
                 STA $FC                                   ; ($41DB)
                 LDY #$02                                  ; ($41DD)
                 LDX #$06                                  ; ($41DF)
-L41E1
+DrawRightRow
                 LDA #$01                                  ; ($41E1)
-L41E3
+DrawRightCol
                 STA ($FB),Y                               ; ($41E3)
                 DEY                                       ; ($41E5)
-                BPL L41E3                                 ; ($41E6)
+                BPL DrawRightCol                          ; ($41E6)
                 LDY #$02                                  ; ($41E8)
                 LDA $FB                                   ; ($41EA)
                 CLC                                       ; ($41EC)
@@ -1264,7 +1313,7 @@ L41E3
                 ADC #$00                                  ; ($41F3)
                 STA $FC                                   ; ($41F5)
                 DEX                                       ; ($41F7)
-                BNE L41E1                                 ; ($41F8)
+                BNE DrawRightRow                          ; ($41F8)
                 LDA #$01                                  ; ($41FA)
                 STA $0553                                 ; ($41FC)
                 STA $057B                                 ; ($41FF)
@@ -1273,6 +1322,11 @@ L41E3
                 LDA #$02                                  ; ($4208)
                 STA $0555                                 ; ($420A)
                 RTS                                       ; ($420D)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
                 .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($420E)
                 .byte $01,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($421E)
                 .byte $00,$00,$55,$07,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$0F  ; ($422E)
@@ -1779,7 +1833,38 @@ StoreFireButton
                 .byte $01,$00,$00,$00,$00,$00,$00,$00,$01,$00,$00,$00,$00,$00,$00,$00  ; ($5E27)
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$01,$01,$01,$01,$01,$01  ; ($5E37)
                 .byte $01,$01,$01,$01,$01,$01,$01,$01,$01  ; ($5E47)
-L5E50
+
+; ==================================================
+; Section: Copy Screen and Color RAM Data (Code)
+; Range: $5E50 - $5E93 (68 bytes)
+; This routine copies both screen character data and color attribute data
+; from source buffers to their display destinations. It's likely called after
+; screen transitions to refresh the entire display.
+; Operation:
+; Copies data in 232-byte ($E8) chunks per page
+; Processes 3 complete pages (stops when high byte reaches $07)
+; Total copied: approximately 3 × 232 = 696 bytes
+; Dual Copy Process: Each iteration copies:
+; Screen data: From (AE−AE−AF) to (FD−FD−FE)
+; Color data: From (AC−AC−AD) to (FB−FB−FC)
+; Page Management:
+; When Y counter reaches $E8 (232 bytes), increments all four high bytes
+; Continues until screen destination high byte = $07
+; The 232-byte limit per page suggests copying less than a full page to avoid
+; wrapping issues
+; Usage Context: Based on earlier documentation, this routine is called at
+; $67CF during screen transitions (UpdateGameAfterTransition), suggesting it
+; refreshes the display after moving between building sections.
+; Note: The destination starting at $0004 seems unusual for screen memory
+; (typically $0400). This may be:
+; A bug in the disassembly/base address
+; Temporary buffer that gets copied elsewhere
+; Self-modifying code that updates these pointers before execution
+; The routine efficiently updates both character and color data
+; simultaneously to maintain visual consistency during screen updates.
+; ==================================================
+
+CopyScreenAndColorData
                 LDA #$04                                  ; ($5E50)
                 STA $FE                                   ; ($5E52)
                 LDA #$D8                                  ; ($5E54)
@@ -1795,29 +1880,34 @@ L5E50
                 STA $AD                                   ; ($5E68)
                 LDA #$08                                  ; ($5E6A)
                 STA $AC                                   ; ($5E6C)
-L5E6E
+PageCopyLoop
                 LDY #$00                                  ; ($5E6E)
-L5E70
+ByteCopyLoop
                 LDA ($AE),Y                               ; ($5E70)
                 STA ($FD),Y                               ; ($5E72)
                 LDA ($AC),Y                               ; ($5E74)
                 STA ($FB),Y                               ; ($5E76)
                 INY                                       ; ($5E78)
-                BEQ L5E82                                 ; ($5E79)
+                BEQ IncrementPagePointers                 ; ($5E79)
                 CPY #$E8                                  ; ($5E7B)
-                BNE L5E70                                 ; ($5E7D)
-                JMP L5E8D                                 ; ($5E7F)
-L5E82
+                BNE ByteCopyLoop                          ; ($5E7D)
+                JMP CheckCopyComplete                     ; ($5E7F)
+IncrementPagePointers
                 INC $FE                                   ; ($5E82)
                 INC $FC                                   ; ($5E84)
                 INC $AF                                   ; ($5E86)
                 INC $AD                                   ; ($5E88)
-                JMP L5E6E                                 ; ($5E8A)
-L5E8D
+                JMP PageCopyLoop                          ; ($5E8A)
+CheckCopyComplete
                 LDA $FE                                   ; ($5E8D)
                 CMP #$07                                  ; ($5E8F)
-                BNE L5E70                                 ; ($5E91)
+                BNE ByteCopyLoop                          ; ($5E91)
                 RTS                                       ; ($5E93)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
                 .byte $60,$41,$41,$00,$00,$00,$00,$00,$FF,$FF,$FF,$02,$FE,$FE,$FE,$FE  ; ($5E94)
                 .byte $FE,$FE,$FE,$FF,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FF,$FE,$FE,$FE,$FE  ; ($5EA4)
                 .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FF,$FF,$FF,$FF  ; ($5EB4)
@@ -1841,11 +1931,11 @@ L5E8D
                 .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE,$FE,$FE,$FE  ; ($5FD4)
                 .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FF,$FE,$FE,$FE,$FE  ; ($5FE4)
                 .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($5FF4)
-L6000
+ProcessStructureArray
                 LDX #$02                                  ; ($6000)
                 STX $02                                   ; ($6002)
                 LDY #$04                                  ; ($6004)
-L6006
+ProcessNextEntry
                 LDA ($3F),Y                               ; ($6006)
                 PHA                                       ; ($6008)
                 INY                                       ; ($6009)
@@ -1858,15 +1948,15 @@ L6006
                 LDA ($3F),Y                               ; ($6014)
                 STA $FD                                   ; ($6016)
                 PLA                                       ; ($6018)
-                BEQ L604A                                 ; ($6019)
+                BEQ ProcessType0                          ; ($6019)
                 JMP L6FC0                                 ; ($601B)
                 .byte $EA,$EA,$EA                         ; ($601E)
-L6021
+CalculateTableOffset
                 CLC                                       ; ($6021)
                 ADC #$07                                  ; ($6022)
                 DEX                                       ; ($6024)
-                BNE L6021                                 ; ($6025)
-L6027
+                BNE CalculateTableOffset                  ; ($6025)
+LoadStructureParams
                 TAY                                       ; ($6027)
                 LDA $60E8,Y                               ; ($6028)
                 STA $AE                                   ; ($602B)
@@ -1880,17 +1970,17 @@ L6027
                 STA $6048                                 ; ($603E)
                 LDA $60E7,Y                               ; ($6041)
                 STA $6049                                 ; ($6044)
-                JSR L6051                                 ; ($6047)
-L604A
+                JSR ExecuteTableRoutine                   ; ($6047)
+ProcessType0
                 LDY #$08                                  ; ($604A)
                 DEC $02                                   ; ($604C)
-                BNE L6006                                 ; ($604E)
+                BNE ProcessNextEntry                      ; ($604E)
                 RTS                                       ; ($6050)
-L6051
-                JMP L606B                                 ; ($6051)
+ExecuteTableRoutine
+                JMP GraphicsBlit                          ; ($6051)
                 .byte $20,$6B,$60,$A5,$FB,$38,$E9,$C8,$85,$FB,$A5,$FC,$E9,$00,$85,$FC  ; ($6054)
                 .byte $A9,$08,$A0,$01,$91,$FB,$60         ; ($6064)
-L606B
+GraphicsBlit
                 LDA $FE                                   ; ($606B)
                 STA $033D                                 ; ($606D)
                 ASL $FE                                   ; ($6070)
@@ -1901,14 +1991,14 @@ L606B
                 LDA $FC                                   ; ($607B)
                 STA $033F                                 ; ($607D)
                 STX $033C                                 ; ($6080)
-L6083
+BlitRowLoop
                 LDY $FE                                   ; ($6083)
                 DEY                                       ; ($6085)
-L6086
+CopyRowBytes
                 LDA ($AE),Y                               ; ($6086)
                 STA ($FB),Y                               ; ($6088)
                 DEY                                       ; ($608A)
-                BPL L6086                                 ; ($608B)
+                BPL CopyRowBytes                          ; ($608B)
                 LDA $AE                                   ; ($608D)
                 CLC                                       ; ($608F)
                 ADC $FE                                   ; ($6090)
@@ -1924,7 +2014,7 @@ L6086
                 ADC #$00                                  ; ($60A3)
                 STA $FC                                   ; ($60A5)
                 DEX                                       ; ($60A7)
-                BNE L6083                                 ; ($60A8)
+                BNE BlitRowLoop                           ; ($60A8)
                 LDX $033C                                 ; ($60AA)
                 CLC                                       ; ($60AD)
                 ROR $033F                                 ; ($60AE)
@@ -1940,14 +2030,14 @@ L6086
                 STA $FB                                   ; ($60C5)
                 LDA $61B4,Y                               ; ($60C7)
                 STA $FC                                   ; ($60CA)
-L60CC
+ColorFillLoop
                 LDA $FD                                   ; ($60CC)
                 LDY $033D                                 ; ($60CE)
                 DEY                                       ; ($60D1)
-L60D2
+FillColorRow
                 STA ($FB),Y                               ; ($60D2)
                 DEY                                       ; ($60D4)
-                BPL L60D2                                 ; ($60D5)
+                BPL FillColorRow                          ; ($60D5)
                 LDA $FB                                   ; ($60D7)
                 CLC                                       ; ($60D9)
                 ADC #$28                                  ; ($60DA)
@@ -1956,7 +2046,7 @@ L60D2
                 ADC #$00                                  ; ($60E0)
                 STA $FC                                   ; ($60E2)
                 DEX                                       ; ($60E4)
-                BNE L60CC                                 ; ($60E5)
+                BNE ColorFillLoop                         ; ($60E5)
                 RTS                                       ; ($60E7)
                 .byte $01,$51,$60,$10,$55,$06,$06,$02,$51,$60,$40,$52,$04,$06,$03,$51  ; ($60E8)
                 .byte $60,$C0,$53,$04,$06,$04,$51,$60,$50,$57,$05,$04,$05,$51,$60,$A0  ; ($60F8)
@@ -1986,29 +2076,29 @@ L60D2
                 .byte $D9,$46,$D9,$47,$D9,$48,$D9,$49,$D9,$4A,$D9,$4B,$D9,$4C,$D9,$4D  ; ($6278)
                 .byte $D9,$4E,$D9,$4F,$D9,$50,$D9,$51,$D9,$52,$D9,$FF,$FF,$FF,$FF,$FF  ; ($6288)
                 .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF     ; ($6298)
-L62A0
+PlaceItemsInRoom
                 LDY #$01                                  ; ($62A0)
                 LDX #$5B                                  ; ($62A2)
                 LDA #$D0                                  ; ($62A4)
                 STA $FB                                   ; ($62A6)
                 LDA #$63                                  ; ($62A8)
                 STA $FC                                   ; ($62AA)
-L62AC
+ItemScanLoop
                 LDA ($FB),Y                               ; ($62AC)
                 CMP CurrentScreenIndex                    ; ($62AE)
-                BEQ L62C2                                 ; ($62B1)
-L62B3
+                BEQ PlaceThisItem                         ; ($62B1)
+NextItemEntry
                 LDA $FB                                   ; ($62B3)
                 CLC                                       ; ($62B5)
                 ADC #$08                                  ; ($62B6)
                 STA $FB                                   ; ($62B8)
-                BCC L62BE                                 ; ($62BA)
+                BCC NoCarry                               ; ($62BA)
                 INC $FC                                   ; ($62BC)
-L62BE
+NoCarry
                 DEX                                       ; ($62BE)
-                BNE L62AC                                 ; ($62BF)
+                BNE ItemScanLoop                          ; ($62BF)
                 RTS                                       ; ($62C1)
-L62C2
+PlaceThisItem
                 TXA                                       ; ($62C2)
                 PHA                                       ; ($62C3)
                 INY                                       ; ($62C4)
@@ -2016,9 +2106,9 @@ L62C2
                 INY                                       ; ($62C6)
                 INY                                       ; ($62C7)
                 LDA ($FB),Y                               ; ($62C8)
-                BNE L62CF                                 ; ($62CA)
-                JMP L6385                                 ; ($62CC)
-L62CF
+                BNE SkipPlacement                         ; ($62CA)
+                JMP ItemPlaced                            ; ($62CC)
+SkipPlacement
                 LDA #$40                                  ; ($62CF)
                 STA $AE                                   ; ($62D1)
                 LDA #$3C                                  ; ($62D3)
@@ -2028,17 +2118,17 @@ L62CF
                 STA $FD                                   ; ($62DB)
                 LDA #$3C                                  ; ($62DD)
                 STA $FE                                   ; ($62DF)
-L62E1
+CheckEmptySlot
                 LDY #$0F                                  ; ($62E1)
-L62E3
+CheckSlotBytes
                 LDA ($AE),Y                               ; ($62E3)
-                BNE L62F1                                 ; ($62E5)
+                BNE SlotOccupied                          ; ($62E5)
                 LDA ($FD),Y                               ; ($62E7)
-                BNE L62F1                                 ; ($62E9)
+                BNE SlotOccupied                          ; ($62E9)
                 DEY                                       ; ($62EB)
-                BPL L62E3                                 ; ($62EC)
-                JMP L6309                                 ; ($62EE)
-L62F1
+                BPL CheckSlotBytes                        ; ($62EC)
+                JMP FoundEmptySlot                        ; ($62EE)
+SlotOccupied
                 LDA $AE                                   ; ($62F1)
                 CLC                                       ; ($62F3)
                 ADC #$08                                  ; ($62F4)
@@ -2047,13 +2137,13 @@ L62F1
                 CLC                                       ; ($62FA)
                 ADC #$08                                  ; ($62FB)
                 STA $FD                                   ; ($62FD)
-                BCC L6303                                 ; ($62FF)
+                BCC NoCarry2                              ; ($62FF)
                 INC $FE                                   ; ($6301)
-L6303
+NoCarry2
                 DEX                                       ; ($6303)
-                BNE L62E1                                 ; ($6304)
-                JMP L6385                                 ; ($6306)
-L6309
+                BNE CheckEmptySlot                        ; ($6304)
+                JMP ItemPlaced                            ; ($6306)
+FoundEmptySlot
                 LDY #$03                                  ; ($6309)
                 LDX #$02                                  ; ($630B)
                 LDA $AE                                   ; ($630D)
@@ -2066,11 +2156,11 @@ L6309
                 LDA ($FB),Y                               ; ($631C)
                 STA $FE                                   ; ($631E)
                 LDY #$0F                                  ; ($6320)
-L6322
+CopyItemData
                 LDA ($FD),Y                               ; ($6322)
                 STA ($AE),Y                               ; ($6324)
                 DEY                                       ; ($6326)
-                BPL L6322                                 ; ($6327)
+                BPL CopyItemData                          ; ($6327)
                 LDA $AE                                   ; ($6329)
                 CLC                                       ; ($632B)
                 ADC #$70                                  ; ($632C)
@@ -2087,7 +2177,7 @@ L6322
                 STA $FE                                   ; ($6341)
                 LDY #$0F                                  ; ($6343)
                 DEX                                       ; ($6345)
-                BNE L6322                                 ; ($6346)
+                BNE CopyItemData                          ; ($6346)
                 LDY #$06                                  ; ($6348)
                 LDA ($FB),Y                               ; ($634A)
                 TAX                                       ; ($634C)
@@ -2112,73 +2202,259 @@ L6322
                 CLC                                       ; ($6374)
                 ADC #$28                                  ; ($6375)
                 STA $AE                                   ; ($6377)
-                BCC L637D                                 ; ($6379)
+                BCC NoCarry3                              ; ($6379)
                 INC $AF                                   ; ($637B)
-L637D
+NoCarry3
                 TXA                                       ; ($637D)
                 LDY #$01                                  ; ($637E)
                 STA ($AE),Y                               ; ($6380)
                 DEY                                       ; ($6382)
                 STA ($AE),Y                               ; ($6383)
-L6385
+ItemPlaced
                 PLA                                       ; ($6385)
                 TAX                                       ; ($6386)
                 LDY #$01                                  ; ($6387)
-                JMP L62B3                                 ; ($6389)
+                JMP NextItemEntry                         ; ($6389)
                 .byte $02,$FF,$FF,$FE,$FF,$FF,$FF,$02,$FF,$FF,$FF,$FE,$FF,$FF,$02,$FF  ; ($638C)
                 .byte $FF,$FF,$FF,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($639C)
                 .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($63AC)
                 .byte $FE,$FE,$FE,$FE,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF  ; ($63BC)
                 .byte $FF,$FF,$FF,$FE                     ; ($63CC)
-ItemDefinitionTable
-                .byte $01,$04,$19,$48,$4F,$01,$08,$01,$02,$80,$19,$48,$4F,$01,$08,$01  ; ($63D0)
-                .byte $03,$22,$19,$48,$4F,$01,$08,$01,$04,$31,$19,$48,$4F,$01,$08,$01  ; ($63E0)
-                .byte $05,$40,$19,$48,$4F,$01,$08,$01,$06,$0C,$19,$48,$4F,$01,$08,$01  ; ($63F0)
-                .byte $07,$1B,$19,$48,$4F,$01,$08,$01,$08,$2A,$19,$48,$4F,$01,$08,$01  ; ($6400)
-                .byte $09,$39,$19,$48,$4F,$01,$08,$01,$0A,$48,$19,$48,$4F,$01,$08,$01  ; ($6410)
-                .byte $0B,$80,$0A,$28,$4F,$01,$08,$02,$0C,$80,$0A,$28,$4F,$01,$08,$02  ; ($6420)
-                .byte $0D,$80,$0A,$28,$4F,$01,$08,$02,$0E,$80,$0A,$28,$4F,$01,$08,$02  ; ($6430)
-                .byte $0F,$80,$0A,$28,$4F,$01,$08,$02,$10,$80,$0A,$28,$4F,$01,$08,$02  ; ($6440)
-                .byte $11,$80,$0A,$28,$4F,$01,$08,$02,$12,$80,$0A,$28,$4F,$01,$08,$02  ; ($6450)
-                .byte $13,$80,$0A,$28,$4F,$01,$08,$02,$14,$80,$0A,$28,$4F,$01,$08,$02  ; ($6460)
-                .byte $15,$1E,$28,$20,$48,$01,$00,$03,$16,$39,$0A,$80,$48,$01,$06,$04  ; ($6470)
-                .byte $17,$2D,$0A,$80,$49,$00,$00,$05,$18,$06,$02,$40,$49,$00,$00,$06  ; ($6480)
-                .byte $19,$25,$02,$40,$49,$00,$03,$06,$1A,$35,$02,$40,$49,$00,$05,$06  ; ($6490)
-                .byte $1B,$29,$02,$40,$49,$00,$01,$06,$1C,$38,$02,$40,$49,$00,$04,$06  ; ($64A0)
-                .byte $1D,$41,$02,$40,$49,$00,$06,$06,$1E,$09,$02,$C0,$47,$00,$00,$07  ; ($64B0)
-                .byte $1F,$19,$02,$C0,$47,$00,$06,$07,$20,$0E,$02,$C0,$47,$00,$04,$07  ; ($64C0)
-                .byte $21,$33,$02,$C0,$47,$00,$05,$07,$22,$00,$00,$00,$00,$00,$00,$00  ; ($64D0)
-                .byte $23,$3D,$02,$C0,$47,$00,$01,$07,$24,$80,$02,$C0,$47,$00,$03,$07  ; ($64E0)
-                .byte $25,$16,$05,$E0,$47,$00,$06,$08,$26,$2E,$05,$E0,$47,$00,$03,$08  ; ($64F0)
-                .byte $27,$37,$05,$E0,$47,$00,$02,$08,$28,$3C,$05,$E0,$47,$00,$00,$08  ; ($6500)
-                .byte $29,$0A,$05,$E0,$47,$00,$05,$08,$2A,$14,$05,$E0,$47,$00,$01,$08  ; ($6510)
-                .byte $2B,$07,$05,$00,$48,$01,$00,$09,$2C,$0B,$02,$A0,$47,$00,$00,$0A  ; ($6520)
-                .byte $2D,$0B,$02,$A0,$47,$00,$00,$0A,$2E,$0B,$02,$A0,$47,$00,$00,$0A  ; ($6530)
-                .byte $2F,$1C,$02,$A0,$47,$00,$00,$0A,$30,$1C,$02,$A0,$47,$00,$00,$0A  ; ($6540)
-                .byte $31,$16,$02,$A0,$47,$00,$00,$0A,$32,$80,$02,$60,$49,$00,$05,$0B  ; ($6550)
-                .byte $33,$80,$00,$C0,$48,$00,$00,$0C,$34,$80,$05,$E0,$48,$00,$00,$0D  ; ($6560)
-                .byte $35,$1D,$02,$A0,$48,$00,$02,$0E,$36,$00,$00,$60,$48,$00,$00,$0F  ; ($6570)
-                .byte $37,$0F,$0A,$20,$49,$00,$04,$10,$38,$18,$00,$A0,$49,$00,$00,$11  ; ($6580)
-                .byte $39,$80,$00,$C0,$49,$00,$00,$12,$3A,$1E,$02,$A0,$47,$00,$00,$0A  ; ($6590)
-                .byte $3B,$1E,$02,$A0,$47,$00,$00,$0A,$3C,$0D,$02,$A0,$47,$00,$00,$0A  ; ($65A0)
-                .byte $3D,$80,$05,$00,$49,$00,$05,$13,$3E,$23,$02,$A0,$47,$00,$00,$0A  ; ($65B0)
-                .byte $3F,$23,$02,$A0,$47,$00,$00,$0A,$40,$24,$02,$40,$48,$00,$04,$14  ; ($65C0)
-                .byte $41,$80,$05,$00,$49,$00,$05,$13,$42,$80,$05,$00,$49,$00,$05,$13  ; ($65D0)
-                .byte $43,$34,$02,$40,$48,$00,$04,$14,$44,$80,$05,$00,$49,$00,$05,$13  ; ($65E0)
-                .byte $45,$42,$02,$A0,$47,$00,$00,$0A,$46,$3D,$02,$D0,$58,$00,$00,$15  ; ($65F0)
-                .byte $47,$3D,$02,$40,$48,$00,$04,$14,$48,$3D,$02,$A0,$47,$00,$00,$0A  ; ($6600)
-                .byte $49,$3D,$02,$A0,$47,$00,$00,$0A,$4A,$80,$05,$00,$49,$00,$05,$13  ; ($6610)
-                .byte $4B,$80,$05,$00,$49,$00,$05,$13,$4C,$80,$05,$00,$49,$00,$05,$13  ; ($6620)
-                .byte $4D,$36,$02,$A0,$47,$00,$00,$0A,$4E,$46,$02,$A0,$47,$00,$00,$0A  ; ($6630)
-                .byte $4F,$46,$02,$A0,$47,$00,$00,$0A,$50,$46,$02,$A0,$47,$00,$00,$0A  ; ($6640)
-                .byte $51,$2B,$02,$A0,$47,$00,$00,$0A,$52,$80,$02,$60,$49,$00,$05,$0B  ; ($6650)
-                .byte $53,$80,$02,$60,$49,$00,$05,$0B,$54,$80,$00,$10,$58,$00,$00,$16  ; ($6660)
-                .byte $55,$80,$00,$30,$58,$00,$00,$16,$56,$37,$00,$50,$58,$00,$00,$16  ; ($6670)
-                .byte $57,$80,$00,$70,$58,$00,$00,$16,$58,$3D,$00,$90,$58,$00,$00,$16  ; ($6680)
-                .byte $59,$80,$00,$B0,$58,$00,$00,$16,$5A,$80,$6E,$F0,$58,$00,$00,$17  ; ($6690)
-                .byte $5B,$3D,$02,$A0,$47,$00,$00,$0A,$CD,$D8,$CE,$D8,$CF,$D8,$D0,$D8  ; ($66A0)
-                .byte $D1,$D8,$D2,$D8,$D3,$D8,$D4,$D8,$D5,$D8,$D6,$D8,$D7,$D8,$D8,$D8  ; ($66B0)
-                .byte $D9,$D8,$DA,$D8,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE  ; ($66C0)
+                .byte $01                                 ; ($63D0) =========ITEM_ID: 01 (Bucket) =========
+                .byte $04                                 ; ($63D1) ROOM_INDEX: $04 (Floor 5, Left Wing Room 5)
+                .byte $19                                 ; ($63D2) SPRITE_LO: $19
+                .byte $48                                 ; ($63D3) SPRITE_HI: $48 (Sprite at $4819)
+                .byte $4F                                 ; ($63D4) SPRITE_BANK: $4F
+                .byte $01                                 ; ($63D5) FLAGS: $01 (Visible)
+                .byte $08                                 ; ($63D6) COLOR: $08 (Blue)
+                .byte $01                                 ; ($63D7) ITEM_TYPE: $01 (Bucket)
+                .byte $02                                 ; ($63D8) =========ITEM_ID: 02 (Bucket) =========
+                .byte $80                                 ; ($63D9) ROOM_INDEX: Room $80 (Hidden/Inventory)
+                .byte $19                                 ; ($63DA) SPRITE_LO: $19
+                .byte $48                                 ; ($63DB) SPRITE_HI: $48 (Sprite at $4819)
+                .byte $4F                                 ; ($63DC) SPRITE_BANK: $4F
+                .byte $01                                 ; ($63DD) FLAGS: $01 (Visible)
+                .byte $08                                 ; ($63DE) COLOR: $08 (Blue)
+                .byte $01                                 ; ($63DF) ITEM_TYPE: $01 (Bucket)
+                .byte $03                                 ; ($63E0) =========ITEM_ID: 03 (Bucket) =========
+                .byte $22                                 ; ($63E1) ROOM_INDEX: $22 (Floor 3, Left Wing Room 5)
+                .byte $19                                 ; ($63E2) SPRITE_LO: $19
+                .byte $48                                 ; ($63E3) SPRITE_HI: $48
+                .byte $4F                                 ; ($63E4) SPRITE_BANK: $4F
+                .byte $01                                 ; ($63E5) FLAGS: $01
+                .byte $08                                 ; ($63E6) COLOR: $08
+                .byte $01                                 ; ($63E7) ITEM_TYPE: Bucket
+                .byte $04                                 ; ($63E8) =========ITEM_ID: 04 (Bucket) =========
+                .byte $31,$19,$48,$4F,$01,$08,$01         ; ($63E9)
+                .byte $05                                 ; ($63F0) =========ITEM_ID: 05 (Bucket) =========
+                .byte $40,$19,$48,$4F,$01,$08,$01         ; ($63F1)
+                .byte $06                                 ; ($63F8) =========ITEM_ID: 06 (Bucket) =========
+                .byte $0C,$19,$48,$4F,$01,$08,$01         ; ($63F9)
+                .byte $07                                 ; ($6400) =========ITEM_ID: 07 (Bucket) =========
+                .byte $1B,$19,$48,$4F,$01                 ; ($6401)
+                .byte $08                                 ; ($6406) =========ITEM_ID: 08 (Bucket) =========
+                .byte $01,$08,$2A,$19,$48,$4F,$01,$08,$01  ; ($6407)
+                .byte $09                                 ; ($6410) =========ITEM_ID: 09 (Bucket) =========
+                .byte $39,$19,$48,$4F,$01,$08,$01         ; ($6411)
+                .byte $0A                                 ; ($6418) =========ITEM_ID: 0A (Bucket) =========
+                .byte $48,$19,$48,$4F,$01,$08,$01         ; ($6419)
+                .byte $0B                                 ; ($6420) =========ITEM_ID: 0B (Bucket) =========
+                .byte $80,$0A,$28,$4F,$01,$08,$02         ; ($6421)
+                .byte $0C                                 ; ($6428) =========ITEM_ID: 0C (Bucket) =========
+                .byte $80,$0A,$28,$4F,$01,$08,$02         ; ($6429)
+                .byte $0D                                 ; ($6430) =========ITEM_ID: 0D (Bucket) =========
+                .byte $80,$0A,$28,$4F,$01,$08,$02         ; ($6431)
+                .byte $0E                                 ; ($6438) =========ITEM_ID: 0E (Bucket) =========
+                .byte $80,$0A,$28,$4F,$01,$08,$02         ; ($6439)
+                .byte $0F                                 ; ($6440) =========ITEM_ID: 0F (Bucket) =========
+                .byte $80,$0A,$28,$4F,$01,$08,$02         ; ($6441)
+                .byte $10                                 ; ($6448) =========ITEM_ID: 10 (Bucket) =========
+                .byte $80,$0A,$28,$4F,$01,$08,$02         ; ($6449)
+                .byte $11                                 ; ($6450) =========ITEM_ID: 11 (Bucket) =========
+                .byte $80,$0A,$28,$4F,$01,$08,$02         ; ($6451)
+                .byte $12                                 ; ($6458) =========ITEM_ID: 12 (Bucket) =========
+                .byte $80,$0A,$28,$4F,$01,$08,$02         ; ($6459)
+                .byte $13                                 ; ($6460) =========ITEM_ID: 13 (Bucket) =========
+                .byte $80,$0A,$28,$4F,$01,$08,$02         ; ($6461)
+                .byte $14                                 ; ($6468) =========ITEM_ID: 14 (Bucket) =========
+                .byte $80,$0A,$28,$4F,$01,$08,$02         ; ($6469)
+                .byte $15                                 ; ($6470) =========ITEM_ID: 15 (Hose)
+                .byte $1E,$28,$20,$48,$01,$00,$03         ; ($6471)
+                .byte $16                                 ; ($6478) =========ITEM_ID: 16 (Typewriter)
+                .byte $39,$0A,$80,$48,$01,$06,$04         ; ($6479)
+                .byte $17                                 ; ($6480) =========ITEM_ID: 17 (Geiger Counter)
+                .byte $2D,$0A,$80,$49,$00,$00,$05         ; ($6481)
+                .byte $18                                 ; ($6488) =========ITEM_ID: 18 (Keycard — Black)
+                .byte $06,$02,$40,$49,$00,$00,$06         ; ($6489)
+                .byte $19                                 ; ($6490) =========ITEM_ID: 19 (Keycard — Downy)
+                .byte $25,$02,$40,$49,$00,$03,$06         ; ($6491)
+                .byte $1A                                 ; ($6498) =========ITEM_ID: 1A (Keycard — Wisteria)
+                .byte $35,$02,$40,$49,$00,$05,$06         ; ($6499)
+                .byte $1B                                 ; ($64A0) =========ITEM_ID: 1B (Keycard — White)
+                .byte $29,$02,$40,$49,$00,$01,$06         ; ($64A1)
+                .byte $1C                                 ; ($64A8) =========ITEM_ID: 1C (Keycard — Violet)
+                .byte $38,$02,$40,$49,$00,$04,$06         ; ($64A9)
+                .byte $1D                                 ; ($64B0) =========ITEM_ID: 1D (Keycard — Dark Blue)
+                .byte $41,$02,$40,$49,$00,$06,$06         ; ($64B1)
+                .byte $1E                                 ; ($64B8) =========ITEM_ID: 1E (Door Key — Black)
+                .byte $09,$02,$C0,$47,$00,$00,$07         ; ($64B9)
+                .byte $1F                                 ; ($64C0) =========ITEM_ID: 1F (Door Key — Dark Blue)
+                .byte $19,$02,$C0,$47,$00,$06,$07         ; ($64C1)
+                .byte $20                                 ; ($64C8) =========ITEM_ID: 20 (Door Key — Violet)
+                .byte $0E,$02,$C0,$47,$00,$04,$07         ; ($64C9)
+                .byte $21                                 ; ($64D0) =========ITEM_ID: 21 (Door Key — Downy)
+                .byte $33,$02,$C0,$47,$00,$05,$07         ; ($64D1)
+                .byte $22                                 ; ($64D8) =========ITEM_ID: 22 (Nothing)
+                .byte $00,$00,$00,$00,$00,$00,$00         ; ($64D9)
+                .byte $23                                 ; ($64E0) =========ITEM_ID: 23 (Door Key — White)
+                .byte $3D,$02,$C0,$47,$00,$01,$07         ; ($64E1)
+                .byte $24                                 ; ($64E8) =========ITEM_ID: 24 (Door Key — Generic)
+                .byte $80,$02,$C0,$47,$00,$03,$07         ; ($64E9)
+                .byte $25                                 ; ($64F0) =========ITEM_ID: 25 (Cabinet Key)
+                .byte $16,$05,$E0,$47,$00,$06,$08         ; ($64F1)
+                .byte $26                                 ; ($64F8) =========ITEM_ID: 26 (Cabinet Key)
+                .byte $2E,$05,$E0,$47,$00,$03,$08         ; ($64F9)
+                .byte $27                                 ; ($6500) =========ITEM_ID: 27 (Cabinet Key)
+                .byte $37,$05,$E0,$47,$00,$02,$08         ; ($6501)
+                .byte $28                                 ; ($6508) =========ITEM_ID: 28 (Cabinet Key)
+                .byte $3C,$05,$E0,$47,$00,$00,$08         ; ($6509)
+                .byte $29                                 ; ($6510) =========ITEM_ID: 29 (Cabinet Key)
+                .byte $0A,$05,$E0,$47,$00,$05,$08         ; ($6511)
+                .byte $2A                                 ; ($6518) =========ITEM_ID: 2A (Cabinet Key)
+                .byte $14,$05,$E0,$47,$00,$01,$08         ; ($6519)
+                .byte $2B                                 ; ($6520) =========ITEM_ID: 2B (Gun)
+                .byte $07,$05,$00,$48,$01,$00,$09         ; ($6521)
+                .byte $2C                                 ; ($6528) =========ITEM_ID: 2C (Bullet)
+                .byte $0B,$02,$A0,$47,$00,$00,$0A         ; ($6529)
+                .byte $2D                                 ; ($6530) =========ITEM_ID: 2D (Bullet)
+                .byte $0B,$02,$A0,$47,$00,$00,$0A         ; ($6531)
+                .byte $2E                                 ; ($6538) =========ITEM_ID: 2E (Bullet)
+                .byte $0B,$02,$A0,$47,$00,$00,$0A         ; ($6539)
+                .byte $2F                                 ; ($6540) =========ITEM_ID: 2F (Bullet)
+                .byte $1C,$02,$A0,$47,$00,$00,$0A         ; ($6541)
+                .byte $30                                 ; ($6548) =========ITEM_ID: 30 (Bullet)
+                .byte $1C,$02,$A0,$47,$00,$00,$0A         ; ($6549)
+                .byte $31                                 ; ($6550) =========ITEM_ID: 31 (Bullet)
+                .byte $16,$02,$A0,$47,$00,$00,$0A         ; ($6551)
+                .byte $32                                 ; ($6558) =========ITEM_ID: 32 (Dynamite)
+                .byte $80,$02,$60,$49,$00,$05,$0B         ; ($6559)
+                .byte $33                                 ; ($6560) =========ITEM_ID: 33 (Stacey Sutton ★★★★★)
+                .byte $80,$00,$C0,$48,$00,$00,$0C         ; ($6561)
+                .byte $34                                 ; ($6568) =========ITEM_ID: 34 (Torch)
+                .byte $80,$05,$E0,$48,$00,$00,$0D         ; ($6569)
+                .byte $35                                 ; ($6570) =========ITEM_ID: 35 (Tape / Ribbon)
+                .byte $1D,$02,$A0,$48,$00,$02,$0E         ; ($6571)
+                .byte $36                                 ; ($6578) =========ITEM_ID: 36 (Keycard Holder)
+                .byte $00,$00,$60,$48,$00,$00,$0F         ; ($6579)
+                .byte $37                                 ; ($6580) =========ITEM_ID: 37 (Crowbar)
+                .byte $0F,$0A,$20,$49,$00,$04,$10         ; ($6581)
+                .byte $38                                 ; ($6588) =========ITEM_ID: 38 (Safe Comb +)
+                .byte $18,$00,$A0,$49,$00,$00,$11         ; ($6589)
+                .byte $39                                 ; ($6590) =========ITEM_ID: 39 (Safe Comb –)
+                .byte $80,$00,$C0,$49,$00,$00,$12         ; ($6591)
+                .byte $3A                                 ; ($6598) =========ITEM_ID: 3A (Bullet)
+                .byte $1E,$02,$A0,$47,$00,$00,$0A         ; ($6599)
+                .byte $3B                                 ; ($65A0) =========ITEM_ID: 3B (Bullet)
+                .byte $1E,$02,$A0,$47,$00,$00,$0A         ; ($65A1)
+                .byte $3C                                 ; ($65A8) =========ITEM_ID: 3C (Bullet)
+                .byte $0D,$02,$A0,$47,$00,$00,$0A         ; ($65A9)
+                .byte $3D                                 ; ($65B0) =========ITEM_ID: 3D (Coffee)
+                .byte $80,$05,$00,$49,$00,$05,$13         ; ($65B1)
+                .byte $3E                                 ; ($65B8) =========ITEM_ID: 3E (Bullet)
+                .byte $23,$02,$A0,$47,$00,$00,$0A         ; ($65B9)
+                .byte $3F                                 ; ($65C0) =========ITEM_ID: 3F (Bullet)
+                .byte $23,$02,$A0,$47,$00,$00,$0A         ; ($65C1)
+                .byte $40                                 ; ($65C8) =========ITEM_ID: 40 (Coin)
+                .byte $24,$02,$40,$48,$00,$04,$14         ; ($65C9)
+                .byte $41                                 ; ($65D0) =========ITEM_ID: 41 (Coffee)
+                .byte $80,$05,$00,$49,$00,$05,$13         ; ($65D1)
+                .byte $42                                 ; ($65D8) =========ITEM_ID: 42 (Coffee)
+                .byte $80,$05,$00,$49,$00,$05,$13         ; ($65D9)
+                .byte $43                                 ; ($65E0) =========ITEM_ID: 43 (Coin)
+                .byte $34,$02,$40,$48,$00,$04,$14         ; ($65E1)
+                .byte $44                                 ; ($65E8) =========ITEM_ID: 44 (Coffee)
+                .byte $80,$05,$00,$49,$00,$05,$13         ; ($65E9)
+                .byte $45                                 ; ($65F0) =========ITEM_ID: 45 (Bullet)
+                .byte $42,$02,$A0,$47,$00,$00,$0A         ; ($65F1)
+                .byte $46                                 ; ($65F8) =========ITEM_ID: 46 (Mine Pass ★★★)
+                .byte $3D,$02,$D0,$58,$00,$00,$15         ; ($65F9)
+                .byte $47                                 ; ($6600) =========ITEM_ID: 47 (Coin)
+                .byte $3D,$02,$40,$48,$00,$04,$14         ; ($6601)
+                .byte $48                                 ; ($6608) =========ITEM_ID: 48 (Bullet)
+                .byte $3D,$02,$A0,$47,$00,$00,$0A         ; ($6609)
+                .byte $49                                 ; ($6610) =========ITEM_ID: 49 (Bullet)
+                .byte $3D,$02,$A0,$47,$00,$00,$0A         ; ($6611)
+                .byte $4A                                 ; ($6618) =========ITEM_ID: 4A (Coffee)
+                .byte $80,$05,$00,$49,$00,$05,$13         ; ($6619)
+                .byte $4B                                 ; ($6620) =========ITEM_ID: 4B (Coffee)
+                .byte $80,$05,$00,$49,$00,$05,$13         ; ($6621)
+                .byte $4C                                 ; ($6628) =========ITEM_ID: 4C (Coffee)
+                .byte $80,$05,$00,$49,$00,$05,$13         ; ($6629)
+                .byte $4D                                 ; ($6630) =========ITEM_ID: 4D (Bullet)
+                .byte $36,$02,$A0,$47,$00,$00,$0A         ; ($6631)
+                .byte $4E                                 ; ($6638) =========ITEM_ID: 4E (Bullet)
+                .byte $46,$02,$A0,$47,$00,$00,$0A         ; ($6639)
+                .byte $4F                                 ; ($6640) =========ITEM_ID: 4F (Bullet)
+                .byte $46,$02,$A0,$47,$00,$00,$0A         ; ($6641)
+                .byte $50                                 ; ($6648) =========ITEM_ID: 50 (Bullet)
+                .byte $46,$02,$A0,$47,$00,$00,$0A         ; ($6649)
+                .byte $51                                 ; ($6650) =========ITEM_ID: 51 (Bullet)
+                .byte $2B,$02,$A0,$47,$00,$00,$0A         ; ($6651)
+                .byte $52                                 ; ($6658) =========ITEM_ID: 52 (Dynamite)
+                .byte $80,$02,$60,$49,$00,$05,$0B         ; ($6659)
+                .byte $53                                 ; ($6660) =========ITEM_ID: 53 (Dynamite)
+                .byte $80,$02,$60,$49,$00,$05,$0B         ; ($6661)
+                .byte $54                                 ; ($6668) =========ITEM_ID: 54 (Key-1)
+                .byte $80,$00,$10,$58,$00,$00,$16         ; ($6669)
+                .byte $55                                 ; ($6670) =========ITEM_ID: 55 (Key-4)
+                .byte $80,$00,$30,$58,$00,$00,$16         ; ($6671)
+                .byte $56                                 ; ($6678) =========ITEM_ID: 56 (Key-6)
+                .byte $37                                 ; ($6679) ROOM_INDEX: $37 (Floor 2, Right Wing Room 3)
+                .byte $00                                 ; ($667A) SPRITE_LO: $00
+                .byte $50                                 ; ($667B) SPRITE_HI: $50
+                .byte $58                                 ; ($667C) SPRITE_BANK: $58
+                .byte $00                                 ; ($667D) FLAGS: $00
+                .byte $00                                 ; ($667E) COLOR: $00
+                .byte $16                                 ; ($667F) ITEM_TYPE: Key-6
+                .byte $57                                 ; ($6680) =========ITEM_ID: 57 (Key-3)
+                .byte $80                                 ; ($6681) ROOM_INDEX: $80 (Hidden, Special)
+                .byte $00                                 ; ($6682) SPRITE_LO: $00
+                .byte $70                                 ; ($6683) SPRITE_HI: $50
+                .byte $58                                 ; ($6684) SPRITE_BANK: $58
+                .byte $00                                 ; ($6685) FLAGS: $00
+                .byte $00                                 ; ($6686) COLOR: $00
+                .byte $16                                 ; ($6687) ITEM_TYPE: Key-6
+                .byte $58                                 ; ($6688) =========ITEM_ID: 58 (Key-7)
+                .byte $3D                                 ; ($6689) ROOM_INDEX: $3D (Floor 1, Left Wing Room 2)
+                .byte $00                                 ; ($668A) SPRITE_LO: $00
+                .byte $90                                 ; ($668B) SPRITE_HI: $90
+                .byte $58                                 ; ($668C) SPRITE_BANK: $58
+                .byte $00                                 ; ($668D) FLAGS: $00
+                .byte $00                                 ; ($668E) COLOR: $00
+                .byte $16                                 ; ($668F) ITEM_TYPE: Key-7
+                .byte $59                                 ; ($6690) =========ITEM_ID: 59 (Key-9)
+                .byte $80                                 ; ($6691) ROOM_INDEX: $80 (Hidden, Special)
+                .byte $00,$B0,$58,$00,$00,$16             ; ($6692)
+                .byte $5A                                 ; ($6698) =========ITEM_ID: 5A (Nothing)
+                .byte $80                                 ; ($6699) ROOM_INDEX: $80 (Hidden, Special)
+                .byte $6E,$F0,$58,$00,$00,$17             ; ($669A)
+                .byte $5B                                 ; ($66A0) =========ITEM_ID: 5B (Bullet)
+                .byte $3D                                 ; ($66A1) ROOM_INDEX: $3D (Floor 1, Left Wing Room 2)
+                .byte $02,$A0,$47,$00,$00,$0A             ; ($66A2)
+
+; ==================================================
+; Section: ItemColorRAMLookup (Data)
+; Range: $66A8 - $66C3 (28 bytes)
+; ==================================================
+
+                .byte $CD,$D8,$CE,$D8,$CF,$D8,$D0,$D8,$D1,$D8,$D2,$D8,$D3,$D8,$D4,$D8  ; ($66A8)
+                .byte $D5,$D8,$D6,$D8,$D7,$D8,$D8,$D8,$D9,$D8,$DA,$D8  ; ($66B8)
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
+                .byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FE  ; ($66C4)
 
 ; ==================================================
 ; Section: Main Player Movement Handler (Code)
@@ -2337,11 +2613,11 @@ HandleRightEdgeTransition
                 STA PlayerScreenX                         ; ($67C9)
                 INC CurrentScreenIndex                    ; ($67CC)
 RefreshScreenState
-                JSR L5E50                                 ; ($67CF)
-                JSR L4100                                 ; ($67D2)
-                JSR L40B0                                 ; ($67D5)
-                JSR L6000                                 ; ($67D8)
-                JSR L62A0                                 ; ($67DB)
+                JSR CopyScreenAndColorData                ; ($67CF)
+                JSR DrawStructure                         ; ($67D2)
+                JSR InitScreen                            ; ($67D5)
+                JSR ProcessStructureArray                 ; ($67D8)
+                JSR PlaceItemsInRoom                      ; ($67DB)
                 JSR L8915                                 ; ($67DE)
                 NOP                                       ; ($67E1)
                 NOP                                       ; ($67E2)
@@ -2679,38 +2955,14 @@ L6A0C
 ; ==================================================
 ; Section: Draw Building/City Map with Room Status (Data)
 ; Range: $6A20 - $6A78 (89 bytes)
-; This routine draws the building facade in the lower-left portion of the
-; screen, showing which rooms/locations the player has visited. Based on the
-; screenshot, this represents a multi-story building view where each window
-; indicates room visit status.
-; Operation:
-; Processes 5 floors (vertical) × 19 rooms (horizontal) of the building
-; For each room, checks byte offset +$0C in the room's data structure
-; If byte is non-zero: draws character $3E (lit window - visited room)
-; If byte is zero: draws character $19 (dark window - unvisited room)
-; Building Layout:
-; Processes rooms 0-7, then skips to 12-18 (19 total, with 4-room gap for
-; building entrance/structure)
-; The gap at positions 8-11 represents the central entrance or architectural
-; feature visible in the building
-; Each floor advances screen pointer by $28 (40 bytes = 1 screen row)
-; Data Structure:
-; Room entries are $0E bytes apart in memory (14 bytes per room)
-; Byte offset +$0C is the "visited" flag for each room
-; Starting room data pointer: $3042
-; Self-Modifying Code:
-; Dynamically updates screen destination in instruction at $6A40
-; Initial screen position $06F9, increments by $28 per floor
-; Allows flexible positioning of the building display
-; This creates a visual map of the building showing player progress through
-; different rooms across multiple floors, with lit windows indicating
-; explored areas.
+; $19 = Dark window (unvisited/not on fire)
+; ; $3E = Fire frame 1 (burning room - alternates with $13 for animation)
 ; ==================================================
 
 DrawBuildingStatusIcons
-                LDA #$05                                  ; ($6A20)
+                LDA #$05                                  ; ($6A20) 5 floors to process
                 STA $25                                   ; ($6A22)
-                LDA #$30                                  ; ($6A24)
+                LDA #$30                                  ; ($6A24) Point to first room data at $4230
                 STA $26                                   ; ($6A26)
                 LDA #$42                                  ; ($6A28)
                 STA $27                                   ; ($6A2A)
@@ -2721,41 +2973,41 @@ DrawBuildingStatusIcons
 FloorLoop
                 LDX #$00                                  ; ($6A36)
 RoomLoop
-                LDY #$0C                                  ; ($6A38)
-                LDA ($26),Y                               ; ($6A3A)
-                BEQ DrawUnvisitedRoom                     ; ($6A3C)
-                LDA #$3E                                  ; ($6A3E)
+                LDY #$0C                                  ; ($6A38) Check fire status flag at offset +$0C
+                LDA ($26),Y                               ; ($6A3A) Load room's fire status byte
+                BEQ DrawUnvisitedRoom                     ; ($6A3C) If zero: room not on fire, draw dark window
+                LDA #$3E                                  ; ($6A3E) Load fire character (flame animation frame 1)
 WriteRoomIconToScreen
                 STA $07C1,X                               ; ($6A40)
-                JMP NextRoomTile                          ; ($6A43)
+                JMP NextRoomTile                          ; ($6A43) Continue to next room
 DrawUnvisitedRoom
-                LDA #$19                                  ; ($6A46)
-                JMP WriteRoomIconToScreen                 ; ($6A48)
+                LDA #$19                                  ; ($6A46) Load dark window (unvisited/not burning)
+                JMP WriteRoomIconToScreen                 ; ($6A48) Draw it to screen
 NextRoomTile
-                LDA $26                                   ; ($6A4B)
-                CLC                                       ; ($6A4D)
+                LDA $26                                   ; ($6A4B) Advance room data pointer by 14 bytes
+                CLC                                       ; ($6A4D) (each room structure is $0E bytes)
                 ADC #$0E                                  ; ($6A4E)
                 STA $26                                   ; ($6A50)
                 LDA $27                                   ; ($6A52)
                 ADC #$00                                  ; ($6A54)
                 STA $27                                   ; ($6A56)
-                INX                                       ; ($6A58)
-                CPX #$08                                  ; ($6A59)
+                INX                                       ; ($6A58) Move to next screen column
+                CPX #$08                                  ; ($6A59) Finished left wing? (columns 0-7)
                 BNE CheckRoomEnd                          ; ($6A5B)
-                LDX #$0C                                  ; ($6A5D)
+                LDX #$0C                                  ; ($6A5D) Skip entrance (cols 8-11), jump to right wing
 CheckRoomEnd
-                CPX #$13                                  ; ($6A5F)
-                BNE RoomLoop                              ; ($6A61)
-                LDA $6A41                                 ; ($6A63)
+                CPX #$13                                  ; ($6A5F) Finished all 19 columns? (0-7, 12-18)
+                BNE RoomLoop                              ; ($6A61) No: continue processing rooms on this floor Yes: move down to next floor
+                LDA $6A41                                 ; ($6A63) Advance screen pointer to next row
                 CLC                                       ; ($6A66)
-                ADC #$28                                  ; ($6A67)
+                ADC #$28                                  ; ($6A67) Add 40 bytes (one screen row)
                 STA $6A41                                 ; ($6A69)
                 LDA $6A42                                 ; ($6A6C)
                 ADC #$00                                  ; ($6A6F)
                 STA $6A42                                 ; ($6A71)
-                DEC $25                                   ; ($6A74)
-                BNE FloorLoop                             ; ($6A76)
-                RTS                                       ; ($6A78)
+                DEC $25                                   ; ($6A74) One floor complete, decrement counter
+                BNE FloorLoop                             ; ($6A76) Continue if more floors remain
+                RTS                                       ; ($6A78) All 75 rooms processed, return
 
 ; ==================================================
 ; Unsectioned Data
@@ -2795,48 +3047,64 @@ L6B50
                 .byte $A9,$09,$8D,$13,$D4,$A9,$00,$8D,$14,$D4,$A9,$81,$8D,$12,$D4,$60  ; ($6B9F)
                 .byte $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE  ; ($6BAF)
                 .byte $FE                                 ; ($6BBF)
-L6BC0
-                LDA #$01                                  ; ($6BC0)
+
+; ==================================================
+; Section: UpdateBuildingColors (Code)
+; Range: $6BC0 - $6C07 (72 bytes)
+; This routine updates the color attributes for all windows in the building.
+; It reads color values from a table at $6C08 and writes them to color RAM at
+; $DAF9 (corresponding to screen memory at $06F9). Color codes used: $07 =
+; Yellow (player's current location) $03 = Cyan (visited rooms) $02/$0A =
+; Red/Light Red (rooms on fire) $08/$09 = Orange (rooms on fire)
+; ==================================================
+
+UpdateBuildingColors
+                LDA #$01                                  ; ($6BC0) Initialize floor counter
                 PHA                                       ; ($6BC2)
                 LDY CurrentScreenIndex                    ; ($6BC3)
-                LDA #$07                                  ; ($6BC6)
-                STA $6C08,Y                               ; ($6BC8)
-                LDA #$F9                                  ; ($6BCB)
+                LDA #$07                                  ; ($6BC6) Yellow color code
+                STA $6C08,Y                               ; ($6BC8) Mark player's current room as yellow
+                LDA #$F9                                  ; ($6BCB) Set color RAM pointer to $DAF9
                 STA $42                                   ; ($6BCD)
                 LDA #$DA                                  ; ($6BCF)
                 STA $43                                   ; ($6BD1)
-                LDX #$01                                  ; ($6BD3)
-L6BD5
-                LDY #$00                                  ; ($6BD5)
-L6BD7
+                LDX #$01                                  ; ($6BD3) Start reading from color table at $6C09
+FloorColorLoop
+                LDY #$00                                  ; ($6BD5) Start at column 0
+RoomColorLoop
                 LDA $6C08,X                               ; ($6BD7)
-                STA ($42),Y                               ; ($6BDA)
+                STA ($42),Y                               ; ($6BDA) Write to color RAM
                 INX                                       ; ($6BDC)
-                INY                                       ; ($6BDD)
-                CPY #$08                                  ; ($6BDE)
-                BNE L6BE4                                 ; ($6BE0)
-                LDY #$0C                                  ; ($6BE2)
-L6BE4
-                CPY #$13                                  ; ($6BE4)
-                BNE L6BD7                                 ; ($6BE6)
-                LDA $42                                   ; ($6BE8)
+                INY                                       ; ($6BDD) Next screen column
+                CPY #$08                                  ; ($6BDE) Finished left wing (columns 0-7)?
+                BNE CheckColorEnd                         ; ($6BE0)
+                LDY #$0C                                  ; ($6BE2) Skip entrance, jump to right wing (col 12)
+CheckColorEnd
+                CPY #$13                                  ; ($6BE4) Finished all 19 columns (0-7, 12-18)?
+                BNE RoomColorLoop                         ; ($6BE6) No: continue current floor Yes: move to next floor
+                LDA $42                                   ; ($6BE8) Advance color RAM pointer
                 CLC                                       ; ($6BEA)
-                ADC #$28                                  ; ($6BEB)
+                ADC #$28                                  ; ($6BEB) Add 40 bytes (next screen row)
                 STA $42                                   ; ($6BED)
                 LDA $43                                   ; ($6BEF)
                 ADC #$00                                  ; ($6BF1)
                 STA $43                                   ; ($6BF3)
-                PLA                                       ; ($6BF5)
+                PLA                                       ; ($6BF5) Get floor counter from stack
                 CLC                                       ; ($6BF6)
-                ADC #$01                                  ; ($6BF7)
-                PHA                                       ; ($6BF9)
-                CMP #$06                                  ; ($6BFA)
-                BNE L6BD5                                 ; ($6BFC)
-                PLA                                       ; ($6BFE)
-                LDA #$03                                  ; ($6BFF)
-                LDY CurrentScreenIndex                    ; ($6C01)
-                STA $6C08,Y                               ; ($6C04)
-                RTS                                       ; ($6C07)
+                ADC #$01                                  ; ($6BF7) Increment floor
+                PHA                                       ; ($6BF9) Save back to stack
+                CMP #$06                                  ; ($6BFA) Processed all 5 floors? (1-5, exits at 6)
+                BNE FloorColorLoop                        ; ($6BFC) No: continue next floor
+                PLA                                       ; ($6BFE) Clean up stack
+                LDA #$03                                  ; ($6BFF) Cyan color code
+                LDY CurrentScreenIndex                    ; ($6C01) Get player's current room index
+                STA $6C08,Y                               ; ($6C04) Mark player's previous room as cyan (visited)
+                RTS                                       ; ($6C07) Return
+
+; ==================================================
+; Unsectioned Data
+; ==================================================
+
                 .byte $00,$07,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($6C08)
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($6C18)
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00  ; ($6C28)
@@ -3125,9 +3393,9 @@ L6FC4
                 LDA #$03                                  ; ($6FC5)
                 DEX                                       ; ($6FC7)
                 BEQ L6FCD                                 ; ($6FC8)
-                JMP L6021                                 ; ($6FCA)
+                JMP CalculateTableOffset                  ; ($6FCA)
 L6FCD
-                JMP L6027                                 ; ($6FCD)
+                JMP LoadStructureParams                   ; ($6FCD)
 L6FD0
                 LDY $6176                                 ; ($6FD0)
                 BNE L6FC4                                 ; ($6FD3)
@@ -3147,7 +3415,7 @@ L6FD0
                 STX $05BA                                 ; ($6FEF)
                 INX                                       ; ($6FF2)
                 STX $05BB                                 ; ($6FF3)
-                JMP L604A                                 ; ($6FF6)
+                JMP ProcessType0                          ; ($6FF6)
 L6FF9
                 STX $05BA                                 ; ($6FF9)
 L6FFC
@@ -3163,12 +3431,12 @@ L7000
                 STA $D016                                 ; ($700D)
                 LDA #$FF                                  ; ($7010)
                 STA $D015                                 ; ($7012)
-                JSR L4000                                 ; ($7015)
-                JSR L5E50                                 ; ($7018)
-                JSR L40B0                                 ; ($701B)
-                JSR L6000                                 ; ($701E)
-                JSR L4100                                 ; ($7021)
-                JSR L62A0                                 ; ($7024)
+                JSR InitRasterIRQ                         ; ($7015)
+                JSR CopyScreenAndColorData                ; ($7018)
+                JSR InitScreen                            ; ($701B)
+                JSR ProcessStructureArray                 ; ($701E)
+                JSR DrawStructure                         ; ($7021)
+                JSR PlaceItemsInRoom                      ; ($7024)
                 JSR HandlePlayerInput                     ; ($7027)
                 JSR SetPlayerSpriteFrame                  ; ($702A)
                 LDX #$08                                  ; ($702D)
@@ -3250,7 +3518,7 @@ L7096
 L7099
                 BEQ L70A1                                 ; ($7099)
 L709B
-                JMP $1300                                 ; ($709B)
+                JMP VictoryScreen                         ; ($709B)
 L709E
                 JMP L704D                                 ; ($709E)
 L70A1
@@ -4536,7 +4804,7 @@ L9640
                 JSR L8900                                 ; ($9648)
 L964B
                 JSR LC6AB                                 ; ($964B)
-                JMP L4074                                 ; ($964E)
+                JMP ExitIRQ                               ; ($964E)
                 .byte $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$00  ; ($9651)
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$A2,$FF,$9A,$4C,$00,$86,$00  ; ($9661)
                 .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$A9,$03,$85,$D9,$EA,$A9  ; ($9671)
