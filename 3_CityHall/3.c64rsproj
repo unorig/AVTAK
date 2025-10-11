@@ -2420,6 +2420,103 @@
         25122,
         25124,
         25126,
+        25240,
+        25242,
+        25244,
+        25246,
+        25235,
+        25236,
+        25238,
+        25273,
+        25275,
+        25276,
+        25278,
+        25265,
+        25267,
+        25269,
+        25271,
+        25256,
+        25259,
+        25258,
+        25263,
+        25262,
+        25248,
+        25250,
+        25252,
+        25254,
+        25304,
+        25307,
+        25306,
+        25309,
+        25311,
+        25296,
+        25298,
+        25300,
+        25302,
+        25288,
+        25291,
+        25290,
+        25293,
+        25281,
+        25280,
+        25283,
+        25285,
+        25286,
+        25337,
+        25339,
+        25341,
+        25343,
+        25331,
+        25330,
+        25333,
+        25335,
+        25321,
+        25320,
+        25323,
+        25324,
+        25327,
+        25326,
+        25312,
+        25315,
+        25314,
+        25317,
+        25318,
+        25368,
+        25370,
+        25372,
+        25375,
+        25374,
+        25361,
+        25364,
+        25366,
+        25353,
+        25354,
+        25356,
+        25359,
+        25358,
+        25344,
+        25346,
+        25349,
+        25348,
+        25351,
+        25400,
+        25402,
+        25404,
+        25406,
+        25393,
+        25392,
+        25395,
+        25396,
+        25399,
+        25384,
+        25387,
+        25386,
+        25389,
+        25390,
+        25378,
+        25381,
+        25380,
+        25383,
         25432,
         25435,
         25437,
@@ -2427,6 +2524,13 @@
         25427,
         25429,
         25431,
+        25416,
+        25419,
+        25418,
+        25408,
+        25410,
+        25412,
+        25414,
         25456,
         25448,
         25450,
@@ -2471,6 +2575,13 @@
         25555,
         25556,
         25558,
+        25544,
+        25547,
+        25546,
+        25550,
+        25539,
+        25541,
+        25543,
         25593,
         25595,
         25596,
@@ -11646,6 +11757,314 @@
             "value": "PLA"
         },
         {
+            "key": 25241,
+            "value": "LDY #$08"
+        },
+        {
+            "key": 25243,
+            "value": "LDA ($3F),Y"
+        },
+        {
+            "key": 25245,
+            "value": "CMP #$08"
+        },
+        {
+            "key": 25247,
+            "value": "BEQ $6C7B"
+        },
+        {
+            "key": 25234,
+            "value": "LDA $6F03"
+        },
+        {
+            "key": 25237,
+            "value": "CMP #$01"
+        },
+        {
+            "key": 25239,
+            "value": "BNE $6C7A"
+        },
+        {
+            "key": 25272,
+            "value": "LDA #$04"
+        },
+        {
+            "key": 25274,
+            "value": "STA $6F03"
+        },
+        {
+            "key": 25277,
+            "value": "LDA #$4D"
+        },
+        {
+            "key": 25279,
+            "value": "STA $6F01"
+        },
+        {
+            "key": 25264,
+            "value": "CMP #$53"
+        },
+        {
+            "key": 25266,
+            "value": "BCS $6C7A"
+        },
+        {
+            "key": 25268,
+            "value": "CMP #$41"
+        },
+        {
+            "key": 25270,
+            "value": "BCC $6C7A"
+        },
+        {
+            "key": 25257,
+            "value": "JMP $6D04"
+        },
+        {
+            "key": 25261,
+            "value": "LDA $6F02"
+        },
+        {
+            "key": 25260,
+            "value": "RTS"
+        },
+        {
+            "key": 25249,
+            "value": "CMP #$09"
+        },
+        {
+            "key": 25251,
+            "value": "BEQ $6CBF"
+        },
+        {
+            "key": 25253,
+            "value": "CMP #$0A"
+        },
+        {
+            "key": 25255,
+            "value": "BNE $6C7A"
+        },
+        {
+            "key": 25305,
+            "value": "LDA $1B51"
+        },
+        {
+            "key": 25308,
+            "value": "SBC #$0F"
+        },
+        {
+            "key": 25310,
+            "value": "STA $1B51"
+        },
+        {
+            "key": 25297,
+            "value": "STA $3F"
+        },
+        {
+            "key": 25299,
+            "value": "LDA $40"
+        },
+        {
+            "key": 25301,
+            "value": "SBC #$00"
+        },
+        {
+            "key": 25303,
+            "value": "STA $40"
+        },
+        {
+            "key": 25289,
+            "value": "STA $6F00"
+        },
+        {
+            "key": 25292,
+            "value": "LDA $3F"
+        },
+        {
+            "key": 25295,
+            "value": "SBC #$D2"
+        },
+        {
+            "key": 25294,
+            "value": "SEC"
+        },
+        {
+            "key": 25282,
+            "value": "LDA #$58"
+        },
+        {
+            "key": 25284,
+            "value": "STA $6F02"
+        },
+        {
+            "key": 25287,
+            "value": "LDA #$78"
+        },
+        {
+            "key": 25336,
+            "value": "CMP #$41"
+        },
+        {
+            "key": 25338,
+            "value": "BCC $6C7A"
+        },
+        {
+            "key": 25340,
+            "value": "LDA #$04"
+        },
+        {
+            "key": 25342,
+            "value": "STA $6F03"
+        },
+        {
+            "key": 25329,
+            "value": "LDA $6F02"
+        },
+        {
+            "key": 25328,
+            "value": "RTS"
+        },
+        {
+            "key": 25332,
+            "value": "CMP #$53"
+        },
+        {
+            "key": 25334,
+            "value": "BCS $6C7A"
+        },
+        {
+            "key": 25322,
+            "value": "JSR $6000"
+        },
+        {
+            "key": 25325,
+            "value": "JSR $62A0"
+        },
+        {
+            "key": 25313,
+            "value": "JSR $5E50"
+        },
+        {
+            "key": 25316,
+            "value": "JSR $40B0"
+        },
+        {
+            "key": 25319,
+            "value": "JSR $4100"
+        },
+        {
+            "key": 25369,
+            "value": "ADC #$00"
+        },
+        {
+            "key": 25371,
+            "value": "STA $40"
+        },
+        {
+            "key": 25373,
+            "value": "LDA $1B51"
+        },
+        {
+            "key": 25360,
+            "value": "LDA $3F"
+        },
+        {
+            "key": 25363,
+            "value": "ADC #$D2"
+        },
+        {
+            "key": 25362,
+            "value": "CLC"
+        },
+        {
+            "key": 25365,
+            "value": "STA $3F"
+        },
+        {
+            "key": 25367,
+            "value": "LDA $40"
+        },
+        {
+            "key": 25352,
+            "value": "STA $6F02"
+        },
+        {
+            "key": 25355,
+            "value": "LDA #$78"
+        },
+        {
+            "key": 25357,
+            "value": "STA $6F00"
+        },
+        {
+            "key": 25345,
+            "value": "LDA #$4D"
+        },
+        {
+            "key": 25347,
+            "value": "STA $6F01"
+        },
+        {
+            "key": 25350,
+            "value": "LDA #$58"
+        },
+        {
+            "key": 25401,
+            "value": "CMP #$6C"
+        },
+        {
+            "key": 25403,
+            "value": "BCS $6D1A"
+        },
+        {
+            "key": 25405,
+            "value": "CMP #$41"
+        },
+        {
+            "key": 25407,
+            "value": "BCC $6D1A"
+        },
+        {
+            "key": 25394,
+            "value": "JSR $62A0"
+        },
+        {
+            "key": 25397,
+            "value": "RTS"
+        },
+        {
+            "key": 25398,
+            "value": "LDA $6F02"
+        },
+        {
+            "key": 25385,
+            "value": "JSR $40B0"
+        },
+        {
+            "key": 25388,
+            "value": "JSR $4100"
+        },
+        {
+            "key": 25391,
+            "value": "JSR $6000"
+        },
+        {
+            "key": 25377,
+            "value": "ADC #$0F"
+        },
+        {
+            "key": 25376,
+            "value": "CLC"
+        },
+        {
+            "key": 25379,
+            "value": "STA $1B51"
+        },
+        {
+            "key": 25382,
+            "value": "JSR $5E50"
+        },
+        {
             "key": 25433,
             "value": "DEY"
         },
@@ -11668,6 +12087,30 @@
         {
             "key": 25430,
             "value": "STA $D8E0,Y"
+        },
+        {
+            "key": 25417,
+            "value": "JMP $6C86"
+        },
+        {
+            "key": 25420,
+            "value": "RTS"
+        },
+        {
+            "key": 25409,
+            "value": "CMP #$53"
+        },
+        {
+            "key": 25411,
+            "value": "BCC $6CCA"
+        },
+        {
+            "key": 25413,
+            "value": "CMP #$5E"
+        },
+        {
+            "key": 25415,
+            "value": "BCC $6D1A"
         },
         {
             "key": 25465,
@@ -11936,6 +12379,34 @@
         {
             "key": 25559,
             "value": "CMP #$01"
+        },
+        {
+            "key": 25545,
+            "value": "STA $D840,Y"
+        },
+        {
+            "key": 25549,
+            "value": "BNE $6D94"
+        },
+        {
+            "key": 25548,
+            "value": "DEY"
+        },
+        {
+            "key": 25551,
+            "value": "RTS"
+        },
+        {
+            "key": 25538,
+            "value": "LDA #$02"
+        },
+        {
+            "key": 25540,
+            "value": "LDY #$0A"
+        },
+        {
+            "key": 25542,
+            "value": "STA $D8E0,Y"
         },
         {
             "key": 25592,
@@ -12967,6 +13438,22 @@
                 "type": "Data"
             },
             {
+                "comment": "",
+                "endAddress": 27096,
+                "isVisible": true,
+                "name": "UpdateSpriteXExpansion",
+                "startAddress": 27072,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 27156,
+                "isVisible": true,
+                "name": "DrawVerticalColumn",
+                "startAddress": 27104,
+                "type": "Code"
+            },
+            {
                 "comment": "$19 = Dark window (unvisited/not on fire)\n; $3E = Fire frame 1 (burning room - alternates with $13 for animation) ",
                 "endAddress": 27256,
                 "isVisible": true,
@@ -12975,11 +13462,115 @@
                 "type": "Data"
             },
             {
+                "comment": "",
+                "endAddress": 27502,
+                "isVisible": true,
+                "name": "PlayPickupSound",
+                "startAddress": 27472,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 27534,
+                "isVisible": true,
+                "name": "PlayErrorSound",
+                "startAddress": 27504,
+                "type": "Code"
+            },
+            {
                 "comment": "This routine updates the color attributes for all windows in the building. It reads color values from a table at $6C08 and writes them to color RAM at $DAF9 (corresponding to screen memory at $06F9). Color codes used: $07 = Yellow (player's current location) $03 = Cyan (visited rooms) $02/$0A = Red/Light Red (rooms on fire) $08/$09 = Orange (rooms on fire)",
                 "endAddress": 27655,
                 "isVisible": true,
                 "name": "UpdateBuildingColors",
                 "startAddress": 27584,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 27770,
+                "isVisible": true,
+                "name": "CheckRoomTransitions",
+                "startAddress": 27744,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 27838,
+                "isVisible": true,
+                "name": "TransitionUp",
+                "startAddress": 27771,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 27907,
+                "isVisible": true,
+                "name": "TransitionDown",
+                "startAddress": 27839,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 27930,
+                "isVisible": true,
+                "name": "DualTransition",
+                "startAddress": 27908,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 27946,
+                "isVisible": true,
+                "name": "AlternateModeHandler",
+                "startAddress": 27936,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 28013,
+                "isVisible": true,
+                "name": "InventoryModeHandler",
+                "startAddress": 27957,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 28045,
+                "isVisible": true,
+                "name": "AlternateModeBlinkHandler",
+                "startAddress": 28016,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 28061,
+                "isVisible": true,
+                "name": "UpdateScreenColors",
+                "startAddress": 28048,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 28076,
+                "isVisible": true,
+                "name": "InputModeDispatcher",
+                "startAddress": 28064,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 28138,
+                "isVisible": true,
+                "name": "UpdateSpriteAnimation",
+                "startAddress": 28096,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 28217,
+                "isVisible": true,
+                "name": "UpdateMultiElementBlink",
+                "startAddress": 28176,
                 "type": "Code"
             },
             {
@@ -13291,6 +13882,14 @@
             "value": "L845B"
         },
         {
+            "key": 25234,
+            "value": "L6C60"
+        },
+        {
+            "key": 25272,
+            "value": "L6C86"
+        },
+        {
             "key": 31400,
             "value": "L8476"
         },
@@ -13309,6 +13908,14 @@
         {
             "key": 35622,
             "value": "L94F4"
+        },
+        {
+            "key": 25261,
+            "value": "L6C7B"
+        },
+        {
+            "key": 25260,
+            "value": "L6C7A"
         },
         {
             "key": 35650,
@@ -13331,8 +13938,16 @@
             "value": "L9537"
         },
         {
+            "key": 25340,
+            "value": "L6CCA"
+        },
+        {
             "key": 35694,
             "value": "L953C"
+        },
+        {
+            "key": 25329,
+            "value": "L6CBF"
         },
         {
             "key": 35682,
@@ -13375,6 +13990,10 @@
             "value": "L84F0"
         },
         {
+            "key": 25398,
+            "value": "L6D04"
+        },
+        {
             "key": 25426,
             "value": "L6D20"
         },
@@ -13385,6 +14004,10 @@
         {
             "key": 29504,
             "value": "L7D0E"
+        },
+        {
+            "key": 25420,
+            "value": "L6D1A"
         },
         {
             "key": 29560,
@@ -13467,8 +14090,16 @@
             "value": "L964B"
         },
         {
+            "key": 25538,
+            "value": "L6D90"
+        },
+        {
             "key": 35954,
             "value": "L9640"
+        },
+        {
+            "key": 25542,
+            "value": "L6D94"
         },
         {
             "key": 25592,
@@ -14371,7 +15002,7 @@
             "value": "L6A5F"
         }
     ],
-    "timestamp": 1760152790,
+    "timestamp": 1760166571,
     "userSymbols": [
         {
             "key": 28784,
@@ -14399,7 +15030,7 @@
         },
         {
             "key": 25610,
-            "value": "L6DD8"
+            "value": "CalculateFrameOffset"
         },
         {
             "key": 22843,
@@ -14407,7 +15038,7 @@
         },
         {
             "key": 24638,
-            "value": "L6A0C"
+            "value": "StopDrawing"
         },
         {
             "key": 23821,
@@ -14455,7 +15086,7 @@
         },
         {
             "key": 24608,
-            "value": "L69EE"
+            "value": "WriteCharAndAdvance"
         },
         {
             "key": 26155,
@@ -14488,6 +15119,18 @@
         {
             "key": 28819,
             "value": "DrawInventoryItem"
+        },
+        {
+            "key": 4643,
+            "value": "CurrentAnimationFrame"
+        },
+        {
+            "key": 4642,
+            "value": "AnimationDelayCounter"
+        },
+        {
+            "key": 4645,
+            "value": "MultiBlinkDelayCounter"
         },
         {
             "key": 14268,
@@ -14535,7 +15178,7 @@
         },
         {
             "key": 25690,
-            "value": "L6E28"
+            "value": "NextElement"
         },
         {
             "key": 24402,
@@ -14543,7 +15186,7 @@
         },
         {
             "key": 25694,
-            "value": "L6E2C"
+            "value": "ChangeToWhite"
         },
         {
             "key": 14242,
@@ -14575,7 +15218,7 @@
         },
         {
             "key": 25672,
-            "value": "L6E16"
+            "value": "ToggleColors"
         },
         {
             "key": 24701,
@@ -14583,7 +15226,7 @@
         },
         {
             "key": 25679,
-            "value": "L6E1D"
+            "value": "ScanLoop"
         },
         {
             "key": 14289,
@@ -14607,7 +15250,7 @@
         },
         {
             "key": 25666,
-            "value": "L6E10"
+            "value": "UpdateMultiElementBlink"
         },
         {
             "key": 26239,
@@ -14674,8 +15317,12 @@
             "value": "L1829"
         },
         {
+            "key": 25234,
+            "value": "CheckRoomTransitions"
+        },
+        {
             "key": 26211,
-            "value": "L7031"
+            "value": "delay_loop"
         },
         {
             "key": 23927,
@@ -14704,6 +15351,10 @@
         {
             "key": 14357,
             "value": "DrawRightCol"
+        },
+        {
+            "key": 26265,
+            "value": "L7067"
         },
         {
             "key": 24420,
@@ -14735,7 +15386,7 @@
         },
         {
             "key": 25702,
-            "value": "L6E34"
+            "value": "ChangeToRed"
         },
         {
             "key": 26257,
@@ -14752,6 +15403,10 @@
         {
             "key": 26262,
             "value": "UpdateState"
+        },
+        {
+            "key": 25272,
+            "value": "ExecuteUpTransition"
         },
         {
             "key": 26249,
@@ -14810,6 +15465,14 @@
             "value": "L7087"
         },
         {
+            "key": 25261,
+            "value": "TransitionUp"
+        },
+        {
+            "key": 25260,
+            "value": "NoTransition"
+        },
+        {
             "key": 26300,
             "value": "L708A"
         },
@@ -14835,7 +15498,7 @@
         },
         {
             "key": 26290,
-            "value": "L7080"
+            "value": "MainLoopContinuation"
         },
         {
             "key": 26293,
@@ -14915,7 +15578,7 @@
         },
         {
             "key": 26323,
-            "value": "L70A1"
+            "value": "RestartGame"
         },
         {
             "key": 13874,
@@ -14942,8 +15605,16 @@
             "value": "L7099"
         },
         {
+            "key": 25340,
+            "value": "ExecuteDownTransition"
+        },
+        {
             "key": 26317,
             "value": "L709B"
+        },
+        {
+            "key": 25329,
+            "value": "TransitionDown"
         },
         {
             "key": 28977,
@@ -15003,7 +15674,7 @@
         },
         {
             "key": 24562,
-            "value": "L69C0"
+            "value": "UpdateSpriteXExpansion"
         },
         {
             "key": 32583,
@@ -15106,6 +15777,10 @@
             "value": "CheckItemType"
         },
         {
+            "key": 25398,
+            "value": "DualTransition"
+        },
+        {
             "key": 1745,
             "value": "L109F"
         },
@@ -15199,7 +15874,7 @@
         },
         {
             "key": 25426,
-            "value": "L6D20"
+            "value": "AlternateModeHandler"
         },
         {
             "key": 1784,
@@ -15211,7 +15886,7 @@
         },
         {
             "key": 25430,
-            "value": "L6D24"
+            "value": "ColorRow5Loop"
         },
         {
             "key": 30609,
@@ -15220,6 +15895,10 @@
         {
             "key": 53824,
             "value": "CIA2_TIMER_A_CONTROL"
+        },
+        {
+            "key": 25420,
+            "value": "InvalidPosition"
         },
         {
             "key": 48367,
@@ -15295,7 +15974,7 @@
         },
         {
             "key": 25451,
-            "value": "L6D39"
+            "value": "ColorRow1Loop"
         },
         {
             "key": 13990,
@@ -15359,7 +16038,7 @@
         },
         {
             "key": 25447,
-            "value": "L6D35"
+            "value": "InventoryModeHandler"
         },
         {
             "key": 50739,
@@ -15375,7 +16054,7 @@
         },
         {
             "key": 25497,
-            "value": "L6D67"
+            "value": "InventoryApplyNewColor"
         },
         {
             "key": 50741,
@@ -15403,7 +16082,7 @@
         },
         {
             "key": 25503,
-            "value": "L6D6D"
+            "value": "InventorySkipColorToggle"
         },
         {
             "key": 22099,
@@ -15463,7 +16142,7 @@
         },
         {
             "key": 25529,
-            "value": "L6D87"
+            "value": "ApplyNewColor"
         },
         {
             "key": 50773,
@@ -15494,8 +16173,12 @@
             "value": "VIC_CONTROL_REG_2"
         },
         {
+            "key": 4498,
+            "value": "BlinkFrameCounter"
+        },
+        {
             "key": 25535,
-            "value": "L6D8D"
+            "value": "SkipColorToggle"
         },
         {
             "key": 22140,
@@ -15578,6 +16261,14 @@
             "value": "CurrentScreenIndex"
         },
         {
+            "key": 4482,
+            "value": "GameStateHeader"
+        },
+        {
+            "key": 4484,
+            "value": "TotalRoomCount"
+        },
+        {
             "key": 2403,
             "value": "EndSequence"
         },
@@ -15587,7 +16278,7 @@
         },
         {
             "key": 25506,
-            "value": "L6D70"
+            "value": "AlternateModeBlinkHandler"
         },
         {
             "key": 15677,
@@ -15619,7 +16310,7 @@
         },
         {
             "key": 25566,
-            "value": "L6DAC"
+            "value": "NormalMode"
         },
         {
             "key": 14094,
@@ -15627,7 +16318,7 @@
         },
         {
             "key": 25554,
-            "value": "L6DA0"
+            "value": "InputModeDispatcher"
         },
         {
             "key": 14080,
@@ -15658,6 +16349,10 @@
             "value": "ClearMemoryBlock"
         },
         {
+            "key": 25538,
+            "value": "UpdateScreenColors"
+        },
+        {
             "key": 32308,
             "value": "ClearMemoryLoop"
         },
@@ -15674,12 +16369,16 @@
             "value": "DrawStructure"
         },
         {
+            "key": 25542,
+            "value": "ScreenColorFillLoop"
+        },
+        {
             "key": 22738,
             "value": "PlaceItemsInRoom"
         },
         {
             "key": 25592,
-            "value": "L6DC6"
+            "value": "AdvanceFrame"
         },
         {
             "key": 29241,
@@ -15702,6 +16401,10 @@
             "value": "StoreFireButton"
         },
         {
+            "key": 4562,
+            "value": "VictoryConditionFlag"
+        },
+        {
             "key": 35824,
             "value": "L95BE"
         },
@@ -15719,7 +16422,7 @@
         },
         {
             "key": 25586,
-            "value": "L6DC0"
+            "value": "UpdateSpriteAnimation"
         },
         {
             "key": 29234,
@@ -15831,7 +16534,7 @@
         },
         {
             "key": 24604,
-            "value": "L69EA"
+            "value": "DrawNextRow"
         },
         {
             "key": 25110,
@@ -15847,7 +16550,7 @@
         },
         {
             "key": 24594,
-            "value": "L69E0"
+            "value": "DrawVerticalColumn"
         },
         {
             "key": 22803,
@@ -15891,7 +16594,7 @@
         },
         {
             "key": 24578,
-            "value": "L69D0"
+            "value": "ExpandSpritesAtEdge"
         },
         {
             "key": 35861,
@@ -15903,7 +16606,7 @@
         },
         {
             "key": 25618,
-            "value": "L6DE0"
+            "value": "CopyFrameLoop"
         },
         {
             "key": 48585,
