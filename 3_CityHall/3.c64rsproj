@@ -13080,6 +13080,30 @@
             },
             {
                 "comment": "",
+                "endAddress": 34697,
+                "isVisible": true,
+                "name": "InitializeGameData",
+                "startAddress": 34560,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 34825,
+                "isVisible": true,
+                "name": "ClearMemoryBlock",
+                "startAddress": 34816,
+                "type": "Code"
+            },
+            {
+                "comment": "",
+                "endAddress": 34850,
+                "isVisible": true,
+                "name": "CopyMemoryPages",
+                "startAddress": 34832,
+                "type": "Code"
+            },
+            {
+                "comment": "",
                 "endAddress": 38509,
                 "isVisible": true,
                 "name": "ResetStackAndJump",
@@ -14347,7 +14371,7 @@
             "value": "L6A5F"
         }
     ],
-    "timestamp": 1760141520,
+    "timestamp": 1760152790,
     "userSymbols": [
         {
             "key": 28784,
@@ -14415,7 +14439,7 @@
         },
         {
             "key": 26162,
-            "value": "L7000"
+            "value": "MainGameLoop"
         },
         {
             "key": 29340,
@@ -14587,7 +14611,7 @@
         },
         {
             "key": 26239,
-            "value": "L704D"
+            "value": "AnimationUpdateLoop"
         },
         {
             "key": 23875,
@@ -14678,10 +14702,6 @@
             "value": "DrawRightSection"
         },
         {
-            "key": 26265,
-            "value": "L7067"
-        },
-        {
             "key": 14357,
             "value": "DrawRightCol"
         },
@@ -14691,7 +14711,7 @@
         },
         {
             "key": 26267,
-            "value": "L7069"
+            "value": "CheckStructureAndAction"
         },
         {
             "key": 26269,
@@ -14703,7 +14723,7 @@
         },
         {
             "key": 26271,
-            "value": "L706D"
+            "value": "CheckActionFlag"
         },
         {
             "key": 3656,
@@ -14719,11 +14739,11 @@
         },
         {
             "key": 26257,
-            "value": "L705F"
+            "value": "ResetInputMode"
         },
         {
             "key": 26259,
-            "value": "L7061"
+            "value": "WriteInputMode"
         },
         {
             "key": 35996,
@@ -14731,15 +14751,15 @@
         },
         {
             "key": 26262,
-            "value": "L7064"
+            "value": "UpdateState"
         },
         {
             "key": 26249,
-            "value": "L7057"
+            "value": "SetSIDVolume"
         },
         {
             "key": 26251,
-            "value": "L7059"
+            "value": "WriteSIDVolume"
         },
         {
             "key": 14343,
@@ -14755,7 +14775,7 @@
         },
         {
             "key": 26254,
-            "value": "L705C"
+            "value": "UpdateSound"
         },
         {
             "key": 31503,
@@ -14763,7 +14783,7 @@
         },
         {
             "key": 26243,
-            "value": "L7051"
+            "value": "StoreAnimFrame"
         },
         {
             "key": 31489,
@@ -14771,7 +14791,7 @@
         },
         {
             "key": 26242,
-            "value": "L7050"
+            "value": "IncrementAnimFrame"
         },
         {
             "key": 23958,
@@ -14779,11 +14799,11 @@
         },
         {
             "key": 26244,
-            "value": "L7052"
+            "value": "MaskAnimFrame"
         },
         {
             "key": 26246,
-            "value": "L7054"
+            "value": "SaveAnimFrame"
         },
         {
             "key": 26297,
@@ -14835,7 +14855,7 @@
         },
         {
             "key": 26282,
-            "value": "L7078"
+            "value": "ReturnToMainLoop"
         },
         {
             "key": 23987,
@@ -14859,7 +14879,7 @@
         },
         {
             "key": 26276,
-            "value": "L7072"
+            "value": "StoreRequiredRoom"
         },
         {
             "key": 31522,
@@ -14887,7 +14907,7 @@
         },
         {
             "key": 32050,
-            "value": "L8700"
+            "value": "InitializeGameData"
         },
         {
             "key": 26320,
@@ -15198,6 +15218,10 @@
             "value": "JoystickDelayOuterLoop"
         },
         {
+            "key": 53824,
+            "value": "CIA2_TIMER_A_CONTROL"
+        },
+        {
             "key": 48367,
             "value": "LC6BD"
         },
@@ -15442,6 +15466,14 @@
             "value": "L6D87"
         },
         {
+            "key": 50773,
+            "value": "VIC_BG_COLOR_2"
+        },
+        {
+            "key": 50772,
+            "value": "VIC_BG_COLOR_1"
+        },
+        {
             "key": 35773,
             "value": "L958B"
         },
@@ -15456,6 +15488,10 @@
         {
             "key": 50761,
             "value": "VIC_SPRITE_Y_EXPAND"
+        },
+        {
+            "key": 50760,
+            "value": "VIC_CONTROL_REG_2"
         },
         {
             "key": 25535,
@@ -15534,6 +15570,10 @@
             "value": "CONSUMPTION_EVENT_FLAG"
         },
         {
+            "key": 50759,
+            "value": "VIC_SPRITE_ENABLE"
+        },
+        {
             "key": 4483,
             "value": "CurrentScreenIndex"
         },
@@ -15568,6 +15608,10 @@
         {
             "key": 24994,
             "value": "PlayErrorSound"
+        },
+        {
+            "key": 4530,
+            "value": "INPUT_MODE"
         },
         {
             "key": 22173,
@@ -15611,11 +15655,11 @@
         },
         {
             "key": 32306,
-            "value": "L8800"
+            "value": "ClearMemoryBlock"
         },
         {
             "key": 32308,
-            "value": "L8802"
+            "value": "ClearMemoryLoop"
         },
         {
             "key": 22147,
@@ -15767,7 +15811,7 @@
         },
         {
             "key": 32322,
-            "value": "L8810"
+            "value": "CopyMemoryPages"
         },
         {
             "key": 24306,

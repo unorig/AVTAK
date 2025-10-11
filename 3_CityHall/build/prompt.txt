@@ -1,0 +1,382 @@
+I'm reverse engineering the Commodore 64 game "A View to a Kill". Here's what I've documented so far:
+
+# A View to a Kill - Inventory System Documentation
+
+## Memory Map
+
+### Game Variables
+```
+CurrentScreenIndex        = (address unknown) ; Current room/location number
+InventoryActiveFlag       = (address unknown) ; $01 = inventory system active
+JoyFire                   = (address unknown) ; Joystick fire button state
+JoyHorizontal             = (address unknown) ; Joystick horizontal position
+```
+
+### Inventory System Variables
+```
+AVAILABLE_ITEMS_LIST      = $7E00  ; List of items in current room (null-terminated)
+PLAYER_INVENTORY          = $6AC0  ; Player's inventory list (null-terminated)
+TOTAL_CARRIED_WEIGHT      = $1B56  ; Current weight of all carried items
+SelectedItemIndex         = $FF    ; Currently selected item in menu
+CurrentInventoryPage      = $02    ; Current inventory menu page (0-7)
+TempInventoryIndex        = $AE    ; Temporary index for scrolling operations
+ItemCounter               = $41    ; Item number being checked (1-91)
+ItemDataPtr               = $FD    ; Zero page pointer to item data ($FD/$FE)
+```
+
+### Special Action Variables
+```
+REQUIRED_ROOM_FOR_ACTION  = $1B5D  ; Room where special action can be performed
+ACTION_PERFORMED_FLAG     = $1B57  ; Flag indicating action was performed
+SPECIAL_ITEMS_COLLECTED   = $1B58  ; Counter for special items collected
+INPUT_MODE                = $1B80  ; Input mode: $01=inventory, $02=alternate
+```
+
+### Data Structures
+```
+ITEM_DATABASE_BASE        = $63D0  ; Base address of item data (8 bytes per item, 91 items)
+INVENTORY_SOURCE_DATA     = $8095  ; Screen codes for inventory display template
+INVENTORY_DISPLAY_ADDR    = $0509  ; Screen location for inventory display
+InventoryPageJumpTable    = $80E5  ; Jump table for 8 inventory pages (16 bytes)
+ITEM_ACTION_JUMP_TABLE    = $7CA6  ; Jump table for item use/examine actions
+SPECIAL_ITEM_FLAG_TABLE   = $8515  ; Pointers to flag data for special items 84-89
+SPECIAL_ITEM_LOCATION_TABLE = $8521 ; Pointers to database entries for special items
+GAME_STATE_FLAGS          = $4860  ; 32-byte array of game state flags
+```
+
+### SID Sound Chip Registers
+```
+SID_VOICE2_ATTACK_DECAY    = $D407  ; Voice 2 Attack/Decay register
+SID_VOICE2_SUSTAIN_RELEASE = $D408  ; Voice 2 Sustain/Release register
+SID_VOICE3_FREQ_LO         = $D40C  ; Voice 3 Frequency Low byte
+SID_VOICE3_FREQ_HI         = $D40D  ; Voice 3 Frequency High byte
+SID_VOICE3_CONTROL         = $D40B  ; Voice 3 Control register
+```
+
+## Constants
+
+### Inventory Limits
+```
+MAX_CARRY_WEIGHT          = $65    ; Maximum weight player can carry (101 lbs)
+INVENTORY_ITEMS_PER_PAGE  = $0A    ; 10 items displayed at a time
+MAX_INVENTORY_PAGE        = $07    ; Maximum page number (8 pages)
+TOTAL_ITEMS               = $5C    ; Total items in game (92, IDs 1-91)
+```
+
+### Special Item Ranges
+```
+SPECIAL_ITEMS_START       = $54    ; Item #84 - start of special items
+SPECIAL_ITEMS_END         = $5A    ; Item #90 - end of special items
+ITEM_TAKEN_FLAG           = $80    ; Flag in database byte 1 = item taken
+UNDROPABLE_ITEM_1         = $33    ; Item #51 - cannot be dropped
+UNDROPABLE_ITEM_2         = $36    ; Item #54 - cannot be dropped
+```
+
+### SID Sound Values
+```
+SID_GATE_OFF              = $00    ; Gate bit off (stop sound)
+SID_TRIANGLE_GATE_ON      = $11    ; Triangle waveform + Gate on
+SID_SAWTOOTH_GATE_ON      = $21    ; Sawtooth waveform + Gate on
+
+; Pickup sound parameters
+PICKUP_ATTACK_DECAY       = $32    ; Attack=3, Decay=2
+PICKUP_SUSTAIN_RELEASE    = $20    ; Sustain=2, Release=0
+PICKUP_FREQ_LO            = $09    ; Frequency low byte
+PICKUP_FREQ_HI            = $09    ; Frequency high byte ($0909 = ~2313 Hz)
+
+; Error sound parameters
+ERROR_ATTACK_DECAY        = $32    ; Attack=3, Decay=2
+ERROR_SUSTAIN_RELEASE     = $08    ; Sustain=0, Release=8
+ERROR_FREQ_LO             = $07    ; Frequency low byte
+ERROR_FREQ_HI             = $08    ; Frequency high byte ($0807 = ~2055 Hz)
+```
+
+### Delay Timing Constants
+```
+DELAY_OUTER_COUNT         = $40    ; 64 iterations for debounce delay
+DELAY_INNER_COUNT         = $FF    ; 255 iterations (total: 16,320 cycles)
+SCROLL_DELAY_OUTER        = $10    ; 16 iterations for scroll delay
+SCROLL_DELAY_INNER        = $FF    ; 255 iterations (total: 4,080 cycles)
+```
+
+## Item Database Structure
+
+Each item is 8 bytes at $63D0 + (ItemID-1)*8:
+
+```
+Offset  Description
+------  -----------
+  +0    Unknown
+  +1    Screen/room index where item is located (or $80 if taken)
+  +2    Item weight in pounds
+  +3    Unknown
+  +4    Unknown
+  +5    Unknown
+  +6    Unknown
+  +7    Action type (index into ITEM_ACTION_JUMP_TABLE for use/examine)
+```
+
+## Inventory Menu Pages
+
+The inventory has 8 pages accessed by scrolling left/right:
+
+```
+Page  Address   Handler Name                  Description
+----  -------   ---------------------------   -----------
+  0   $7C00     InventoryItemSelected         Simple confirmation/cancel
+  1   $7C07     DropItemHandler               Drop item in current room
+  2   $7CD6     BuildInventoryList            Search room for items
+  3   $7C6A     UseItemHandler                Use/examine item
+  4   $8463     LocationBasedActionHandler    Action only works in specific room
+  5   $845B     (unknown)                     Not yet documented
+  6   $8476     (unknown)                     Not yet documented
+  7   $966A     (unknown)                     Not yet documented
+```
+
+## Subroutines
+
+### BuildInventoryList ($7CD6)
+```
+Builds a list of items available in the current room and handles item pickup
+
+This routine:
+1. Scans the item database ($63D0) for items matching CurrentScreenIndex
+2. Builds a list of available items at $7E00
+3. Displays the inventory interface
+4. Processes item selection and transfers items to player inventory ($6AC0)
+5. Updates item weight and marks picked items as taken
+
+Input:  CurrentScreenIndex - Current room/screen number
+Output: Updates $7E00 (available items list)
+        Updates $6AC0 (player inventory)
+        Updates $1B56 (total carried weight)
+        Marks items in database as taken (sets byte 1 to $80)
+        
+Calls:
+  WaitForFireButtonRelease - Waits for fire button release, debounces with
+                             ~50-80ms delay, sets $1B80 = $01
+  PlayPickupSound - Plays item pickup sound effect (triangle wave on SID voice 3)
+  PlayErrorSound - Plays error sound when item is too heavy to carry
+  HandleSpecialItems - Processes special item IDs 84-89
+  RedrawInventoryDisplay - Refreshes the inventory screen interface
+  InitScreen - Redraws the current room screen
+  ProcessStructureArray - Updates room structure data
+  PlaceItemsInRoom - Refreshes item placement in current room
+```
+
+### DropItemHandler ($7C07)
+```
+Page 1: Drop selected item in current room
+
+Validates the item can be dropped (not slot 2, not items #51 or #54)
+Updates item database to place item in current room
+Reduces total carried weight
+Removes item from player inventory
+Refreshes room display to show dropped item
+
+Special items that cannot be dropped:
+  - Item #51 ($33)
+  - Item #54 ($36)
+  - Anything in inventory slot 2
+```
+
+### UseItemHandler ($7C6A)
+```
+Page 3: Use or examine selected item
+
+Reads byte 7 from item database (action type)
+Uses action type to index into jump table at $7CA6
+Jumps to appropriate handler for that item type
+
+Different items have different actions (unlock, consume, read, etc.)
+```
+
+### LocationBasedActionHandler ($8463)
+```
+Page 4: Performs action only in specific room
+
+Checks if player is in required room ($1B5D)
+If yes: Sets action performed flag ($1B57) and plays success sound
+If no: Plays error sound
+
+Used for location-specific actions like RADIO, TRANSMIT, OPERATE, CALL
+```
+
+### HandleSpecialItems ($84DD)
+```
+Handles special quest items (IDs 84-89)
+
+These items don't go into inventory. Instead they:
+1. Set multiple game state flags (32 bytes at $4860)
+2. Mark item as taken in database
+3. Increment special items counter ($1B58)
+4. Play pickup sound
+
+Uses self-modifying code to load flag patterns from table at $8515
+```
+
+### InventorySelectionLoop ($8000)
+```
+Main inventory display and selection loop
+
+Displays 10 items per page at screen location $0509
+Handles joystick input for scrolling and selection:
+  - Left/Right: Scroll through 8 pages
+  - Fire: Select current page action
+
+Uses jump table at $80E5 to call appropriate handler
+```
+
+### UpdateInventoryDisplay ($80FD)
+```
+Updates inventory display and adds scroll delay
+
+Copies 10 bytes from source data to screen
+Adds ~12-20ms delay for smooth scrolling animation
+Called repeatedly during page scrolling
+```
+
+### WaitForFireButtonRelease ($8120)
+```
+Waits for joystick fire button to be released
+Adds debounce delay (~50-80ms)
+Sets input mode to $01 (inventory mode)
+```
+
+### JoystickDebounceDelay ($815D)
+```
+Software delay routine (~50-80ms)
+16,320 iterations (64 outer × 255 inner loops)
+Used for input debouncing
+```
+
+### PlayPickupSound ($6B50)
+```
+Plays item pickup confirmation sound
+Triangle wave at ~2313 Hz on SID voice 3
+Quick attack/decay envelope
+```
+
+### PlayErrorSound ($6B70)
+```
+Plays error sound (item too heavy, can't drop, wrong location)
+Sawtooth wave at ~2055 Hz on SID voice 3
+Longer release than pickup sound (more "buzzy")
+```
+
+## Known External Subroutines (Not Yet Documented)
+
+```
+ReadJoystick2              - Reads joystick port 2 input
+RedrawInventoryDisplay     - Draws inventory screen interface
+InitScreen                 - Redraws current room screen
+ProcessStructureArray      - Updates room structure data
+PlaceItemsInRoom          - Places items visibly in current room
+EnterInventoryMenu        - Enters/rebuilds inventory menu (referenced but address unknown)
+```
+
+## Flow Diagrams
+
+### Item Pickup Flow
+```
+BuildInventoryList
+  ↓
+Scan database for items in current room → Build list at $7E00
+  ↓
+Display inventory interface
+  ↓
+Wait for player selection
+  ↓
+Item selected?
+  ├─ Yes → Check if special item (84-89)?
+  │         ├─ Yes → HandleSpecialItems (set flags, don't add to inventory)
+  │         └─ No → Check weight limit
+  │                  ├─ Too heavy → PlayErrorSound
+  │                  └─ OK → Add to inventory, update weight, mark as taken
+  └─ Exit → Return to game
+```
+
+### Inventory Menu Navigation
+```
+InventorySelectionLoop
+  ↓
+Display current page (0-7)
+  ↓
+Read joystick input
+  ├─ Left → Scroll to next page (if not at max)
+  ├─ Right → Scroll to previous page (if not at page 0)
+  └─ Fire → Jump to page handler (via $80E5 table)
+              ├─ Page 0: Simple confirmation
+              ├─ Page 1: Drop item
+              ├─ Page 2: Search room
+              ├─ Page 3: Use/examine item
+              ├─ Page 4: Location-based action
+              └─ Pages 5-7: Unknown
+```
+
+## Still Unknown / To Be Documented
+
+### CODE ADDRESSES TO INVESTIGATE
+
+**Inventory Menu Handlers (referenced in jump table at $80E5):**
+- **$845B** - Page 5 handler (unknown function)
+- **$8476** - Page 6 handler (unknown function)
+- **$966A** - Page 7 handler (unknown function)
+
+**Room/World System Subroutines:**
+- **InitScreen** - Redraws current room screen (address unknown)
+- **ProcessStructureArray** - Updates room structures (address unknown)
+- **PlaceItemsInRoom** - Places items visibly in room (address unknown)
+- **RedrawInventoryDisplay** - Draws inventory screen interface (address unknown)
+- **ReadJoystick2** - Reads joystick port 2 input (address unknown)
+- **EnterInventoryMenu** - Enters/rebuilds inventory menu (address unknown, referenced at $7C61)
+
+### DATA TABLES TO EXAMINE
+
+**Item Action System:**
+- **$7CA6** - Item action jump table (for UseItemHandler)
+  - Structure: 2-byte addresses indexed by item database byte 7
+  - Need to see how many entries and what handlers exist
+
+**Special Items (84-89):**
+- **$8515** - SPECIAL_ITEM_FLAG_TABLE (6 entries × 2 bytes = 12 bytes)
+  - Pointers to 32-byte flag patterns
+- **$8521** - SPECIAL_ITEM_LOCATION_TABLE (6 entries × 2 bytes = 12 bytes)
+  - Pointers to item database entries
+- Need to dump the actual flag data these point to
+
+**Inventory Display:**
+- **$8095** - INVENTORY_SOURCE_DATA (already seen bytes but need interpretation)
+  - 10-byte screen code template
+  - Appears to be UI frame/border characters
+
+**Item Database:**
+- **$63D0 through $659B** - Complete item database dump
+  - 91 items × 8 bytes = 728 bytes ($2D8)
+  - Need all data to create item list with names, weights, locations
+
+### UNKNOWN MECHANICS
+
+**Item Database Structure:**
+- Byte 0: Unknown purpose
+- Bytes 3-6: Unknown purpose
+- Need to analyze patterns to determine what these bytes control
+
+**Game State:**
+- What specific game events does $1B57 (ACTION_PERFORMED_FLAG) trigger?
+- What room number is stored at $1B5D (REQUIRED_ROOM_FOR_ACTION)?
+- How does the 32-byte flag array at $4860 (GAME_STATE_FLAGS) work?
+- What makes items #51 ($33) and #54 ($36) special/undropable?
+
+**Display System:**
+- How are screen codes at $8095 interpreted (which character set)?
+- What gets displayed at $0509 (INVENTORY_DISPLAY_ADDR)?
+
+## Notes
+
+- The game uses self-modifying code extensively (JSR addresses modified at runtime)
+- Items 84-89 are "special" and set game flags instead of going into inventory
+- Weight system prevents carrying more than 101 lbs
+- Inventory uses paged display with 10 items per page
+- Sound effects use SID voices 2 and 3 (possibly ring-modulated)
+- All delays are software-based timing loops (no interrupts)
